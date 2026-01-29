@@ -12,8 +12,14 @@ export function generateStaticParams() {
     return getCaseStudySlugs().map((slug) => ({ slug }))
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-    const data = getCaseStudyBySlug(params.slug)
+export default async function CaseStudyPage({
+    params
+}: {
+    params: Promise<{ slug: string }>
+}) {
+    const { slug } = await params
+
+    const data = getCaseStudyBySlug(slug)
     if (!data) return notFound()
 
     const { frontmatter, content } = data
@@ -38,10 +44,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                     options={{
                         mdxOptions: {
                             remarkPlugins: [remarkGfm],
-                            rehypePlugins: [
-                                rehypeSlug,
-                                [rehypeAutolinkHeadings, { behavior: 'wrap' }]
-                            ]
+                            rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]
                         }
                     }}
                 />
