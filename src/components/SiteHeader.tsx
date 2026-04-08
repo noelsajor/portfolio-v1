@@ -18,6 +18,7 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
         <Link
             href={href}
             onClick={onClick}
+            data-tracking={`nav_${label.toLowerCase()}`}
             className={[
                 'text-sm font-medium transition-colors',
                 active ? 'text-white' : 'text-white/70 hover:text-white'
@@ -40,7 +41,7 @@ export function SiteHeader() {
     return (
         <header className="sticky top-0 z-50 border-b border-white/10 bg-black/60 backdrop-blur">
             <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-                <Link href="/" className="text-sm font-semibold tracking-tight text-white">
+                <Link href="/" data-tracking="nav_home" className="text-sm font-semibold tracking-tight text-white">
                     Jose Leon
                 </Link>
 
@@ -51,6 +52,7 @@ export function SiteHeader() {
                     ))}
                     <Link
                         href="/work"
+                        data-tracking="nav_cta_view_work"
                         className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                     >
                         View Work

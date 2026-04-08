@@ -27,6 +27,7 @@ export default function WorkPage() {
                     <Link
                         key={slug}
                         href={`/work/${slug}`}
+                        data-tracking={`portfolio_item_${slug}`}
                         className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                     >
                         <div className="space-y-2">

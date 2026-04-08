@@ -6,10 +6,10 @@ export function SiteFooter() {
             <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
                 <p>© {new Date().getFullYear()} Jose Leon</p>
                 <div className="flex flex-wrap gap-4">
-                    <Link className="hover:text-white" href="mailto:noelsajor@gmail.com">
+                    <Link className="hover:text-white" href="mailto:noelsajor@gmail.com" data-tracking="footer_email">
                         noelsajor@gmail.com
                     </Link>
-                    <Link className="hover:text-white" href="https://www.linkedin.com/in/noelsajor" target="_blank" rel="noreferrer">
+                    <Link className="hover:text-white" href="https://www.linkedin.com/in/noelsajor" target="_blank" rel="noreferrer" data-tracking="footer_linkedin">
                         LinkedIn
                     </Link>
                 </div>

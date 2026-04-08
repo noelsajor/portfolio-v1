@@ -1,66 +1,60 @@
-# Jose Leon — Portfolio
+# 🚀 Agency Master Operation Template
 
-Senior UI/UX Designer & Shopify Front-end Developer focused on conversion-driven e-commerce experiences.
+This repository is a robust, highly-documented, and fully automated "Master Template" designed for rapid deployment of high-performance marketing and portfolio websites.
 
-This repository contains my personal portfolio site showcasing selected Shopify and e-commerce case studies. The goal of this site is to clearly communicate how I approach UX, CRO, and front-end implementation for high-performing online stores.
+## 🏁 How to Start
+If you are cloning this repository for a new client or project, **DO NOT start by writing code**. 
 
-## Live
-- Portfolio: https://[your-vercel-url].vercel.app
-
-## What you’ll find here
-- Curated **case studies** with clear context, problems, and outcomes
-- UX and conversion-focused **design decisions**
-- Notes on **Shopify implementation** (Liquid, sections, metafields, performance, accessibility)
-- A clean, fast, recruiter-friendly experience
-
-## Tech stack
-- Framework: Next.js (App Router)
-- Language: TypeScript
-- Styling: Tailwind CSS
-- Deployment: Vercel
-- Tooling: ESLint, Prettier
-
-> Some projects use anonymized or reconstructed assets to respect client confidentiality.
-
-## Getting started
-
-### Requirements
-- Node.js 18+
-- npm, pnpm, or yarn
-
-### Install dependencies
-npm install
-
-### Run locally
-npm run dev
-
-Open http://localhost:3000 in your browser.
-
-### Build for production
-npm run build  
-npm run start
-
-### Lint (optional)
-npm run lint
-
-## Project structure (high level)
-- app/ — routes and pages (Home, Work, Case Studies, About, Contact)
-- components/ — reusable UI components
-- content/ — case study content
-- public/ — images, icons, static assets
-- styles/ — global styles (if applicable)
-
-## Deployment
-This project is deployed on **Vercel**.
-
-- Pushes to `main` trigger a production deployment
-- Pull requests generate preview deployments
-
-## Contact
-- Email: [your-email]
-- LinkedIn: https://linkedin.com/in/[your-handle]
-- GitHub: https://github.com/[your-username]
+1.  Navigate to the `docs/` folder.
+2.  Open **`first-kick-prompt-template.md`**.
+3.  Copy the content of that folder and feed it to your AI agent to begin the automated rebranding and setup process.
 
 ---
 
-© Jose Leon. All rights reserved.
+## 🏗️ Core Documentation
+Comprehensive guides are located in the `docs/` directory:
+
+- **[Master Architecture Guide](docs/master-architecture-guide.md)**: Technical blueprint of routes, components, and data schemas.
+- **[Bulletproof SOPs](docs/best-practices/)**: Strict playbooks for SEO, UI/UX, Security, and Analytics.
+- **[Client Handoff Manual](docs/client-handoff-manual.md)**: Non-technical instructions for end-clients to manage their product.
+
+---
+
+## 🛠️ Tech Stack
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS 4
+- **Language**: TypeScript
+- **Content**: MDX-driven components
+- **Deployment**: Vercel
+
+---
+
+## 🚀 Local Development
+
+### Prerequisites
+- Node.js 18+
+- npm
+
+### Setup
+```bash
+npm install
+npm run dev
+```
+
+### Quality Control
+```bash
+npm run lint    # Logical & style check
+npm run build   # Production validation
+```
+
+---
+
+## 🚢 Deployment & Infrastructure
+This template is optimized for **Vercel**. 
+- Production: Pushes to `main`.
+- Previews: Every Pull Request generates a unique URL.
+- Security: Pre-configured with strict CSP and Security Headers.
+
+---
+
+© 2026 Agency Master Operation. All rights reserved.
