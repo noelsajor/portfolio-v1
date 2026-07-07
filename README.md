@@ -33,18 +33,18 @@ Comprehensive guides are located in the `docs/` directory:
 
 ### Prerequisites
 - Node.js 18+
-- npm
+- pnpm
 
 ### Setup
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ### Quality Control
 ```bash
-npm run lint    # Logical & style check
-npm run build   # Production validation
+pnpm lint    # Logical & style check
+pnpm build   # Production validation
 ```
 
 ---
