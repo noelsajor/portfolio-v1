@@ -40,6 +40,8 @@ Reusable UI elements located in `src/components/`.
 ### Single Source of Truth: MDX (`src/content/case-studies/`)
 Every project exists exactly once, as a single `.mdx` file — there is no separate data file. Frontmatter is the only place project metadata is authored. Files prefixed with `_` (e.g. `_template.mdx`) are internal reference templates and are never exposed publicly.
 
+Note the distinction from `docs/case-studies/`: that directory holds approved narrative **source drafts** (editorial working documents a case study is written and reviewed from) — it is not consumed by the app and is not the MDX contract. Once a case study's narrative is approved there, its content is used to author the corresponding file in `src/content/case-studies/`, which remains the only source `getProjects()`/`getFeaturedProjects()`/`getProjectBySlug()` ever read from.
+
 ```typescript
 type Project = {
     slug: string          // derived from the filename, never authored in frontmatter

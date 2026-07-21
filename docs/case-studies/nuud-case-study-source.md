@@ -1,0 +1,65 @@
+# NUUD Pleasures — Case Study Source Document
+
+**Status**: Approved (Version 4, Final)
+**Purpose**: This is the canonical narrative source for the NUUD Pleasures case study. It is not the final MDX implementation — it is the approved content that future MDX for `src/content/case-studies/nuud-pleasures.mdx` will be generated from.
+
+---
+
+## 1. Overview
+
+NUUD Pleasures is a direct-to-consumer brand that engaged ASCENTMGMT for a complete brand experience redesign, spanning packaging, visual identity, and Shopify storefront. Over approximately six to seven months in 2025, I served as Front-End Shopify Developer and UI/UX Designer, responsible for translating the new brand direction into a responsive, production-ready storefront.
+
+## 2. Project Summary
+
+- **Role**: Front-End Shopify Developer, UI/UX Designer
+- **Duration**: ~6–7 months (2025)
+- **Platform**: Shopify (OS 2.0)
+- **Industry**: Consumer Goods / E-commerce
+- **Team**: Creative Director, Project Manager, SEO Director, Community Manager, Shopify Developer (me)
+- **Deliverables**: Homepage, product detail pages, collection pages, blog templates, promotional landing pages, reusable Liquid section system
+
+## 3. Business Context
+
+The project team included a Creative Director, Project Manager, SEO Director, and Community Manager alongside myself as Shopify Developer. Packaging and visual identity were part of the broader engagement; my scope was the storefront — building the new brand direction out across every major template the business needed to run on day to day.
+
+## 4. Challenge
+
+NUUD Pleasures wasn't simply redesigning a website. The engagement was a full brand relaunch — packaging, visual identity, and storefront — meaning the digital experience had to introduce an entirely new brand to customers, not just refresh an existing one.
+
+At the product level, that meant the new identity had to hold together across the full shopping journey — homepage, product pages, collections, and blog — as one coherent experience rather than a redesigned landing page sitting on top of an unchanged store.
+
+At the technical level, the storefront also had to support the business past launch day: ongoing marketing campaigns and future growth, which meant the marketing team needed to be able to assemble and update pages themselves. That requirement shaped the implementation toward reusable, structured Liquid sections rather than one-off page builds.
+
+## 5. Design to Development
+
+The project began with a complete redesign in Figma, covering the homepage, product detail pages, collection pages, blog, and supporting UI components. My role was to take that approved design and translate it into a production-ready Shopify storefront — preserving the visual language, UX decisions, and interaction patterns as designed, while adapting them to the constraints and capabilities of the Shopify platform. Throughout implementation, I worked closely with the Creative Director and the rest of the project team to confirm that build-stage decisions stayed true to the approved design intent, rather than translating the Figma files in isolation.
+
+## 6. Solution
+
+The objective was a storefront that balanced three things at once: design fidelity to the approved Figma work, enough flexibility for the marketing team to keep the site current independently, and a codebase that would remain maintainable as the brand grew. I built the theme on Shopify OS 2.0 in Liquid, HTML, CSS, and JavaScript, covering the homepage, product detail pages, collection pages, and blog templates, plus dedicated promotional landing pages for marketing campaigns.
+
+Rather than hard-coding each page, I structured the theme around custom, reusable sections configured with metafields and schema — this was the mechanism that let the marketing team assemble and update pages themselves without needing a developer for every change, directly supporting the requirement to keep the storefront usable well past initial launch.
+
+Responsive behavior was implemented across the full template set, and SEO — including schema configuration — was built into the front-end work directly rather than added as a separate pass afterward. I also produced supporting marketing assets and carried the work through QA and deployment support.
+
+## 7. Outcome
+
+The engagement delivered a fully implemented, responsive Shopify storefront across the homepage, product detail pages, collection pages, blog, and supporting promotional landing pages. More than a one-time redesign, it established the digital foundation for the new brand — a maintainable storefront architecture built to support future merchandising and marketing efforts without requiring ongoing developer involvement for routine content changes.
+
+## 8. My Contributions
+
+- Led front-end implementation of the redesigned storefront, from initial build through deployment support
+- Translated the new brand identity into UI/UX decisions across the storefront experience
+- Developed a reusable Shopify theme architecture using metafields and schema, built for marketing-team self-sufficiency
+- Implemented responsive experiences across all core commerce templates — homepage, PDP, collection, and blog
+- Directed SEO implementation and schema configuration as part of the front-end build, not as a separate pass
+- Produced supporting marketing assets and promotional landing pages for campaign use
+- Collaborated with the Creative Director, Project Manager, SEO Director, and Community Manager throughout implementation
+- Supported QA and deployment through project completion
+
+## 9. Technologies
+
+- **Platform**: Shopify
+- **Languages**: Liquid, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0, Metafields, Schema
+- **Tools**: Git, Figma, Adobe Photoshop, Adobe Illustrator
