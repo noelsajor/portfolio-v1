@@ -4,8 +4,8 @@ export const homeContent = {
         headline: ['From idea', 'to production.'],
         supportingText:
             "I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences—without coordinating separate designers and front-end developers.",
-        primaryCta: { label: 'View Selected Work', href: '/work' },
-        secondaryCta: { label: 'Discuss a Project', href: '/contact' },
+        primaryCta: { label: 'Work With Me', href: '/contact' },
+        secondaryCta: { label: 'View My Work', href: '/work' },
         availability: 'Available for remote, white-label and project-based collaborations.'
     },
     trustStrip: {
