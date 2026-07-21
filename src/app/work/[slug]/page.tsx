@@ -6,11 +6,15 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 import { mdxComponents } from '@/components/mdx/mdx-components'
-import { getCaseStudyBySlug, getCaseStudySlugs } from '@/lib/mdx'
+import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 
 export function generateStaticParams() {
-    return getCaseStudySlugs().map((slug) => ({ slug }))
+    return getProjectSlugs().map((slug) => ({ slug }))
 }
+
+// Only slugs returned by generateStaticParams are servable — an unknown or
+// template slug 404s instead of being rendered on demand.
+export const dynamicParams = false
 
 export default async function CaseStudyPage({
     params
@@ -19,7 +23,7 @@ export default async function CaseStudyPage({
 }) {
     const { slug } = await params
 
-    const data = getCaseStudyBySlug(slug)
+    const data = getProjectBySlug(slug)
     if (!data) return notFound()
 
     const { frontmatter, content } = data
@@ -31,10 +35,10 @@ export default async function CaseStudyPage({
             </Link>
 
             <header className="space-y-2">
-                <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.type ?? 'Case Study'}</p>
+                <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.type}</p>
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
-                {frontmatter.role ? <p className="text-white/70">{frontmatter.role}</p> : null}
-                {frontmatter.summary ? <p className="max-w-2xl text-white/70">{frontmatter.summary}</p> : null}
+                <p className="text-white/70">{frontmatter.roles.join(' · ')}</p>
+                <p className="max-w-2xl text-white/70">{frontmatter.summary}</p>
             </header>
 
             <article className="prose prose-invert max-w-none">

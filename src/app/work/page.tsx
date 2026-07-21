@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getCaseStudySlugs, getCaseStudyBySlug } from '@/lib/mdx'
+import { getProjects } from '@/lib/projects'
 
 export const metadata = {
     title: 'Work — Jose Leon',
@@ -7,11 +7,7 @@ export const metadata = {
 }
 
 export default function WorkPage() {
-    const slugs = getCaseStudySlugs()
-    const items = slugs
-        .map((slug) => getCaseStudyBySlug(slug))
-        .filter(Boolean)
-        .map((x) => x!)
+    const projects = getProjects()
 
     return (
         <div className="space-y-10">
@@ -22,22 +18,27 @@ export default function WorkPage() {
                 </p>
             </header>
 
-            <div className="grid gap-4 md:grid-cols-2">
-                {items.map(({ slug, frontmatter }) => (
-                    <Link
-                        key={slug}
-                        href={`/work/${slug}`}
-                        className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                    >
-                        <div className="space-y-2">
-                            <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.type ?? 'Case Study'}</p>
-                            <h2 className="text-xl font-semibold tracking-tight">{frontmatter.title}</h2>
-                            {frontmatter.summary ? <p className="text-sm text-white/70">{frontmatter.summary}</p> : null}
-                            <p className="text-sm font-semibold text-white/70">View case study →</p>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+            {projects.length > 0 ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                    {projects.map((project) => (
+                        <Link
+                            key={project.slug}
+                            href={`/work/${project.slug}`}
+                            data-tracking={`portfolio_item_${project.slug}`}
+                            className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                        >
+                            <div className="space-y-2">
+                                <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                <h2 className="text-xl font-semibold tracking-tight">{project.title}</h2>
+                                <p className="text-sm text-white/70">{project.summary}</p>
+                                <p className="text-sm font-semibold text-white/70">View case study →</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-sm text-white/60">No projects published yet.</p>
+            )}
         </div>
     )
 }
