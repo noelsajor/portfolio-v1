@@ -14,7 +14,7 @@ All routes are located in `src/app/`.
 
 | Route | File Path | Description |
 | :--- | :--- | :--- |
-| `/` | `src/app/page.tsx` | Homepage / Hero + Featured Work. |
+| `/` | `src/app/page.tsx` | Homepage — composes Hero, TrustStrip, Services, FeaturedWork, Process, AIWorkflow, WhyMe, AboutPreview and FinalCTA sections, in that order. |
 | `/work` | `src/app/work/page.tsx` | Full portfolio listing. |
 | `/work/[slug]` | `src/app/work/[slug]/page.tsx` | Dynamic case study pages (Markdown-driven). |
 | `/about` | `src/app/about/page.tsx` | Agency/Professional biography. |
@@ -29,6 +29,11 @@ Reusable UI elements located in `src/components/`.
 
 ### MDX Components
 - Located in `src/components/mdx/`: Custom React components used inside `.mdx` files for rich case study layouts.
+
+### Homepage Section Components
+- Located in `src/components/home/`: nine presentational components composing the homepage — `HeroSection`, `TrustStrip`, `ServicesSection`, `FeaturedWorkSection`, `ProcessSection`, `AIWorkflowSection`, `WhyMeSection`, `AboutPreviewSection`, `FinalCTASection` — rendered in that order by `src/app/page.tsx`.
+- Static copy for these components lives in `src/content/home.ts` (a single plain, typed object keyed by section — not a CMS or content loader). Each component imports only the section it renders. `FeaturedWorkSection` is the only one that also reads live data, via the project loader below.
+- Markup-specific strings that aren't reusable editorial copy — an `aria-label`, a decorative arrow glyph — intentionally stay inline in the component rather than being centralized into `home.ts`. They're implementation details of that component's markup, not content someone would edit as copy.
 
 ## 📄 Content & Data Schema
 
@@ -63,11 +68,14 @@ type CaseStudyFrontmatter = Project & {
 ```
 
 ### Data Access Layer (`src/lib/projects.ts`)
-The only supported way to read project data. Three functions, all reading the same MDX files:
+The only supported way to read project data. Four functions, all reading the same MDX files:
 
-- `getProjects({ includeDrafts? })` — all projects, sorted by `order`; used by the homepage and `/work`.
+- `getProjects({ includeDrafts? })` — the full published project collection, in editorial order (sorted by `order`). Used by `/work`.
+- `getFeaturedProjects({ includeDrafts? })` — the published, `featured: true` subset, in the same editorial order as `getProjects()`. Used by the homepage's Featured Work section.
 - `getProjectSlugs({ includeDrafts? })` — slugs for `generateStaticParams` on `/work/[slug]`.
 - `getProjectBySlug(slug, { includeDrafts? })` — a single project plus its MDX body; used by `/work/[slug]`.
+
+**Responsibility boundary**: `getProjects()` and `getFeaturedProjects()` decide *which* projects qualify and in what order — that's the data layer's job. *How many* are actually shown is a presentation decision made by the calling component: `FeaturedWorkSection` calls `getFeaturedProjects().slice(0, 3)` to cap the homepage at 3 cards. The loader itself has no concept of "3" — a future page that wants to show a different number of featured projects can call `getFeaturedProjects()` unmodified.
 
 Homepage, `/work`, `/work/[slug]`, route metadata, and any future feature (sitemap, RSS, Open Graph image generation) must all read through this loader — project data must never be re-derived or duplicated elsewhere.
 
@@ -77,3 +85,39 @@ Homepage, `/work`, `/work/[slug]`, route metadata, and any future feature (sitem
 - **Entry Point**: `src/app/globals.css`
 - **Theme Variables**: Use the `@theme` block in `globals.css` to define brand colors and typography.
 - **Strict Rule**: Avoid hardcoded hex values in components; always use Tailwind theme tokens.
+
+## Infrastructure Lessons Learned
+
+### Issue
+During the foundation phase, the existing Vercel project repeatedly deployed an outdated commit, despite:
+- Local builds succeeding.
+- TypeScript passing.
+- ESLint passing.
+- The production build passing.
+- GitHub containing the latest commits.
+
+Symptoms observed in the stale deployments:
+- Dependency scanning continued detecting an old version of `next-mdx-remote`.
+- Deleted project files continued appearing in deployment builds.
+
+### Investigation
+The following was verified, in order:
+- **Git verification** — confirmed the local working tree was clean and commits existed with the expected hashes.
+- **Branch verification** — confirmed `main` was the active branch, both locally and on the remote.
+- **Dependency verification** — confirmed `package.json`/`pnpm-lock.yaml` on `main` referenced the intended dependency versions.
+- **Local production build verification** — confirmed `tsc --noEmit`, `eslint`, and a clean `rm -rf .next && pnpm run build` all passed against the exact commit in question.
+- **Repository synchronization** — confirmed via `git fetch` and `git log origin/main` that the GitHub remote had received and stored the correct commits.
+- **Vercel deployment inspection** — inspected the Vercel project's deployment history and GitHub integration state for signs of what commit it was actually building from.
+
+### Root Cause
+The original Vercel project appeared to have a stale or corrupted Git integration. The repository itself was healthy — verified clean at every checkpoint above. The issue was isolated to the Vercel project configuration, not to the codebase or GitHub.
+
+### Resolution
+The issue was resolved by:
+- Creating a new Vercel project.
+- Reconnecting the existing GitHub repository.
+- Verifying automatic deployments.
+- Confirming the latest commits were successfully deployed.
+
+### Recommendation
+If a Vercel project repeatedly deploys stale commits despite GitHub containing the correct repository state and local production builds succeeding, prefer creating a fresh Vercel project instead of spending excessive time troubleshooting a potentially stale Git integration.

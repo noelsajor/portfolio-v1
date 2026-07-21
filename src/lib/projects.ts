@@ -82,6 +82,11 @@ export function getProjects({ includeDrafts = false }: { includeDrafts?: boolean
         .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
 }
 
+/** Featured projects, in the same publication + ordering contract as getProjects(). Callers decide how many to display. */
+export function getFeaturedProjects({ includeDrafts = false }: { includeDrafts?: boolean } = {}): CaseStudyFrontmatter[] {
+    return getProjects({ includeDrafts }).filter((project) => project.featured === true)
+}
+
 /** Same publication contract as getProjects()/getProjectSlugs(): drafts excluded unless includeDrafts is set. */
 export function getProjectBySlug(
     slug: string,
