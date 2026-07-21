@@ -32,21 +32,46 @@ Reusable UI elements located in `src/components/`.
 
 ## 📄 Content & Data Schema
 
-### 1. Static Project Data (`src/data/projects.ts`)
-Used for quick previews and listing pages.
+### Single Source of Truth: MDX (`src/content/case-studies/`)
+Every project exists exactly once, as a single `.mdx` file — there is no separate data file. Frontmatter is the only place project metadata is authored. Files prefixed with `_` (e.g. `_template.mdx`) are internal reference templates and are never exposed publicly.
+
 ```typescript
 type Project = {
-    slug: string;
-    name: string;
-    type: 'Homepage' | 'PDP' | 'Collection' | 'CRO';
-    role: string;
-    summary: string;
-    year?: string;
+    slug: string          // derived from the filename, never authored in frontmatter
+    title: string
+    client?: string
+    type: 'E-commerce' | 'Product Design' | 'Marketing Website' | 'Design System'
+    roles: string[]
+    summary: string
+    services: string[]
+    year?: string
+    featured?: boolean
+    order?: number                    // deterministic display order; missing sorts last
+    status?: 'draft' | 'published'    // omitted = published
+    coverImage: string
+    coverAlt: string
+    liveUrl?: string
+    repositoryUrl?: string
+}
+
+type CaseStudyFrontmatter = Project & {
+    challenge: string
+    outcome: string
+    duration?: string
+    team?: string
 }
 ```
 
-### 2. Case Studies (`src/content/case-studies/`)
-Rich-text content stored as `.mdx` files. Frontmatter must follow the `Project` type structure for consistency.
+### Data Access Layer (`src/lib/projects.ts`)
+The only supported way to read project data. Three functions, all reading the same MDX files:
+
+- `getProjects({ includeDrafts? })` — all projects, sorted by `order`; used by the homepage and `/work`.
+- `getProjectSlugs({ includeDrafts? })` — slugs for `generateStaticParams` on `/work/[slug]`.
+- `getProjectBySlug(slug, { includeDrafts? })` — a single project plus its MDX body; used by `/work/[slug]`.
+
+Homepage, `/work`, `/work/[slug]`, route metadata, and any future feature (sitemap, RSS, Open Graph image generation) must all read through this loader — project data must never be re-derived or duplicated elsewhere.
+
+**Draft projects are excluded from every one of these functions by default.** A project is published unless its frontmatter explicitly sets `status: draft` — an omitted `status` always means published. `/work/[slug]` also sets `dynamicParams = false`, so a draft (or unknown) slug 404s instead of being rendered on demand. The `includeDrafts: true` option exists only for internal/development tooling and is never used by any public page.
 
 ## 🎨 Global Styles (Tailwind 4)
 - **Entry Point**: `src/app/globals.css`

@@ -1,8 +1,10 @@
 import Link from 'next/link'
-import { projects } from '@/data/projects'
+import { getProjects } from '@/lib/projects'
 
 export default function HomePage() {
-  const featured = projects.slice(0, 3)
+  const featured = getProjects()
+    .filter((project) => project.featured)
+    .slice(0, 3)
 
   return (
     <div className="space-y-16">
@@ -44,28 +46,32 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {featured.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/work/${p.slug}`}
-              data-tracking={`project_card_${p.slug}`}
-              className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs font-semibold tracking-wide text-white/70">{p.type}</p>
-                  <p className="text-xs text-white/60">{p.role}</p>
+        {featured.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-3">
+            {featured.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/work/${p.slug}`}
+                data-tracking={`project_card_${p.slug}`}
+                className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-xs font-semibold tracking-wide text-white/70">{p.type}</p>
+                    <p className="text-xs text-white/60">{p.roles.join(' · ')}</p>
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">{p.title}</h3>
+                  <p className="text-sm leading-relaxed text-white/70">{p.summary}</p>
+                  <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
+                    View case study →
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">{p.name}</h3>
-                <p className="text-sm leading-relaxed text-white/70">{p.summary}</p>
-                <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
-                  View case study →
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-white/60">No featured projects yet — check back soon.</p>
+        )}
       </section>
     </div>
   )
