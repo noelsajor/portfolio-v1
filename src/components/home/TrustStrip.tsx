@@ -5,7 +5,10 @@ export function TrustStrip() {
 
     return (
         <section aria-label="Experience summary" className="border-y border-white/10 py-6">
-            <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-center text-sm text-white/70">
+            <ul
+                role="list"
+                className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-center text-sm text-white/70 md:gap-x-10"
+            >
                 {points.map((point) => (
                     <li key={point}>{point}</li>
                 ))}
