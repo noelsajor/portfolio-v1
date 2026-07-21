@@ -9,6 +9,13 @@ function isTemplateSlug(slug: string): boolean {
     return slug.startsWith('_')
 }
 
+export type GalleryItem = {
+    id: string
+    status?: 'pending' | 'ready'
+    src?: string
+    alt?: string
+}
+
 export type Project = {
     slug: string
     title: string
@@ -27,6 +34,13 @@ export type Project = {
     coverAlt: string
     liveUrl?: string
     repositoryUrl?: string
+    /** Optional industry/sector label shown alongside other project metadata. */
+    industry?: string
+    /** Optional SEO overrides for the case study route; falls back to title/summary when omitted. */
+    seoTitle?: string
+    seoDescription?: string
+    /** Optional supporting images beyond the cover image. Entries without a real `src` render as a pending placeholder. */
+    gallery?: GalleryItem[]
 }
 
 export type CaseStudyFrontmatter = Project & {

@@ -3,7 +3,7 @@ import { getProjects } from '@/lib/projects'
 
 export const metadata = {
     title: 'Work — Jose Leon',
-    description: 'Selected Shopify and e-commerce case studies.'
+    description: 'Selected product design, front-end implementation and Shopify projects.'
 }
 
 export default function WorkPage() {

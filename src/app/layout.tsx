@@ -4,8 +4,9 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Jose Leon — UI/UX + Shopify Front-end',
-  description: 'Senior UI/UX Designer & Shopify Front-end Developer focused on conversion-driven e-commerce experiences.'
+  title: 'Jose Leon — Product Design & Front-End Implementation',
+  description:
+    'I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences through product design, front-end development and Shopify implementation.'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,10 +1,13 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
+import { ImagePlaceholder } from '@/components/mdx/ImagePlaceholder'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 
@@ -15,6 +18,22 @@ export function generateStaticParams() {
 // Only slugs returned by generateStaticParams are servable — an unknown or
 // template slug 404s instead of being rendered on demand.
 export const dynamicParams = false
+
+export async function generateMetadata({
+    params
+}: {
+    params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+    const { slug } = await params
+    const data = getProjectBySlug(slug)
+    if (!data) return {}
+
+    const { frontmatter } = data
+    return {
+        title: frontmatter.seoTitle ?? frontmatter.title,
+        description: frontmatter.seoDescription ?? frontmatter.summary
+    }
+}
 
 export default async function CaseStudyPage({
     params
@@ -35,10 +54,25 @@ export default async function CaseStudyPage({
             </Link>
 
             <header className="space-y-2">
-                <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.type}</p>
+                <p className="text-xs font-semibold tracking-wide text-white/70">
+                    {frontmatter.type}
+                    {frontmatter.industry ? ` · ${frontmatter.industry}` : ''}
+                </p>
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
                 <p className="text-white/70">{frontmatter.roles.join(' · ')}</p>
                 <p className="max-w-2xl text-white/70">{frontmatter.summary}</p>
+                {frontmatter.liveUrl ? (
+                    <Link
+                        href={frontmatter.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 pt-2 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                    >
+                        Visit live site
+                        <span aria-hidden="true">↗</span>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                    </Link>
+                ) : null}
             </header>
 
             <article className="prose prose-invert max-w-none">
@@ -53,6 +87,29 @@ export default async function CaseStudyPage({
                     }}
                 />
             </article>
+
+            {frontmatter.gallery && frontmatter.gallery.length > 0 ? (
+                <section className="space-y-4">
+                    <h2 className="text-xl font-semibold tracking-tight md:text-2xl">Gallery</h2>
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {frontmatter.gallery.map((item) =>
+                            item.status === 'ready' && item.src ? (
+                                <div key={item.id} className="overflow-hidden rounded-2xl border border-white/10">
+                                    <Image
+                                        src={item.src}
+                                        alt={item.alt ?? item.id}
+                                        width={960}
+                                        height={540}
+                                        className="h-auto w-full"
+                                    />
+                                </div>
+                            ) : (
+                                <ImagePlaceholder key={item.id} id={item.id} />
+                            )
+                        )}
+                    </div>
+                </section>
+            ) : null}
         </div>
     )
 }
