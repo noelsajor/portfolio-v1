@@ -4,31 +4,65 @@ import { useState } from 'react'
 
 export function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+
+        // Guards against a duplicate submission firing before the disabled
+        // button has re-rendered (e.g. a fast double Enter/click).
+        if (status === 'submitting') return
+
         const formData = new FormData(e.currentTarget)
-        
-        // Honeypot check
+
+        // Honeypot check — real enforcement also happens server-side, since a
+        // bot can bypass client-side JavaScript entirely.
         if (formData.get('website')) {
             console.warn('Bot detected via honeypot')
-            setStatus('success') // Silently fail for bots
+            setStatus('success')
             return
         }
 
         setStatus('submitting')
-        
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setStatus('success')
+        setErrorMessage(null)
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    message: formData.get('message'),
+                    website: formData.get('website')
+                })
+            })
+
+            const data = await response.json().catch(() => null)
+
+            if (!response.ok) {
+                setErrorMessage(data?.error ?? 'Something went wrong. Please try again.')
+                setStatus('error')
+                return
+            }
+
+            setStatus('success')
+        } catch {
+            setErrorMessage('Something went wrong. Please check your connection and try again.')
+            setStatus('error')
+        }
     }
 
     if (status === 'success') {
         return (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
+            <div
+                role="status"
+                aria-live="polite"
+                className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center"
+            >
                 <h3 className="text-xl font-semibold">Message sent!</h3>
                 <p className="mt-2 text-white/70">Thank you for reaching out. I&apos;ll get back to you soon.</p>
-                <button 
+                <button
                     onClick={() => setStatus('idle')}
                     className="mt-6 text-sm font-semibold text-white/70 hover:text-white"
                 >
@@ -53,6 +87,7 @@ export function ContactForm() {
                         type="text"
                         id="name"
                         name="name"
+                        maxLength={200}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                         placeholder="Your name"
                     />
@@ -64,6 +99,7 @@ export function ContactForm() {
                         type="email"
                         id="email"
                         name="email"
+                        maxLength={320}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                         placeholder="email@example.com"
                     />
@@ -77,10 +113,17 @@ export function ContactForm() {
                     id="message"
                     name="message"
                     rows={5}
+                    maxLength={5000}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                     placeholder="How can I help?"
                 />
             </div>
+
+            {status === 'error' && errorMessage ? (
+                <p role="alert" className="rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm text-white">
+                    {errorMessage}
+                </p>
+            ) : null}
 
             <button
                 disabled={status === 'submitting'}
