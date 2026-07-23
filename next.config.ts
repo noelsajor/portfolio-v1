@@ -11,12 +11,19 @@ import type { NextConfig } from "next";
 // style-src has no 'unsafe-inline': this app has no inline `style=`
 // attributes anywhere, confirmed by a repo-wide search, and removing it
 // produced zero CSP violations across every route.
+// script-src/connect-src also allow Google's specific GA4 hosts (added in
+// Step 8): gtag.js is loaded from googletagmanager.com, and it reports
+// events via fetch/beacon to google-analytics.com and googletagmanager.com.
+// Confirmed via a real browser that GA is silently blocked (and nothing
+// downstream in the app breaks — it just never loads) without these; this
+// is the minimal allowance needed, not a broad google.com allowance.
 const csp =
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline'; " +
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; " +
     "style-src 'self'; " +
     "img-src 'self' blob: data:; " +
     "font-src 'self'; " +
+    "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; " +
     "object-src 'none'; " +
     "base-uri 'self'; " +
     "form-action 'self'; " +

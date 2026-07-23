@@ -10,6 +10,7 @@
     "validate:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
+    "@next/third-parties": "16.2.11",
     "gray-matter": "^4.0.3",
     "next": "16.2.11",
     "next-mdx-remote": "^6.0.0",

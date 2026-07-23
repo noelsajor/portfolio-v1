@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { StructuredData } from '@/components/StructuredData'
+import { GoogleAnalyticsPageViews } from '@/components/GoogleAnalyticsPageViews'
 import { siteConfig } from '@/lib/site-config'
+import { buildVerificationMetadata, gaMeasurementId } from '@/lib/analytics-config'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -19,6 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.siteUrl
   },
+  ...buildVerificationMetadata(),
   openGraph: {
     type: 'website',
     url: siteConfig.siteUrl,
@@ -76,6 +80,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        {process.env.NODE_ENV === 'production' && gaMeasurementId ? (
+          <>
+            <GoogleAnalytics gaId={gaMeasurementId} />
+            <GoogleAnalyticsPageViews />
+          </>
+        ) : null}
       </body>
     </html>
   )
