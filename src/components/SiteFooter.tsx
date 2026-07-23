@@ -9,7 +9,7 @@ export function SiteFooter() {
                     <Link className="hover:text-white" href="mailto:noelsajor@gmail.com" data-tracking="footer_email">
                         noelsajor@gmail.com
                     </Link>
-                    <Link className="hover:text-white" href="https://www.linkedin.com/in/noelsajor" target="_blank" rel="noreferrer" data-tracking="footer_linkedin">
+                    <Link className="hover:text-white" href="https://www.linkedin.com/in/noelsajor" target="_blank" rel="noopener noreferrer" data-tracking="footer_linkedin">
                         LinkedIn
                     </Link>
                 </div>
