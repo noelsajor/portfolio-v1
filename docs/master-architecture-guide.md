@@ -42,32 +42,26 @@ Every project exists exactly once, as a single `.mdx` file — there is no separ
 
 Note the distinction from `docs/case-studies/`: that directory holds approved narrative **source drafts** (editorial working documents a case study is written and reviewed from) — it is not consumed by the app and is not the MDX contract. Once a case study's narrative is approved there, its content is used to author the corresponding file in `src/content/case-studies/`, which remains the only source `getProjects()`/`getFeaturedProjects()`/`getProjectBySlug()` ever read from.
 
-```typescript
-type Project = {
-    slug: string          // derived from the filename, never authored in frontmatter
-    title: string
-    client?: string
-    type: 'E-commerce' | 'Product Design' | 'Marketing Website' | 'Design System'
-    roles: string[]
-    summary: string
-    services: string[]
-    year?: string
-    featured?: boolean
-    order?: number                    // deterministic display order; missing sorts last
-    status?: 'draft' | 'published'    // omitted = published
-    coverImage: string
-    coverAlt: string
-    liveUrl?: string
-    repositoryUrl?: string
-}
+### Schema & Runtime Validation
 
-type CaseStudyFrontmatter = Project & {
-    challenge: string
-    outcome: string
-    duration?: string
-    team?: string
-}
+Frontmatter is treated as external, untrusted input. The authoritative field list lives in **one place**: `src/lib/project-schema.ts` (a Zod schema, `projectFrontmatterSchema`) — not as a hand-written TypeScript interface, and not duplicated here. `ProjectFrontmatter` (and the `Project`/`CaseStudyFrontmatter` names re-exported from `src/lib/projects.ts` for backward compatibility) are inferred directly from that schema via `z.infer`, so the type and the validation can never drift apart.
+
+**Where validation happens**: every `.mdx` file is validated exactly once, in `readProjectFile()` inside `src/lib/projects.ts`, immediately after `gray-matter` parses the frontmatter and before that data is returned to any caller. This is the single trusted boundary — `getProjects()`, `getFeaturedProjects()`, `getProjectSlugs()`, and `getProjectBySlug()` all read through it, so nothing downstream (pages, sitemap, metadata) ever sees unvalidated frontmatter.
+
+**Unknown fields**: the schema uses `.strict()` — a typo'd or stray frontmatter key fails validation instead of being silently ignored. Both real case studies today use exactly the documented field set with no extension fields, so there's no current case for allowing arbitrary extra keys.
+
+**On invalid frontmatter**: `readProjectFile()` throws immediately, failing the dev server or build loudly (never a production runtime response) with the filename, slug, failing field path(s), and a human-readable reason, e.g.:
 ```
+Invalid case-study frontmatter in "iotek.mdx" (slug: "iotek"):
+  - title: title is required
+  - liveUrl: liveUrl must be a valid URL
+```
+
+**Adding a new project**: copy `_template.mdx`, rename it to the project's slug, fill in every field the template documents, and set `status: draft` until it's ready to publish. If a required field is missing or a field has the wrong shape, the dev server / build will fail immediately with the error format above — fix the file and re-run.
+
+**Validation scenarios**: `pnpm run validate:content` (`scripts/validate-content.ts`) exercises the schema directly (valid project, missing field, invalid URL, invalid enum, unknown field) and the loader against the real content directory (template/draft exclusion, and that a genuinely invalid file's error message names the filename and field). No new test framework was introduced — the project has none yet; this is a plain script run via `tsx`.
+
+Two fields are intentionally free-text strings, not structured dates: `year` (e.g. `"2025"`) and `duration` (e.g. `"~6-7 months (2025)"`). Case studies store these as human-readable values, not ISO dates, so the schema doesn't force a date shape onto them.
 
 ### Data Access Layer (`src/lib/projects.ts`)
 The only supported way to read project data. Four functions, all reading the same MDX files:

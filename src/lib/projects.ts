@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import { projectFrontmatterSchema, type ProjectFrontmatter, type GalleryItem } from './project-schema'
 
 const PROJECTS_DIR = path.join(process.cwd(), 'src', 'content', 'case-studies')
 
@@ -9,65 +10,47 @@ function isTemplateSlug(slug: string): boolean {
     return slug.startsWith('_')
 }
 
-export type GalleryItem = {
-    id: string
-    status?: 'pending' | 'ready'
-    src?: string
-    alt?: string
-}
-
-export type Project = {
-    slug: string
-    title: string
-    client?: string
-    type: 'E-commerce' | 'Product Design' | 'Marketing Website' | 'Design System'
-    roles: string[]
-    summary: string
-    services: string[]
-    year?: string
-    featured?: boolean
-    /** Deterministic display order across the homepage and /work. Lower sorts first; missing sorts last. */
-    order?: number
-    /** Defaults to 'published' when omitted. 'draft' projects are excluded from getProjects() unless includeDrafts is set. */
-    status?: 'draft' | 'published'
-    coverImage: string
-    coverAlt: string
-    liveUrl?: string
-    repositoryUrl?: string
-    /** Optional industry/sector label shown alongside other project metadata. */
-    industry?: string
-    /** Optional SEO overrides for the case study route; falls back to title/summary when omitted. */
-    seoTitle?: string
-    seoDescription?: string
-    /** Optional supporting images beyond the cover image. Entries without a real `src` render as a pending placeholder. */
-    gallery?: GalleryItem[]
-}
-
-export type CaseStudyFrontmatter = Project & {
-    challenge: string
-    outcome: string
-    duration?: string
-    team?: string
-}
+export type { GalleryItem, ProjectFrontmatter }
+// Kept as aliases for the exact on-disk shape: every real case study is
+// read as a full CaseStudyFrontmatter, so these two names have always
+// described the same object. `slug` is added here, not in the schema —
+// it's derived from the filename, never authored in frontmatter, so it
+// isn't part of what gets validated.
+export type Project = ProjectFrontmatter & { slug: string }
+export type CaseStudyFrontmatter = ProjectFrontmatter & { slug: string }
 
 export type CaseStudy = {
     frontmatter: CaseStudyFrontmatter
     content: string
 }
 
-function isPublished(project: Project): boolean {
+function isPublished(project: CaseStudyFrontmatter): boolean {
     return (project.status ?? 'published') === 'published'
 }
 
+/** Content is external, untrusted input: this is the only place frontmatter
+ *  is parsed, and every field is validated here before anything else in the
+ *  app can see it. A malformed file throws immediately with the filename,
+ *  slug, failing field(s), and a human-readable reason — the build/dev
+ *  server fails loudly rather than silently publishing or dropping bad data. */
 function readProjectFile(slug: string): CaseStudy | null {
-    const fullPath = path.join(PROJECTS_DIR, `${slug}.mdx`)
+    const filename = `${slug}.mdx`
+    const fullPath = path.join(PROJECTS_DIR, filename)
     if (!fs.existsSync(fullPath)) return null
 
     const file = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(file)
 
+    const result = projectFrontmatterSchema.safeParse(data)
+    if (!result.success) {
+        const reasons = result.error.issues
+            .map((issue) => `  - ${issue.path.join('.') || '(root)'}: ${issue.message}`)
+            .join('\n')
+        throw new Error(`Invalid case-study frontmatter in "${filename}" (slug: "${slug}"):\n${reasons}`)
+    }
+
     return {
-        frontmatter: { ...(data as Omit<CaseStudyFrontmatter, 'slug'>), slug },
+        frontmatter: { ...result.data, slug },
         content
     }
 }
