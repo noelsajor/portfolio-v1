@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { getProjects } from '@/lib/projects'
+import { buildPageMetadata } from '@/lib/site-config'
 
-export const metadata = {
-    title: 'Work — Jose Leon',
-    description: 'Selected product design, front-end implementation and Shopify projects.'
-}
+export const metadata = buildPageMetadata({
+    title: 'Work',
+    description: 'Selected product design, front-end implementation and Shopify projects.',
+    path: '/work'
+})
 
 export default function WorkPage() {
     const projects = getProjects()

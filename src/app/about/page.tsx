@@ -1,7 +1,10 @@
-export const metadata = {
-    title: 'About — Jose Leon',
-    description: 'Senior UI/UX Designer & Shopify Front-end Developer.'
-}
+import { buildPageMetadata } from '@/lib/site-config'
+
+export const metadata = buildPageMetadata({
+    title: 'About',
+    description: 'Senior UI/UX Designer & Shopify Front-end Developer.',
+    path: '/about'
+})
 
 export default function AboutPage() {
     return (

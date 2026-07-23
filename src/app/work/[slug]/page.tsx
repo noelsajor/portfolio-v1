@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { ImagePlaceholder } from '@/components/mdx/ImagePlaceholder'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
+import { absoluteUrl, siteConfig } from '@/lib/site-config'
 
 export function generateStaticParams() {
     return getProjectSlugs().map((slug) => ({ slug }))
@@ -29,9 +30,33 @@ export async function generateMetadata({
     if (!data) return {}
 
     const { frontmatter } = data
+    const description = frontmatter.seoDescription ?? frontmatter.summary
+    const url = absoluteUrl(`/work/${slug}`)
+
+    // Existing seoTitle values already end in " | Jose Leon" (authored before
+    // the root layout had a title template). Strip that suffix for the page
+    // `title` so the template doesn't append it twice; Open Graph/Twitter
+    // don't use the template, so they keep the full authored title as-is.
+    const fullTitle = frontmatter.seoTitle ?? frontmatter.title
+    const shortTitle = fullTitle.replace(/\s*\|\s*Jose Leon\s*$/, '')
+
     return {
-        title: frontmatter.seoTitle ?? frontmatter.title,
-        description: frontmatter.seoDescription ?? frontmatter.summary
+        title: shortTitle,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: 'article',
+            url,
+            siteName: siteConfig.name,
+            title: fullTitle,
+            description,
+            locale: siteConfig.locale
+        },
+        twitter: {
+            card: 'summary',
+            title: fullTitle,
+            description
+        }
     }
 }
 

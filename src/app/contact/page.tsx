@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { ContactForm } from '@/components/ContactForm'
+import { buildPageMetadata } from '@/lib/site-config'
 
-export const metadata = {
-    title: 'Contact — Jose Leon',
-    description: 'Get in touch with Jose Leon.'
-}
+export const metadata = buildPageMetadata({
+    title: 'Contact',
+    description: 'Get in touch with Jose Leon.',
+    path: '/contact'
+})
 
 export default function ContactPage() {
     return (
@@ -31,9 +33,9 @@ export default function ContactPage() {
                         </Link>
                         <Link
                             className="block text-white/80 hover:text-white"
-                            href="https://www.linkedin.com/in/YOUR-HANDLE"
+                            href="https://www.linkedin.com/in/noelsajor"
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             data-tracking="contact_linkedin_link"
                         >
                             LinkedIn
