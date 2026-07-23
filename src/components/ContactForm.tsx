@@ -1,10 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const successRef = useRef<HTMLDivElement>(null)
+
+    // The success view replaces the form entirely, which would otherwise
+    // remove the focused submit button from the DOM and drop keyboard/screen
+    // reader focus back to the document body with no context.
+    useEffect(() => {
+        if (status === 'success') successRef.current?.focus()
+    }, [status])
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -56,9 +64,11 @@ export function ContactForm() {
     if (status === 'success') {
         return (
             <div
+                ref={successRef}
+                tabIndex={-1}
                 role="status"
                 aria-live="polite"
-                className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center"
+                className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center focus:outline-none"
             >
                 <h3 className="text-xl font-semibold">Message sent!</h3>
                 <p className="mt-2 text-white/70">Thank you for reaching out. I&apos;ll get back to you soon.</p>
@@ -87,6 +97,7 @@ export function ContactForm() {
                         type="text"
                         id="name"
                         name="name"
+                        autoComplete="name"
                         maxLength={200}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                         placeholder="Your name"
@@ -99,6 +110,7 @@ export function ContactForm() {
                         type="email"
                         id="email"
                         name="email"
+                        autoComplete="email"
                         maxLength={320}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                         placeholder="email@example.com"

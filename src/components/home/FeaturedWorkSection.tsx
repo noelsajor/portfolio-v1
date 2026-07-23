@@ -20,30 +20,31 @@ export function FeaturedWorkSection() {
             </div>
 
             {featured.length > 0 ? (
-                <div className="grid gap-4 md:grid-cols-3">
+                <ul role="list" className="grid gap-4 md:grid-cols-3">
                     {featured.map((project) => (
-                        <Link
-                            key={project.slug}
-                            href={`/work/${project.slug}`}
-                            data-tracking={`project_card_${project.slug}`}
-                            className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                        >
-                            <div className="space-y-3">
-                                <div className="flex items-center justify-between gap-3">
-                                    <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
-                                    <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>
+                        <li key={project.slug}>
+                            <Link
+                                href={`/work/${project.slug}`}
+                                data-tracking={`project_card_${project.slug}`}
+                                className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                            >
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                        <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>
+                                    </div>
+                                    <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
+                                    <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
+                                        {featuredWork.projectCtaLabel} <span aria-hidden="true">→</span>
+                                    </p>
                                 </div>
-                                <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
-                                    {project.title}
-                                </h3>
-                                <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
-                                <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
-                                    {featuredWork.projectCtaLabel} →
-                                </p>
-                            </div>
-                        </Link>
+                            </Link>
+                        </li>
                     ))}
-                </div>
+                </ul>
             ) : (
                 <p className="text-sm text-white/60">{featuredWork.emptyStateMessage}</p>
             )}

@@ -74,8 +74,11 @@ export default async function CaseStudyPage({
 
     return (
         <div className="space-y-10">
-            <Link href="/work" className="text-sm font-semibold text-white/70 hover:text-white">
-                ← Back to work
+            <Link
+                href="/work"
+                className="rounded-sm text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+            >
+                <span aria-hidden="true">←</span> Back to work
             </Link>
 
             <header className="space-y-2">

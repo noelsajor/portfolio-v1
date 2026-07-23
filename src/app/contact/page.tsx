@@ -22,17 +22,17 @@ export default function ContactPage() {
                 <ContactForm />
                 
                 <div className="space-y-6">
-                    <h3 className="text-lg font-semibold">Other channels</h3>
-                    <div className="space-y-3">
-                        <Link 
-                            className="block text-white/80 hover:text-white" 
+                    <h2 className="text-lg font-semibold">Other channels</h2>
+                    <address className="not-italic space-y-3">
+                        <Link
+                            className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
                             href="mailto:noelsajor@gmail.com"
                             data-tracking="contact_email_link"
                         >
                             noelsajor@gmail.com
                         </Link>
                         <Link
-                            className="block text-white/80 hover:text-white"
+                            className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
                             href="https://www.linkedin.com/in/noelsajor"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -40,7 +40,7 @@ export default function ContactPage() {
                         >
                             LinkedIn
                         </Link>
-                    </div>
+                    </address>
                 </div>
             </div>
         </div>

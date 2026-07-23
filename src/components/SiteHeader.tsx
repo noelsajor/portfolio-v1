@@ -18,9 +18,10 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
         <Link
             href={href}
             onClick={onClick}
+            aria-current={active ? 'page' : undefined}
             data-tracking={`nav_${label.toLowerCase()}`}
             className={[
-                'text-sm font-medium transition-colors',
+                'rounded-sm text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30',
                 active ? 'text-white' : 'text-white/70 hover:text-white'
             ].join(' ')}
         >
@@ -46,7 +47,7 @@ export function SiteHeader() {
                 </Link>
 
                 {/* Desktop nav */}
-                <nav className="hidden items-center gap-6 md:flex">
+                <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
                     {nav.map((item) => (
                         <NavLink key={item.href} href={item.href} label={item.label} />
                     ))}
@@ -71,25 +72,29 @@ export function SiteHeader() {
                 </button>
             </div>
 
-            {/* Mobile menu */}
-            {open ? (
-                <div id="mobile-menu" className="border-t border-white/10 bg-black/80 md:hidden">
-                    <div className="mx-auto max-w-5xl px-4 py-4">
-                        <div className="flex flex-col gap-4">
-                            {nav.map((item) => (
-                                <NavLink key={item.href} href={item.href} label={item.label} onClick={() => setOpen(false)} />
-                            ))}
-                            <Link
-                                href="/work"
-                                onClick={() => setOpen(false)}
-                                className="w-fit rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                            >
-                                View Work
-                            </Link>
-                        </div>
+            {/* Mobile menu — always in the DOM (never conditionally unmounted) so
+                the toggle button's aria-controls reference always resolves to a
+                real element; visibility is CSS-only via the hidden/block swap. */}
+            <nav
+                id="mobile-menu"
+                aria-label="Primary"
+                className={[open ? 'block' : 'hidden', 'border-t border-white/10 bg-black/80 md:hidden'].join(' ')}
+            >
+                <div className="mx-auto max-w-5xl px-4 py-4">
+                    <div className="flex flex-col gap-4">
+                        {nav.map((item) => (
+                            <NavLink key={item.href} href={item.href} label={item.label} onClick={() => setOpen(false)} />
+                        ))}
+                        <Link
+                            href="/work"
+                            onClick={() => setOpen(false)}
+                            className="w-fit rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                        >
+                            View Work
+                        </Link>
                     </div>
                 </div>
-            ) : null}
+            </nav>
         </header>
     )
 }

@@ -60,9 +60,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-dvh">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
+        >
+          Skip to main content
+        </a>
         <StructuredData />
         <SiteHeader />
-        <main className="mx-auto max-w-5xl px-4 py-12">{children}</main>
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="mx-auto max-w-5xl px-4 py-12 focus:outline-none"
+        >
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

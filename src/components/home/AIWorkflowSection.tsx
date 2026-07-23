@@ -15,7 +15,7 @@ export function AIWorkflowSection() {
                 </div>
             </div>
 
-            <ul className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/70">
+            <ul role="list" className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/70">
                 {aiWorkflow.supportingItems.map((item) => (
                     <li key={item}>{item}</li>
                 ))}

@@ -21,23 +21,26 @@ export default function WorkPage() {
             </header>
 
             {projects.length > 0 ? (
-                <div className="grid gap-4 md:grid-cols-2">
+                <ul role="list" className="grid gap-4 md:grid-cols-2">
                     {projects.map((project) => (
-                        <Link
-                            key={project.slug}
-                            href={`/work/${project.slug}`}
-                            data-tracking={`portfolio_item_${project.slug}`}
-                            className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                        >
-                            <div className="space-y-2">
-                                <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
-                                <h2 className="text-xl font-semibold tracking-tight">{project.title}</h2>
-                                <p className="text-sm text-white/70">{project.summary}</p>
-                                <p className="text-sm font-semibold text-white/70">View case study →</p>
-                            </div>
-                        </Link>
+                        <li key={project.slug}>
+                            <Link
+                                href={`/work/${project.slug}`}
+                                data-tracking={`portfolio_item_${project.slug}`}
+                                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                            >
+                                <div className="space-y-2">
+                                    <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                    <h2 className="text-xl font-semibold tracking-tight">{project.title}</h2>
+                                    <p className="text-sm text-white/70">{project.summary}</p>
+                                    <p className="text-sm font-semibold text-white/70">
+                                        View case study <span aria-hidden="true">→</span>
+                                    </p>
+                                </div>
+                            </Link>
+                        </li>
                     ))}
-                </div>
+                </ul>
             ) : (
                 <p className="text-sm text-white/60">No projects published yet.</p>
             )}
