@@ -8,29 +8,34 @@
 title: Example Project Name
 client: Client name (optional)
 type: E-commerce # one of: E-commerce | Product Design | Marketing Website | Design System
+industry: Industry / sector label (optional)
 roles:
   - UI/UX Design
   - Front-End Implementation
-summary: One or two sentences describing the project at a glance.
 services:
   - Service name shown alongside the project
+summary: One or two sentences describing the project at a glance.
+challenge: One or two sentences on the problem this project solved.
+outcome: One or two sentences on the result, described qualitatively unless real metrics exist.
 year: "2026"
+duration: e.g. "6 weeks" (optional)
+team: e.g. "Solo" or "2 designers, 1 developer" (optional)
 featured: false
 order: 100
 status: draft # optional — omit or set to "published" to make it live; "draft" hides it from getProjects()
-coverImage: '/images/case-studies/example-cover.jpg'
-coverAlt: Descriptive alt text for the cover image
-challenge: One or two sentences on the problem this project solved.
-outcome: One or two sentences on the result, described qualitatively unless real metrics exist.
-duration: e.g. "6 weeks" (optional)
-team: e.g. "Solo" or "2 designers, 1 developer" (optional)
-liveUrl: https://example.com (optional)
-repositoryUrl: https://github.com/example/example (optional)
 # updatedAt (optional, YYYY-MM-DD): the date this case study's content was
 # last meaningfully revised. Powers the sitemap's lastModified for this
 # project. Omit until the first real edit — don't set it to today's date
 # just to fill it in, and don't touch it for typo fixes.
 # updatedAt: "2026-01-15"
+# coverImage/coverAlt (both optional, but must be set together — omit both
+# until a real image exists rather than filling in placeholder text):
+# coverImage: '/images/case-studies/example-cover.jpg'
+# coverAlt: Descriptive alt text for the cover image
+seoTitle: SEO-specific title override (optional, falls back to title)
+seoDescription: SEO-specific description override (optional, falls back to summary)
+liveUrl: https://example.com (optional)
+repositoryUrl: https://github.com/example/example (optional)
 ---
 
 <!-- No top-level "# " heading here — the page already renders an <h1> from

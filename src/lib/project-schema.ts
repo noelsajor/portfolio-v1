@@ -39,8 +39,6 @@ export const projectFrontmatterSchema = z
         roles: z.array(z.string().min(1)).min(1, 'at least one role is required'),
         summary: z.string().min(1, 'summary is required'),
         services: z.array(z.string().min(1)).min(1, 'at least one service is required'),
-        coverImage: z.string().min(1, 'coverImage is required'),
-        coverAlt: z.string().min(1, 'coverAlt is required'),
         challenge: z.string().min(1, 'challenge is required'),
         outcome: z.string().min(1, 'outcome is required'),
 
@@ -57,6 +55,15 @@ export const projectFrontmatterSchema = z
         industry: z.string().min(1).optional(),
         seoTitle: z.string().min(1).optional(),
         seoDescription: z.string().min(1).optional(),
+        // Optional and paired (see the refine below), unlike the original
+        // design: neither field has a real UI consumer yet, and requiring
+        // both forced content authors to fill them with fake placeholder
+        // text ("TODO: placeholder...") just to satisfy the schema before a
+        // real cover image existed. gallery items already solved this exact
+        // problem correctly (optional src/alt) — this brings coverImage in
+        // line with that same honest-when-not-ready pattern.
+        coverImage: z.string().min(1).optional(),
+        coverAlt: z.string().min(1).optional(),
         gallery: z.array(galleryItemSchema).optional(),
         // Intentionally a free-text string ("~6-7 months (2025)"), not a
         // structured duration — the project stores human-readable ranges.
@@ -71,6 +78,10 @@ export const projectFrontmatterSchema = z
         updatedAt: isoDateSchema.optional()
     })
     .strict()
+    .refine((project) => Boolean(project.coverImage) === Boolean(project.coverAlt), {
+        message: 'coverImage and coverAlt must both be set, or both omitted — never a real image with no alt text, or alt text with no image',
+        path: ['coverAlt']
+    })
 
 export type ProjectFrontmatter = z.infer<typeof projectFrontmatterSchema>
 export type GalleryItem = z.infer<typeof galleryItemSchema>

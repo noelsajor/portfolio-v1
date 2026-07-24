@@ -10,6 +10,21 @@ function isTemplateSlug(slug: string): boolean {
     return slug.startsWith('_')
 }
 
+// Lowercase, digits, single hyphens between segments — the same shape as the
+// two real slugs today ("iotek", "nuud"). Nothing currently enforced this:
+// any filename produced a "valid" slug and therefore a servable URL, so a
+// typo'd or inconsistently-cased filename (e.g. "My Project!.mdx") would
+// have silently shipped an ugly, non-canonical /work/... URL.
+const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/
+
+function assertValidSlug(slug: string, filename: string): void {
+    if (!SLUG_PATTERN.test(slug)) {
+        throw new Error(
+            `Invalid case-study filename "${filename}": derived slug "${slug}" must be lowercase letters, digits, and single hyphens only (e.g. "nuud-pleasures.mdx").`
+        )
+    }
+}
+
 export type { GalleryItem, ProjectFrontmatter }
 // Kept as aliases for the exact on-disk shape: every real case study is
 // read as a full CaseStudyFrontmatter, so these two names have always
@@ -60,7 +75,11 @@ function readAllProjects(): CaseStudy[] {
     return fs
         .readdirSync(PROJECTS_DIR)
         .filter((f) => f.endsWith('.mdx') && !isTemplateSlug(f))
-        .map((f) => f.replace(/\.mdx$/, ''))
+        .map((f) => {
+            const slug = f.replace(/\.mdx$/, '')
+            assertValidSlug(slug, f)
+            return slug
+        })
         .map((slug) => readProjectFile(slug))
         .filter((file): file is CaseStudy => Boolean(file))
 }
