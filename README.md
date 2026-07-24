@@ -32,8 +32,8 @@ Comprehensive guides are located in the `docs/` directory:
 ## 🚀 Local Development
 
 ### Prerequisites
-- Node.js 18+
-- pnpm
+- Node.js 20.9+ (required by Next.js 16 — see `engines` in `package.json`)
+- pnpm (see `packageManager` in `package.json` for the exact version)
 
 ### Setup
 ```bash
@@ -43,8 +43,10 @@ pnpm dev
 
 ### Quality Control
 ```bash
-pnpm lint    # Logical & style check
-pnpm build   # Production validation
+pnpm lint             # Logical & style check
+pnpm exec tsc --noEmit  # Type check
+pnpm build             # Production validation
+pnpm run validate:content  # MDX frontmatter validation scenarios
 ```
 
 ---

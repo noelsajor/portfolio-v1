@@ -43,3 +43,25 @@ manual, account-side action still required before it's live.
 - [ ] Submit sitemap to Bing Webmaster Tools
 - [ ] Configure privacy-friendly analytics (optional, e.g. Plausible/Fathom)
       — not implemented; GA4 was the requested integration for this step
+
+## Known Residual Items (Step 10 Release Audit)
+
+- [ ] Create `.env.example` — blocked by permission settings every time it's
+      been attempted (Steps 2, 4, 8, 10). Content is in each step's report;
+      create manually or grant permission to retry.
+- [ ] Decide on `sharp`/`postcss`/`brace-expansion` transitive vulnerabilities
+      (`pnpm audit`) — explicitly deferred at Step 1, still present. All are
+      nested inside `next`'s or `eslint`'s own dependency tree, not fixable
+      via a direct version bump. `brace-expansion` is dev-only (ESLint
+      tooling, never shipped). `sharp`/`postcss` are Next's own build-time
+      dependencies; `sharp`'s runtime image-processing path isn't currently
+      exercised in production since no real gallery image is live yet
+      (`status: pending` on every gallery item).
+- [ ] Decide whether to load the real "Inter" typeface via `next/font`.
+      `globals.css` currently declares it but nothing actually loads it — the
+      site renders in system-fallback fonts today. Documented as a
+      design/product decision in `docs/performance-baseline.md`, not fixed,
+      since adding real font loading would add a network request.
+- [ ] Add real cover images for iOTEK and NUUD (both `coverImage`/`coverAlt`
+      are still TODO placeholders in their MDX frontmatter) and real gallery
+      images (all `status: pending`).

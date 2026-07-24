@@ -19,13 +19,21 @@ All routes are located in `src/app/`.
 | `/work/[slug]` | `src/app/work/[slug]/page.tsx` | Dynamic case study pages (Markdown-driven). |
 | `/about` | `src/app/about/page.tsx` | Agency/Professional biography. |
 | `/contact` | `src/app/contact/page.tsx` | Lead generation form. |
+| `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — sends contact-form submissions via Resend. Not a page. |
+| `/robots.txt` | `src/app/robots.ts` | Generated `MetadataRoute.Robots` — disallows `/api/`, points to the sitemap. |
+| `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study. |
 
 ## 📦 Component Inventory
 Reusable UI elements located in `src/components/`.
 
 ### Layout Components
-- `SiteHeader.tsx`: Global navigation, brand logo, and mobile menu.
+- `SiteHeader.tsx`: Global navigation, brand logo, and mobile menu. Client Component (nav state).
 - `SiteFooter.tsx`: Global footer, secondary links, and social icons.
+- `StructuredData.tsx`: Person + WebSite JSON-LD, rendered once in the root layout.
+- `GoogleAnalyticsPageViews.tsx`: Client Component — fires a `page_view` event on every App Router client-side navigation after the first (the bare `<GoogleAnalytics>` component from `@next/third-parties` only tracks the initial load on its own).
+
+### Form Components
+- `ContactForm.tsx`: Client Component — the `/contact` form. Posts to `/api/contact`, honest loading/success/error states, server-validated, honeypot spam protection.
 
 ### MDX Components
 - Located in `src/components/mdx/`: Custom React components used inside `.mdx` files for rich case study layouts.
@@ -76,6 +84,11 @@ The only supported way to read project data. Four functions, all reading the sam
 Homepage, `/work`, `/work/[slug]`, route metadata, and any future feature (sitemap, RSS, Open Graph image generation) must all read through this loader — project data must never be re-derived or duplicated elsewhere.
 
 **Draft projects are excluded from every one of these functions by default.** A project is published unless its frontmatter explicitly sets `status: draft` — an omitted `status` always means published. `/work/[slug]` also sets `dynamicParams = false`, so a draft (or unknown) slug 404s instead of being rendered on demand. The `includeDrafts: true` option exists only for internal/development tooling and is never used by any public page.
+
+## 🔍 Site Configuration, SEO & Analytics (`src/lib/`)
+
+- **`site-config.ts`**: single source of truth for the production domain (`siteConfig.siteUrl`), site identity, and social profiles (`sameAs`). `absoluteUrl(path)` and `buildPageMetadata({ title, description, path })` are the two exports every route's `metadata` should go through — they generate canonical URLs, Open Graph, and Twitter card fields consistently instead of each page hand-rolling them. Root layout metadata, `robots.ts`, `sitemap.ts`, and `StructuredData.tsx` all read from this file.
+- **`analytics-config.ts`**: reads `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `GOOGLE_SITE_VERIFICATION`, and `BING_SITE_VERIFICATION` from environment variables — never hardcoded, never invented. `buildVerificationMetadata()` returns the `verification` field for the root layout's metadata, omitting it entirely when no tokens are configured.
 
 ## 🎨 Global Styles (Tailwind 4)
 - **Entry Point**: `src/app/globals.css`
