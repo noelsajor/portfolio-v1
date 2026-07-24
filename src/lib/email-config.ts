@@ -2,6 +2,8 @@
 // route handler has one place to ask "is sending even possible right now?"
 // instead of scattering ad-hoc checks through the request-handling logic.
 
+import { siteConfig } from './site-config'
+
 // Resend's shared testing sender. It can only deliver to the email address on
 // the Resend account itself, not to arbitrary recipients — a real
 // development convenience, but never acceptable as a silent production
@@ -48,7 +50,7 @@ export function resolveEmailConfig(): EmailConfigResult {
         return { ok: false, reason: 'RESEND_API_KEY does not look like a valid Resend API key (expected a "re_" prefixed value).' }
     }
 
-    const to = process.env.CONTACT_TO_EMAIL ?? 'noelsajor@gmail.com'
+    const to = process.env.CONTACT_TO_EMAIL ?? siteConfig.email
     if (!isValidEmailAddress(to)) {
         return { ok: false, reason: `CONTACT_TO_EMAIL ("${to}") is not a valid email address.` }
     }

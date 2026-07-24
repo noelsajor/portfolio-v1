@@ -10,6 +10,7 @@ export const siteConfig = {
     description:
         'I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences through product design, front-end development and Shopify implementation.',
     siteUrl: 'https://noelsajor.com',
+    email: 'noelsajor@gmail.com',
     locale: 'en_US',
     keywords: [
         'Jose Leon',

@@ -26,12 +26,9 @@ function assertValidSlug(slug: string, filename: string): void {
 }
 
 export type { GalleryItem, ProjectFrontmatter }
-// Kept as aliases for the exact on-disk shape: every real case study is
-// read as a full CaseStudyFrontmatter, so these two names have always
-// described the same object. `slug` is added here, not in the schema —
-// it's derived from the filename, never authored in frontmatter, so it
-// isn't part of what gets validated.
-export type Project = ProjectFrontmatter & { slug: string }
+// `slug` is added here, not in the schema — it's derived from the
+// filename, never authored in frontmatter, so it isn't part of what
+// gets validated.
 export type CaseStudyFrontmatter = ProjectFrontmatter & { slug: string }
 
 export type CaseStudy = {
