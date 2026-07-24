@@ -52,10 +52,11 @@ export async function generateMetadata({
             description,
             locale: siteConfig.locale
         },
+        // No title/description here — see the matching comment in
+        // buildPageMetadata() (site-config.ts): Next's Metadata API fills
+        // these from openGraph automatically when omitted.
         twitter: {
-            card: 'summary',
-            title: fullTitle,
-            description
+            card: 'summary'
         }
     }
 }

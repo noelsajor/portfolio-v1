@@ -1,3 +1,5 @@
+import { siteConfig } from '@/lib/site-config'
+
 export const homeContent = {
     hero: {
         eyebrow: 'PRODUCT DESIGN + FRONT-END IMPLEMENTATION',
@@ -120,6 +122,6 @@ export const homeContent = {
         heading: 'Need an extra pair of hands that can own both design and implementation?',
         body: 'Tell me what you are building, where the project is blocked and what your team needs help delivering.',
         primaryCta: { label: 'Discuss Your Project', href: '/contact' },
-        secondaryLink: { label: 'Email me directly', href: 'mailto:noelsajor@gmail.com' }
+        secondaryLink: { label: 'Email me directly', href: `mailto:${siteConfig.email}` }
     }
 } as const

@@ -78,6 +78,36 @@ check('valid project passes', projectFrontmatterSchema.safeParse(validSample).su
     check('unknown field is rejected (strict mode)', !result.success)
 }
 
+{
+    const result = projectFrontmatterSchema.safeParse({ ...validSample, updatedAt: '2026-13-45' })
+    check(
+        'invalid updatedAt (not a real date) fails',
+        !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'updatedAt')
+    )
+}
+
+check(
+    'valid updatedAt (YYYY-MM-DD) passes',
+    projectFrontmatterSchema.safeParse({ ...validSample, updatedAt: '2026-07-21' }).success
+)
+
+{
+    const withoutCoverAlt: Record<string, unknown> = { ...validSample }
+    delete withoutCoverAlt.coverAlt
+    const result = projectFrontmatterSchema.safeParse(withoutCoverAlt)
+    check(
+        'coverImage without coverAlt fails (must be paired)',
+        !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'coverAlt')
+    )
+}
+
+{
+    const withoutEitherCover: Record<string, unknown> = { ...validSample }
+    delete withoutEitherCover.coverImage
+    delete withoutEitherCover.coverAlt
+    check('omitting both coverImage and coverAlt passes', projectFrontmatterSchema.safeParse(withoutEitherCover).success)
+}
+
 // --- Loader-level scenarios (exercise the real content directory) ---------
 // Temporary fixtures are written into the real content directory and always
 // removed afterward (see cleanupTempFiles above) — nothing broken is left
@@ -155,6 +185,45 @@ Temporary validation fixture.
     check(
         'invalid frontmatter throws, message includes filename, slug, and field',
         message.includes(`${badSlug}.mdx`) && message.includes(badSlug) && message.toLowerCase().includes('title')
+    )
+    fs.unlinkSync(badPath)
+    tempFiles.pop()
+}
+
+{
+    // Uppercase + a space: a filename that would otherwise happily become a
+    // "valid" (but ugly, non-canonical) slug and URL without this check.
+    const badFilename = 'Zz Validation Scenario Bad Slug.mdx'
+    const badPath = path.join(CONTENT_DIR, badFilename)
+    tempFiles.push(badPath)
+    fs.writeFileSync(
+        badPath,
+        `---
+title: Bad Slug Validation Scenario
+type: Product Design
+roles:
+  - UI/UX Design
+summary: Temporary fixture used only by scripts/validate-content.ts.
+services:
+  - UI/UX Design
+challenge: "n/a"
+outcome: "n/a"
+---
+
+Temporary validation fixture.
+`,
+        'utf8'
+    )
+
+    let message = ''
+    try {
+        getProjectSlugs({ includeDrafts: true })
+    } catch (err) {
+        message = err instanceof Error ? err.message : String(err)
+    }
+    check(
+        'filename that produces a non-kebab-case slug throws',
+        message.includes(badFilename) && message.toLowerCase().includes('slug')
     )
     fs.unlinkSync(badPath)
     tempFiles.pop()

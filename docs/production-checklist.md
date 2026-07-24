@@ -46,9 +46,8 @@ manual, account-side action still required before it's live.
 
 ## Known Residual Items (Step 10 Release Audit)
 
-- [ ] Create `.env.example` — blocked by permission settings every time it's
-      been attempted (Steps 2, 4, 8, 10). Content is in each step's report;
-      create manually or grant permission to retry.
+- [x] Create `.env.example` — created and verified against every real
+      `process.env` usage in the codebase (Phase 1, Objective 2).
 - [ ] Decide on `sharp`/`postcss`/`brace-expansion` transitive vulnerabilities
       (`pnpm audit`) — explicitly deferred at Step 1, still present. All are
       nested inside `next`'s or `eslint`'s own dependency tree, not fixable
@@ -62,6 +61,7 @@ manual, account-side action still required before it's live.
       site renders in system-fallback fonts today. Documented as a
       design/product decision in `docs/performance-baseline.md`, not fixed,
       since adding real font loading would add a network request.
-- [ ] Add real cover images for iOTEK and NUUD (both `coverImage`/`coverAlt`
-      are still TODO placeholders in their MDX frontmatter) and real gallery
-      images (all `status: pending`).
+- [ ] Add real cover images for iOTEK and NUUD (`coverImage`/`coverAlt` are
+      intentionally omitted in their MDX frontmatter until a real image
+      exists — see `_template.mdx`) and real gallery images (all
+      `status: pending`).

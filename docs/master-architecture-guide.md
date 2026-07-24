@@ -19,9 +19,9 @@ All routes are located in `src/app/`.
 | `/work/[slug]` | `src/app/work/[slug]/page.tsx` | Dynamic case study pages (Markdown-driven). |
 | `/about` | `src/app/about/page.tsx` | Agency/Professional biography. |
 | `/contact` | `src/app/contact/page.tsx` | Lead generation form. |
-| `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — sends contact-form submissions via Resend. Not a page. |
+| `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — rate-limited (`src/lib/rate-limiter.ts`, Upstash Redis), then sends contact-form submissions via Resend. Not a page. |
 | `/robots.txt` | `src/app/robots.ts` | Generated `MetadataRoute.Robots` — disallows `/api/`, points to the sitemap. |
-| `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study. |
+| `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study (via `getProjects()`, not a second data source). No `priority`/`changeFrequency` on any entry — Google's documentation states it doesn't use either for crawling or ranking. `lastModified` is included only for projects with a real `updatedAt` in frontmatter; static routes and projects without one are omitted rather than backfilled with the build date. |
 
 ## 📦 Component Inventory
 Reusable UI elements located in `src/components/`.
@@ -71,6 +71,16 @@ Invalid case-study frontmatter in "iotek.mdx" (slug: "iotek"):
 
 Two fields are intentionally free-text strings, not structured dates: `year` (e.g. `"2025"`) and `duration` (e.g. `"~6-7 months (2025)"`). Case studies store these as human-readable values, not ISO dates, so the schema doesn't force a date shape onto them.
 
+`updatedAt` (optional, `YYYY-MM-DD`) is the one real date field: the date a case study's content was last meaningfully revised. It's manually authored, not auto-computed — update it by hand when you materially edit a published case study, not for typo fixes, and never set it to today's date just to have a value. It powers the sitemap's `lastModified` for that project; a project without `updatedAt` simply has no `lastModified` entry rather than one backfilled with the build date. `iotek.mdx` and `nuud.mdx` were seeded with `2026-07-21`, the real date of the commit that published both — not an invented value.
+
+**Field order convention**: `_template.mdx`, `iotek.mdx`, and `nuud.mdx` all use the same frontmatter key order — identity/classification (`title`→`services`), narrative content (`summary`→`outcome`), timeframe (`year`→`team`), publication metadata (`featured`→`updatedAt`), cover/gallery media, then SEO overrides and external links. Order has no effect on validation (YAML keys are unordered data), but a consistent order is what makes the two real files, and any future one, easy to compare side by side. Follow it when adding a project.
+
+**`coverImage`/`coverAlt`** are optional, but paired — set both together or neither (enforced by a schema `refine`, not just documentation). Originally required, they were made optional because neither has a real UI consumer yet (no page renders them), and requiring them forced content authors to fill in fake placeholder text ("TODO: placeholder...") just to satisfy the schema before a real cover image existed — the same problem `gallery` already solved correctly with optional `src`/`alt` per item. Add real values together once a real asset exists; don't add one without the other, and don't fill in placeholder text again.
+
+**Two required fields have no current UI consumer either — `services` and `challenge`/`outcome`.** Unlike `coverImage`, this isn't a "missing asset" gap: the content is real, deliberately and carefully authored (both went through the full editorial pipeline documented in `docs/case-studies/`), just not yet surfaced by any page component. They're left required, on purpose — this is reserved, ready-to-use structured data for a future UI addition (e.g. a services tag list, or a challenge/outcome summary card), not dead weight to prune.
+
+**Slug validation**: `readAllProjects()` (`src/lib/projects.ts`) now rejects any filename that doesn't produce a lowercase, hyphen-separated slug (`assertValidSlug`) — e.g. `My Project!.mdx` throws instead of silently becoming the URL `/work/My Project!`. Nothing enforced this before; both real slugs (`iotek`, `nuud`) already satisfied it.
+
 ### Data Access Layer (`src/lib/projects.ts`)
 The only supported way to read project data. Four functions, all reading the same MDX files:
 
@@ -85,10 +95,20 @@ Homepage, `/work`, `/work/[slug]`, route metadata, and any future feature (sitem
 
 **Draft projects are excluded from every one of these functions by default.** A project is published unless its frontmatter explicitly sets `status: draft` — an omitted `status` always means published. `/work/[slug]` also sets `dynamicParams = false`, so a draft (or unknown) slug 404s instead of being rendered on demand. The `includeDrafts: true` option exists only for internal/development tooling and is never used by any public page.
 
+**Scalability**: the current architecture (full filesystem scan + per-file parse and validation, no caching) has no real ceiling at 10, 50, or even 200 projects — this all runs at build time for static generation, not per-request, and Next.js routinely statically generates far more pages than that. The one real inefficiency, not worth fixing yet: `getProjects()`, `getFeaturedProjects()`, `getProjectSlugs()`, and `getProjectBySlug()` are each called independently across the homepage, `/work`, `generateStaticParams`, and `sitemap.ts`, and every call re-reads and re-validates every file from scratch — no memoization within a single build. Negligible at today's scale (2 projects); if the project count grows large enough for this to matter, memoize `readAllProjects()`'s result per build/request rather than redesigning the loader.
+
+**Extending the schema for future content types** — evaluated, not implemented: categories/technologies would just be new optional string-array fields, no different from `services`. Testimonials and metrics would follow the same nested-array-of-objects shape `gallery` already establishes (`z.array(z.object({...}).strict())`). Videos aren't accommodated today — `gallery` items have no `type` discriminator between image and video — and would need either a `type: 'image' | 'video'` field added to `galleryItemSchema` or a separate array. Downloadable assets and generic external links (beyond the existing `liveUrl`/`repositoryUrl`) don't exist yet either, but could share one `{ label, url }[]` shape. None of this is implemented now — it's not needed yet, and adding it speculatively would be exactly the over-engineering this audit was asked to avoid.
+
 ## 🔍 Site Configuration, SEO & Analytics (`src/lib/`)
 
 - **`site-config.ts`**: single source of truth for the production domain (`siteConfig.siteUrl`), site identity, and social profiles (`sameAs`). `absoluteUrl(path)` and `buildPageMetadata({ title, description, path })` are the two exports every route's `metadata` should go through — they generate canonical URLs, Open Graph, and Twitter card fields consistently instead of each page hand-rolling them. Root layout metadata, `robots.ts`, `sitemap.ts`, and `StructuredData.tsx` all read from this file.
 - **`analytics-config.ts`**: reads `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `GOOGLE_SITE_VERIFICATION`, and `BING_SITE_VERIFICATION` from environment variables — never hardcoded, never invented. `buildVerificationMetadata()` returns the `verification` field for the root layout's metadata, omitting it entirely when no tokens are configured.
+
+### Metadata Conventions
+
+- **Don't set `twitter.title`/`twitter.description`.** Next's Metadata API fills both automatically from `openGraph.title`/`openGraph.description` when the `twitter` object omits them (verified via rendered output, not assumed) — adding them explicitly is dead duplication, not a safety net.
+- **`robots` is inherited, not merged, per key.** A page's `metadata` object only needs to set `robots` when it wants to *differ* from the root layout's `index: true, follow: true` — omitting it entirely inherits the parent correctly. The one exception: `not-found.tsx` explicitly sets `robots: { index: false, follow: false }`, because Next's built-in not-found handling injects its own `noindex` tag *in addition to* whatever the root layout would otherwise contribute, rather than replacing it — without the explicit override, the 404 page rendered two conflicting `<meta name="robots">` tags.
+- **No Open Graph/Twitter images exist anywhere yet** (root, pages, or case studies) — deliberate, not an oversight: there's no real image asset to reference. When one is added, note that OG metadata does **not** deep-merge between a layout and a page — a page that sets its own `openGraph` object (as every page here does, via `buildPageMetadata`/`generateMetadata`) replaces the parent's `openGraph` entirely, images included. A future global fallback image set only on the root layout would silently disappear on every other page unless `buildPageMetadata`/`generateMetadata` are updated to accept and pass through an `image` parameter. Once a real image exists, also upgrade `twitter.card` from `'summary'` to `'summary_large_image'`.
 
 ## 🎨 Global Styles (Tailwind 4)
 - **Entry Point**: `src/app/globals.css`

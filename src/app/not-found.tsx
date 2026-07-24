@@ -1,4 +1,15 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+// Without this, the page renders two conflicting <meta name="robots"> tags:
+// Next's own built-in noindex for the not-found boundary, plus the root
+// layout's inherited index/follow (child metadata only overrides a key the
+// child actually sets — robots wasn't set anywhere below root, so it fell
+// through and both ended up in the same <head>). Explicit here so this
+// segment's robots directive is unambiguous.
+export const metadata: Metadata = {
+    robots: { index: false, follow: false }
+}
 
 export default function NotFound() {
     return (

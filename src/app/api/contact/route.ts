@@ -1,21 +1,11 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? 'noelsajor@gmail.com'
-
-// onboarding@resend.dev is Resend's shared testing sender: it can only deliver
-// to the email address on the Resend account itself, not to arbitrary
-// recipients. It is a development/testing fallback only — production requires
-// CONTACT_FROM_EMAIL to be set to an address on a domain verified with Resend.
-const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev'
+import { checkRateLimit } from '@/lib/rate-limiter'
+import { isValidEmailAddress, resolveEmailConfig } from '@/lib/email-config'
 
 const MAX_NAME_LENGTH = 200
 const MAX_EMAIL_LENGTH = 320
 const MAX_MESSAGE_LENGTH = 5000
-
-function isValidEmail(value: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-}
 
 // The name is interpolated into the email subject line — reject control
 // characters (newlines in particular) so a submission can't inject extra
@@ -25,9 +15,24 @@ function hasControlCharacters(value: string): boolean {
 }
 
 export async function POST(request: Request) {
-    const apiKey = process.env.RESEND_API_KEY
-    if (!apiKey) {
-        console.error('Contact form: RESEND_API_KEY is not configured')
+    // Checked before anything else — including whether Resend is configured —
+    // so a flood of requests is rejected as cheaply as possible, before any
+    // JSON parsing or validation work happens.
+    const rateLimit = await checkRateLimit(request)
+    if (!rateLimit.success) {
+        const retryAfterSeconds = Math.max(0, Math.ceil((rateLimit.reset - Date.now()) / 1000))
+        return NextResponse.json(
+            { error: 'Too many requests. Please try again later.' },
+            { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
+        )
+    }
+
+    // Resolved and validated together (API key, sender, recipient) before any
+    // request-body work — a broken deployment configuration fails the same
+    // way for every request, loudly in the server logs, never silently.
+    const emailConfig = resolveEmailConfig()
+    if (!emailConfig.ok) {
+        console.error(`Contact form: ${emailConfig.reason}`)
         return NextResponse.json({ error: 'Contact form is not configured.' }, { status: 500 })
     }
 
@@ -52,7 +57,7 @@ export async function POST(request: Request) {
         name.length > MAX_NAME_LENGTH ||
         hasControlCharacters(name) ||
         typeof email !== 'string' ||
-        !isValidEmail(email) ||
+        !isValidEmailAddress(email) ||
         email.length > MAX_EMAIL_LENGTH ||
         typeof message !== 'string' ||
         !message.trim() ||
@@ -64,12 +69,12 @@ export async function POST(request: Request) {
         )
     }
 
-    const resend = new Resend(apiKey)
+    const resend = new Resend(emailConfig.config.apiKey)
 
     try {
         const { error } = await resend.emails.send({
-            from: FROM_EMAIL,
-            to: TO_EMAIL,
+            from: emailConfig.config.from,
+            to: emailConfig.config.to,
             replyTo: email,
             subject: `New portfolio message from ${name}`,
             text: `From: ${name} <${email}>\n\n${message}`

@@ -8,12 +8,13 @@ This guide details the process of deploying the Agency Master Template and integ
 - Import the repository into your Vercel Dashboard.
 - Ensure the **Framework Preset** is set to `Next.js`.
 - Add the required Environment Variables. For this project specifically:
-  - `RESEND_API_KEY` (required — contact form)
-  - `CONTACT_TO_EMAIL` (optional — defaults to noelsajor@gmail.com)
-  - `CONTACT_FROM_EMAIL` (required for real production delivery — see `.env.example`)
+  - `RESEND_API_KEY` (required — contact form, must be a real `re_`-prefixed Resend key)
+  - `CONTACT_TO_EMAIL` (optional — defaults to noelsajor@gmail.com; must be a valid email address if set)
+  - `CONTACT_FROM_EMAIL` (**required in production** — an address on a domain verified with Resend, e.g. `Portfolio Contact <contact@yourdomain.com>`. The contact endpoint deliberately refuses to send in production if this is unset or still set to Resend's `onboarding@resend.dev` sandbox sender, since that sender can only deliver to the Resend account's own address. Locally, leaving it unset is fine — see `.env.example`.)
   - `NEXT_PUBLIC_GA_MEASUREMENT_ID` (optional — Google Analytics 4; omit to ship with no analytics)
   - `GOOGLE_SITE_VERIFICATION` (optional — Search Console)
   - `BING_SITE_VERIFICATION` (optional — Bing Webmaster Tools)
+  - `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (optional — contact form rate limiting; omit to run with rate limiting disabled/fail-open)
 
   See `.env.example` for the full list with descriptions of where each value comes from.
 
@@ -37,6 +38,9 @@ Google Analytics 4 is already integrated in code (`@next/third-parties/google`) 
 Search Console and Bing Webmaster verification meta tags are also already wired up — set `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` once you have real tokens from each platform.
 
 Optionally, also connect **Vercel Analytics** in the dashboard for real-time Speed Insights and Traffic data — independent of and complementary to the GA4 integration above.
+
+### Contact Form Rate Limiting
+The contact endpoint (`/api/contact`) is rate-limited per client IP using [Upstash Redis](https://upstash.com) + `@upstash/ratelimit` (5 requests per 10-minute window — see `src/lib/rate-limit-config.ts`). Create a free Upstash Redis database, then set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` in Vercel. If left unset, or if Upstash is temporarily unreachable, the endpoint **fails open** (allows the request through) rather than blocking legitimate visitors — this is intentional, see `src/lib/rate-limiter.ts` for the reasoning. No code changes are needed between local development, preview, and production; behavior is controlled entirely by whether these two variables are set.
 
 ## 🔄 Deployment Workflow
 1.  **Develop** on a feature branch (e.g., `feat/rebrand`).

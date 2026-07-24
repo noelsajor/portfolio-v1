@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { siteConfig } from '@/lib/site-config'
 
 export function SiteFooter() {
     return (
@@ -8,14 +9,14 @@ export function SiteFooter() {
                 <address className="not-italic flex flex-wrap gap-4">
                     <Link
                         className="rounded-sm hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                        href="mailto:noelsajor@gmail.com"
+                        href={`mailto:${siteConfig.email}`}
                         data-tracking="footer_email"
                     >
-                        noelsajor@gmail.com
+                        {siteConfig.email}
                     </Link>
                     <Link
                         className="rounded-sm hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                        href="https://www.linkedin.com/in/noelsajor"
+                        href={siteConfig.sameAs.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
                         data-tracking="footer_linkedin"

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ContactForm } from '@/components/ContactForm'
-import { buildPageMetadata } from '@/lib/site-config'
+import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 
 export const metadata = buildPageMetadata({
     title: 'Contact',
@@ -26,14 +26,14 @@ export default function ContactPage() {
                     <address className="not-italic space-y-3">
                         <Link
                             className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
-                            href="mailto:noelsajor@gmail.com"
+                            href={`mailto:${siteConfig.email}`}
                             data-tracking="contact_email_link"
                         >
-                            noelsajor@gmail.com
+                            {siteConfig.email}
                         </Link>
                         <Link
                             className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
-                            href="https://www.linkedin.com/in/noelsajor"
+                            href={siteConfig.sameAs.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
                             data-tracking="contact_linkedin_link"

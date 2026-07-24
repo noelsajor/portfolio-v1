@@ -11,10 +11,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:content": "tsx scripts/validate-content.ts"
+    "typecheck": "tsc --noEmit",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "verify": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run validate:content"
   },
   "dependencies": {
     "@next/third-parties": "16.2.11",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
+    "@vercel/functions": "^3.7.5",
     "gray-matter": "^4.0.3",
     "next": "16.2.11",
     "next-mdx-remote": "^6.0.0",
