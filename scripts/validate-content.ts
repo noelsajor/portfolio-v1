@@ -78,6 +78,19 @@ check('valid project passes', projectFrontmatterSchema.safeParse(validSample).su
     check('unknown field is rejected (strict mode)', !result.success)
 }
 
+{
+    const result = projectFrontmatterSchema.safeParse({ ...validSample, updatedAt: '2026-13-45' })
+    check(
+        'invalid updatedAt (not a real date) fails',
+        !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'updatedAt')
+    )
+}
+
+check(
+    'valid updatedAt (YYYY-MM-DD) passes',
+    projectFrontmatterSchema.safeParse({ ...validSample, updatedAt: '2026-07-21' }).success
+)
+
 // --- Loader-level scenarios (exercise the real content directory) ---------
 // Temporary fixtures are written into the real content directory and always
 // removed afterward (see cleanupTempFiles above) — nothing broken is left

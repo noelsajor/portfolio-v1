@@ -21,7 +21,7 @@ All routes are located in `src/app/`.
 | `/contact` | `src/app/contact/page.tsx` | Lead generation form. |
 | `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — rate-limited (`src/lib/rate-limiter.ts`, Upstash Redis), then sends contact-form submissions via Resend. Not a page. |
 | `/robots.txt` | `src/app/robots.ts` | Generated `MetadataRoute.Robots` — disallows `/api/`, points to the sitemap. |
-| `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study. |
+| `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study (via `getProjects()`, not a second data source). No `priority`/`changeFrequency` on any entry — Google's documentation states it doesn't use either for crawling or ranking. `lastModified` is included only for projects with a real `updatedAt` in frontmatter; static routes and projects without one are omitted rather than backfilled with the build date. |
 
 ## 📦 Component Inventory
 Reusable UI elements located in `src/components/`.
@@ -70,6 +70,8 @@ Invalid case-study frontmatter in "iotek.mdx" (slug: "iotek"):
 **Validation scenarios**: `pnpm run validate:content` (`scripts/validate-content.ts`) exercises the schema directly (valid project, missing field, invalid URL, invalid enum, unknown field) and the loader against the real content directory (template/draft exclusion, and that a genuinely invalid file's error message names the filename and field). No new test framework was introduced — the project has none yet; this is a plain script run via `tsx`.
 
 Two fields are intentionally free-text strings, not structured dates: `year` (e.g. `"2025"`) and `duration` (e.g. `"~6-7 months (2025)"`). Case studies store these as human-readable values, not ISO dates, so the schema doesn't force a date shape onto them.
+
+`updatedAt` (optional, `YYYY-MM-DD`) is the one real date field: the date a case study's content was last meaningfully revised. It's manually authored, not auto-computed — update it by hand when you materially edit a published case study, not for typo fixes, and never set it to today's date just to have a value. It powers the sitemap's `lastModified` for that project; a project without `updatedAt` simply has no `lastModified` entry rather than one backfilled with the build date. `iotek.mdx` and `nuud.mdx` were seeded with `2026-07-21`, the real date of the commit that published both — not an invented value.
 
 ### Data Access Layer (`src/lib/projects.ts`)
 The only supported way to read project data. Four functions, all reading the same MDX files:

@@ -23,6 +23,14 @@ const galleryItemSchema = z
     })
     .strict()
 
+// Plain YYYY-MM-DD, not a full ISO datetime — this is a manually-authored
+// field (see updatedAt below), and a bare date is what a content author can
+// actually reason about and keep accurate without inventing a time-of-day.
+const isoDateSchema = z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'must be a YYYY-MM-DD date')
+    .refine((value) => !Number.isNaN(Date.parse(value)), 'must be a real calendar date')
+
 export const projectFrontmatterSchema = z
     .object({
         // Required — every current case study authors these.
@@ -53,7 +61,14 @@ export const projectFrontmatterSchema = z
         // Intentionally a free-text string ("~6-7 months (2025)"), not a
         // structured duration — the project stores human-readable ranges.
         duration: z.string().min(1).optional(),
-        team: z.string().min(1).optional()
+        team: z.string().min(1).optional(),
+        // The date this case study's content was last meaningfully revised —
+        // update it by hand when you materially edit a published case study
+        // (not for typo fixes). Optional and omitted by default: a project
+        // with no updatedAt simply has no lastModified entry in the sitemap,
+        // which is more accurate than guessing. Never set this to "today" or
+        // the build date — it must reflect a real edit.
+        updatedAt: isoDateSchema.optional()
     })
     .strict()
 
