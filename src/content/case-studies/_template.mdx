@@ -4,11 +4,14 @@
 # underscore in this filename, and from /work/[slug] static generation
 # because that route sets `dynamicParams = false`.
 # To add a real project: copy this file, rename it to the project's slug
-# (e.g. nuud-pleasures.mdx), and fill in every field below.
+# (e.g. nuud-pleasures.mdx), and fill in the required fields below.
+# Required fields already have clean placeholder values, so a straight
+# copy-rename passes validation as-is (try `pnpm run validate:content`) —
+# edit them next. Optional fields are commented out on purpose: uncomment
+# and fill in only the ones you actually need, so nothing ships with
+# leftover placeholder text pretending to be real data.
 title: Example Project Name
-client: Client name (optional)
 type: E-commerce # one of: E-commerce | Product Design | Marketing Website | Design System
-industry: Industry / sector label (optional)
 roles:
   - UI/UX Design
   - Front-End Implementation
@@ -18,24 +21,26 @@ summary: One or two sentences describing the project at a glance.
 challenge: One or two sentences on the problem this project solved.
 outcome: One or two sentences on the result, described qualitatively unless real metrics exist.
 year: "2026"
-duration: e.g. "6 weeks" (optional)
-team: e.g. "Solo" or "2 designers, 1 developer" (optional)
 featured: false
 order: 100
-status: draft # optional — omit or set to "published" to make it live; "draft" hides it from getProjects()
-# updatedAt (optional, YYYY-MM-DD): the date this case study's content was
-# last meaningfully revised. Powers the sitemap's lastModified for this
-# project. Omit until the first real edit — don't set it to today's date
-# just to fill it in, and don't touch it for typo fixes.
+status: draft # omit or set to "published" to make it live; "draft" hides it from getProjects()
+# client: Client name
+# industry: Industry / sector label
+# duration: "6 weeks"
+# team: "Solo" or "2 designers, 1 developer"
+# updatedAt (YYYY-MM-DD): the date this case study's content was last
+# meaningfully revised. Powers the sitemap's lastModified for this project.
+# Omit until the first real edit — don't set it to today's date just to
+# fill it in, and don't touch it for typo fixes.
 # updatedAt: "2026-01-15"
-# coverImage/coverAlt (both optional, but must be set together — omit both
-# until a real image exists rather than filling in placeholder text):
+# coverImage/coverAlt must be set together — omit both until a real image
+# exists rather than filling in placeholder text:
 # coverImage: '/images/case-studies/example-cover.jpg'
 # coverAlt: Descriptive alt text for the cover image
-seoTitle: SEO-specific title override (optional, falls back to title)
-seoDescription: SEO-specific description override (optional, falls back to summary)
-liveUrl: https://example.com (optional)
-repositoryUrl: https://github.com/example/example (optional)
+# seoTitle: SEO-specific title override — falls back to title if omitted
+# seoDescription: SEO-specific description override — falls back to summary if omitted
+# liveUrl: https://example.com
+# repositoryUrl: https://github.com/example/example
 ---
 
 <!-- No top-level "# " heading here — the page already renders an <h1> from

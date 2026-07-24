@@ -23,7 +23,7 @@ Bring the site into 100% compliance with `docs/best-practices/`:
 3.  **Analytics**: Inject the client's GTM/Pixel IDs into the tracking components.
 
 ## 🚀 Step 4: Final Validation
-1.  Run `npm run build` to ensure zero compilation errors.
+1.  Run `pnpm run verify` (lint, typecheck, build, content validation) to ensure zero errors.
 2.  Perform a Lighthouse audit; if score < 95 on Desktop, identify and fix the bottleneck.
 3.  Verify all internal links using the `docs/master-architecture-guide.md`.
 

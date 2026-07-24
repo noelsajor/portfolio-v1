@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:content": "tsx scripts/validate-content.ts"
+    "typecheck": "tsc --noEmit",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "verify": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run validate:content"
   },
   "dependencies": {
     "@next/third-parties": "16.2.11",
