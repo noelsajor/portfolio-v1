@@ -63,10 +63,13 @@ export function buildPageMetadata({
             description,
             locale: siteConfig.locale
         },
+        // No title/description here — verified via rendered output that
+        // Next's Metadata API fills twitter:title/twitter:description from
+        // openGraph.title/openGraph.description automatically when the
+        // twitter object omits them, so repeating the same two values under
+        // a second key was duplicate logic with no behavioral difference.
         twitter: {
-            card: 'summary',
-            title: fullTitle,
-            description
+            card: 'summary'
         }
     }
 }

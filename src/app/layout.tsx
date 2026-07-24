@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
   keywords: siteConfig.keywords,
   authors: [siteConfig.author],
   creator: siteConfig.name,
@@ -36,9 +37,10 @@ export const metadata: Metadata = {
   twitter: {
     // `summary` (not `summary_large_image`) because no image is set above —
     // upgrade the card type once an Open Graph image exists.
-    card: 'summary',
-    title: siteConfig.title,
-    description: siteConfig.description
+    // No title/description: Next's Metadata API fills twitter:title/
+    // twitter:description from openGraph automatically when omitted here
+    // (verified via rendered output) — repeating them was duplicate logic.
+    card: 'summary'
   },
   robots: {
     index: true,
