@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "@next/third-parties": "16.2.11",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
+    "@vercel/functions": "^3.7.5",
     "gray-matter": "^4.0.3",
     "next": "16.2.11",
     "next-mdx-remote": "^6.0.0",

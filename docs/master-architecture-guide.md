@@ -19,7 +19,7 @@ All routes are located in `src/app/`.
 | `/work/[slug]` | `src/app/work/[slug]/page.tsx` | Dynamic case study pages (Markdown-driven). |
 | `/about` | `src/app/about/page.tsx` | Agency/Professional biography. |
 | `/contact` | `src/app/contact/page.tsx` | Lead generation form. |
-| `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — sends contact-form submissions via Resend. Not a page. |
+| `/api/contact` | `src/app/api/contact/route.ts` | POST-only Route Handler — rate-limited (`src/lib/rate-limiter.ts`, Upstash Redis), then sends contact-form submissions via Resend. Not a page. |
 | `/robots.txt` | `src/app/robots.ts` | Generated `MetadataRoute.Robots` — disallows `/api/`, points to the sitemap. |
 | `/sitemap.xml` | `src/app/sitemap.ts` | Generated `MetadataRoute.Sitemap` — static routes plus every published case study. |
 

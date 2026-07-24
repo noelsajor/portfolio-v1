@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { checkRateLimit } from '@/lib/rate-limiter'
 
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? 'noelsajor@gmail.com'
 
@@ -25,6 +26,18 @@ function hasControlCharacters(value: string): boolean {
 }
 
 export async function POST(request: Request) {
+    // Checked before anything else — including whether Resend is configured —
+    // so a flood of requests is rejected as cheaply as possible, before any
+    // JSON parsing or validation work happens.
+    const rateLimit = await checkRateLimit(request)
+    if (!rateLimit.success) {
+        const retryAfterSeconds = Math.max(0, Math.ceil((rateLimit.reset - Date.now()) / 1000))
+        return NextResponse.json(
+            { error: 'Too many requests. Please try again later.' },
+            { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
+        )
+    }
+
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
         console.error('Contact form: RESEND_API_KEY is not configured')
