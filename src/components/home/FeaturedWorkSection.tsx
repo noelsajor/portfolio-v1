@@ -22,11 +22,11 @@ export function FeaturedWorkSection() {
             {featured.length > 0 ? (
                 <ul role="list" className="grid gap-4 md:grid-cols-2">
                     {featured.map((project) => (
-                        <li key={project.slug}>
+                        <li key={project.slug} className="h-full">
                             <Link
                                 href={`/work/${project.slug}`}
                                 data-tracking={`project_card_${project.slug}`}
-                                className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                                className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between gap-3">

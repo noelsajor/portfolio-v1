@@ -24,11 +24,11 @@ export default function WorkPage() {
             {projects.length > 0 ? (
                 <ul role="list" className="grid gap-4 md:grid-cols-2">
                     {projects.map((project) => (
-                        <li key={project.slug}>
+                        <li key={project.slug} className="h-full">
                             <Link
                                 href={`/work/${project.slug}`}
                                 data-tracking={`portfolio_item_${project.slug}`}
-                                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                                className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
                                 <div className="space-y-2">
                                     <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
