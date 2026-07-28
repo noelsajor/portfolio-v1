@@ -52,11 +52,11 @@ export function SiteHeader() {
                         <NavLink key={item.href} href={item.href} label={item.label} />
                     ))}
                     <Link
-                        href="/work"
-                        data-tracking="nav_cta_view_work"
+                        href="/contact"
+                        data-tracking="nav_cta_discuss_project"
                         className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                     >
-                        View Work
+                        Discuss a Project
                     </Link>
                 </nav>
 
@@ -86,11 +86,12 @@ export function SiteHeader() {
                             <NavLink key={item.href} href={item.href} label={item.label} onClick={() => setOpen(false)} />
                         ))}
                         <Link
-                            href="/work"
+                            href="/contact"
                             onClick={() => setOpen(false)}
+                            data-tracking="nav_cta_discuss_project"
                             className="w-fit rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
-                            View Work
+                            Discuss a Project
                         </Link>
                     </div>
                 </div>
