@@ -5,6 +5,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { StructuredData } from '@/components/StructuredData'
 import { GoogleAnalyticsPageViews } from '@/components/GoogleAnalyticsPageViews'
+import { GoogleAnalyticsClickTracking } from '@/components/GoogleAnalyticsClickTracking'
 import { defaultOgImage, siteConfig } from '@/lib/site-config'
 import { buildVerificationMetadata, gaMeasurementId } from '@/lib/analytics-config'
 
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <>
             <GoogleAnalytics gaId={gaMeasurementId} />
             <GoogleAnalyticsPageViews />
+            <GoogleAnalyticsClickTracking />
           </>
         ) : null}
       </body>

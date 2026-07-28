@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { sendGAEvent } from '@next/third-parties/google'
 
 export function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -54,6 +55,10 @@ export function ContactForm() {
                 return
             }
 
+            // No form content in the event payload — just the fact that a
+            // real submission succeeded (honeypot catches above return early
+            // and never reach this line, so bot "successes" aren't counted).
+            sendGAEvent('event', 'contact_form_submit_success')
             setStatus('success')
         } catch {
             setErrorMessage('Something went wrong. Please check your connection and try again.')
