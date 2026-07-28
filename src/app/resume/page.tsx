@@ -64,13 +64,23 @@ export default function ResumePage() {
                 <p className="max-w-2xl text-white/70">
                     For recruiters and hiring managers evaluating contract, short-term, or permanent roles.
                 </p>
-                <Link
-                    href={`mailto:${siteConfig.email}`}
-                    className={`inline-flex w-fit items-center rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background`}
-                    data-tracking="resume_email_cta"
-                >
-                    Reach out about a role
-                </Link>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <Link
+                        href={`mailto:${siteConfig.email}`}
+                        className="inline-flex w-fit items-center justify-center rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
+                        data-tracking="resume_email_cta"
+                    >
+                        Reach out about a role
+                    </Link>
+                    <Link
+                        href="/resume.pdf"
+                        download="Jose-Leon-Resume.pdf"
+                        className="inline-flex w-fit items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                        data-tracking="resume_download_cta"
+                    >
+                        Download CV
+                    </Link>
+                </div>
             </header>
 
             <section className="space-y-4">
