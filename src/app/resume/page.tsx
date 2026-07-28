@@ -41,7 +41,7 @@ const experience = [
     {
         title: 'iOTEK',
         role: 'UI/UX Design & Front-End Implementation (official title: Graphic Designer)',
-        period: '2026 — ongoing, ~5–6 months to date',
+        period: '2026, ~5–6 months',
         detail: 'Full-time remote. Brand identity system and bilingual production website for a multi-division IoT company.'
     },
     {
