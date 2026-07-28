@@ -1,4 +1,12 @@
+import { Layers, Component, Braces, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { homeContent } from '@/content/home'
+
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+    'Product & UX Design': Layers,
+    'UI Systems': Component,
+    'Front-End Implementation': Braces,
+    'Shopify Development': ShoppingBag
+}
 
 export function ServicesSection() {
     const { services } = homeContent
@@ -11,13 +19,18 @@ export function ServicesSection() {
                 <p className="max-w-2xl text-white/70">{services.intro}</p>
             </div>
 
-            <ul role="list" className="grid gap-x-8 gap-y-6 md:grid-cols-2">
-                {services.items.map((service) => (
-                    <li key={service.title} className="space-y-2">
-                        <h3 className="text-lg font-semibold tracking-tight">{service.title}</h3>
-                        <p className="text-sm leading-relaxed text-white/70">{service.description}</p>
-                    </li>
-                ))}
+            <ul role="list" className="grid gap-x-8 gap-y-8 md:grid-cols-2">
+                {services.items.map((service) => {
+                    const Icon = SERVICE_ICONS[service.title]
+
+                    return (
+                        <li key={service.title} className="space-y-2">
+                            {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
+                            <h3 className="text-lg font-semibold tracking-tight">{service.title}</h3>
+                            <p className="text-sm leading-relaxed text-white/70">{service.description}</p>
+                        </li>
+                    )
+                })}
             </ul>
         </section>
     )
