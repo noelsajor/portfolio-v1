@@ -7,11 +7,11 @@ export function WhyMeSection() {
         <section className="space-y-8">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{whyMe.heading}</h2>
 
-            <ul role="list" className="space-y-6">
+            <ul role="list" className="grid gap-x-8 gap-y-6 md:grid-cols-3">
                 {whyMe.reasons.map((reason) => (
-                    <li key={reason.title} className="border-l-2 border-white/15 pl-5">
+                    <li key={reason.title} className="space-y-2 border-t border-white/10 pt-6">
                         <h3 className="text-lg font-semibold tracking-tight">{reason.title}</h3>
-                        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-white/70">{reason.description}</p>
+                        <p className="text-sm leading-relaxed text-white/70">{reason.description}</p>
                     </li>
                 ))}
             </ul>
