@@ -12,7 +12,7 @@ export function ProcessSection() {
 
             <ol role="list" className="grid gap-x-8 gap-y-6 md:grid-cols-2">
                 {process.steps.map((step) => (
-                    <li key={step.number} className="space-y-2 border-t border-white/10 pt-6">
+                    <li key={step.number} className="space-y-2">
                         <p className="text-sm font-semibold text-white/50">{step.number}</p>
                         <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
                         <p className="text-sm leading-relaxed text-white/70">{step.description}</p>

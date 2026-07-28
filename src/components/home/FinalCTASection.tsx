@@ -5,7 +5,7 @@ export function FinalCTASection() {
     const { finalCTA } = homeContent
 
     return (
-        <section className="space-y-6 border-t border-white/10 pt-12 text-center">
+        <section className="space-y-6 text-center">
             <h2 className="mx-auto max-w-2xl text-2xl font-semibold tracking-tight md:text-3xl">{finalCTA.heading}</h2>
             <p className="mx-auto max-w-xl text-white/70">{finalCTA.body}</p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
