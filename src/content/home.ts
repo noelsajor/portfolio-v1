@@ -82,15 +82,6 @@ export const homeContent = {
             }
         ]
     },
-    aiWorkflow: {
-        label: 'HOW I MOVE FASTER',
-        heading: 'AI-assisted execution, without AI-level quality.',
-        paragraphs: [
-            'I use AI to accelerate research, exploration, documentation, component creation and repetitive implementation work.',
-            "Every output is reviewed, refined and adapted to the project's actual goals, brand and technical requirements. The result is a faster workflow without handing creative or technical judgment over to a tool."
-        ],
-        supportingItems: ['Faster exploration', 'Cleaner documentation', 'Quicker implementation', 'Human-reviewed decisions']
-    },
     whyMe: {
         heading: 'Less handoff. Less management. More ownership.',
         reasons: [
@@ -110,14 +101,6 @@ export const homeContent = {
                     'You work directly with the person doing the work, without account-management layers or unnecessary meetings.'
             }
         ]
-    },
-    aboutPreview: {
-        heading: 'Designer by background. Builder by practice.',
-        paragraphs: [
-            "I'm Jose Leon, a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products and web implementation.",
-            'That background allows me to see a project as more than a collection of screens or components. I can help shape the visual direction, understand the user experience and carry the approved idea into production.'
-        ],
-        cta: { label: 'More About Me', href: '/about' }
     },
     finalCTA: {
         heading: 'Need an extra pair of hands that can own both design and implementation?',
