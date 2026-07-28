@@ -18,12 +18,12 @@ export function ProcessSection() {
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{process.heading}</h2>
             </div>
 
-            <ol role="list" className="grid gap-x-8 gap-y-8 md:grid-cols-2">
+            <ol role="list" className="grid gap-x-8 gap-y-10 md:grid-cols-2">
                 {process.steps.map((step) => {
                     const Icon = STEP_ICONS[step.title]
 
                     return (
-                        <li key={step.number} className="space-y-2">
+                        <li key={step.number} className="space-y-3">
                             <div className="flex items-center gap-3">
                                 {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
                                 <p className="text-sm font-semibold text-white/50">{step.number}</p>

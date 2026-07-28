@@ -9,7 +9,7 @@ import { FinalCTASection } from '@/components/home/FinalCTASection'
 
 export default function HomePage() {
   return (
-    <div className="space-y-16">
+    <div className="space-y-24">
       <HeroSection />
       <TrustStrip />
       <ServicesSection />
