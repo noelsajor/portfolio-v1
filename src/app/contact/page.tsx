@@ -4,7 +4,8 @@ import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 
 export const metadata = buildPageMetadata({
     title: 'Contact',
-    description: 'Get in touch with Jose Leon.',
+    description:
+        'Tell me what your team is building. Get in touch about freelance projects, agency production support, Shopify work, or front-end implementation.',
     path: '/contact'
 })
 
@@ -12,9 +13,20 @@ export default function ContactPage() {
     return (
         <div className="space-y-12">
             <div className="space-y-6">
-                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Contact</h1>
+                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Tell me what your team is building.</h1>
                 <p className="max-w-2xl text-white/70">
-                    Want to chat about a role or a Shopify project? Fill out the form below or reach out on LinkedIn.
+                    Share the project, production gap, or backlog you need help with. I&apos;ll respond with the most useful
+                    next step.
+                </p>
+                <p className="max-w-2xl text-sm text-white/50">
+                    Recruiter or hiring manager? See my{' '}
+                    <Link
+                        href="/resume"
+                        className="rounded-sm underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    >
+                        resume
+                    </Link>{' '}
+                    instead.
                 </p>
             </div>
 

@@ -23,6 +23,13 @@ export function SiteFooter() {
                     >
                         LinkedIn
                     </Link>
+                    <Link
+                        className="rounded-sm hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                        href="/resume"
+                        data-tracking="footer_resume"
+                    >
+                        Resume
+                    </Link>
                 </address>
             </div>
         </footer>
