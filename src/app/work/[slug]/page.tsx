@@ -7,7 +7,6 @@ import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-import { ImagePlaceholder } from '@/components/mdx/ImagePlaceholder'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
@@ -72,6 +71,9 @@ export default async function CaseStudyPage({
     if (!data) return notFound()
 
     const { frontmatter, content } = data
+    const readyGalleryItems = (frontmatter.gallery ?? []).filter(
+        (item): item is typeof item & { src: string } => item.status === 'ready' && Boolean(item.src)
+    )
 
     return (
         <div className="space-y-10">
@@ -117,25 +119,21 @@ export default async function CaseStudyPage({
                 />
             </article>
 
-            {frontmatter.gallery && frontmatter.gallery.length > 0 ? (
+            {readyGalleryItems.length > 0 ? (
                 <section className="space-y-4">
                     <h2 className="text-xl font-semibold tracking-tight md:text-2xl">Gallery</h2>
                     <div className="grid gap-4 md:grid-cols-2">
-                        {frontmatter.gallery.map((item) =>
-                            item.status === 'ready' && item.src ? (
-                                <div key={item.id} className="overflow-hidden rounded-2xl border border-white/10">
-                                    <Image
-                                        src={item.src}
-                                        alt={item.alt ?? item.id}
-                                        width={960}
-                                        height={540}
-                                        className="h-auto w-full"
-                                    />
-                                </div>
-                            ) : (
-                                <ImagePlaceholder key={item.id} id={item.id} />
-                            )
-                        )}
+                        {readyGalleryItems.map((item) => (
+                            <div key={item.id} className="overflow-hidden rounded-2xl border border-white/10">
+                                <Image
+                                    src={item.src}
+                                    alt={item.alt ?? item.id}
+                                    width={960}
+                                    height={540}
+                                    className="h-auto w-full"
+                                />
+                            </div>
+                        ))}
                     </div>
                 </section>
             ) : null}

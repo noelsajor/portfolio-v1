@@ -1,5 +1,4 @@
 import type { MDXComponents } from 'mdx/types'
-import { ImagePlaceholder } from './ImagePlaceholder'
 
 export const mdxComponents: MDXComponents = {
     h1: (props) => <h1 className="text-3xl md:text-4xl font-semibold tracking-tight" {...props} />,
@@ -12,6 +11,5 @@ export const mdxComponents: MDXComponents = {
             className="rounded-sm underline decoration-white/30 underline-offset-4 hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
             {...props}
         />
-    ),
-    ImagePlaceholder
+    )
 }
