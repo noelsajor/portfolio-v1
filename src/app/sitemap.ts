@@ -16,7 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: absoluteUrl('/about') },
         { url: absoluteUrl('/work') },
         { url: absoluteUrl('/contact') },
-        { url: absoluteUrl('/resume') }
+        { url: absoluteUrl('/resume') },
+        { url: absoluteUrl('/for-agencies') }
     ]
 
     // getProjects() (not getProjectSlugs()) so updatedAt is available here —

@@ -1,0 +1,32 @@
+import { buildPageMetadata } from '@/lib/site-config'
+import { forAgenciesContent } from '@/content/for-agencies'
+import { LandingHero } from '@/components/landing/LandingHero'
+import { LandingFeatureList } from '@/components/landing/LandingFeatureList'
+import { LandingProof } from '@/components/landing/LandingProof'
+import { LandingTextBlock } from '@/components/landing/LandingTextBlock'
+import { LandingFaq } from '@/components/landing/LandingFaq'
+import { LandingCta } from '@/components/landing/LandingCta'
+
+export const metadata = buildPageMetadata({
+    title: 'For Agencies',
+    description:
+        'White-label design, Shopify, and front-end production support for agencies with more work than available capacity.',
+    path: '/for-agencies'
+})
+
+export default function ForAgenciesPage() {
+    const { hero, problems, services, process, assurance, faq, cta } = forAgenciesContent
+
+    return (
+        <div className="space-y-16">
+            <LandingHero {...hero} />
+            <LandingFeatureList label={problems.label} heading={problems.heading} items={problems.items} />
+            <LandingFeatureList label={services.label} heading={services.heading} items={services.items} />
+            <LandingProof heading="Selected proof" />
+            <LandingFeatureList label={process.label} heading={process.heading} items={process.steps} numbered />
+            <LandingTextBlock heading={assurance.heading} body={assurance.body} />
+            <LandingFaq heading={faq.heading} items={faq.items} />
+            <LandingCta {...cta} />
+        </div>
+    )
+}
