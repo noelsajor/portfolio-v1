@@ -21,6 +21,7 @@
     "@upstash/redis": "^1.38.0",
     "@vercel/functions": "^3.7.5",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^1.27.0",
     "next": "16.2.11",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.3",

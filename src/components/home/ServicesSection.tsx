@@ -13,7 +13,7 @@ export function ServicesSection() {
 
             <ul role="list" className="grid gap-x-8 gap-y-6 md:grid-cols-2">
                 {services.items.map((service) => (
-                    <li key={service.title} className="space-y-2 border-t border-white/10 pt-6">
+                    <li key={service.title} className="space-y-2">
                         <h3 className="text-lg font-semibold tracking-tight">{service.title}</h3>
                         <p className="text-sm leading-relaxed text-white/70">{service.description}</p>
                     </li>
