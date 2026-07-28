@@ -20,7 +20,7 @@ export function FeaturedWorkSection() {
             </div>
 
             {featured.length > 0 ? (
-                <ul role="list" className="grid gap-4 md:grid-cols-3">
+                <ul role="list" className="grid gap-4 md:grid-cols-2">
                     {featured.map((project) => (
                         <li key={project.slug}>
                             <Link
