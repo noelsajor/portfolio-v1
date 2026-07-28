@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { sendGAEvent } from '@next/third-parties/google'
+import { SUPPORT_TYPES, TIMELINES } from '@/lib/contact-form-options'
 
 export function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -43,7 +44,10 @@ export function ContactForm() {
                     name: formData.get('name'),
                     email: formData.get('email'),
                     message: formData.get('message'),
-                    website: formData.get('website')
+                    website: formData.get('website'),
+                    supportType: formData.get('supportType'),
+                    timeline: formData.get('timeline'),
+                    budget: formData.get('budget')
                 })
             })
 
@@ -121,6 +125,61 @@ export function ContactForm() {
                         placeholder="email@example.com"
                     />
                 </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <label htmlFor="supportType" className="text-sm font-medium text-white/70">Type of support</label>
+                    <select
+                        required
+                        id="supportType"
+                        name="supportType"
+                        defaultValue=""
+                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    >
+                        <option value="" disabled>
+                            Select one
+                        </option>
+                        {SUPPORT_TYPES.map((type) => (
+                            <option key={type} value={type}>
+                                {type}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="space-y-2">
+                    <label htmlFor="timeline" className="text-sm font-medium text-white/70">Timeline</label>
+                    <select
+                        required
+                        id="timeline"
+                        name="timeline"
+                        defaultValue=""
+                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    >
+                        <option value="" disabled>
+                            Select one
+                        </option>
+                        {TIMELINES.map((timeline) => (
+                            <option key={timeline} value={timeline}>
+                                {timeline}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <div className="space-y-2">
+                <label htmlFor="budget" className="text-sm font-medium text-white/70">
+                    Budget or engagement model <span className="text-white/50">(optional)</span>
+                </label>
+                <input
+                    type="text"
+                    id="budget"
+                    name="budget"
+                    maxLength={200}
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    placeholder="e.g. project-based, ongoing retainer, $X–Y range"
+                />
             </div>
 
             <div className="space-y-2">
