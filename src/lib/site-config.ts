@@ -35,6 +35,16 @@ export function absoluteUrl(path: string = ''): string {
     return new URL(path, siteConfig.siteUrl).toString()
 }
 
+// Default social-sharing image, generated via scripts/generate-og-image.tsx.
+// Per-page metadata can override `openGraph.images`/`twitter.images` once a
+// real, approved page-specific asset exists — see buildPageMetadata below.
+export const defaultOgImage = {
+    url: absoluteUrl('/og-image.png'),
+    width: 1200,
+    height: 630,
+    alt: siteConfig.title
+}
+
 // Shared canonical/OG/Twitter metadata shape for the static top-level pages.
 // `title` is the short page segment (e.g. "About") — the root layout's title
 // template appends the site name for the <title> tag, but Open Graph/Twitter
@@ -62,7 +72,8 @@ export function buildPageMetadata({
             siteName: siteConfig.name,
             title: fullTitle,
             description,
-            locale: siteConfig.locale
+            locale: siteConfig.locale,
+            images: [defaultOgImage]
         },
         // No title/description here — verified via rendered output that
         // Next's Metadata API fills twitter:title/twitter:description from
@@ -70,7 +81,8 @@ export function buildPageMetadata({
         // twitter object omits them, so repeating the same two values under
         // a second key was duplicate logic with no behavioral difference.
         twitter: {
-            card: 'summary'
+            card: 'summary_large_image',
+            images: [defaultOgImage.url]
         }
     }
 }

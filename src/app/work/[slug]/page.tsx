@@ -9,7 +9,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
-import { absoluteUrl, siteConfig } from '@/lib/site-config'
+import { absoluteUrl, defaultOgImage, siteConfig } from '@/lib/site-config'
 
 export function generateStaticParams() {
     return getProjectSlugs().map((slug) => ({ slug }))
@@ -39,6 +39,12 @@ export async function generateMetadata({
     const fullTitle = frontmatter.seoTitle ?? frontmatter.title
     const shortTitle = fullTitle.replace(/\s*\|\s*Jose Leon\s*$/, '')
 
+    // Falls back to the default site-wide OG image until a real, approved
+    // per-project cover image exists (see coverImage/coverAlt in the schema).
+    const ogImage = frontmatter.coverImage
+        ? { url: absoluteUrl(frontmatter.coverImage), width: 1200, height: 630, alt: frontmatter.coverAlt ?? fullTitle }
+        : defaultOgImage
+
     return {
         title: shortTitle,
         description,
@@ -49,13 +55,15 @@ export async function generateMetadata({
             siteName: siteConfig.name,
             title: fullTitle,
             description,
-            locale: siteConfig.locale
+            locale: siteConfig.locale,
+            images: [ogImage]
         },
         // No title/description here — see the matching comment in
         // buildPageMetadata() (site-config.ts): Next's Metadata API fills
         // these from openGraph automatically when omitted.
         twitter: {
-            card: 'summary'
+            card: 'summary_large_image',
+            images: [ogImage.url]
         }
     }
 }

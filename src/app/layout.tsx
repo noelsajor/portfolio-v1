@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { StructuredData } from '@/components/StructuredData'
 import { GoogleAnalyticsPageViews } from '@/components/GoogleAnalyticsPageViews'
-import { siteConfig } from '@/lib/site-config'
+import { defaultOgImage, siteConfig } from '@/lib/site-config'
 import { buildVerificationMetadata, gaMeasurementId } from '@/lib/analytics-config'
 
 export const metadata: Metadata = {
@@ -30,17 +30,15 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,
-    locale: siteConfig.locale
-    // No `images` entry: no real Open Graph image asset exists yet.
-    // Add one here once a production social-preview image is available.
+    locale: siteConfig.locale,
+    images: [defaultOgImage]
   },
   twitter: {
-    // `summary` (not `summary_large_image`) because no image is set above —
-    // upgrade the card type once an Open Graph image exists.
+    card: 'summary_large_image',
+    images: [defaultOgImage.url]
     // No title/description: Next's Metadata API fills twitter:title/
     // twitter:description from openGraph automatically when omitted here
     // (verified via rendered output) — repeating them was duplicate logic.
-    card: 'summary'
   },
   robots: {
     index: true,
