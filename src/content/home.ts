@@ -8,7 +8,8 @@ export const homeContent = {
             "I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences—without coordinating separate designers and front-end developers.",
         primaryCta: { label: 'Work With Me', href: '/contact' },
         secondaryCta: { label: 'View My Work', href: '/work' },
-        availability: 'Available for remote, white-label and project-based collaborations.'
+        availability: 'Available for remote, white-label and project-based collaborations.',
+        recruiterNote: { label: 'Recruiter or hiring manager? See my resume', href: '/resume' }
     },
     trustStrip: {
         points: [

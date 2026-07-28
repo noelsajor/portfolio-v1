@@ -8,7 +8,7 @@ export function StructuredData() {
         '@type': 'Person',
         name: siteConfig.author.name,
         url: siteConfig.siteUrl,
-        jobTitle: 'Product Designer & Front-End Developer',
+        jobTitle: 'Multidisciplinary Designer & Front-End Production Specialist',
         sameAs: [siteConfig.sameAs.github, siteConfig.sameAs.linkedin]
     }
 

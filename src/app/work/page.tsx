@@ -16,7 +16,8 @@ export default function WorkPage() {
             <header className="space-y-3">
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Work</h1>
                 <p className="max-w-2xl text-white/70">
-                    A curated set of Shopify and e-commerce projects focused on conversion, clarity, and scalable implementation.
+                    A curated set of product design, Shopify, and front-end implementation projects — from brand systems
+                    and marketing websites to e-commerce storefronts.
                 </p>
             </header>
 

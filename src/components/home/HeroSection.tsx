@@ -34,6 +34,15 @@ export function HeroSection() {
             </div>
 
             <p className="text-sm text-white/60">{hero.availability}</p>
+            <p className="text-sm text-white/50">
+                <Link
+                    href={hero.recruiterNote.href}
+                    data-tracking="hero_recruiter_note"
+                    className="rounded-sm underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                >
+                    {hero.recruiterNote.label}
+                </Link>
+            </p>
         </section>
     )
 }
