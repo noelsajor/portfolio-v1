@@ -79,6 +79,18 @@ check('valid project passes', projectFrontmatterSchema.safeParse(validSample).su
 }
 
 {
+    const result = projectFrontmatterSchema.safeParse({ ...validSample, segment: 'Not A Real Segment' })
+    check(
+        'invalid enum value (segment) fails',
+        !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'segment')
+    )
+}
+
+check('valid segment passes', projectFrontmatterSchema.safeParse({ ...validSample, segment: 'D2C' }).success)
+
+check('omitting segment passes (optional field)', projectFrontmatterSchema.safeParse(validSample).success)
+
+{
     const result = projectFrontmatterSchema.safeParse({ ...validSample, updatedAt: '2026-13-45' })
     check(
         'invalid updatedAt (not a real date) fails',

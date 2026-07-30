@@ -14,6 +14,12 @@ import { z } from 'zod'
 
 export const PROJECT_TYPES = ['E-commerce', 'Product Design', 'Marketing Website', 'Design System'] as const
 
+// Client segment (D2C vs B2B) — shown as a small chip on case-study cards,
+// separate from `type` (which is the platform/deliverable category). Optional
+// because it's a positioning detail, not something every future project
+// necessarily has an unambiguous answer for.
+export const PROJECT_SEGMENTS = ['D2C', 'B2B'] as const
+
 const galleryItemSchema = z
     .object({
         id: z.string().min(1, 'gallery item id is required'),
@@ -43,6 +49,7 @@ export const projectFrontmatterSchema = z
         outcome: z.string().min(1, 'outcome is required'),
 
         // Optional — present on some but not all current case studies.
+        segment: z.enum(PROJECT_SEGMENTS).optional(),
         client: z.string().min(1).optional(),
         // Intentionally a free-text string, not a date/number — the project
         // stores readable values like "2025", never an ISO date.
