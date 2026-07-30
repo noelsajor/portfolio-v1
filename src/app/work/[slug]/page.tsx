@@ -11,6 +11,7 @@ import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 import { absoluteUrl, defaultOgImage, siteConfig } from '@/lib/site-config'
 import { SegmentBadge } from '@/components/SegmentBadge'
+import { Chip } from '@/components/Chip'
 
 export function generateStaticParams() {
     return getProjectSlugs().map((slug) => ({ slug }))
@@ -95,11 +96,11 @@ export default async function CaseStudyPage({
 
             <header className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-xs font-semibold tracking-wide text-white/70">
-                        {frontmatter.type}
-                        {frontmatter.industry ? ` · ${frontmatter.industry}` : ''}
-                    </p>
+                    <Chip variant="primary">{frontmatter.type}</Chip>
                     <SegmentBadge segment={frontmatter.segment} />
+                    {frontmatter.industry ? (
+                        <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.industry}</p>
+                    ) : null}
                 </div>
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
                 <p className="text-white/70">{frontmatter.roles.join(' · ')}</p>

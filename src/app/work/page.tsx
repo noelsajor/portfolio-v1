@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getProjects } from '@/lib/projects'
 import { buildPageMetadata } from '@/lib/site-config'
 import { SegmentBadge } from '@/components/SegmentBadge'
+import { Chip } from '@/components/Chip'
 
 export const metadata = buildPageMetadata({
     title: 'Work',
@@ -33,7 +34,7 @@ export default function WorkPage() {
                             >
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-2">
-                                        <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                        <Chip variant="primary">{project.type}</Chip>
                                         <SegmentBadge segment={project.segment} />
                                     </div>
                                     <h2 className="text-xl font-semibold tracking-tight">{project.title}</h2>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getFeaturedProjects } from '@/lib/projects'
 import { homeContent } from '@/content/home'
 import { SegmentBadge } from '@/components/SegmentBadge'
+import { Chip } from '@/components/Chip'
 
 export function FeaturedWorkSection() {
     const { featuredWork } = homeContent
@@ -32,7 +33,7 @@ export function FeaturedWorkSection() {
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between gap-3">
                                         <div className="flex items-center gap-2">
-                                            <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                            <Chip variant="primary">{project.type}</Chip>
                                             <SegmentBadge segment={project.segment} />
                                         </div>
                                         <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getFeaturedProjects } from '@/lib/projects'
 import { SegmentBadge } from '@/components/SegmentBadge'
+import { Chip } from '@/components/Chip'
 
 export function LandingProof({ heading }: { heading: string }) {
     const projects = getFeaturedProjects()
@@ -19,7 +20,7 @@ export function LandingProof({ heading }: { heading: string }) {
                             className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
                             <div className="flex items-center gap-2">
-                                <p className="text-xs font-semibold tracking-wide text-white/70">{project.type}</p>
+                                <Chip variant="primary">{project.type}</Chip>
                                 <SegmentBadge segment={project.segment} />
                             </div>
                             <h3 className="mt-2 text-lg font-semibold tracking-tight">{project.title}</h3>
