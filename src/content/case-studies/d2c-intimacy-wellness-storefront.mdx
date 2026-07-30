@@ -1,66 +1,106 @@
-# NUUD Pleasures — Case Study Source Document
-
-**Status**: Approved (Version 4, Final)
-**Purpose**: This is the canonical narrative source for the NUUD Pleasures case study. It is not the final MDX implementation — it is the approved content that future MDX for `src/content/case-studies/nuud-pleasures.mdx` will be generated from.
-
+---
+title: D2C Intimacy & Wellness Storefront
+client: Direct-to-consumer intimacy & wellness brand (name withheld at client's request)
+type: E-commerce
+industry: Consumer Goods / Intimacy & Wellness
+roles:
+  - Shopify Developer
+  - UI/UX Designer
+services:
+  - UI/UX Design
+  - Shopify Theme Development
+  - Front-End Implementation
+  - SEO Implementation
+  - Analytics & Tracking Implementation
+  - Performance Optimization
+summary: Shopify storefront redesign for a direct-to-consumer brand relaunch in a heavily ad-restricted product category — UI/UX design and front-end implementation across the full customer journey, built around strict content-compliance constraints.
+challenge: This wasn't simply a redesign — it was a full brand relaunch in a product category (CBD-containing, sexual-wellness products) that ad platforms restrict and scrutinize heavily, meaning every piece of content had to be curated and structured to keep ad accounts in good standing, not just to look good.
+outcome: Delivered a fully implemented, responsive Shopify storefront across every core template — kept compliant with Meta and Google's advertising content policy throughout — establishing a maintainable architecture that let the marketing team keep the site current without ongoing developer involvement.
+year: "2025"
+duration: ~6-7 months (2025)
+team: Creative Director, Project Manager, SEO Director, Community Manager, Shopify Developer (me) — engaged via a marketing agency for a direct-to-consumer client (name withheld at client's request)
+featured: true
+order: 2
+status: published
+updatedAt: "2026-07-30"
+# coverImage/coverAlt intentionally omitted — no real cover image exists yet.
+# Both fields are optional and paired; add them together once a real asset exists.
+gallery:
+  - id: blog-template
+    status: pending
+  - id: promotional-landing-page
+    status: pending
+  - id: reusable-section-system
+    status: pending
+seoTitle: D2C Intimacy & Wellness Storefront — Shopify Redesign | Jose Leon
+seoDescription: Shopify storefront redesign for a direct-to-consumer brand relaunch in a heavily ad-restricted product category — UI/UX design and front-end implementation across the full customer journey.
 ---
 
-## 1. Overview
+**Note:** The client's name and identifying details (brand name, agency name, domain) are withheld at their request. The work and results described below are real and verified against project records.
 
-NUUD Pleasures is a direct-to-consumer brand that engaged ASCENTMGMT for a complete brand experience redesign, spanning packaging, visual identity, and Shopify storefront. Over approximately six to seven months in 2025, I served as Shopify Developer and UI/UX Designer, responsible for translating the new brand direction into a responsive, production-ready storefront.
+## Overview
 
-## 2. Project Summary
+This brand is a direct-to-consumer intimacy and wellness label that engaged a marketing agency for a complete brand experience redesign, spanning packaging, visual identity, and Shopify storefront. Over approximately six to seven months in 2025, I served as Shopify Developer and UI/UX Designer, responsible for translating the new brand direction into a responsive, production-ready storefront.
+
+## Project Summary
 
 - **Role**: Shopify Developer, UI/UX Designer
 - **Duration**: ~6–7 months (2025)
 - **Platform**: Shopify (OS 2.0)
-- **Industry**: Consumer Goods / E-commerce
+- **Industry**: Consumer Goods / Intimacy & Wellness
 - **Team**: Creative Director, Project Manager, SEO Director, Community Manager, Shopify Developer (me)
 - **Deliverables**: Homepage, product detail pages with variant-based smart filtering, collection pages, blog templates with SEO-preserving filtering, promotional landing pages, reusable Liquid section system, pixel and analytics tracking setup
 
-## 3. Business Context
+## Business Context
 
 The project team included a Creative Director, Project Manager, SEO Director, and Community Manager alongside myself as Shopify Developer. Packaging and visual identity were part of the broader engagement; my scope was the storefront — building the new brand direction out across every major template the business needed to run on day to day.
 
-## 4. Challenge
+The product line contained CBD and other actively regulated ingredients and was positioned in the sexual-wellness category — both flagged categories under Meta and Google's advertising policies. That constraint sat underneath every part of the build: product copy, imagery, and page structure all had to be curated to stay within platform content rules, not just to read well.
 
-NUUD Pleasures wasn't simply redesigning a website. The engagement was a full brand relaunch — packaging, visual identity, and storefront — meaning the digital experience had to introduce an entirely new brand to customers, not just refresh an existing one.
+## Challenge
+
+This brand wasn't simply redesigning a website. The engagement was a full brand relaunch — packaging, visual identity, and storefront — meaning the digital experience had to introduce an entirely new brand to customers, not just refresh an existing one.
 
 At the product level, that meant the new identity had to hold together across the full shopping journey — homepage, product pages, collections, and blog — as one coherent experience rather than a redesigned landing page sitting on top of an unchanged store.
 
 At the technical level, the storefront also had to support the business past launch day: ongoing marketing campaigns and future growth, which meant the marketing team needed to be able to assemble and update pages themselves. That requirement shaped the implementation toward reusable, structured Liquid sections rather than one-off page builds.
 
-## 5. Design to Development
+Running paid ads for this category added a layer most storefronts never have to deal with: Meta and Google both restrict and closely review ads and landing pages for CBD and sexual-wellness products, and a single non-compliant page or claim can get an entire ad account flagged or disabled. Every template, not just the ad creative itself, had to be built with that risk in mind.
+
+## Design to Development
 
 The project began with a complete redesign in Figma, covering the homepage, product detail pages, collection pages, blog, and supporting UI components. My role was to take that approved design and translate it into a production-ready Shopify storefront — preserving the visual language, UX decisions, and interaction patterns as designed, while adapting them to the constraints and capabilities of the Shopify platform. Throughout implementation, I worked closely with the Creative Director and the rest of the project team to confirm that build-stage decisions stayed true to the approved design intent, rather than translating the Figma files in isolation.
 
-## 6. Solution
+## Solution
 
 The objective was a storefront that balanced three things at once: design fidelity to the approved Figma work, enough flexibility for the marketing team to keep the site current independently, and a codebase that would remain maintainable as the brand grew. I built the theme on Shopify OS 2.0 in Liquid, HTML, CSS, and JavaScript, covering the homepage, product detail pages, collection pages, and blog templates, plus dedicated promotional landing pages for marketing campaigns.
 
 Rather than hard-coding each page, I structured the theme around custom, reusable sections configured with metafields and schema — this was the mechanism that let the marketing team assemble and update pages themselves without needing a developer for every change, directly supporting the requirement to keep the storefront usable well past initial launch.
 
+Because the product category was restricted on ad platforms, every page the marketing team could assemble also needed guardrails built in: I worked within a strict content-review process so that product claims, imagery, and page copy stayed inside Meta and Google's advertising policies for CBD and sexual-wellness products, rather than relying on catching issues after an ad got disapproved or an account got flagged.
+
 Responsive behavior was implemented across the full template set, and SEO — including schema configuration — was built into the front-end work directly rather than added as a separate pass afterward. I also produced supporting marketing assets and carried the work through QA and deployment support.
 
 On the product detail page, I built a custom smart-filtering system that lets shoppers narrow products down by variant — size, color, and other options — across the full catalog, rather than falling back to a single flat listing. Each filtered view keeps its own indexable, SEO-friendly URL, so the filtering experience never comes at the expense of how the catalog gets crawled and indexed. I applied the same approach to the blog, adding a filtering tool over blog content that preserves the same SEO structure.
 
-I also implemented the storefront's tracking stack — Meta Pixel, Twitter/X Pixel, and Google Tag Manager — auditing and fixing the existing setup so campaign attribution and conversion tracking worked correctly across the funnel.
+I also implemented the storefront's tracking stack — Meta Pixel, Twitter/X Pixel, and Google Tag Manager — auditing and fixing the existing setup so campaign attribution and conversion tracking worked correctly across the funnel, within the same platform content constraints.
 
 Once the redesign itself was live, the engagement's focus shifted to performance: a dedicated pass to improve Lighthouse scores and Core Web Vitals (LCP, INP, CLS) across the storefront's core templates.
 
-## 7. Outcome
+## Outcome
 
 The engagement delivered a fully implemented, responsive Shopify storefront across the homepage, product detail pages, collection pages, blog, and supporting promotional landing pages. More than a one-time redesign, it established the digital foundation for the new brand — a maintainable storefront architecture built to support future merchandising and marketing efforts without requiring ongoing developer involvement for routine content changes.
 
-Beyond the redesign itself, the storefront shipped with a variant-based smart-filtering system on the PDP and blog that kept every filtered view SEO-friendly, a corrected tracking stack across Meta Pixel, Twitter/X Pixel, and Google Tag Manager, and a dedicated post-launch pass to improve Lighthouse scores and Core Web Vitals across the core templates.
+Beyond the redesign itself, the storefront shipped with a variant-based smart-filtering system on the PDP and blog that kept every filtered view SEO-friendly, a corrected tracking stack across Meta Pixel, Twitter/X Pixel, and Google Tag Manager, and a dedicated post-launch pass to improve Lighthouse scores and Core Web Vitals across the core templates — all built and maintained within Meta and Google's advertising content policy, so the brand could run paid campaigns without the account-level risk that regularly disrupts advertisers in this category.
 
-## 8. My Contributions
+## My Contributions
 
 - Led front-end implementation of the redesigned storefront, from initial build through deployment support
 - Translated the new brand identity into UI/UX decisions across the storefront experience
 - Developed a reusable Shopify theme architecture using metafields and schema, built for marketing-team self-sufficiency
 - Implemented responsive experiences across all core commerce templates — homepage, PDP, collection, and blog
 - Directed SEO implementation and schema configuration as part of the front-end build, not as a separate pass
+- Built and maintained every page within Meta and Google's advertising content-policy constraints for a restricted product category (CBD, sexual wellness), reducing the risk of ad-account flags or disapprovals
 - Built a custom PDP filtering system that lets shoppers filter across all product variants while keeping indexable, SEO-friendly URLs for every filtered view
 - Built a matching SEO-preserving filtering tool for the blog
 - Implemented and fixed the storefront's tracking stack — Meta Pixel, Twitter/X Pixel, and Google Tag Manager
@@ -69,7 +109,7 @@ Beyond the redesign itself, the storefront shipped with a variant-based smart-fi
 - Collaborated with the Creative Director, Project Manager, SEO Director, and Community Manager throughout implementation
 - Supported QA and deployment through project completion
 
-## 9. Technologies
+## Technologies
 
 - **Platform**: Shopify
 - **Languages**: Liquid, HTML, CSS, JavaScript

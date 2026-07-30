@@ -1,6 +1,6 @@
 # Portfolio (portfolio-v1)
 
-Jose Leon's personal portfolio — a Next.js site with case studies (iOTEK, NUUD Pleasures), a production contact form, and a hardened deployment configuration.
+Jose Leon's personal portfolio — a Next.js site with real client case studies (some anonymized at client request), a production contact form, and a hardened deployment configuration.
 
 This repository doubles as a reusable "Agency Master Operation Template": the same architecture, SOPs (`docs/best-practices/`), and rebrand workflow (`docs/first-kick-prompt-template.md`) can bootstrap a new client site. That template usage is documented separately — everything in this README describes the repository as it exists today, running as a real, deployed portfolio.
 

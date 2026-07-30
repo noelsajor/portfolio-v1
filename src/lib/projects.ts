@@ -11,7 +11,7 @@ function isTemplateSlug(slug: string): boolean {
 }
 
 // Lowercase, digits, single hyphens between segments — the same shape as the
-// two real slugs today ("iotek", "nuud"). Nothing currently enforced this:
+// real slugs today ("iotek", "d2c-wellness-storefront", etc). Nothing currently enforced this:
 // any filename produced a "valid" slug and therefore a servable URL, so a
 // typo'd or inconsistently-cased filename (e.g. "My Project!.mdx") would
 // have silently shipped an ugly, non-canonical /work/... URL.
@@ -20,7 +20,7 @@ const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/
 function assertValidSlug(slug: string, filename: string): void {
     if (!SLUG_PATTERN.test(slug)) {
         throw new Error(
-            `Invalid case-study filename "${filename}": derived slug "${slug}" must be lowercase letters, digits, and single hyphens only (e.g. "nuud-pleasures.mdx").`
+            `Invalid case-study filename "${filename}": derived slug "${slug}" must be lowercase letters, digits, and single hyphens only (e.g. "example-project.mdx").`
         )
     }
 }

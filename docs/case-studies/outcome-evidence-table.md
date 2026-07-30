@@ -28,11 +28,14 @@ review before this audit.)
 No claim about lead volume, conversion rate, revenue, or fleet/customer
 count appears anywhere in the file. Nothing to flag here.
 
-## NUUD Pleasures (`src/content/case-studies/nuud.mdx`)
+## D2C Intimacy & Wellness Storefront (`src/content/case-studies/d2c-intimacy-wellness-storefront.mdx`)
+
+Anonymized at the client's request — see "How the anonymized D2C case
+studies fit into the wider positioning" in `messaging-framework.md`.
 
 | Claim | Category | Publicly verifiable? | Attributable to my work? | Exact wording allowed | Proof location |
 |---|---|---|---|---|---|
-| Shopify storefront redesign, full customer journey | 1 | No live URL published in frontmatter (store may have since changed) | Yes | As published | Prior engagement record via ASCENTMGMT; case study already approved through editorial review per project history |
+| Shopify storefront redesign, full customer journey | 1 | No live URL published in frontmatter (store may have since changed) | Yes | As published | Prior engagement record via the marketing agency; case study already approved through editorial review per project history |
 | Fully implemented, responsive storefront across every core template | 1 | Same as above | Yes | As published | Same |
 | Maintainable, reusable Liquid/metafield architecture reduces ongoing developer dependency | 2 | Internal — an architecture/process claim, not a business metric | Yes — I designed it | As published | Same |
 

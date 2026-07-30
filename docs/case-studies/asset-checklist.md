@@ -2,7 +2,7 @@
 
 Produced during Phase 1, Step 1.1 (media placeholder cleanup). The dashed
 "Image pending" boxes and inline `<ImagePlaceholder>` tags were removed from
-`iotek.mdx` and `nuud.mdx` — no fake screenshots were substituted. This
+`iotek.mdx` and `d2c-intimacy-wellness-storefront.mdx` — no fake screenshots were substituted. This
 checklist tracks which real screenshots would fill those slots once available,
 using the exact `id`s that were authored in the MDX source before removal (so
 intent isn't lost, only the placeholder rendering).
@@ -28,7 +28,7 @@ Gallery slots already defined in frontmatter (`icon-set-spread`,
 `division-sublockup-examples`, `newsletter`, `brochure`) remain `status:
 pending` and need real assets + alt text.
 
-## NUUD Pleasures
+## D2C Intimacy & Wellness Storefront (anonymized)
 
 | Former placeholder id | What it would show | Priority |
 |---|---|---|
@@ -39,7 +39,8 @@ pending` and need real assets + alt text.
 
 Gallery slots already defined in frontmatter (`blog-template`,
 `promotional-landing-page`, `reusable-section-system`) remain `status:
-pending`.
+pending`. Any real screenshot used here must not reveal the client's name,
+domain, or product branding — crop/redact accordingly before adding it.
 
 ## Citriom / other product work
 

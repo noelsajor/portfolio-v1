@@ -1,8 +1,12 @@
 # Third case-study slot
 
-Per Phase 3, Step 3.5. **No third case study was added** — there's no
-verified project in this repo or its docs to build one from, and the plan is
-explicit: don't fabricate one.
+Per Phase 3, Step 3.5. **Update (2026-07-30): superseded.** A third case
+study (`d2c-wellness-storefront.mdx`) was added from real, verified project
+history, and the second slot (formerly a differently-named file) was renamed to
+`d2c-intimacy-wellness-storefront.mdx` and anonymized at the client's
+request. The rest of this file is kept as the process record for how a
+candidate should be evaluated before publishing — the original framing below
+(written when no third case study existed yet) is left unedited.
 
 ## Structural capacity already exists — no code change needed
 
@@ -24,7 +28,7 @@ ahead of time.
 
 ## Checklist to fill in once a candidate is chosen
 
-Use the same rigor as iOTEK/NUUD went through (discovery → outcome
+Use the same rigor as prior case studies went through (discovery → outcome
 verification → editorial review) before publishing:
 
 - **Context** — client/project background

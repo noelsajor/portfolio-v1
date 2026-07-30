@@ -71,12 +71,13 @@ those are historical records, not copy, and are deliberately left unedited.
 
 ## How Shopify fits into the wider positioning
 
-Shopify is a strong, real capability (see NUUD Pleasures) but not the only
-one. Copy that describes the *entire* portfolio or the person as
-"Shopify-focused" or "e-commerce" is inaccurate — of the two published case
-studies, only NUUD is Shopify/e-commerce. iOTEK is a Marketing Website
-(Astro), not Shopify. Site-wide copy (homepage, About, `/work` index) should
-describe Shopify as one of several services, not the umbrella category.
+Shopify is a strong, real capability (see the anonymized D2C case studies)
+but not the only one. Copy that describes the *entire* portfolio or the
+person as "Shopify-focused" or "e-commerce" is inaccurate — of the three
+published case studies, two are Shopify/e-commerce. iOTEK is a Marketing
+Website (Astro), not Shopify. Site-wide copy (homepage, About, `/work`
+index) should describe Shopify as one of several services, not the umbrella
+category.
 
 ## How iOTEK fits into the wider positioning
 
@@ -84,20 +85,28 @@ B2B IoT/industrial-connectivity marketing website, brand identity system,
 and front-end implementation — built in Astro, not Shopify. The engagement
 was a full-time remote employment relationship (official title: Graphic
 Designer; actual scope: UI/UX Design + Junior Front-End Development). The
-case study should lead with scope and deliverables, the same way NUUD does,
-rather than reading as first-person employment narrative — see Phase 2 Step
-2.4.
+case study should lead with scope and deliverables, the same way the
+anonymized case studies do, rather than reading as first-person employment
+narrative — see Phase 2 Step 2.4.
 
-## How the D2C wellness storefront case study fits into the wider positioning
+## How the anonymized D2C case studies fit into the wider positioning
 
-Shopify theme development, Core Web Vitals/performance optimization, SEO, and
-tracking work for a direct-to-consumer wellness brand — the client's name and
-identifying details are withheld at their request (no public-display
-permission was given, unlike iOTEK). Do not add the real client name,
-domain, or product names anywhere in this repo, including "internal" docs
-under `docs/`, because this repository is public on GitHub — there is no
-private location inside it to keep that detail. Full engagement detail
-lives only in private memory (engram), not in any committed file.
+Two of the three published case studies are anonymized at the client's
+request: no public-display permission was given, unlike iOTEK. **Do not add
+either client's real name, domain, agency name, or identifying product
+names anywhere in this repo**, including "internal" docs under `docs/`,
+because this repository is public on GitHub — there is no private location
+inside it to keep that detail. Full engagement detail for both lives only in
+private memory (engram), never in a committed file.
+
+- **`d2c-wellness-storefront.mdx`** — Shopify theme development, Core Web
+  Vitals/performance optimization, SEO, and tracking work for a
+  direct-to-consumer wellness brand.
+- **`d2c-intimacy-wellness-storefront.mdx`** — Shopify storefront redesign
+  for a direct-to-consumer brand relaunch in a heavily ad-restricted product
+  category (CBD, sexual wellness) — every page had to be built and
+  maintained within Meta/Google's advertising content policy, not just
+  designed well.
 
 ## How EMRG or white-label work should be referenced
 

@@ -45,10 +45,10 @@ const experience = [
         detail: 'Full-time remote. Brand identity system and bilingual production website for a multi-division IoT company.'
     },
     {
-        title: 'NUUD Pleasures (via ASCENTMGMT)',
-        role: 'Front-End Shopify Developer & UI/UX Designer',
+        title: 'D2C Intimacy & Wellness Brand (via marketing agency)',
+        role: 'Shopify Developer & UI/UX Designer',
         period: '2025, ~6–7 months',
-        detail: 'Shopify storefront redesign for a direct-to-consumer brand relaunch.'
+        detail: 'Shopify storefront redesign for a direct-to-consumer brand relaunch in a heavily ad-restricted product category.'
     }
 ]
 
