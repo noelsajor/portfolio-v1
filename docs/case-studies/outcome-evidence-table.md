@@ -14,23 +14,29 @@ company-level metric claims were found in either file, and nothing needed to
 be removed.** (Both case studies had already been through prior editorial
 review before this audit.)
 
-## iOTEK (`src/content/case-studies/iotek.mdx`)
+## Brand & Website Build (`src/content/case-studies/brand-website-build.mdx`)
+
+Anonymized at the client's request (no public-display permission — this
+case study was previously published under the real company name and a real
+`liveUrl`; both were removed along with the real client names it referenced
+in results). See "How the anonymized case studies fit into the wider
+positioning" in `messaging-framework.md`.
 
 | Claim | Category | Publicly verifiable? | Attributable to my work? | Exact wording allowed | Proof location |
 |---|---|---|---|---|---|
-| Solo-built brand identity system + bilingual production website, CRM-integrated | 1 | Yes — `liveUrl: https://iotekcorp.net` | Yes — sole designer/developer | As published | Live site |
-| Replaced outdated site with complete bilingual production website | 1 | Yes | Yes | As published | Live site |
-| Site presents real client work (Power Solar, ConWaste, Central Industrial) | 1 | Yes — visible on live site | Describes site content, not a performance claim | As published | Live site |
+| Solo-built brand identity system + bilingual production website, CRM-integrated | 1 | No longer publicly linkable (anonymized) | Yes — sole designer/developer | As published | Prior engagement record |
+| Replaced outdated site with complete bilingual production website | 1 | Same as above | Yes | As published | Same |
+| Site presents real client work across the industrial sector | 1 | Same as above | Describes site content, not a performance claim | As published (real client names removed) | Same |
 | Seven divisions unified under one brand system | 2 | Not independently public, but a scope/delivery fact, not a metric | Yes | As published | Project scope (frontmatter `services`/`roles`) |
-| Bilingual (EN/ES) + light/dark theme delivered | 1 | Yes | Yes | As published | Live site |
+| Bilingual (EN/ES) + light/dark theme delivered | 1 | Same as above | Yes | As published | Same |
 | CRM integration routes visitor inquiries to sales pipeline | 2 | Internal (can't verify lead volume/quality externally) | Yes — I built the integration | As published — no lead-count or conversion number is claimed, only that the integration exists and routes inquiries | N/A — no number attached |
 
 No claim about lead volume, conversion rate, revenue, or fleet/customer
 count appears anywhere in the file. Nothing to flag here.
 
-## D2C Intimacy & Wellness Storefront (`src/content/case-studies/d2c-intimacy-wellness-storefront.mdx`)
+## Intimacy Storefront Design & Build (`src/content/case-studies/d2c-intimacy-wellness-storefront.mdx`)
 
-Anonymized at the client's request — see "How the anonymized D2C case
+Anonymized at the client's request — see "How the anonymized case
 studies fit into the wider positioning" in `messaging-framework.md`.
 
 | Claim | Category | Publicly verifiable? | Attributable to my work? | Exact wording allowed | Proof location |

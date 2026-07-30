@@ -4,11 +4,16 @@ Per Phase 3, Step 3.5. **Update (2026-07-30): superseded.** A third case
 study (`d2c-wellness-storefront.mdx`) was added from real, verified project
 history, and the second slot (formerly a differently-named file) was renamed
 to `d2c-intimacy-wellness-storefront.mdx` and anonymized at the client's
-request. A fourth (`d2c-hemp-cannabis-storefront.mdx`, status: draft
-pending review) was added the same way. The rest of this file is kept as
-the process record for how a candidate should be evaluated before
-publishing — the original framing below (written when no third case study
-existed yet) is left unedited.
+request. A fourth (`d2c-hemp-cannabis-storefront.mdx`) and fifth
+(`b2b-supplement-manufacturer-site.mdx`) were added the same way. The
+original first slot (formerly published under a real company name, as a
+differently-named file) was later anonymized too — no public-display
+permission existed for it either — and renamed to
+`brand-website-build.mdx`. All five
+published case studies are now anonymized at their clients' request. The
+rest of this file is kept as the process record for how a candidate should
+be evaluated before publishing — the original framing below (written when
+no third case study existed yet) is left unedited.
 
 ## Structural capacity already exists — no code change needed
 
@@ -36,7 +41,7 @@ verification → editorial review) before publishing:
 - **Context** — client/project background
 - **Challenge** — the real problem, not a generic one
 - **Role** — your actual scope, distinguished from any official title if
-  different (see the iOTEK precedent, Phase 2 Step 2.4)
+  different (see the brand & website build precedent, Phase 2 Step 2.4)
 - **Deliverables** — what actually shipped
 - **Constraints** — real limitations you worked within
 - **Process** — how the work actually happened

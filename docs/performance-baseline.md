@@ -9,7 +9,7 @@ Recorded against the production build (`pnpm build && pnpm start`), Lighthouse 1
 | `/` | 100 | 100 | 100 | 100 | 0.5s | 0 | 0ms | 228 KiB |
 | `/about` | 100 | 100 | 100 | 100 | 0.5s | 0 | 0ms | 224 KiB |
 | `/work` | 100 | 100 | 100 | 100 | 0.5s | 0 | 0ms | 250 KiB |
-| `/work/iotek` | 100 | 100 | 100 | 100 | 0.6s | 0 | 0ms | 236 KiB |
+| `/work/brand-website-build` | 100 | 100 | 100 | 100 | 0.6s | 0 | 0ms | 236 KiB |
 | `/contact` | 100 | 100 | 100 | 100 | 0.5s | 0 | 0ms | 224 KiB |
 | `/` with GA4 enabled (`NEXT_PUBLIC_GA_MEASUREMENT_ID` set) | 100 | 100 | 100 | 100 | 0.5s | 0 | 0ms | 373 KiB |
 

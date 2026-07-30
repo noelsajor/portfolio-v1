@@ -11,7 +11,7 @@ function isTemplateSlug(slug: string): boolean {
 }
 
 // Lowercase, digits, single hyphens between segments — the same shape as the
-// real slugs today ("iotek", "d2c-wellness-storefront", etc). Nothing currently enforced this:
+// real slugs today ("brand-website-build", "d2c-wellness-storefront", etc). Nothing currently enforced this:
 // any filename produced a "valid" slug and therefore a servable URL, so a
 // typo'd or inconsistently-cased filename (e.g. "My Project!.mdx") would
 // have silently shipped an ugly, non-canonical /work/... URL.

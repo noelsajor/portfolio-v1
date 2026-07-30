@@ -60,7 +60,7 @@ Frontmatter is treated as external, untrusted input. The authoritative field lis
 
 **On invalid frontmatter**: `readProjectFile()` throws immediately, failing the dev server or build loudly (never a production runtime response) with the filename, slug, failing field path(s), and a human-readable reason, e.g.:
 ```
-Invalid case-study frontmatter in "iotek.mdx" (slug: "iotek"):
+Invalid case-study frontmatter in "example-project.mdx" (slug: "example-project"):
   - title: title is required
   - liveUrl: liveUrl must be a valid URL
 ```
@@ -71,9 +71,9 @@ Invalid case-study frontmatter in "iotek.mdx" (slug: "iotek"):
 
 Two fields are intentionally free-text strings, not structured dates: `year` (e.g. `"2025"`) and `duration` (e.g. `"~6-7 months (2025)"`). Case studies store these as human-readable values, not ISO dates, so the schema doesn't force a date shape onto them.
 
-`updatedAt` (optional, `YYYY-MM-DD`) is the one real date field: the date a case study's content was last meaningfully revised. It's manually authored, not auto-computed — update it by hand when you materially edit a published case study, not for typo fixes, and never set it to today's date just to have a value. It powers the sitemap's `lastModified` for that project; a project without `updatedAt` simply has no `lastModified` entry rather than one backfilled with the build date. `iotek.mdx` and `d2c-intimacy-wellness-storefront.mdx` were seeded with `2026-07-21`, the real date of the commit that published both (the latter under its original filename, before it was renamed and anonymized) — not an invented value.
+`updatedAt` (optional, `YYYY-MM-DD`) is the one real date field: the date a case study's content was last meaningfully revised. It's manually authored, not auto-computed — update it by hand when you materially edit a published case study, not for typo fixes, and never set it to today's date just to have a value. It powers the sitemap's `lastModified` for that project; a project without `updatedAt` simply has no `lastModified` entry rather than one backfilled with the build date. `brand-website-build.mdx` and `d2c-intimacy-wellness-storefront.mdx` were seeded with `2026-07-21`, the real date of the commit that published both (both under their original, pre-anonymization filenames at the time) — not an invented value.
 
-**Field order convention**: `_template.mdx`, `iotek.mdx`, and `d2c-intimacy-wellness-storefront.mdx` all use the same frontmatter key order — identity/classification (`title`→`services`), narrative content (`summary`→`outcome`), timeframe (`year`→`team`), publication metadata (`featured`→`updatedAt`), cover/gallery media, then SEO overrides and external links. Order has no effect on validation (YAML keys are unordered data), but a consistent order is what makes the two real files, and any future one, easy to compare side by side. Follow it when adding a project.
+**Field order convention**: `_template.mdx`, `brand-website-build.mdx`, and `d2c-intimacy-wellness-storefront.mdx` all use the same frontmatter key order — identity/classification (`title`→`services`), narrative content (`summary`→`outcome`), timeframe (`year`→`team`), publication metadata (`featured`→`updatedAt`), cover/gallery media, then SEO overrides and external links. Order has no effect on validation (YAML keys are unordered data), but a consistent order is what makes the two real files, and any future one, easy to compare side by side. Follow it when adding a project.
 
 **`coverImage`/`coverAlt`** are optional, but paired — set both together or neither (enforced by a schema `refine`, not just documentation). Originally required, they were made optional because neither has a real UI consumer yet (no page renders them), and requiring them forced content authors to fill in fake placeholder text ("TODO: placeholder...") just to satisfy the schema before a real cover image existed — the same problem `gallery` already solved correctly with optional `src`/`alt` per item. Add real values together once a real asset exists; don't add one without the other, and don't fill in placeholder text again.
 

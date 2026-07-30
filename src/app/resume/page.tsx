@@ -39,13 +39,13 @@ const skillGroups = [
 
 const experience = [
     {
-        title: 'iOTEK',
+        title: 'Brand & Website Build (B2B IoT company)',
         role: 'UI/UX Design & Front-End Implementation (official title: Graphic Designer)',
         period: '2026, ~5–6 months',
         detail: 'Full-time remote. Brand identity system and bilingual production website for a multi-division IoT company.'
     },
     {
-        title: 'D2C Intimacy & Wellness Brand (via marketing agency)',
+        title: 'Intimacy Storefront Design & Build (via marketing agency)',
         role: 'Shopify Developer & UI/UX Designer',
         period: '2025, ~6–7 months',
         detail: 'Shopify storefront redesign for a direct-to-consumer brand relaunch in a heavily ad-restricted product category.'

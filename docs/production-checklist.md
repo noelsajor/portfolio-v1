@@ -61,9 +61,9 @@ manual, account-side action still required before it's live.
       site renders in system-fallback fonts today. Documented as a
       design/product decision in `docs/performance-baseline.md`, not fixed,
       since adding real font loading would add a network request.
-- [ ] Add real cover images for iOTEK and the two anonymized D2C case
-      studies (`coverImage`/`coverAlt` are intentionally omitted in their
-      MDX frontmatter until a real image exists — see `_template.mdx`) and
-      real gallery images (all `status: pending`). For the anonymized case
-      studies, any image must be cropped/redacted so it doesn't reveal the
-      client's name, domain, or product branding.
+- [ ] Add real cover images for all five case studies (`coverImage`/
+      `coverAlt` are intentionally omitted in their MDX frontmatter until a
+      real image exists — see `_template.mdx`) and real gallery images (all
+      `status: pending`). All five are anonymized — any image must be
+      cropped/redacted so it doesn't reveal the client's name, domain, or
+      product branding.

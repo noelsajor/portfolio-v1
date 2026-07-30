@@ -32,7 +32,7 @@ rather than presenting two contradictory identities on the same page.
 - UI systems / design systems
 - Front-end implementation (responsive, accessible, maintainable)
 - Shopify development (theme customization, storefronts, Liquid)
-- Brand identity systems (see iOTEK)
+- Brand identity systems (see the anonymized brand & website build case study)
 
 ## Preferred role description
 
@@ -46,10 +46,8 @@ studies are positioning assets: they should present Jose as a strategic
 partner a team can hand an operational problem to, not as someone who needs
 supervision. Describing the work as "front-end implementation" is accurate
 and neutral — it claims no seniority and understates nothing. The scale of
-the work (e.g. solo-building iOTEK's brand system and production site)
-speaks for itself without a self-applied qualifier. Internal research
-records under `docs/case-studies/` may still contain the original wording;
-those are historical records, not copy, and are deliberately left unedited.
+the work (e.g. solo-building a client's brand system and production site)
+speaks for itself without a self-applied qualifier.
 
 ## Terms to use consistently
 
@@ -71,35 +69,41 @@ those are historical records, not copy, and are deliberately left unedited.
 
 ## How Shopify fits into the wider positioning
 
-Shopify is a strong, real capability (see the anonymized D2C case studies)
-but not the only one. Copy that describes the *entire* portfolio or the
-person as "Shopify-focused" or "e-commerce" is inaccurate — of the five
-published case studies, three are Shopify/e-commerce. iOTEK and the
-anonymized B2B supplement-manufacturer site are both Marketing Websites
-(Astro), not Shopify. Site-wide copy (homepage, About, `/work` index)
-should describe Shopify as one of several services, not the umbrella
-category.
+Shopify is a strong, real capability (see the anonymized e-commerce case
+studies) but not the only one. Copy that describes the *entire* portfolio
+or the person as "Shopify-focused" or "e-commerce" is inaccurate — of the
+five published case studies, three are Shopify/e-commerce. The other two
+(the brand & website build, and the supplement-manufacturer site) are both
+Marketing Websites (Astro), not Shopify. Site-wide copy (homepage, About,
+`/work` index) should describe Shopify as one of several services, not the
+umbrella category.
 
-## How iOTEK fits into the wider positioning
+## How the brand & website build case study fits into the wider positioning
 
 B2B IoT/industrial-connectivity marketing website, brand identity system,
 and front-end implementation — built in Astro, not Shopify. The engagement
 was a full-time remote employment relationship (official title: Graphic
 Designer; actual scope: UI/UX Design + Junior Front-End Development). The
-case study should lead with scope and deliverables, the same way the
-anonymized case studies do, rather than reading as first-person employment
+client's real name is withheld at their request (no public-display
+permission — see the anonymization rule below). The case study leads with
+scope and deliverables rather than reading as first-person employment
 narrative — see Phase 2 Step 2.4.
 
 ## How the anonymized case studies fit into the wider positioning
 
-Four of the five published case studies are anonymized at the client's
-request: no public-display permission was given, unlike iOTEK. **Do not add
-any of these clients' real names, domains, agency names, or identifying
-product/brand names anywhere in this repo**, including "internal" docs
-under `docs/`, because this repository is public on GitHub — there is no
-private location inside it to keep that detail. Full engagement detail for
-all four lives only in private memory (engram), never in a committed file.
+All five published case studies are anonymized at the client's request: no
+public-display permission was given for any of them, including the
+brand/website build (previously published under the real company name —
+that name, its domain, its live-site link, and the real client names it
+referenced have all been removed). **Do not add any of these clients' real
+names, domains, agency names, or identifying product/brand names anywhere
+in this repo**, including "internal" docs under `docs/`, because this
+repository is public on GitHub — there is no private location inside it to
+keep that detail. Full engagement detail for all five lives only in private
+memory (engram), never in a committed file.
 
+- **`brand-website-build.mdx`** — ground-up brand identity system and
+  bilingual production website for a multi-division B2B IoT company.
 - **`d2c-wellness-storefront.mdx`** — Shopify theme development, Core Web
   Vitals/performance optimization, SEO, and tracking work for a
   direct-to-consumer wellness brand.
@@ -112,10 +116,22 @@ all four lives only in private memory (engram), never in a committed file.
   (no prior active store) for a direct-to-consumer CBD/Delta-8/Delta-9/
   medical-cannabis brand — multi-line product catalog, shared strain
   filtering, and an ongoing lab-certificate (COA) compliance system.
-- **`b2b-supplement-manufacturer-site.mdx`** — the one B2B case study: an
-  Astro + Sanity marketing site with a lead-generation funnel and a custom
-  product-mockup tool for a private-label supplement manufacturer, plus a
-  full production infrastructure handoff to the client's own accounts.
+- **`b2b-supplement-manufacturer-site.mdx`** — an Astro + Sanity marketing
+  site with a lead-generation funnel and a custom product-mockup tool for a
+  private-label supplement manufacturer, plus a full production
+  infrastructure handoff to the client's own accounts.
+
+## Card title convention (updated 2026-07-30)
+
+Case-study card titles summarize the primary deliverable/task (e.g. "Brand
+& Website Build", "Wellness Storefront Build & Optimization"), not the
+client segment. Segment language (D2C, B2B) belongs in the internal
+description/summary fields, not the title — this was a deliberate change
+away from titles like "D2C Wellness Storefront" once that prefix started
+repeating across every card and added noise instead of clarity. A visual
+segment chip/tag on the card is a separate, not-yet-implemented idea
+(would need a new frontmatter field and a card-component change) — do not
+assume it exists until it's actually built.
 
 ## How EMRG or white-label work should be referenced
 
