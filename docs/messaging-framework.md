@@ -39,9 +39,17 @@ rather than presenting two contradictory identities on the same page.
 **Multidisciplinary Designer & Front-End Production Specialist**
 
 Do not use "Senior" as a job title anywhere on the site — not supported by a
-confirmed professional history/title, and not approved. Do not use "Junior"
-either (it appears in iOTEK's actual official title and should stay factual
-there, but not bleed into site-wide positioning).
+confirmed professional history/title, and not approved.
+
+Do not use "Junior" anywhere either, including inside case studies. Case
+studies are positioning assets: they should present Jose as a strategic
+partner a team can hand an operational problem to, not as someone who needs
+supervision. Describing the work as "front-end implementation" is accurate
+and neutral — it claims no seniority and understates nothing. The scale of
+the work (e.g. solo-building iOTEK's brand system and production site)
+speaks for itself without a self-applied qualifier. Internal research
+records under `docs/case-studies/` may still contain the original wording;
+those are historical records, not copy, and are deliberately left unedited.
 
 ## Terms to use consistently
 
@@ -55,7 +63,7 @@ there, but not bleed into site-wide positioning).
 - "Senior" (unapproved job title)
 - "Shopify-focused" / "Shopify Developer" as the sole identity — Shopify is
   a strong capability, not the whole positioning
-- "Junior front-end development" outside of iOTEK's factual role context
+- "Junior" in any form, anywhere in public copy (see role description above)
 - Any language implying full-service agency scale (this is founder-led,
   solo work)
 - Unverified metrics, outcomes, or client quotes (see evidence table,
