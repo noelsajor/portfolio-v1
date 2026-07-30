@@ -73,10 +73,11 @@ those are historical records, not copy, and are deliberately left unedited.
 
 Shopify is a strong, real capability (see the anonymized D2C case studies)
 but not the only one. Copy that describes the *entire* portfolio or the
-person as "Shopify-focused" or "e-commerce" is inaccurate — of the four
-published case studies, three are Shopify/e-commerce. iOTEK is a Marketing
-Website (Astro), not Shopify. Site-wide copy (homepage, About, `/work`
-index) should describe Shopify as one of several services, not the umbrella
+person as "Shopify-focused" or "e-commerce" is inaccurate — of the five
+published case studies, three are Shopify/e-commerce. iOTEK and the
+anonymized B2B supplement-manufacturer site are both Marketing Websites
+(Astro), not Shopify. Site-wide copy (homepage, About, `/work` index)
+should describe Shopify as one of several services, not the umbrella
 category.
 
 ## How iOTEK fits into the wider positioning
@@ -89,15 +90,15 @@ case study should lead with scope and deliverables, the same way the
 anonymized case studies do, rather than reading as first-person employment
 narrative — see Phase 2 Step 2.4.
 
-## How the anonymized D2C case studies fit into the wider positioning
+## How the anonymized case studies fit into the wider positioning
 
-Three of the four published case studies are anonymized at the client's
+Four of the five published case studies are anonymized at the client's
 request: no public-display permission was given, unlike iOTEK. **Do not add
 any of these clients' real names, domains, agency names, or identifying
 product/brand names anywhere in this repo**, including "internal" docs
 under `docs/`, because this repository is public on GitHub — there is no
 private location inside it to keep that detail. Full engagement detail for
-all three lives only in private memory (engram), never in a committed file.
+all four lives only in private memory (engram), never in a committed file.
 
 - **`d2c-wellness-storefront.mdx`** — Shopify theme development, Core Web
   Vitals/performance optimization, SEO, and tracking work for a
@@ -111,12 +112,20 @@ all three lives only in private memory (engram), never in a committed file.
   (no prior active store) for a direct-to-consumer CBD/Delta-8/Delta-9/
   medical-cannabis brand — multi-line product catalog, shared strain
   filtering, and an ongoing lab-certificate (COA) compliance system.
+- **`b2b-supplement-manufacturer-site.mdx`** — the one B2B case study: an
+  Astro + Sanity marketing site with a lead-generation funnel and a custom
+  product-mockup tool for a private-label supplement manufacturer, plus a
+  full production infrastructure handoff to the client's own accounts.
 
 ## How EMRG or white-label work should be referenced
 
-No EMRG entity, or any other white-label arrangement, currently appears in
-this project's verified content (checked: not in any MDX file, page, or
-existing docs). Nothing to reference yet — do not invent one. If real
-white-label/agency-partner work exists and should be documented, it needs to
-come from you with the same verification rigor as any other case study
+A real third-party marketing/staffing agency intermediary connects Noel
+with some clients (confirmed for the anonymized intimacy/wellness case
+study and the B2B supplement-manufacturer case study) — but per the same
+anonymization rule above, that intermediary is never named in this repo,
+only referenced generically ("a marketing/staffing agency intermediary").
+No other white-label arrangement or entity currently appears in this
+project's verified content. If more real white-label/agency-partner work
+exists and should be documented, it needs to come from you with the same
+verification rigor as any other case study
 before it's added here or to any page.

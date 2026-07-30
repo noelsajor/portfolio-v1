@@ -1,0 +1,78 @@
+---
+title: B2B Supplement Manufacturer Site & Infrastructure Handoff
+client: B2B private-label supplement manufacturer (name withheld at client's request)
+type: Marketing Website
+industry: Consumer Goods / Supplement Contract Manufacturing (B2B)
+roles:
+  - Full-Stack Developer
+  - Infrastructure & Client Handoff
+services:
+  - Website Development (Astro + Headless CMS)
+  - Front-End Implementation
+  - Lead-Generation Tooling
+  - Production Infrastructure Handoff
+summary: Built a B2B marketing site with a custom lead-generation funnel and an interactive product-mockup tool for a private-label supplement manufacturer, then executed a full production infrastructure handoff to the client's own accounts with zero downtime.
+challenge: The brand needed a B2B site that could turn prospective private-label clients into qualified leads — including letting them preview their own packaging on the manufacturer's real product formats — and, once built, needed full ownership of the production infrastructure transferred into its own accounts without downtime or re-coding.
+outcome: Delivered a live B2B marketing site with a working lead-generation funnel and a custom mockup tool, then completed a full infrastructure handoff — code, hosting, CMS, and email all transferred to the client's own accounts — with zero agency access remaining.
+year: "2026"
+duration: A few weeks (2026)
+team: Engaged via a marketing/staffing agency intermediary; sole developer responsible for the build and the full infrastructure handoff.
+featured: false
+order: 5
+status: draft
+updatedAt: "2026-07-30"
+seoTitle: B2B Supplement Manufacturer Site & Handoff — Astro, Sanity | Jose Leon
+seoDescription: B2B marketing site with a custom lead-generation funnel and product-mockup tool for a private-label supplement manufacturer, plus a full production infrastructure handoff.
+---
+
+**Note:** The client's name and identifying details (brand name, domain) are withheld at their request. The work described below is real, drawn from project records.
+
+## Overview
+
+This company is a B2B private-label supplement manufacturer — brands come to them to have their own supplement products formulated, packaged, and produced. I was brought in through a marketing/staffing agency intermediary as the sole developer to build their B2B marketing site: a lead-generation funnel for prospective private-label clients, plus a custom interactive tool that lets a prospect preview their own label on the manufacturer's real product formats before ever requesting a quote. Once the site was live, I also led a full handoff of the production infrastructure into the client's own accounts.
+
+## Project Summary
+
+- **Role**: Full-Stack Developer, Infrastructure & Client Handoff
+- **Duration**: A few weeks (2026)
+- **Platform**: Astro (hybrid rendering) + Sanity headless CMS, deployed on Vercel
+- **Industry**: Consumer Goods / Supplement Contract Manufacturing (B2B)
+- **Engagement**: Via a marketing/staffing agency intermediary; sole developer
+- **Deliverables**: B2B marketing site, interactive product-mockup generator, lead-generation funnel (quote/guide/mockup requests), full production infrastructure handoff
+
+## Business Context
+
+Private-label supplement manufacturing is a B2B sale: a prospective brand needs to be convinced the manufacturer can produce their product, in their packaging, at the quality and scale they need, before a single conversation happens with a real person. The site had to do that convincing on its own — explain the manufacturing capability and let a prospect self-serve their way toward a real quote, instead of dead-ending on a static "contact us" page.
+
+## Challenge
+
+Two separate problems needed solving, on two different timelines. First, the site itself: a lead-generation funnel with three distinct paths — requesting a quote, downloading a guide, and generating a mockup of a prospect's own label on the manufacturer's real product formats — built on a headless CMS so the marketing side could manage content without touching code. Second, once that site was live, the business needed full ownership of it: its own GitHub, its own hosting, its own CMS project, its own transactional email — not a site that quietly depended on an agency's infrastructure indefinitely.
+
+## Solution
+
+I built the site in Astro using a hybrid rendering setup — static pages by default, with a serverless API route for form handling — paired with Sanity as a headless CMS so non-technical staff could manage page content without code changes. Interactive pieces, including the lead forms and the mockup tool, were built as isolated React islands rather than adding client-side JavaScript to the whole site, so the site stayed fast by default and only shipped interactivity where it was actually needed.
+
+The mockup generator was the most involved piece: a tool that takes a prospect's label artwork and places it onto the manufacturer's real product formats, so a prospective client can see their own branding on an actual product before ever talking to a salesperson — turning an abstract "can you make my product" question into something they can see for themselves. All three lead paths route through a single transactional-email pipeline, landing directly in the sales team's inbox as a real, actionable lead rather than a form submission sitting in a database no one checks.
+
+Once the site was live, I planned and executed a full production handoff: transferring the GitHub repository, the hosting project, the CMS project, and the transactional-email domain into accounts the client owns outright, with no agency-owned infrastructure left in the loop. That meant migrating the package manager, rewriting the internal build documentation into client-facing operational guides, and running a DNS cutover with zero downtime — so the business ended up owning its infrastructure outright rather than renting it from whoever built it.
+
+## Outcome
+
+The manufacturer went from having no self-serve way to convert private-label prospects to a live B2B site with a working lead-generation funnel, including a mockup tool that lets prospects preview their branding before requesting a quote. Beyond the build itself, the full production infrastructure — code, hosting, CMS, and email — now lives entirely in the client's own accounts, with zero ongoing dependency on the agency that built it.
+
+## My Contributions
+
+- Built a B2B marketing site in Astro with a Sanity headless CMS, so non-technical staff could manage content independently
+- Designed and built a custom interactive mockup-generator tool that previews a prospect's label on the manufacturer's real product formats
+- Built a three-path lead-generation funnel (quote request, guide download, mockup request), routed through a single transactional-email pipeline
+- Used React islands for all interactive pieces, keeping the rest of the site static and fast by default
+- Planned and executed a full production infrastructure handoff — code repository, hosting, CMS, and transactional email — into the client's own accounts
+- Ran a zero-downtime DNS cutover and rewrote internal build documentation into client-facing operational guides
+- Verified zero remaining agency access across every system after handoff
+
+## Technologies
+
+- **Platform**: Astro (hybrid rendering), Vercel
+- **Languages**: TypeScript, JavaScript, CSS
+- **Framework / CMS**: Astro Islands (React), Sanity headless CMS (GROQ)
+- **Tools**: Git, Resend (transactional email), pnpm
