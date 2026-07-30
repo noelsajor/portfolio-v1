@@ -73,8 +73,8 @@ those are historical records, not copy, and are deliberately left unedited.
 
 Shopify is a strong, real capability (see the anonymized D2C case studies)
 but not the only one. Copy that describes the *entire* portfolio or the
-person as "Shopify-focused" or "e-commerce" is inaccurate — of the three
-published case studies, two are Shopify/e-commerce. iOTEK is a Marketing
+person as "Shopify-focused" or "e-commerce" is inaccurate — of the four
+published case studies, three are Shopify/e-commerce. iOTEK is a Marketing
 Website (Astro), not Shopify. Site-wide copy (homepage, About, `/work`
 index) should describe Shopify as one of several services, not the umbrella
 category.
@@ -91,13 +91,13 @@ narrative — see Phase 2 Step 2.4.
 
 ## How the anonymized D2C case studies fit into the wider positioning
 
-Two of the three published case studies are anonymized at the client's
+Three of the four published case studies are anonymized at the client's
 request: no public-display permission was given, unlike iOTEK. **Do not add
-either client's real name, domain, agency name, or identifying product
-names anywhere in this repo**, including "internal" docs under `docs/`,
-because this repository is public on GitHub — there is no private location
-inside it to keep that detail. Full engagement detail for both lives only in
-private memory (engram), never in a committed file.
+any of these clients' real names, domains, agency names, or identifying
+product/brand names anywhere in this repo**, including "internal" docs
+under `docs/`, because this repository is public on GitHub — there is no
+private location inside it to keep that detail. Full engagement detail for
+all three lives only in private memory (engram), never in a committed file.
 
 - **`d2c-wellness-storefront.mdx`** — Shopify theme development, Core Web
   Vitals/performance optimization, SEO, and tracking work for a
@@ -107,6 +107,10 @@ private memory (engram), never in a committed file.
   category (CBD, sexual wellness) — every page had to be built and
   maintained within Meta/Google's advertising content policy, not just
   designed well.
+- **`d2c-hemp-cannabis-storefront.mdx`** — Shopify store build from scratch
+  (no prior active store) for a direct-to-consumer CBD/Delta-8/Delta-9/
+  medical-cannabis brand — multi-line product catalog, shared strain
+  filtering, and an ongoing lab-certificate (COA) compliance system.
 
 ## How EMRG or white-label work should be referenced
 

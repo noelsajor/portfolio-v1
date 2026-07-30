@@ -2,11 +2,13 @@
 
 Per Phase 3, Step 3.5. **Update (2026-07-30): superseded.** A third case
 study (`d2c-wellness-storefront.mdx`) was added from real, verified project
-history, and the second slot (formerly a differently-named file) was renamed to
-`d2c-intimacy-wellness-storefront.mdx` and anonymized at the client's
-request. The rest of this file is kept as the process record for how a
-candidate should be evaluated before publishing — the original framing below
-(written when no third case study existed yet) is left unedited.
+history, and the second slot (formerly a differently-named file) was renamed
+to `d2c-intimacy-wellness-storefront.mdx` and anonymized at the client's
+request. A fourth (`d2c-hemp-cannabis-storefront.mdx`, status: draft
+pending review) was added the same way. The rest of this file is kept as
+the process record for how a candidate should be evaluated before
+publishing — the original framing below (written when no third case study
+existed yet) is left unedited.
 
 ## Structural capacity already exists — no code change needed
 
