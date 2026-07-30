@@ -1,0 +1,84 @@
+---
+title: D2C Wellness Storefront
+client: Direct-to-consumer wellness brand (name withheld at client's request)
+type: E-commerce
+industry: Consumer Goods / Wellness & Supplements
+roles:
+  - Shopify Developer
+  - Performance Optimization
+services:
+  - Shopify Theme Development
+  - Front-End Implementation
+  - SEO Implementation
+  - Performance Optimization
+  - Analytics & Tracking Implementation
+summary: Ongoing Shopify theme development, Core Web Vitals optimization, and SEO/tracking fixes for a direct-to-consumer wellness brand, plus a full storefront and brand rebuild under a compressed timeline.
+challenge: The brand needed continuous theme development on a live storefront while carrying real technical debt — a mobile performance regression, incomplete tracking, and SEO gaps — as a direct engagement with no agency layer in between.
+outcome: Measurably improved mobile Core Web Vitals and accessibility on the live storefront, corrected the site's tracking and SEO foundations, and delivered a fully built storefront and brand rebuild under a compressed timeline.
+year: "2026"
+duration: ~2 months (2026)
+team: Engaged directly by the brand's leadership, without an agency intermediary; sole developer across theme, performance, SEO, and tracking work.
+featured: false
+order: 3
+status: draft
+updatedAt: "2026-07-30"
+seoTitle: D2C Wellness Storefront — Shopify Performance & SEO | Jose Leon
+seoDescription: Shopify theme development, Core Web Vitals optimization, and SEO/tracking work for a direct-to-consumer wellness brand.
+---
+
+**Note:** The client's name and identifying details (domain, product names) are withheld at their request. The work and results described below are real and verified against project records.
+
+## Overview
+
+This brand sells single-serve, honey-based wellness supplements direct to consumers through a Shopify storefront. I was engaged directly by the brand's leadership — no agency in between — as the sole developer responsible for ongoing theme development, technical SEO, tracking, and performance work on the live store. Over roughly two months, that scope grew from routine feature work into a performance recovery effort and, eventually, a full storefront and brand rebuild.
+
+## Project Summary
+
+- **Role**: Shopify Developer, Performance Optimization
+- **Duration**: ~2 months (2026)
+- **Platform**: Shopify (OS 2.0)
+- **Industry**: Consumer Goods / Wellness & Supplements
+- **Engagement**: Direct freelance relationship, no agency intermediary
+- **Deliverables**: Ongoing theme development, Core Web Vitals and accessibility optimization, SEO schema corrections, tracking/pixel fixes, full storefront and brand rebuild
+
+## Business Context
+
+The brand ran an active Shopify storefront selling several single-serve supplement variants. Reporting directly to the brand's leadership, I was responsible for the storefront's day-to-day technical health — theme development, SEO, tracking, and performance — work that's usually split across separate specialists, here handled by one person end to end.
+
+## Challenge
+
+Two problems surfaced at the same time. First, a real mobile performance regression was actively hurting Core Web Vitals scores, and a set of tracking and SEO gaps — a missing purchase-event pixel, duplicate analytics tags, incomplete product schema — had been accumulating quietly underneath the day-to-day feature work. Second, the brand asked for a full storefront and brand-identity rebuild — new templates, new pages, a corrected typography and color system — on a compressed timeline, layered on top of everything already in flight.
+
+## Solution
+
+A full technical audit of the live theme turned up a specific, fixable set of performance problems: Google Tag Manager was firing a duplicate GA4 tag on top of Shopify's own analytics channel; 85 orphaned files from a previously uninstalled page-builder app were still loading unused CSS and JavaScript on every page; the hero image driving Largest Contentful Paint had no preload; and several sections were missing the width, height, and alt attributes needed to avoid layout shift and pass accessibility checks.
+
+Fixing each of those individually moved the needle, and together they took the storefront's mobile Lighthouse score from 65 to 77–78, Largest Contentful Paint from 5.4s to 4.04s, Total Blocking Time from 450ms to as low as 18ms, and the Accessibility score from 90 to 97 — verified with before/after Lighthouse runs, not estimated.
+
+In parallel, I corrected the site's tracking and SEO foundation: implemented a missing pixel's purchase event that had never actually fired a conversion, deduplicated the analytics tags causing the performance hit, and fixed Shopify Merchant Center product-schema issues — a duplicated brand field and missing global identifiers — that Google Search Console had flagged. I also ran recurring full-site audits across SEO, accessibility, and conversion, and corrected on-page SEO issues like internal links pointing at the wrong domain.
+
+Alongside that ongoing work, I led a full rebuild of the storefront and brand identity under the compressed timeline the brand requested: new per-SKU product templates with their own schema and FAQs, a complete supporting-page set (About, Contact, FAQ, How It Works), and a corrected typography, color, and spacing system built against the brand's own identity guidelines — including a dedicated page written specifically for AI-crawler discoverability, ahead of that becoming a common practice.
+
+## Outcome
+
+The live storefront came out of this engagement measurably faster and more accessible on mobile, with corrected tracking data and a completed technical SEO base — accurate product schema, resolved Merchant Center issues, corrected internal linking. Alongside that ongoing work, I delivered a fully built storefront and brand rebuild — new templates, new pages, and a corrected identity system — ready for the brand to take forward.
+
+## My Contributions
+
+- Diagnosed and fixed a mobile Core Web Vitals regression: Lighthouse score 65 → 77–78, LCP 5.4s → 4.04s, Total Blocking Time 450ms → as low as 18ms, Accessibility 90 → 97
+- Removed duplicate analytics tracking and 85 orphaned files from a previously uninstalled app that were silently loading unused CSS/JS
+- Added LCP image preload and fixed missing width/height/alt attributes and ARIA issues across multiple theme sections
+- Implemented and fixed the site's tracking stack, including a purchase-conversion pixel event that had never actually fired
+- Corrected Shopify Merchant Center product-schema issues flagged by Google Search Console
+- Ran recurring full-site technical audits across performance, SEO, accessibility, and conversion
+- Fixed on-page SEO issues, including internal links pointing at the wrong domain, across multiple sprints
+- Led a full storefront and brand-identity rebuild under a compressed timeline — new per-SKU product templates, a full supporting-page set, and a corrected typography/color/spacing system
+- Supported paid-campaign work on Google and Meta by supplying the corrected tracking data those campaigns depended on
+
+## Technologies
+
+- **Platform**: Shopify
+- **Languages**: Liquid, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0
+- **Tracking**: Google Tag Manager, Meta Pixel, analytics pixel implementation
+- **Tools**: Git, Shopify CLI, Google Search Console, Lighthouse

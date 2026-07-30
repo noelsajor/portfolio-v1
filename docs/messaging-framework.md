@@ -88,6 +88,17 @@ case study should lead with scope and deliverables, the same way NUUD does,
 rather than reading as first-person employment narrative — see Phase 2 Step
 2.4.
 
+## How the D2C wellness storefront case study fits into the wider positioning
+
+Shopify theme development, Core Web Vitals/performance optimization, SEO, and
+tracking work for a direct-to-consumer wellness brand — the client's name and
+identifying details are withheld at their request (no public-display
+permission was given, unlike iOTEK). Do not add the real client name,
+domain, or product names anywhere in this repo, including "internal" docs
+under `docs/`, because this repository is public on GitHub — there is no
+private location inside it to keep that detail. Full engagement detail
+lives only in private memory (engram), not in any committed file.
+
 ## How EMRG or white-label work should be referenced
 
 No EMRG entity, or any other white-label arrangement, currently appears in
