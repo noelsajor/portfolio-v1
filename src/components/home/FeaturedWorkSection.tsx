@@ -31,16 +31,14 @@ export function FeaturedWorkSection() {
                                 className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between gap-3">
-                                        <div className="flex items-center gap-2">
-                                            <Chip variant="primary">{project.type}</Chip>
-                                            <SegmentBadge segment={project.segment} />
-                                        </div>
-                                        <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <Chip variant="primary">{project.type}</Chip>
+                                        <SegmentBadge segment={project.segment} />
                                     </div>
                                     <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
                                         {project.title}
                                     </h3>
+                                    <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>
                                     <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
                                     <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
                                         {featuredWork.projectCtaLabel} <span aria-hidden="true">→</span>
