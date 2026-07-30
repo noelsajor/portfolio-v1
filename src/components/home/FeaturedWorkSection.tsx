@@ -38,7 +38,6 @@ export function FeaturedWorkSection() {
                                     <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
                                         {project.title}
                                     </h3>
-                                    <p className="text-xs text-white/60">{project.roles.join(' · ')}</p>
                                     <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
                                     <p className="pt-2 text-sm font-semibold text-white/70 group-hover:text-white">
                                         {featuredWork.projectCtaLabel} <span aria-hidden="true">→</span>
