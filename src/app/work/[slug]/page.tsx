@@ -94,7 +94,7 @@ export default async function CaseStudyPage({
                 <span aria-hidden="true">←</span> Back to work
             </Link>
 
-            <header className="space-y-2">
+            <header className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
                     <Chip variant="primary">{frontmatter.type}</Chip>
                     <SegmentBadge segment={frontmatter.segment} />
@@ -102,21 +102,79 @@ export default async function CaseStudyPage({
                         <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.industry}</p>
                     ) : null}
                 </div>
-                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
-                <p className="text-white/70">{frontmatter.roles.join(' · ')}</p>
-                <p className="max-w-2xl text-white/70">{frontmatter.summary}</p>
-                {frontmatter.liveUrl ? (
-                    <Link
-                        href={frontmatter.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 pt-2 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                    >
-                        Visit live site
-                        <span aria-hidden="true">↗</span>
-                        <span className="sr-only"> (opens in a new tab)</span>
-                    </Link>
+
+                <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
+                    <div className="space-y-4">
+                        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
+                        {frontmatter.liveUrl ? (
+                            <Link
+                                href={frontmatter.liveUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                            >
+                                Visit live site
+                                <span aria-hidden="true">↗</span>
+                                <span className="sr-only"> (opens in a new tab)</span>
+                            </Link>
+                        ) : null}
+
+                        <div className="grid gap-3 sm:grid-cols-2">
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Problem</p>
+                                <p className="mt-1 text-sm text-white/80">{frontmatter.challenge}</p>
+                            </div>
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Solution</p>
+                                <p className="mt-1 text-sm text-white/80">{frontmatter.outcome}</p>
+                            </div>
+                            {frontmatter.duration ? (
+                                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-wide text-white/50">Timeline</p>
+                                    <p className="mt-1 text-sm text-white/80">{frontmatter.duration}</p>
+                                </div>
+                            ) : null}
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">My Role</p>
+                                <p className="mt-1 text-sm text-white/80">{frontmatter.roles.join(' · ')}</p>
+                                {frontmatter.team ? <p className="mt-1 text-xs text-white/60">{frontmatter.team}</p> : null}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4 lg:self-start">
+                        <p className="text-sm font-semibold text-white/80">Want to ask me a question?</p>
+                        <div className="flex flex-wrap gap-2">
+                            <Chip variant="primary" href="#challenge">
+                                What problem was this solving?
+                            </Chip>
+                            <Chip variant="primary" href="#my-contributions">
+                                What was your role here?
+                            </Chip>
+                            <Chip variant="primary" href="#outcome">
+                                How did you define success?
+                            </Chip>
+                            <Chip variant="primary" href="#solution">
+                                What was your approach?
+                            </Chip>
+                        </div>
+                    </div>
+                </div>
+
+                {frontmatter.coverImage ? (
+                    <div className="overflow-hidden rounded-2xl border border-white/10">
+                        <Image
+                            src={frontmatter.coverImage}
+                            alt={frontmatter.coverAlt ?? frontmatter.title}
+                            width={1600}
+                            height={900}
+                            className="h-auto w-full"
+                            priority
+                        />
+                    </div>
                 ) : null}
+
+                <p className="max-w-2xl text-lg text-white/80">{frontmatter.summary}</p>
             </header>
 
             <article className="prose prose-invert max-w-none">
