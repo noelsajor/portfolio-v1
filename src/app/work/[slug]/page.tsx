@@ -193,9 +193,17 @@ export default async function CaseStudyPage({
             {readyGalleryItems.length > 0 ? (
                 <section className="space-y-4">
                     <h2 className="text-xl font-semibold tracking-tight md:text-2xl">Gallery</h2>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    {/* Columns, not a grid: gallery images mix landscape and
+                        portrait (e.g. mobile screenshots) sources, and a grid
+                        forces row-pairing that leaves awkward gaps next to a
+                        tall image. Columns let each item flow to its own
+                        natural height instead. */}
+                    <div className="columns-1 gap-4 md:columns-2">
                         {readyGalleryItems.map((item) => (
-                            <div key={item.id} className="overflow-hidden rounded-2xl border border-white/10">
+                            <div
+                                key={item.id}
+                                className="mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-white/10"
+                            >
                                 <Image
                                     src={item.src}
                                     alt={item.alt ?? item.id}
