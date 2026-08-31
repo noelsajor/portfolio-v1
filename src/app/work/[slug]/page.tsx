@@ -88,14 +88,15 @@ export default async function CaseStudyPage({
 
     return (
         <div className="space-y-10">
-            <Link
-                href="/work"
-                className="rounded-sm text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-            >
-                <span aria-hidden="true">←</span> Back to work
-            </Link>
+            <div className="space-y-6">
+                <Link
+                    href="/work"
+                    className="inline-flex rounded-sm text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                >
+                    <span aria-hidden="true">←</span> Back to work
+                </Link>
 
-            <header className="space-y-6">
+                <header className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
                     <CapabilityChips capabilities={frontmatter.capabilities} />
                     <Chip variant="secondary">{frontmatter.type}</Chip>
@@ -122,21 +123,21 @@ export default async function CaseStudyPage({
                         ) : null}
 
                         <div className="grid gap-3 sm:grid-cols-2">
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
                                 <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Problem</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.challenge}</p>
                             </div>
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
                                 <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Solution</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.outcome}</p>
                             </div>
                             {frontmatter.duration ? (
-                                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
                                     <p className="text-xs font-semibold uppercase tracking-wide text-white/50">Timeline</p>
                                     <p className="mt-1 text-sm text-white/80">{frontmatter.duration}</p>
                                 </div>
                             ) : null}
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
                                 <p className="text-xs font-semibold uppercase tracking-wide text-white/50">My Role</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.roles.join(' · ')}</p>
                                 {frontmatter.team ? <p className="mt-1 text-xs text-white/60">{frontmatter.team}</p> : null}
@@ -177,7 +178,8 @@ export default async function CaseStudyPage({
                 ) : null}
 
                 <p className="max-w-2xl text-lg text-white/80">{frontmatter.summary}</p>
-            </header>
+                </header>
+            </div>
 
             <article className="prose prose-invert max-w-none">
                 <MDXRemote
