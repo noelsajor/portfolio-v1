@@ -26,6 +26,8 @@ export const siteConfig = {
     },
     // Verified real profiles only — do not add unconfirmed accounts.
     sameAs: {
+        behance: 'https://www.behance.net/noelsajor',
+        figma: 'https://www.figma.com/@noelsajor',
         github: 'https://github.com/noelsajor',
         linkedin: 'https://www.linkedin.com/in/noelsajor'
     }

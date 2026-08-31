@@ -9,7 +9,7 @@ export function StructuredData() {
         name: siteConfig.author.name,
         url: siteConfig.siteUrl,
         jobTitle: 'Multidisciplinary Designer & Front-End Production Specialist',
-        sameAs: [siteConfig.sameAs.github, siteConfig.sameAs.linkedin]
+        sameAs: Object.values(siteConfig.sameAs)
     }
 
     const websiteSchema = {
