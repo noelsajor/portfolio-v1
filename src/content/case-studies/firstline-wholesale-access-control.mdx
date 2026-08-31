@@ -1,0 +1,73 @@
+---
+title: Firstline Wholesale Access Control Rebuild
+client: Firstline — B2B wholesale distributor (tobacco & vape)
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: B2B
+industry: Wholesale Distribution — Tobacco & Vape (B2B, WooCommerce)
+roles:
+  - WordPress/WooCommerce Developer
+  - Access Control Systems Architecture
+services:
+  - Wholesale-Only Access Control System
+  - Buyer Registration & Approval Hardening
+  - Catalog & Taxonomy Audit
+  - Caching & Performance Strategy
+summary: Rebuilt access control for an existing 17.5k-SKU WooCommerce wholesale store — server-side buyer-state gating, a hardened registration/approval flow, and a caching policy safe for dynamic, buyer-specific content — delivered through a phased, approval-gated roadmap.
+challenge: Firstline's WooCommerce store exposed its full catalog and pricing to anyone, and its existing buyer registration flow hadn't been hardened enough to safely restrict a live, 17.5k-product wholesale catalog to approved, license-verified buyers only.
+outcome: Delivered server-side wholesale-only catalog gating, a hardened and state-driven registration/approval flow, and a caching policy safe for buyer-specific content — with final QA and public launch remaining as the phased engagement continues.
+year: "2026"
+duration: Ongoing engagement (2026)
+team: Engaged directly by the client; sole developer responsible for the audit, roadmap, and implementation.
+featured: false
+order: 6
+status: published
+liveUrl: https://firstlinewholesale.com/
+seoTitle: Firstline — Wholesale Access Control Rebuild | Jose Leon
+seoDescription: WooCommerce wholesale-only access control rebuild for Firstline — server-side buyer-state gating, a hardened registration/approval flow, and a caching policy safe for dynamic B2B catalog content.
+---
+
+## Overview
+
+Firstline is a B2B wholesale distributor selling through an existing WooCommerce store built on a large product catalog — around 17,500 SKUs — synced live from Cin7, their inventory/ERP system. Some buyers are required to hold a valid tobacco/vape license to register. I was brought in as the sole developer to convert the store to wholesale-only: no product, price, or stock visible to anyone until a buyer registers and is approved, built around the store's existing custom registration system rather than replacing it.
+
+## Business Context
+
+Distributing regulated wholesale products directly to consumers isn't viable — every buyer needs to be a verified, license-holding business, and the storefront itself has to enforce that before it shows a single price or SKU. Firstline already had a fully populated catalog synced live from Cin7 and a custom buyer registration/login flow built into its theme, but neither the catalog gating nor the registration hardening had been built to the level a wholesale-only requirement actually demands.
+
+## Challenge
+
+The store's full catalog, pricing, and stock were publicly visible, not gated to approved wholesale buyers. The existing registration/login system hadn't been audited for security gaps — nonce and capability checks, email-verification enforcement, and a formal buyer-state machine were all missing or incomplete. None of the private-catalog content (state, price, stock, cart, checkout) could safely go through full-page HTML caching, but the store still needed to stay fast under its existing cache plugin. Brand/department filtering across the full catalog already existed but carried documented slow-query patterns that any new filtering work needed to avoid repeating. And every change had to happen without breaking the live Cin7 sync or introducing new WordPress roles that would create migration risk against an existing, mixed-role user base.
+
+## Solution
+
+I proposed and got sign-off on a sequenced roadmap before touching production: stabilize caching, backups, and staging first; audit the existing auth and data model; define formal buyer access states; optimize taxonomy-based filtering; implement server-side catalog gating; and only then choose a wholesale-pricing plugin — deliberately in that order, so pricing decisions wouldn't get made before the access rules, cache safety, and data model were settled.
+
+Buyer access is governed by user state, not new WordPress roles: a central access-check function requires an approved, email-verified buyer state (or staff capability), backed by object caching so it doesn't add a query to every page load. I built this as its own plugin rather than adding it to the theme, specifically for separation of concerns and safe rollback on a live store. State-specific pages — pending, declined, blocked, and an existing verification flow — route unapproved buyers to the right screen instead of a broken one, reusing the store's existing verification shortcode rather than building a second, competing flow.
+
+Because buyer state, pricing, stock, and cart/session are all dynamic, I set the cache plugin to never page-cache anything under the private catalog, account, or checkout paths, and to keep logged-in caching off — private-catalog performance runs through taxonomy queries, object caching, and pagination instead of HTML caching. I audited the existing brand/department filtering and confirmed it's already taxonomy-based rather than postmeta-based, documented the slow query patterns already present so they wouldn't carry into the new filter UX, and deliberately left a risky, inactive search code path disabled rather than reactivating it without a redesign. For wholesale pricing, I recommended a modular pricing plugin layered on top of the existing registration flow and Cin7 sync, rather than an all-in-one B2B plugin that would have overlapped with and risked breaking systems already in production.
+
+Throughout, I worked in scoped, individually-approved phases — auditing and proposing before implementing, and closing out each phase with a written summary — so changes to access control on a live store with an active buyer base never shipped without an explicit go/no-go from the client.
+
+## Outcome
+
+Firstline's private catalog is now gated server-side by verified buyer state, the registration/approval flow has been hardened and connected to that state model, state-specific status pages route unapproved buyers correctly, and the caching layer is safe for dynamic, buyer-specific content. Taxonomy-based filtering has been audited and documented, and a wholesale-pricing plugin path is chosen and ready. Final QA and public launch of the fully wholesale-only storefront are the remaining phases as the engagement continues.
+
+## My Contributions
+
+- Defined and got sign-off on a phased, sequenced roadmap for converting a live 17.5k-SKU WooCommerce store to wholesale-only
+- Audited the existing buyer registration/login flow and formally defined buyer states, permissions, and transitions
+- Built a standalone access-control plugin enforcing server-side, state-based gating of catalog, pricing, cart, and checkout
+- Implemented state-specific status pages (pending, declined, blocked, verification) integrated with the existing verification flow
+- Set a caching policy that keeps the store fast on public pages while never caching buyer-specific private catalog, account, or checkout content
+- Audited existing taxonomy-based brand/department filtering and documented slow query patterns to inform the filter rebuild
+- Recommended a modular wholesale-pricing plugin over an all-in-one B2B plugin to avoid conflicting with the existing registration flow and Cin7 sync
+- Designed high-fidelity desktop and mobile wireframes for the buyer-facing onboarding and catalog experience
+
+## Technologies
+
+- **Platform**: WordPress, WooCommerce
+- **Languages**: PHP, MySQL, JavaScript, CSS
+- **Framework / CMS**: Custom WordPress theme, Advanced Custom Fields (ACF), Elementor
+- **Tools**: Cin7 (ERP/inventory sync), Pencil (wireframing), Git
