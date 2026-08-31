@@ -5,7 +5,7 @@ study (`d2c-wellness-storefront.mdx`) was added from real, verified project
 history, and the second slot (formerly a differently-named file) was renamed
 to `d2c-intimacy-wellness-storefront.mdx` and anonymized at the client's
 request. A fourth (`d2c-hemp-cannabis-storefront.mdx`) and fifth
-(`b2b-supplement-manufacturer-site.mdx`) were added the same way. The
+(`vita-organica-supplement-manufacturer-site.mdx`) were added the same way. The
 original first slot (formerly published under a real company name, as a
 differently-named file) was later anonymized too — no public-display
 permission existed for it either — and renamed to

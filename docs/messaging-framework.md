@@ -116,7 +116,7 @@ memory (engram), never in a committed file.
   (no prior active store) for a direct-to-consumer CBD/Delta-8/Delta-9/
   medical-cannabis brand — multi-line product catalog, shared strain
   filtering, and an ongoing lab-certificate (COA) compliance system.
-- **`b2b-supplement-manufacturer-site.mdx`** — an Astro + Sanity marketing
+- **`vita-organica-supplement-manufacturer-site.mdx`** — an Astro + Sanity marketing
   site with a lead-generation funnel and a custom product-mockup tool for a
   private-label supplement manufacturer, plus a full production
   infrastructure handoff to the client's own accounts.
