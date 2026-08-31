@@ -24,9 +24,8 @@ export function ProcessSection() {
 
                     return (
                         <li key={step.number} className="space-y-3">
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center">
                                 {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
-                                <p className="text-sm font-semibold text-white/50">{step.number}</p>
                             </div>
                             <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
                             <p className="text-sm leading-relaxed text-white/70">{step.description}</p>
