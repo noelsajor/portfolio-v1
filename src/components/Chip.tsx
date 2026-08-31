@@ -1,9 +1,7 @@
 const VARIANT_STYLES = {
-    // Primary: the project's `type` (platform/deliverable category) — the
-    // main classifier, so it reads slightly more prominent and matches the
-    // text size the plain-text label used before this became a chip.
+    // Primary: the main project classifier, usually a capability.
     primary: 'border-white/15 bg-white/10 text-white/80 text-xs',
-    // Secondary: the `segment` (D2C/B2B) — a lighter-weight tag alongside it.
+    // Secondary: supporting metadata such as segment, type, or extra capabilities.
     secondary: 'border-white/10 bg-white/5 text-white/60 text-[10px]'
 } as const
 
@@ -19,9 +17,8 @@ export function Chip({
     // heading ids from rehype-slug, never a route.
     href?: string
 }) {
-    // No forced uppercase: `segment` values (D2C/B2B) are already upper-case
-    // as authored data, and `type` values ("Marketing Website") read better
-    // in their natural case than shouted.
+    // No forced uppercase: authored labels like "Ecommerce Systems" and
+    // "D2C" read better in their natural case than shouted.
     const className = `rounded-full border px-2.5 py-0.5 font-semibold tracking-wide ${VARIANT_STYLES[variant]}${
         href ? ' transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30' : ''
     }`

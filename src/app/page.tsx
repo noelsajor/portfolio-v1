@@ -1,5 +1,4 @@
 import { HeroSection } from '@/components/home/HeroSection'
-import { TrustStrip } from '@/components/home/TrustStrip'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { FeaturedWorkSection } from '@/components/home/FeaturedWorkSection'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
@@ -11,7 +10,6 @@ export default function HomePage() {
   return (
     <div className="space-y-24">
       <HeroSection />
-      <TrustStrip />
       <ServicesSection />
       <FeaturedWorkSection />
       <TestimonialsSection />

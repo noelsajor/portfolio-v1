@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { getFeaturedProjects } from '@/lib/projects'
 import { homeContent } from '@/content/home'
-import { SegmentBadge } from '@/components/SegmentBadge'
-import { Chip } from '@/components/Chip'
+import { CapabilityChips } from '@/components/CapabilityChips'
+import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
 export function FeaturedWorkSection() {
     const { featuredWork } = homeContent
@@ -30,10 +30,10 @@ export function FeaturedWorkSection() {
                                 data-tracking={`project_card_${project.slug}`}
                                 className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
+                                <ProjectCardPreview project={project} />
                                 <div className="space-y-3">
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <Chip variant="primary">{project.type}</Chip>
-                                        <SegmentBadge segment={project.segment} />
+                                        <CapabilityChips capabilities={project.capabilities} />
                                     </div>
                                     <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
                                         {project.title}

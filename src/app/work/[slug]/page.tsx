@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 import { absoluteUrl, defaultOgImage, siteConfig } from '@/lib/site-config'
+import { CapabilityChips } from '@/components/CapabilityChips'
 import { SegmentBadge } from '@/components/SegmentBadge'
 import { Chip } from '@/components/Chip'
 
@@ -96,7 +97,8 @@ export default async function CaseStudyPage({
 
             <header className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
-                    <Chip variant="primary">{frontmatter.type}</Chip>
+                    <CapabilityChips capabilities={frontmatter.capabilities} />
+                    <Chip variant="secondary">{frontmatter.type}</Chip>
                     <SegmentBadge segment={frontmatter.segment} />
                     {frontmatter.industry ? (
                         <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.industry}</p>

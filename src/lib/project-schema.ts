@@ -13,6 +13,7 @@ import { z } from 'zod'
 // this schema explicitly rather than loosening it to passthrough/strip.
 
 export const PROJECT_TYPES = ['E-commerce', 'Product Design', 'Marketing Website', 'Design System'] as const
+export const PROJECT_CAPABILITIES = ['Ecommerce Systems', 'Brand & Identity', 'Custom Websites', 'Product Experiments'] as const
 
 // Client segment (D2C vs B2B) — shown as a small chip on case-study cards,
 // separate from `type` (which is the platform/deliverable category). Optional
@@ -42,6 +43,7 @@ export const projectFrontmatterSchema = z
         // Required — every current case study authors these.
         title: z.string().min(1, 'title is required'),
         type: z.enum(PROJECT_TYPES),
+        capabilities: z.array(z.enum(PROJECT_CAPABILITIES)).min(1, 'at least one capability is required'),
         roles: z.array(z.string().min(1)).min(1, 'at least one role is required'),
         summary: z.string().min(1, 'summary is required'),
         services: z.array(z.string().min(1)).min(1, 'at least one service is required'),

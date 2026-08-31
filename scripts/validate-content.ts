@@ -35,6 +35,7 @@ console.log('Schema:')
 const validSample = {
     title: 'Sample Project',
     type: 'E-commerce',
+    capabilities: ['Ecommerce Systems'],
     roles: ['UI/UX Design'],
     summary: 'A sample project summary.',
     services: ['UI/UX Design'],
@@ -70,6 +71,14 @@ check('valid project passes', projectFrontmatterSchema.safeParse(validSample).su
     check(
         'invalid enum value (type) fails',
         !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'type')
+    )
+}
+
+{
+    const result = projectFrontmatterSchema.safeParse({ ...validSample, capabilities: ['Not A Real Capability'] })
+    check(
+        'invalid enum value (capabilities) fails',
+        !result.success && result.error.issues.some((issue) => issue.path.join('.') === 'capabilities.0')
     )
 }
 
@@ -143,6 +152,8 @@ check(
         `---
 title: Draft Validation Scenario
 type: Product Design
+capabilities:
+  - Product Experiments
 roles:
   - UI/UX Design
 summary: Temporary fixture used only by scripts/validate-content.ts.
@@ -172,6 +183,8 @@ Temporary validation fixture.
         badPath,
         `---
 type: Product Design
+capabilities:
+  - Product Experiments
 roles:
   - UI/UX Design
 summary: Missing a title on purpose.
@@ -213,6 +226,8 @@ Temporary validation fixture.
         `---
 title: Bad Slug Validation Scenario
 type: Product Design
+capabilities:
+  - Product Experiments
 roles:
   - UI/UX Design
 summary: Temporary fixture used only by scripts/validate-content.ts.

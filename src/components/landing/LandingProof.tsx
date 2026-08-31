@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getFeaturedProjects } from '@/lib/projects'
-import { SegmentBadge } from '@/components/SegmentBadge'
-import { Chip } from '@/components/Chip'
+import { CapabilityChips } from '@/components/CapabilityChips'
+import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
 export function LandingProof({ heading }: { heading: string }) {
     const projects = getFeaturedProjects()
@@ -17,11 +17,11 @@ export function LandingProof({ heading }: { heading: string }) {
                         <Link
                             href={`/work/${project.slug}`}
                             data-tracking={`landing_proof_${project.slug}`}
-                            className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                            className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
-                            <div className="flex items-center gap-2">
-                                <Chip variant="primary">{project.type}</Chip>
-                                <SegmentBadge segment={project.segment} />
+                            <ProjectCardPreview project={project} />
+                            <div className="flex flex-wrap items-center gap-2">
+                                <CapabilityChips capabilities={project.capabilities} />
                             </div>
                             <h3 className="mt-2 text-lg font-semibold tracking-tight">{project.title}</h3>
                             <p className="mt-2 text-sm text-white/70">{project.summary}</p>
