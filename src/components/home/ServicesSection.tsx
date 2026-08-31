@@ -5,7 +5,7 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
     'Product & UX Design': Layers,
     'UI Systems': Component,
     'Front-End Implementation': Braces,
-    'Shopify Development': ShoppingBag
+    'E-commerce Development': ShoppingBag
 }
 
 export function ServicesSection() {

@@ -40,9 +40,9 @@ export const homeContent = {
                     'Responsive, accessible front-end development using modern web technologies, with attention to maintainability and performance.'
             },
             {
-                title: 'Shopify Development',
+                title: 'E-commerce Development',
                 description:
-                    'Custom sections, theme improvements, storefront redesigns and front-end optimization for e-commerce brands and agency partners.'
+                    'Custom Shopify and WooCommerce storefronts, theme improvements, checkout-adjacent flows, and front-end optimization for e-commerce brands and agency partners.'
             }
         ]
     },
