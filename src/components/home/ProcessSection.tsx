@@ -18,21 +18,44 @@ export function ProcessSection() {
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{process.heading}</h2>
             </div>
 
-            <ol role="list" className="grid gap-x-8 gap-y-10 md:grid-cols-2">
-                {process.steps.map((step) => {
-                    const Icon = STEP_ICONS[step.title]
+            <div className="relative">
+                <span aria-hidden="true" className="absolute bottom-0 left-0.5 top-0 w-px bg-white/15 md:hidden" />
+                <span aria-hidden="true" className="absolute left-0 top-1/2 hidden h-px w-full bg-white/15 md:block" />
 
-                    return (
-                        <li key={step.number} className="space-y-3">
-                            <div className="flex items-center">
-                                {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
-                            </div>
-                            <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
-                            <p className="text-sm leading-relaxed text-white/70">{step.description}</p>
-                        </li>
-                    )
-                })}
-            </ol>
+                <ol role="list" className="relative space-y-6 md:grid md:min-h-[34rem] md:grid-cols-4 md:space-y-0">
+                    {process.steps.map((step, index) => {
+                        const Icon = STEP_ICONS[step.title]
+                        const isTopStep = index % 2 === 0
+
+                        return (
+                            <li
+                                key={step.number}
+                                className="relative pl-5 md:min-h-[34rem] md:px-3 md:pl-0"
+                            >
+                                <span aria-hidden="true" className="absolute left-0.5 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-white/70 md:left-1/2 md:top-1/2 md:z-10 md:h-3 md:w-3 md:-translate-x-1/2 md:-translate-y-1/2" />
+                                <span
+                                    aria-hidden="true"
+                                    className={`absolute left-1/2 hidden h-16 w-px -translate-x-1/2 bg-white/20 md:block ${
+                                        isTopStep ? 'top-1/2 -translate-y-full' : 'top-1/2'
+                                    }`}
+                                />
+
+                                <article
+                                    className={`space-y-3 rounded-2xl border border-white/10 bg-black p-5 md:absolute md:left-3 md:right-3 ${
+                                        isTopStep ? 'md:bottom-[calc(50%+4rem)]' : 'md:top-[calc(50%+4rem)]'
+                                    }`}
+                                >
+                                    <div className="flex items-center">
+                                        {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
+                                    </div>
+                                    <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
+                                    <p className="text-sm leading-relaxed text-white/70">{step.description}</p>
+                                </article>
+                            </li>
+                        )
+                    })}
+                </ol>
+            </div>
         </section>
     )
 }
