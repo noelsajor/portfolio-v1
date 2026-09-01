@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 import { PROJECT_CAPABILITIES } from '@/lib/project-schema'
 import { getProjects } from '@/lib/projects'
 import { buildPageMetadata } from '@/lib/site-config'
@@ -41,24 +42,43 @@ export default function WorkPage() {
                             </h2>
                             <ul role="list" className="grid gap-4 md:grid-cols-2">
                                 {section.projects.map((project) => (
-                                    <li key={project.slug} className="h-full">
-                                        <Link
-                                            href={`/work/${project.slug}`}
-                                            data-tracking={`portfolio_item_${project.slug}`}
-                                            className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                                        >
-                                            <ProjectCardPreview project={project} />
-                                            <div className="space-y-2">
-                                                <div className="flex flex-wrap items-center gap-2">
-                                                    <CapabilityChips capabilities={project.capabilities} />
-                                                </div>
-                                                <h3 className="text-xl font-semibold tracking-tight">{project.title}</h3>
-                                                <p className="text-sm text-white/70">{project.summary}</p>
+                                    <li
+                                        key={project.slug}
+                                        className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
+                                    >
+                                        <ProjectCardPreview project={project} />
+                                        <div className="space-y-2">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <CapabilityChips capabilities={project.capabilities} />
+                                            </div>
+                                            <h3 className="text-xl font-semibold tracking-tight">
+                                                <Link
+                                                    href={`/work/${project.slug}`}
+                                                    data-tracking={`portfolio_item_${project.slug}`}
+                                                    className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
+                                                >
+                                                    {project.title}
+                                                </Link>
+                                            </h3>
+                                            <p className="text-sm text-white/70">{project.summary}</p>
+                                            <div className="flex flex-wrap items-center gap-4 pt-3">
                                                 <p className="text-sm font-semibold text-white/70">
                                                     View case study <span aria-hidden="true">→</span>
                                                 </p>
+                                                {project.liveUrl ? (
+                                                    <a
+                                                        href={project.liveUrl}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        data-tracking={`portfolio_item_${project.slug}_live`}
+                                                        className="relative z-10 inline-flex items-center gap-1 rounded-sm text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                                                    >
+                                                        Visit live site <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                                                        <span className="sr-only"> (opens in a new tab)</span>
+                                                    </a>
+                                                ) : null}
                                             </div>
-                                        </Link>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>

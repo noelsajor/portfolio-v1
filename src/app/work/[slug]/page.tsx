@@ -6,6 +6,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { ArrowUpRight } from 'lucide-react'
 
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
@@ -117,7 +118,7 @@ export default async function CaseStudyPage({
                                 className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
                                 Visit live site
-                                <span aria-hidden="true">↗</span>
+                                <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
                                 <span className="sr-only"> (opens in a new tab)</span>
                             </Link>
                         ) : null}
