@@ -5,7 +5,7 @@ import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
 export function LandingProof({ lang, heading }: { lang: Locale; heading: string }) {
-    const projects = getFeaturedProjects()
+    const projects = getFeaturedProjects(lang)
 
     if (projects.length === 0) return null
 

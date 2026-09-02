@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function WorkPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
-    const projects = getProjects()
+    const projects = getProjects(lang)
     const projectSections = PROJECT_CAPABILITIES.map((capability) => ({
         capability,
         projects: projects.filter((project) => project.capabilities[0] === capability)
