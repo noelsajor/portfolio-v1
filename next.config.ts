@@ -33,6 +33,28 @@ const csp =
 const nextConfig: NextConfig = {
     // Don't advertise the framework via the X-Powered-By response header.
     poweredByHeader: false,
+    // Legacy, pre-i18n URLs permanently redirect to their /en equivalent.
+    // `/` gets its own non-permanent entry below: it's a language-selection
+    // redirect (src/proxy.ts replaces the fixed /en target with real
+    // detection in PR 2), not a stable SEO destination, so it must stay a
+    // redirect that can change target locale per visitor rather than one
+    // browsers/crawlers cache as permanent.
+    //
+    // No rewrites(): there is no catch-all under [lang] to funnel unmatched
+    // paths into anymore (removed — see src/app/not-found.tsx). Any path
+    // that isn't one of these literal legacy routes, or a real /en/* or
+    // /es/* page, is simply unmatched and served by the static global 404.
+    async redirects() {
+        return [
+            { source: '/', destination: '/en', permanent: false },
+            { source: '/about', destination: '/en/about', permanent: true },
+            { source: '/work', destination: '/en/work', permanent: true },
+            { source: '/contact', destination: '/en/contact', permanent: true },
+            { source: '/resume', destination: '/en/resume', permanent: true },
+            { source: '/for-agencies', destination: '/en/for-agencies', permanent: true },
+            { source: '/work/:slug', destination: '/en/work/:slug', permanent: true }
+        ]
+    },
     async headers() {
         return [
             {
