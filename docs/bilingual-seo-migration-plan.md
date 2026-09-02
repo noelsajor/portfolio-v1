@@ -561,15 +561,15 @@ This section is the resume point. If a working session is lost, start here: read
 
 | # | Branch | Scope | Status |
 |---|--------|-------|--------|
-| 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | done-local |
-| 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | done-local |
-| 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | done-local |
-| 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | done-local |
-| 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | done-local |
+| 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | [PR #4](https://github.com/noelsajor/portfolio-v1/pull/4) → `dev` |
+| 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | [PR #5](https://github.com/noelsajor/portfolio-v1/pull/5) → `feat/i18n-1-lang-routes` |
+| 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | [PR #6](https://github.com/noelsajor/portfolio-v1/pull/6) → `feat/i18n-2-root-locale-redirect` |
+| 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | [PR #7](https://github.com/noelsajor/portfolio-v1/pull/7) → `feat/i18n-3-locale-links-switch` |
+| 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | [PR #8](https://github.com/noelsajor/portfolio-v1/pull/8) → `feat/i18n-4-locale-metadata-sitemap` |
 
-Status values: `pending` → `in-progress` → `done-local` (committed on its branch, verified, reviewed; NOT pushed) → `merged-to-dev`.
+Status values: `pending` → `in-progress` → `done-local` (committed, verified, reviewed; not pushed) → open PR (stacked, as listed above) → `merged-to-dev`.
 
-Nothing is pushed to `origin` unless the user explicitly asks. Each finished slice stays as a local branch until then.
+Pushed 2026-09-02 at the user's explicit request, as 5 stacked PRs (each targets the previous branch; PR #4 targets `dev`). Merge oldest first (#4 → #5 → #6 → #7 → #8) since each branch contains every prior commit.
 
 ### PR 1 — Locale foundation
 
