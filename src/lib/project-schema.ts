@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // The single source of truth for what a case-study MDX file's frontmatter
 // is allowed to contain. Every field here reflects the current real
-// content in src/content/case-studies/ (see brand-website-build.mdx, d2c-wellness-storefront.mdx,
+// content in src/content/en/case-studies/ (see brand-website-build.mdx, d2c-wellness-storefront.mdx,
 // _template.mdx) — nothing here is speculative.
 //
 // `.strict()`: unknown frontmatter keys are rejected. Both real case

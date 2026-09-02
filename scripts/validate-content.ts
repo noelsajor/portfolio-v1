@@ -5,7 +5,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { projectFrontmatterSchema } from '../src/lib/project-schema'
-import { getProjectSlugs } from '../src/lib/projects'
+import { getProjectSlugs, getProjects } from '../src/lib/projects'
 
 let failures = 0
 
@@ -136,7 +136,7 @@ check(
 
 console.log('\nLoader (real content directory):')
 
-const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'case-studies')
+const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'en', 'case-studies')
 
 check(
     'template is never exposed as a project',
@@ -254,6 +254,22 @@ Temporary validation fixture.
     )
     fs.unlinkSync(badPath)
     tempFiles.pop()
+}
+
+// PR 5: no Spanish case-study MDX exists yet (src/content/es/case-studies/
+// is an empty, git-tracked directory) — every slug must fall back to the
+// `en` file. This proves that fallback rather than re-testing the schema.
+{
+    const enSlugs = getProjects('en')
+        .map((project) => project.slug)
+        .sort()
+    const esSlugs = getProjects('es')
+        .map((project) => project.slug)
+        .sort()
+    check(
+        "getProjects('es') falls back to getProjects('en') (same slugs, empty es/case-studies)",
+        esSlugs.length === enSlugs.length && esSlugs.every((slug, i) => slug === enSlugs[i])
+    )
 }
 
 console.log()
