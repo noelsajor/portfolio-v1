@@ -565,7 +565,7 @@ This section is the resume point. If a working session is lost, start here: read
 | 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | done-local |
 | 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | done-local |
 | 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | done-local |
-| 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | pending |
+| 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | done-local |
 
 Status values: `pending` → `in-progress` → `done-local` (committed on its branch, verified, reviewed; NOT pushed) → `merged-to-dev`.
 
@@ -639,14 +639,20 @@ Result: 6 commits on `feat/i18n-4-locale-metadata-sitemap`, 13 files, +257/−71
 
 Start state: content modules and MDX are single-locale.
 
-- [ ] `src/content/en/{home,for-agencies,static-pages}.ts` + `src/content/en/case-studies/*.mdx` (moved from current paths).
-- [ ] `src/content/es/` mirrors the structure; missing files fall back to `en` at load time.
-- [ ] `getContent(lang)` style loaders; `projects.ts` accepts `lang` and reads `src/content/{lang}/case-studies` with `en` fallback.
-- [ ] `contact-form-options.ts` keeps enum values; labels come from a per-locale map. Server validation unchanged.
-- [ ] UI label dictionary for header, footer, 404, error, CTA strings.
-- [ ] `scripts/validate-content.ts` validates every locale directory with the same schema.
+- [x] `src/content/en/{home,for-agencies,static-pages,ui}.ts` + `src/content/en/case-studies/*.mdx` (moved via `git mv` from the pre-PR5 paths).
+- [x] `src/content/es/{home,for-agencies,static-pages,ui}.ts` are one-line re-exports of the `en` versions (e.g. `export { homeContent } from '../en/home'`) — every `es` value is currently textually identical to `en`, by design (this PR is structural, not translation). `src/content/es/case-studies/` is an empty, git-tracked directory.
+- [x] `src/lib/projects.ts`: `getProjectSlugs()` stays lang-independent (always reads `src/content/en/case-studies` — the fixed, stable-across-locales catalog). `getProjects(lang)`, `getFeaturedProjects(lang)`, `getProjectBySlug(slug, lang)` resolve each file per-locale with fallback to `en` when the `es` file doesn't exist yet. `work/[slug]/page.tsx`'s `generateStaticParams()` deliberately untouched — still produces 14 static pages (7 slugs × 2 locales), verified via `.next/server/app/{en,es}/work/*.html` file counts (7 + 7).
+- [x] `contact-form-options.ts`: `SUPPORT_TYPES`/`TIMELINES` enums and `src/app/api/contact/route.ts` validation untouched (confirmed zero diff on the route file). Added `SUPPORT_TYPE_LABELS`/`TIMELINE_LABELS: Record<Locale, Record<enumValue, string>>` for display; `ContactForm` now takes a `lang` prop and renders from the label map while the submitted `value` stays the raw enum string.
+- [x] UI chrome dictionary (`src/content/en/ui.ts` + `es` re-export) covers `SiteHeader` nav labels, the "Discuss a Project" CTA (desktop AND mobile — a fresh review caught the mobile one left hardcoded English on the first pass, fixed), `SiteFooter` aria-labels, the global 404 copy, and the `[lang]/error.tsx` copy. `not-found.tsx` stays hard-`en` on purpose (Phase 1's Next 16.2 limitation — it's the static global 404 and can't be locale-aware).
+- [x] `scripts/validate-content.ts`: `CONTENT_DIR` points at `src/content/en/case-studies`; added a check that `getProjects('es')` returns the same slugs as `getProjects('en')` (proves the fallback works against the still-empty `es` directory).
+- [x] Static page copy (`about`/`contact`/`resume`): plain-text leaves (headings, labels, `skillGroups`, `experience`) moved into `src/content/en/static-pages.ts`. Any paragraph with an inline `<Link>`/`mailto:`/tracked CTA was deliberately left as raw JSX in the page file rather than decomposed — a scope boundary to avoid brittle JSX surgery; see file:line list in the PR 5 result note below.
+- [x] Fresh review also caught that `SiteHeader`'s `data-tracking` nav ids were derived from the visible label text — once real Spanish labels replace the `es` placeholders, that would silently rename analytics events (`nav_work` → `nav_trabajo`), breaking Phase 11's "keep tracking event names stable" rule. Fixed: tracking ids now derive from the (locale-agnostic) `href` instead.
 
-Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallback copy); contact form submits with the same enum values as before.
+Manual checks (verified 2026-09-02): `pnpm run validate:content` passes including the new fallback check; `/es`, `/es/about`, `/es/contact`, `/es/resume`, `/es/for-agencies`, `/es/work`, `/es/work/brand-website-build` all 200 with `<html lang="es">` and the same (English fallback) copy as before this PR — nothing went blank or broke; contact form still submits the same enum values.
+
+Left as raw JSX, not extracted (Deliverable 3 scope boundary): `contact/page.tsx` — the "See my resume instead" sentence and the email/LinkedIn address links; `resume/page.tsx` — the "Reach out about a role"/"Download CV" CTAs and the "Get in touch" mailto link. All carry `data-tracking` or an inline `<Link>`.
+
+Result: 6 commits on `feat/i18n-5-locale-content-model` (case studies → home/for-agencies → static pages → UI dictionary → contact labels → post-review fix), 43 files, +377/−157. `pnpm run verify` green.
 
 ### Open decisions (must close before Slice 2)
 
@@ -660,3 +666,9 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 - 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect` (local only). Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
 - 2026-09-02 — PR 3 implemented on `feat/i18n-3-locale-links-switch`; fresh review found two should-fix a11y/UX items (mobile menu not closing on switch, unlabeled wrapper), both fixed. Next: PR 4, branch from `feat/i18n-3-locale-links-switch`.
 - 2026-09-02 — PR 4 implemented on `feat/i18n-4-locale-metadata-sitemap`; home page metadata was missed in the first pass, caught and fixed in the same PR. `es_US` OG-locale decision closed. Next: PR 5 (content model — `src/content/{en,es}`, project loader takes `lang`, contact form labels, UI dictionary; flips `es` into `INDEXABLE_LOCALES` once real content lands), branch from `feat/i18n-4-locale-metadata-sitemap`.
+- 2026-09-02 — PR 5 implemented on `feat/i18n-5-locale-content-model`; fresh review found two should-fix items (mobile "Discuss a Project" CTA left hardcoded English, nav `data-tracking` ids derived from label text instead of href), both fixed. **All 5 PRs are now done-local — the technical/structural half of this migration (Slice 1) is complete.** Nothing pushed to any remote; all five branches are local only, chained `feat/i18n-1-...` → `feat/i18n-5-...`, each based on the previous.
+
+**Where a new session picks this up:**
+- To review the whole migration end to end: `git diff dev...feat/i18n-5-locale-content-model` (or check out `feat/i18n-5-locale-content-model` and run `pnpm run verify`).
+- To ship it: merge/push the chain in order (`i18n-1` → `i18n-2` → `i18n-3` → `i18n-4` → `i18n-5`) into `dev`, or open them as 5 stacked PRs — ask the user first, nothing is pushed automatically per the session's no-push rule.
+- What's deliberately NOT done, i.e. Slice 2 (real content, not structure): write actual Spanish copy for `src/content/es/{home,for-agencies,static-pages,ui}.ts` and `src/content/es/case-studies/*.mdx` (Phase 9 — translate by search intent, not word-for-word, against the `es_US` audience decision); once a locale's content is real, add `'es'` to `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — that one flip turns on `hreflang`, sitemap inclusion, and removes `noindex` together (see Phase 6/7). Also still open: CSRF on the contact form (pre-existing gap, its own change) and the four raw-JSX paragraphs on `contact`/`resume` pages noted above (translate in place when real copy lands).
