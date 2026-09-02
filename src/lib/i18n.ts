@@ -13,6 +13,20 @@ export function isLocale(value: string): value is Locale {
     return (LOCALES as readonly string[]).includes(value)
 }
 
+// PR 4: Slice 1 (this migration pass) ships routes for every locale in
+// LOCALES, but real translated content only exists for `en` — `/es/*`
+// currently renders the same English copy until PR 5 lands. Gating
+// indexing on this separate list (rather than LOCALES) is what lets
+// canonical/hreflang/OG-locale metadata, robots, and the sitemap treat
+// `/es/*` as not-yet-indexable without touching routing. See
+// docs/bilingual-seo-migration-plan.md Phase 6/7 and the PR 4 "Slice 2
+// unlock" note — flip a locale on here once its real content ships.
+export const INDEXABLE_LOCALES: readonly Locale[] = ['en']
+
+export function isIndexableLocale(locale: Locale): boolean {
+    return (INDEXABLE_LOCALES as readonly string[]).includes(locale)
+}
+
 // PR 3: keeps internal navigation inside the active locale instead of
 // relying on the legacy unprefixed → /en 301s in next.config.ts. `path` is
 // always a site-relative path such as `/`, `/about`, `/work/foo`,
