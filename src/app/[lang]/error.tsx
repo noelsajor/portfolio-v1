@@ -3,7 +3,10 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 
-export default function Error({
+// English copy for now — PR 5 localizes this string per locale. Rendered
+// wrapped in [lang]/layout.tsx for a runtime error thrown inside the locale
+// segment, so `html lang` still matches the current locale.
+export default function LocaleError({
     error,
     reset
 }: {
