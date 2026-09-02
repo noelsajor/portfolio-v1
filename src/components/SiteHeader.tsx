@@ -22,13 +22,19 @@ function NavLink({
     const pathname = usePathname()
     const localizedHref = localizedPath(lang, href)
     const active = pathname === localizedHref || (href === '/work' && pathname?.startsWith(localizedHref))
+    // Tracking id comes from the (locale-agnostic) href, not the visible
+    // label — the label is now sourced from uiContent and will read
+    // differently per locale once real Spanish copy lands, but analytics
+    // event names must stay stable across locales (see Phase 11 of
+    // docs/bilingual-seo-migration-plan.md).
+    const trackingId = href.replace(/^\//, '') || 'home'
 
     return (
         <Link
             href={localizedHref}
             onClick={onClick}
             aria-current={active ? 'page' : undefined}
-            data-tracking={`nav_${label.toLowerCase()}`}
+            data-tracking={`nav_${trackingId}`}
             className={[
                 'rounded-sm text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30',
                 active ? 'text-white' : 'text-white/70 hover:text-white'
@@ -119,7 +125,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                             data-tracking="nav_cta_discuss_project"
                             className="w-fit rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
-                            Discuss a Project
+                            {header.discussProject}
                         </Link>
                     </div>
                 </div>
