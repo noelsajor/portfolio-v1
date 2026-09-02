@@ -34,11 +34,13 @@ const nextConfig: NextConfig = {
     // Don't advertise the framework via the X-Powered-By response header.
     poweredByHeader: false,
     // Legacy, pre-i18n URLs permanently redirect to their /en equivalent.
-    // `/` gets its own non-permanent entry below: it's a language-selection
-    // redirect (src/proxy.ts replaces the fixed /en target with real
-    // detection in PR 2), not a stable SEO destination, so it must stay a
-    // redirect that can change target locale per visitor rather than one
-    // browsers/crawlers cache as permanent.
+    // `/` is NOT listed here: it's a language-selection redirect, not a
+    // stable SEO destination, so it must stay a redirect that can change
+    // target locale per visitor rather than one browsers/crawlers cache as
+    // permanent. src/proxy.ts owns it — detecting the visitor's locale from
+    // the `preferred_locale` cookie and `Accept-Language`, then issuing a
+    // 307 — because that decision depends on per-request data this static
+    // redirects() config cannot see.
     //
     // No rewrites(): there is no catch-all under [lang] to funnel unmatched
     // paths into anymore (removed — see src/app/not-found.tsx). Any path
@@ -46,7 +48,6 @@ const nextConfig: NextConfig = {
     // /es/* page, is simply unmatched and served by the static global 404.
     async redirects() {
         return [
-            { source: '/', destination: '/en', permanent: false },
             { source: '/about', destination: '/en/about', permanent: true },
             { source: '/work', destination: '/en/work', permanent: true },
             { source: '/contact', destination: '/en/contact', permanent: true },
