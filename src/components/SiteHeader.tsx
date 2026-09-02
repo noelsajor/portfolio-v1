@@ -4,13 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { localizedPath, type Locale } from '@/lib/i18n'
+import { uiContent as uiContentEn } from '@/content/en/ui'
+import { uiContent as uiContentEs } from '@/content/es/ui'
 import { LanguageSwitch } from '@/components/LanguageSwitch'
-
-const nav = [
-    { href: '/work', label: 'Work' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' }
-]
 
 function NavLink({
     lang,
@@ -45,6 +41,13 @@ function NavLink({
 
 export function SiteHeader({ lang }: { lang: Locale }) {
     const [open, setOpen] = useState(false)
+    const uiContent = lang === 'es' ? uiContentEs : uiContentEn
+    const { header } = uiContent
+    const nav = [
+        { href: '/work', label: header.navWork },
+        { href: '/about', label: header.navAbout },
+        { href: '/contact', label: header.navContact }
+    ]
 
     useEffect(() => {
         const onResize = () => setOpen(false)
@@ -74,7 +77,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                         data-tracking="nav_cta_discuss_project"
                         className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                     >
-                        Discuss a Project
+                        {header.discussProject}
                     </Link>
                 </nav>
 
