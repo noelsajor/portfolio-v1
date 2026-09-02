@@ -1,13 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
-import { SiteHeader } from '@/components/SiteHeader'
-import { SiteFooter } from '@/components/SiteFooter'
-import { StructuredData } from '@/components/StructuredData'
-import { GoogleAnalyticsPageViews } from '@/components/GoogleAnalyticsPageViews'
-import { GoogleAnalyticsClickTracking } from '@/components/GoogleAnalyticsClickTracking'
 import { defaultOgImage, siteConfig } from '@/lib/site-config'
-import { buildVerificationMetadata, gaMeasurementId } from '@/lib/analytics-config'
+import { buildVerificationMetadata } from '@/lib/analytics-config'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -61,34 +55,16 @@ export const viewport: Viewport = {
   colorScheme: 'dark'
 }
 
+// Pass-through root layout. Next.js requires a layout.tsx at the top of
+// app/, but the real document shell (<html lang>, providers, header,
+// footer, analytics, structured data) now lives in src/app/[lang]/layout.tsx
+// so `lang` can be set from the route param. This root layout renders no
+// DOM of its own — it exists only so segments outside [lang] (the root
+// not-found.tsx boundary, used when an invalid locale segment is requested)
+// still have a layout to render under. `metadata`/`viewport` stay here:
+// Next merges metadata from every layout/page in the tree into whichever
+// <head> the eventual <html> render produces, so this doesn't require its
+// own <html>/<body>.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className="min-h-dvh">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
-        >
-          Skip to main content
-        </a>
-        <StructuredData />
-        <SiteHeader />
-        <main
-          id="main-content"
-          tabIndex={-1}
-          className="mx-auto max-w-5xl px-4 py-12 focus:outline-none"
-        >
-          {children}
-        </main>
-        <SiteFooter />
-        {process.env.NODE_ENV === 'production' && gaMeasurementId ? (
-          <>
-            <GoogleAnalytics gaId={gaMeasurementId} />
-            <GoogleAnalyticsPageViews />
-            <GoogleAnalyticsClickTracking />
-          </>
-        ) : null}
-      </body>
-    </html>
-  )
+  return children
 }
