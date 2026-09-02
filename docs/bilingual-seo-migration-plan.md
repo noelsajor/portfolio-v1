@@ -565,7 +565,7 @@ This section is the resume point. If a working session is lost, start here: read
 | # | Branch | Scope | Status |
 |---|--------|-------|--------|
 | 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | done-local |
-| 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | pending |
+| 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | done-local |
 | 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | pending |
 | 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | pending |
 | 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | pending |
@@ -599,13 +599,15 @@ Result: 4 code commits on `feat/i18n-1-lang-routes` (locale config → move rout
 
 Start state: `/` always goes to `/en` via a temporary `permanent: false` redirect in `next.config.ts`; remove that rule when the proxy takes over.
 
-- [ ] Middleware in `src/proxy.ts` (Next 16 name for middleware) on the default Node runtime (no `runtime = 'edge'`), matched only on `/`.
-- [ ] Order: `preferred_locale` cookie (validated with `isLocale`) → `Accept-Language` best match → `en`.
-- [ ] Never redirect an already-prefixed URL.
-- [ ] Response sets `Vary: Accept-Language, Cookie` or is marked non-cacheable.
-- [ ] Exclusions verified: `/api/`, `/_next/`, static files, `sitemap.xml`, `robots.txt`, images.
+- [x] `src/proxy.ts` (Next 16 name for middleware), `export function proxy(request)`, `config.matcher: '/'`. Next 16 proxy files always run on Node — setting `runtime` throws. Next special-cases a root matcher so it never bleeds into `/en`, `/about`, `/api/*`.
+- [x] Order: `preferred_locale` cookie (validated with `isLocale`) → `Accept-Language` best q-value match on the primary subtag (`es-AR`, `es-419` → `es`; `q=0` excluded) → `en`. Pure helper in `src/lib/locale-detection.ts`.
+- [x] Never redirects an already-prefixed URL; the proxy only reads the cookie, it never sets it (PR 3 does, on manual switch).
+- [x] 307 (never permanent), destination built only from the validated locale, query string preserved, `Vary: Accept-Language, Cookie` + `Cache-Control: private, no-store`. Security headers from `next.config.ts` still apply to the redirect.
+- [x] Temporary `/` → `/en` rule removed from `next.config.ts`; legacy permanent redirects untouched.
 
-Manual checks: Spanish browser + no cookie → `/es`; English → `/en`; cookie `es` + English browser → `/es`; direct `/en/about` never redirects.
+Manual checks (verified with `next start` + curl on 2026-09-02): no headers → `/en`; `es-419` / `es-AR` → `/es`; `pt-BR` / `fr` → `/en`; `en;q=0.5,es;q=0.9` → `/es`; cookie `es` + English browser → `/es`; cookie `ES` or `../../evil` → ignored → `/en`; `/?a=1` → `/es?a=1`; `/en/about` with Spanish browser → 200, no redirect; `/about` → 308; static files and `/api/contact` unaffected.
+
+Result: 3 commits on `feat/i18n-2-root-locale-redirect` (helper, proxy + config, q=0 fix), 3 files, ≈+130/−6. `pnpm run verify` green.
 
 ### PR 3 — Locale-aware navigation
 
@@ -654,3 +656,4 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 
 - 2026-09-02 — Plan reviewed twice against the codebase; added legacy 301 redirects, security/cache sections, localized error surfaces, Node-runtime note. Implementation starts with PR 1.
 - 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes` (local only). Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
+- 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect` (local only). Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
