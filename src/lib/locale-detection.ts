@@ -44,6 +44,9 @@ function resolveFromAcceptLanguage(acceptLanguage: string | null): Locale | null
             return { primarySubtag, quality }
         })
         .filter((candidate): candidate is { primarySubtag: string; quality: number } => candidate !== null)
+        // RFC 9110 §12.4.2: q=0 means "not acceptable", so such languages
+        // must never be selected even when nothing else matches.
+        .filter((candidate) => candidate.quality > 0)
         // Stable sort by descending quality; Array#sort is stable in modern JS
         // engines, which preserves the header's original ordering for ties.
         .sort((a, b) => b.quality - a.quality)
