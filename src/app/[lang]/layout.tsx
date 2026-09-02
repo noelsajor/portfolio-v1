@@ -4,6 +4,20 @@ import { defaultOgImage, siteConfig } from '@/lib/site-config'
 import { buildVerificationMetadata } from '@/lib/analytics-config'
 import { DEFAULT_LOCALE, isLocale, LOCALES } from '@/lib/i18n'
 
+// Locale-independent defaults only. Canonical, alternates.languages, and
+// openGraph (url/locale/title/description/images) are all locale-dependent
+// (PR 4 — see buildLocaleMetadataFields in site-config.ts) and are
+// therefore set per-page via each page's own generateMetadata, never here:
+// a page-level `openGraph`/`alternates` key replaces the whole object from
+// this layout rather than merging into it, so defining locale-specific
+// values at both levels would just make the layout's copies dead weight
+// that's easy to forget to update.
+//
+// `robots` stays here as the site-wide index:true/follow:true default.
+// buildLocaleMetadataFields only returns a `robots` override for
+// non-indexable locales (currently /es/*) — an indexable page's
+// generateMetadata omits `robots` entirely, so it inherits this default
+// rather than needing to restate it on every page.
 export const metadata: Metadata = {
     metadataBase: new URL(siteConfig.siteUrl),
     title: {
@@ -16,19 +30,7 @@ export const metadata: Metadata = {
     authors: [siteConfig.author],
     creator: siteConfig.name,
     publisher: siteConfig.name,
-    alternates: {
-        canonical: siteConfig.siteUrl
-    },
     ...buildVerificationMetadata(),
-    openGraph: {
-        type: 'website',
-        url: siteConfig.siteUrl,
-        siteName: siteConfig.name,
-        title: siteConfig.title,
-        description: siteConfig.description,
-        locale: siteConfig.locale,
-        images: [defaultOgImage]
-    },
     twitter: {
         card: 'summary_large_image',
         images: [defaultOgImage.url]
