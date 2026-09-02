@@ -43,7 +43,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             </div>
 
             <div className="grid gap-12 md:grid-cols-2">
-                <ContactForm />
+                <ContactForm lang={lang} />
 
                 {/* PR 5: address links carry data-tracking attributes — left as JSX; localize in place when real Spanish copy lands */}
                 <div className="space-y-6">
