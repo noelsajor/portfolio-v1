@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/site-config'
-import { forAgenciesContent } from '@/content/for-agencies'
+import { forAgenciesContent as forAgenciesContentEn } from '@/content/en/for-agencies'
+import { forAgenciesContent as forAgenciesContentEs } from '@/content/es/for-agencies'
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 import { LandingHero } from '@/components/landing/LandingHero'
 import { LandingFeatureList } from '@/components/landing/LandingFeatureList'
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function ForAgenciesPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+    const forAgenciesContent = lang === 'es' ? forAgenciesContentEs : forAgenciesContentEn
     const { hero, problems, services, process, assurance, faq, cta } = forAgenciesContent
 
     return (
