@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SiteShell } from '@/components/SiteShell'
+import { localizedPath } from '@/lib/i18n'
 
 // Global, statically-prerendered 404 for the whole app. Next.js 16.2.11
 // cannot reliably serve a curl-visible, correctly server-rendered <html
@@ -42,7 +43,7 @@ export default function GlobalNotFound() {
                 </div>
 
                 <Link
-                    href="/en"
+                    href={localizedPath('en', '/')}
                     className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                 >
                     Return Home

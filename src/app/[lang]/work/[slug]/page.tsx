@@ -11,6 +11,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
 import { absoluteUrl, defaultOgImage, siteConfig } from '@/lib/site-config'
+import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { SegmentBadge } from '@/components/SegmentBadge'
 import { Chip } from '@/components/Chip'
@@ -77,7 +78,8 @@ export default async function CaseStudyPage({
 }: {
     params: Promise<{ lang: string; slug: string }>
 }) {
-    const { slug } = await params
+    const { lang: rawLang, slug } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
 
     const data = getProjectBySlug(slug)
     if (!data) return notFound()
@@ -91,7 +93,7 @@ export default async function CaseStudyPage({
         <div className="space-y-10">
             <div className="space-y-6">
                 <Link
-                    href="/work"
+                    href={localizedPath(lang, '/work')}
                     className="inline-flex rounded-sm text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                 >
                     <span aria-hidden="true">←</span> Back to work
