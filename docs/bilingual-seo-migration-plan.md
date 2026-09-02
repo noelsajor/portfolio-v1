@@ -300,14 +300,14 @@ Recommendation: start with stable slugs. Translate titles, headings, metadata, a
 
 Update the metadata helper so every localized page emits correct SEO signals.
 
-- [ ] Extend `buildPageMetadata()` to accept `lang`.
-- [ ] Generate canonical URLs with locale prefix.
-- [ ] Add `alternates.languages` for English and Spanish equivalents.
-- [ ] Add an explicit `x-default` alternate pointing to the fallback English page.
-- [ ] Set localized Open Graph locale.
-- [ ] Add `openGraph.alternateLocale` where useful.
-- [ ] Ensure page titles and descriptions are localized.
-- [ ] Avoid pointing canonical from Spanish pages to English pages.
+- [x] `buildPageMetadata()` and the new `buildLocaleMetadataFields(lang, path)` accept `lang`. All six static pages plus `work/[slug]` and the home page (`[lang]/page.tsx`) call it via `generateMetadata`.
+- [x] Canonical URLs are locale-prefixed everywhere, home page included (`/en`, `/es`), never the bare site URL.
+- [x] `alternates.languages` includes one entry per locale in `INDEXABLE_LOCALES` (currently `en` only) — a non-indexable locale's page still declares the indexable alternate, never a self-referencing `hreflang` for content that isn't real yet.
+- [ ] `x-default` alternate: intentionally deferred, not added. It only makes sense once 2+ locales are indexable (see the `x-default` rule below) — revisit when PR 5 flips `es` into `INDEXABLE_LOCALES`.
+- [x] `openGraph.locale`: `en_US` for `en`, `es_US` for `es` (plan left `es_ES`/`es_US` open; chose `es_US` — this site's realistic Spanish-speaking audience is LatAm/US clients, not Spain).
+- [x] `openGraph.alternateLocale` set from the other indexable locales.
+- [x] Page titles/descriptions/OG title flow through the same helper for every page including home; verified no duplicate "Jose Leon | Jose Leon" title on `/` (home's title is already fully branded, so it's excluded from the `%s | Jose Leon` template).
+- [x] Spanish pages self-canonicalize (`/es/about` → `/es/about`), never to English.
 
 Expected metadata pattern:
 
@@ -332,21 +332,18 @@ Canonical rule:
 
 `x-default` rule:
 
-- [ ] Every page with both language versions exposes `en`, `es`, and `x-default` alternates.
-- [ ] `x-default` points to the English fallback equivalent, not to `/`.
-- [ ] If only one localized version exists, publish only the available language alternate and define the fallback behavior explicitly; do not create an `hreflang` URL that returns a 404.
+- [ ] Every page with both language versions exposes `en`, `es`, and `x-default` alternates — deferred with the `x-default` item above, both locales aren't indexable yet.
+- [x] Currently only one language version is indexable (`en`): only that alternate is published, and non-indexable `/es/*` never gets an `hreflang` URL that would read as duplicate/thin content.
 
 ### Phase 7: Sitemap And Robots
 
 Make search engines discover both language versions.
 
-- [ ] Update `src/app/sitemap.ts` to emit all static routes for both locales.
-- [ ] Emit all published case studies for each locale.
-- [ ] Include `lastModified` only when the source content has a real `updatedAt`.
-- [ ] Include language alternates if supported by the current Next metadata route type.
-- [ ] Exclude `/` from the content sitemap because it is redirect-only.
-- [ ] Keep `robots.ts` allowing localized routes.
-- [ ] Ensure `/api/` remains blocked.
+- [x] `src/app/sitemap.ts` emits static routes and published case studies for locales in `INDEXABLE_LOCALES` only (13 `<loc>` entries today, all `/en/*`). Flips to include `/es/*` automatically once PR 5 adds `es` to `INDEXABLE_LOCALES`.
+- [x] `lastModified` logic untouched — still only set when the source has a real `updatedAt`.
+- [x] `/` excluded from the sitemap (redirect-only, confirmed no `<loc>` entry for it).
+- [x] `robots.ts` untouched — its only path is a generic `allow: '/'`, nothing unprefixed to fix.
+- [x] `/api/` still blocked.
 
 Expected sitemap coverage:
 
@@ -371,11 +368,10 @@ Expected sitemap coverage:
 
 Localize JSON-LD where it contains page-visible language-specific text.
 
-- [ ] Update `StructuredData` to receive `lang`.
-- [ ] Localize `WebSite.description`.
-- [ ] Localize `Person.jobTitle` if it appears in the target language page.
-- [ ] Add Article/CreativeWork schema for case studies if the project wants stronger GAIO/SEO coverage.
-- [ ] Add FAQ schema for pages that render a real FAQ section with enough questions.
+- [x] `StructuredData` accepts `lang`, threaded from `SiteShell`. Text stays English for both locales for now (no real Spanish source string exists yet) — the prop plumbing is correct so PR 5 only has to swap in real copy.
+- [ ] Localize `WebSite.description` and `Person.jobTitle` with real Spanish text (PR 5).
+- [ ] Add Article/CreativeWork schema for case studies if the project wants stronger GAIO/SEO coverage (optional, not scheduled).
+- [ ] Add FAQ schema for pages that render a real FAQ section with enough questions (optional, not scheduled).
 
 Do not invent profiles, credentials, locations, or business entities just to fill schema fields.
 
@@ -568,7 +564,7 @@ This section is the resume point. If a working session is lost, start here: read
 | 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | done-local |
 | 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | done-local |
 | 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | done-local |
-| 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | pending |
+| 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | done-local |
 | 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | pending |
 
 Status values: `pending` → `in-progress` → `done-local` (committed on its branch, verified, reviewed; NOT pushed) → `merged-to-dev`.
@@ -625,15 +621,19 @@ Manual checks: navigate the whole site under `/es` without ever leaving `/es`; s
 
 Start state: metadata and sitemap still emit unprefixed URLs.
 
-- [ ] `buildPageMetadata({ lang, ... })`: locale-prefixed canonical, `alternates.languages` for every locale that has real content, `openGraph.locale` + `alternateLocale`.
-- [ ] `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — starts as `['en']`. Pages in a non-indexable locale get `robots: { index: false }` and are excluded from sitemap and `hreflang`.
-- [ ] `StructuredData` receives `lang`.
-- [ ] `sitemap.ts` emits static routes and published case studies for indexable locales only; `/` excluded.
-- [ ] `robots.ts` unchanged except confirming `/api/` stays blocked.
+- [x] `buildPageMetadata({ lang, ... })` (and `buildLocaleMetadataFields(lang, path)`, extracted so `work/[slug]/page.tsx` and the home page can reuse just the locale-dependent slice): locale-prefixed canonical, `alternates.languages` for every locale in `INDEXABLE_LOCALES`, `openGraph.locale` + `alternateLocale`.
+- [x] `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — `['en']`. Pages in a non-indexable locale get `robots: { index: false, follow: true }` and are excluded from sitemap and `hreflang`.
+- [x] `StructuredData` receives `lang` (threaded through `SiteShell`); English text kept for both locales until PR 5 has real Spanish copy.
+- [x] `sitemap.ts` emits static routes and published case studies for indexable locales only; `/` excluded.
+- [x] `robots.ts` unchanged; `/api/` still blocked.
 
-Manual checks: view source of `/en/about` — canonical is `/en/about`, no `hreflang` to `/es` yet; `/es/about` has `noindex`; sitemap has only `/en/*`.
+Manual checks (verified with `next start` + curl on 2026-09-02): `/en/about` canonical `/en/about`, `hreflang="en"` only, `robots: index, follow`; `/es/about` canonical `/es/about`, `robots: noindex, follow`, `og:locale` `es_US` + `og:locale:alternate` `en_US`; sitemap has 13 `<loc>` entries, all `/en/*`, none `/es/` or `/`. `/en` and `/es` home page checked the same way after the fix below.
+
+First pass missed the home page: `[lang]/page.tsx` had no `generateMetadata`, so `/` and `/es` inherited the layout's static, unprefixed canonical (`https://noelsajor.com`) and hardcoded `en_US` locale. Caught during my own verification, fixed in the same PR — home now builds its metadata via `buildLocaleMetadataFields` directly (its title is already fully branded, so it deliberately skips the `%s | Jose Leon` template other pages get).
 
 Slice 2 unlock: when a locale's real content lands, add it to `INDEXABLE_LOCALES` — this flips `hreflang`, sitemap and `noindex` together.
+
+Result: 6 commits on `feat/i18n-4-locale-metadata-sitemap`, 13 files, +257/−71. `pnpm run verify` green.
 
 ### PR 5 — Locale content model
 
@@ -650,7 +650,7 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 
 ### Open decisions (must close before Slice 2)
 
-- Target audience for Spanish: `es_ES` vs `es_US`/LatAm. Drives vocabulary, keywords and OG locale.
+- ~~Target audience for Spanish: `es_ES` vs `es_US`/LatAm.~~ Resolved in PR 4: `es_US` (LatAm/US client base, not Spain) — drives `openGraph.locale` today; still the assumption to write Spanish copy against in PR 9/Phase 9.
 - CSRF token on the contact form is a pre-existing gap, out of scope here; handle in its own change.
 
 ### Session log
@@ -658,4 +658,5 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 - 2026-09-02 — Plan reviewed twice against the codebase; added legacy 301 redirects, security/cache sections, localized error surfaces, Node-runtime note. Implementation starts with PR 1.
 - 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes` (local only). Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
 - 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect` (local only). Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
-- 2026-09-02 — PR 3 implemented on `feat/i18n-3-locale-links-switch`; fresh review found two should-fix a11y/UX items, both fixed. Next: PR 4 (`buildPageMetadata(lang)`, canonical/hreflang, `StructuredData(lang)`, sitemap with `INDEXABLE_LOCALES`), branch from `feat/i18n-3-locale-links-switch`.
+- 2026-09-02 — PR 3 implemented on `feat/i18n-3-locale-links-switch`; fresh review found two should-fix a11y/UX items (mobile menu not closing on switch, unlabeled wrapper), both fixed. Next: PR 4, branch from `feat/i18n-3-locale-links-switch`.
+- 2026-09-02 — PR 4 implemented on `feat/i18n-4-locale-metadata-sitemap`; home page metadata was missed in the first pass, caught and fixed in the same PR. `es_US` OG-locale decision closed. Next: PR 5 (content model — `src/content/{en,es}`, project loader takes `lang`, contact form labels, UI dictionary; flips `es` into `INDEXABLE_LOCALES` once real content lands), branch from `feat/i18n-4-locale-metadata-sitemap`.

@@ -10,7 +10,7 @@ import { ArrowUpRight } from 'lucide-react'
 
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { getProjectBySlug, getProjectSlugs } from '@/lib/projects'
-import { absoluteUrl, defaultOgImage, siteConfig } from '@/lib/site-config'
+import { absoluteUrl, buildLocaleMetadataFields, defaultOgImage, siteConfig } from '@/lib/site-config'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { SegmentBadge } from '@/components/SegmentBadge'
@@ -29,13 +29,24 @@ export async function generateMetadata({
 }: {
     params: Promise<{ lang: string; slug: string }>
 }): Promise<Metadata> {
-    const { slug } = await params
+    const { lang: rawLang, slug } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const data = getProjectBySlug(slug)
     if (!data) return {}
 
     const { frontmatter } = data
     const description = frontmatter.seoDescription ?? frontmatter.summary
-    const url = absoluteUrl(`/work/${slug}`)
+
+    // PR 4: canonical/hreflang/OG-locale/robots come from the same
+    // locale-gated logic buildPageMetadata() uses (see site-config.ts) —
+    // this page builds the rest of its Metadata object itself (article OG
+    // type, per-project cover image) rather than going through
+    // buildPageMetadata() directly, since its title-suffix handling below
+    // doesn't fit that helper's title/OG-title convention.
+    const { canonical, languages, ogLocale, ogAlternateLocale, robots } = buildLocaleMetadataFields(
+        lang,
+        `/work/${slug}`
+    )
 
     // Existing seoTitle values already end in " | Jose Leon" (authored before
     // the root layout had a title template). Strip that suffix for the page
@@ -53,14 +64,15 @@ export async function generateMetadata({
     return {
         title: shortTitle,
         description,
-        alternates: { canonical: url },
+        alternates: { canonical, languages },
         openGraph: {
             type: 'article',
-            url,
+            url: canonical,
             siteName: siteConfig.name,
             title: fullTitle,
             description,
-            locale: siteConfig.locale,
+            locale: ogLocale,
+            ...(ogAlternateLocale ? { alternateLocale: ogAlternateLocale } : {}),
             images: [ogImage]
         },
         // No title/description here — see the matching comment in
@@ -69,7 +81,8 @@ export async function generateMetadata({
         twitter: {
             card: 'summary_large_image',
             images: [ogImage.url]
-        }
+        },
+        ...(robots ? { robots } : {})
     }
 }
 
