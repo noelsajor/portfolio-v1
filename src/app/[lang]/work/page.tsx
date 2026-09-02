@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { ArrowUpRight } from 'lucide-react'
 import { PROJECT_CAPABILITIES } from '@/lib/project-schema'
 import { getProjects } from '@/lib/projects'
@@ -11,11 +12,17 @@ function capabilityId(capability: string): string {
     return `capability-${capability.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`
 }
 
-export const metadata = buildPageMetadata({
-    title: 'Work',
-    description: 'Selected product design, front-end implementation and Shopify projects.',
-    path: '/work'
-})
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
+    return buildPageMetadata({
+        title: 'Work',
+        description: 'Selected product design, front-end implementation and Shopify projects.',
+        path: '/work',
+        lang
+    })
+}
 
 export default async function WorkPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params

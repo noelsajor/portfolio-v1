@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/site-config'
 import { forAgenciesContent } from '@/content/for-agencies'
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
@@ -8,12 +9,18 @@ import { LandingTextBlock } from '@/components/landing/LandingTextBlock'
 import { LandingFaq } from '@/components/landing/LandingFaq'
 import { LandingCta } from '@/components/landing/LandingCta'
 
-export const metadata = buildPageMetadata({
-    title: 'For Agencies',
-    description:
-        'White-label design, Shopify, and front-end production support for agencies with more work than available capacity.',
-    path: '/for-agencies'
-})
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
+    return buildPageMetadata({
+        title: 'For Agencies',
+        description:
+            'White-label design, Shopify, and front-end production support for agencies with more work than available capacity.',
+        path: '/for-agencies',
+        lang
+    })
+}
 
 export default async function ForAgenciesPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params

@@ -1,14 +1,21 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 import { getProjects } from '@/lib/projects'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
-export const metadata = buildPageMetadata({
-    title: 'Resume',
-    description:
-        'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.',
-    path: '/resume'
-})
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
+    return buildPageMetadata({
+        title: 'Resume',
+        description:
+            'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.',
+        path: '/resume',
+        lang
+    })
+}
 
 const linkClass =
     'rounded-sm text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30'
