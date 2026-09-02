@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { localizedPath, type Locale } from '@/lib/i18n'
+import { LanguageSwitch } from '@/components/LanguageSwitch'
 
 const nav = [
     { href: '/work', label: 'Work' },
@@ -10,13 +12,24 @@ const nav = [
     { href: '/contact', label: 'Contact' }
 ]
 
-function NavLink({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
+function NavLink({
+    lang,
+    href,
+    label,
+    onClick
+}: {
+    lang: Locale
+    href: string
+    label: string
+    onClick?: () => void
+}) {
     const pathname = usePathname()
-    const active = pathname === href || (href === '/work' && pathname?.startsWith('/work'))
+    const localizedHref = localizedPath(lang, href)
+    const active = pathname === localizedHref || (href === '/work' && pathname?.startsWith(localizedHref))
 
     return (
         <Link
-            href={href}
+            href={localizedHref}
             onClick={onClick}
             aria-current={active ? 'page' : undefined}
             data-tracking={`nav_${label.toLowerCase()}`}
@@ -30,7 +43,7 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
     )
 }
 
-export function SiteHeader() {
+export function SiteHeader({ lang }: { lang: Locale }) {
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
@@ -42,17 +55,22 @@ export function SiteHeader() {
     return (
         <header className="sticky top-0 z-50 border-b border-white/10 bg-black/60 backdrop-blur">
             <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-                <Link href="/" data-tracking="nav_home" className="text-sm font-semibold tracking-tight text-white">
+                <Link
+                    href={localizedPath(lang, '/')}
+                    data-tracking="nav_home"
+                    className="text-sm font-semibold tracking-tight text-white"
+                >
                     Jose Leon
                 </Link>
 
                 {/* Desktop nav */}
                 <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
                     {nav.map((item) => (
-                        <NavLink key={item.href} href={item.href} label={item.label} />
+                        <NavLink key={item.href} lang={lang} href={item.href} label={item.label} />
                     ))}
+                    <LanguageSwitch lang={lang} />
                     <Link
-                        href="/contact"
+                        href={localizedPath(lang, '/contact')}
                         data-tracking="nav_cta_discuss_project"
                         className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                     >
@@ -83,10 +101,17 @@ export function SiteHeader() {
                 <div className="mx-auto max-w-5xl px-4 py-4">
                     <div className="flex flex-col gap-4">
                         {nav.map((item) => (
-                            <NavLink key={item.href} href={item.href} label={item.label} onClick={() => setOpen(false)} />
+                            <NavLink
+                                key={item.href}
+                                lang={lang}
+                                href={item.href}
+                                label={item.label}
+                                onClick={() => setOpen(false)}
+                            />
                         ))}
+                        <LanguageSwitch lang={lang} />
                         <Link
-                            href="/contact"
+                            href={localizedPath(lang, '/contact')}
                             onClick={() => setOpen(false)}
                             data-tracking="nav_cta_discuss_project"
                             className="w-fit rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
