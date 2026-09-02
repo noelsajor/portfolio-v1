@@ -20,11 +20,11 @@ const SWITCH_ARIA_LABEL: Record<Locale, string> = {
 // the page you're on. Every route in this slice exists in both locales, so
 // this never lands on a 404 — see the comment on swapLocaleInPath for the
 // PR 5 caveat once that stops being true.
-export function LanguageSwitch({ lang }: { lang: Locale }) {
+export function LanguageSwitch({ lang, onNavigate }: { lang: Locale; onNavigate?: () => void }) {
     const pathname = usePathname()
 
     return (
-        <div className="flex items-center gap-1 text-sm" aria-label="Language">
+        <nav className="flex items-center gap-1 text-sm" aria-label="Language">
             {LOCALES.map((locale) => {
                 const isCurrent = locale === lang
                 const href = swapLocaleInPath(pathname ?? '/', locale)
@@ -56,6 +56,7 @@ export function LanguageSwitch({ lang }: { lang: Locale }) {
                             // `Secure` also works on http://localhost, which
                             // browsers treat as a secure context.
                             document.cookie = `preferred_locale=${locale}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`
+                            onNavigate?.()
                         }}
                         className={[
                             'rounded-sm px-1.5 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30',
@@ -66,6 +67,6 @@ export function LanguageSwitch({ lang }: { lang: Locale }) {
                     </Link>
                 )
             })}
-        </div>
+        </nav>
     )
 }

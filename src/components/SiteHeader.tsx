@@ -109,7 +109,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                                 onClick={() => setOpen(false)}
                             />
                         ))}
-                        <LanguageSwitch lang={lang} />
+                        <LanguageSwitch lang={lang} onNavigate={() => setOpen(false)} />
                         <Link
                             href={localizedPath(lang, '/contact')}
                             onClick={() => setOpen(false)}
