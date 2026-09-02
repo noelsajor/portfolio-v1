@@ -147,14 +147,13 @@ Root route rules:
 
 Prevent users from accidentally leaving the selected language.
 
-- [ ] Add a helper like `localizedPath(lang, path)`.
-- [ ] Update `SiteHeader` links to include the active locale.
-- [ ] Update `SiteFooter` internal links to include the active locale.
-- [ ] Update project card links from `/work/[slug]` to `/[lang]/work/[slug]`.
-- [ ] Update resume links that point to internal project pages.
-- [ ] Keep external links unchanged.
-- [ ] Add a language switch component to the header.
-- [ ] Make the switch preserve the equivalent page when available.
+- [x] `localizedPath(lang, path)` and `swapLocaleInPath(pathname, target)` added to `src/lib/i18n.ts`. Both no-op on `#...`, `http(s)://`, `mailto:`, `tel:`; never double-prefix; pass query/hash through; `swapLocaleInPath` handles `/` and the static-404 `/_not-found` pathname without producing `/es/undefined`.
+- [x] `SiteHeader`, `SiteFooter`, project cards, resume, home/landing sections all route internal links through the helpers — `rg` for unlocalized `href="/"` across `src/**/*.{ts,tsx,mdx}` returns zero offenders.
+- [x] `LanguageSwitch` in the header swaps the locale segment of the current path (not a fixed destination), so it preserves the equivalent page. It writes `preferred_locale` client-side (`Secure`, `SameSite=Lax`, `Path=/`, `Max-Age=31536000`) from a compile-time `Locale` value only — never a raw/user-controlled string. Fixed after review: mobile switch now closes the menu on navigate (`onNavigate` prop); wrapper is a `<nav aria-label="Language">` landmark, not an unlabeled `<div>`.
+- [x] External links, `mailto:`, resume PDF, `#main-content` unchanged.
+- [x] GA `language_switch` event added (`from_locale`/`to_locale`) via the existing `data-tracking` delegated-listener convention.
+
+Known deferred item (not a bug): `src/app/not-found.tsx` is the static global 404 and always renders `<SiteShell lang="en">` (see Phase 1's Next 16.2 limitation). On a 404 reached from an `/es/...` URL, the switch shows "English" as current even though the visitor was on a Spanish path. Low impact — revisit only if localized 404s become possible.
 
 Examples:
 
@@ -165,6 +164,8 @@ Examples:
 | `/en/work/brand-website-build` | `/es/work/brand-website-build` | `/en/work/brand-website-build` |
 
 If a translated case study does not exist yet, either hide that case study in the missing locale or redirect the switch to the localized `/work` index. Do not send users to a 404 from the language switch.
+
+Result: 4 commits on `feat/i18n-3-locale-links-switch` (helpers → links → switch → post-review fix), 20 files, +264/−49. `pnpm run verify` green. Fresh review found two should-fix items (mobile menu not closing on switch, unlabeled wrapper `<div>`); both fixed and reverified.
 
 ### Security And Privacy Considerations
 
@@ -566,7 +567,7 @@ This section is the resume point. If a working session is lost, start here: read
 |---|--------|-------|--------|
 | 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | done-local |
 | 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | done-local |
-| 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | pending |
+| 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | done-local |
 | 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | pending |
 | 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | pending |
 
@@ -657,3 +658,4 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 - 2026-09-02 — Plan reviewed twice against the codebase; added legacy 301 redirects, security/cache sections, localized error surfaces, Node-runtime note. Implementation starts with PR 1.
 - 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes` (local only). Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
 - 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect` (local only). Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
+- 2026-09-02 — PR 3 implemented on `feat/i18n-3-locale-links-switch`; fresh review found two should-fix a11y/UX items, both fixed. Next: PR 4 (`buildPageMetadata(lang)`, canonical/hreflang, `StructuredData(lang)`, sitemap with `INDEXABLE_LOCALES`), branch from `feat/i18n-3-locale-links-switch`.
