@@ -573,7 +573,7 @@ Audience: `es_US`. Translate for search intent and natural phrasing, not word-fo
 | 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `in-review` ([PR #15](https://github.com/noelsajor/portfolio-v1/pull/15)) |
 | 16 | `feat/i18n-11-es-cs-strike-hemp` | `src/content/es/case-studies/strike-hemp-cannabis-storefront.mdx` | `in-review` ([PR #16](https://github.com/noelsajor/portfolio-v1/pull/16)) |
 | 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `in-review` ([PR #17](https://github.com/noelsajor/portfolio-v1/pull/17)) |
-| 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `pending` |
+| 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `in-review` ([PR #18](https://github.com/noelsajor/portfolio-v1/pull/18)) |
 | 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `pending` |
 | 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `pending` |
 | 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `pending` |
