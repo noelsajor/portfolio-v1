@@ -577,7 +577,7 @@ Audience: `es_US`. Translate for search intent and natural phrasing, not word-fo
 | 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `in-review` ([PR #19](https://github.com/noelsajor/portfolio-v1/pull/19)) |
 | 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `in-review` ([PR #20](https://github.com/noelsajor/portfolio-v1/pull/20)) |
 | 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `in-review` ([PR #21](https://github.com/noelsajor/portfolio-v1/pull/21)) |
-| 22 | `feat/i18n-17-es-activation` | `INDEXABLE_LOCALES = ['en', 'es']` in `src/lib/i18n.ts`. Nothing else in this PR. | `pending` |
+| 22 | `feat/i18n-17-es-activation` | `INDEXABLE_LOCALES = ['en', 'es']` in `src/lib/i18n.ts`. Nothing else in this PR. | `in-review` ([PR #22](https://github.com/noelsajor/portfolio-v1/pull/22), draft until PRs 10-21 are approved) |
 
 Status values: `pending` -> `in-progress` -> `in-review` (open PR, awaiting editorial sign-off) -> `merged-to-dev`.
 
@@ -597,13 +597,18 @@ Why this order: PR 11 removes every remaining hardcoded English string and every
 
 #### Activation PR (22) checklist
 
-- [ ] All of PRs 11-21 are `merged-to-dev`.
-- [ ] `/sitemap.xml` lists `/es` URLs with `hreflang` alternates in both directions, `x-default` to `/en`.
-- [ ] `/robots.txt` and page `<meta name="robots">` no longer `noindex` for `/es`.
-- [ ] `<html lang="es">` on every `/es` route, including the 404 shell (known gap from PR 1: missing Spanish routes currently use the English global 404 shell; decide whether to fix here or accept).
-- [ ] Language switch visible on `/en` and `/es`; `/` redirects to `/es` for `Accept-Language: es` and for `preferred_locale=es`.
-- [ ] `openGraph.locale` is `es_US` on `/es`, `alternateLocale` lists `en_US`.
-- [ ] Structured data on `/es` carries `inLanguage: es`.
+Run 2026-10-08 against a local production build of the PR 22 branch (`pnpm run build && pnpm start`). Items marked [x] passed there; the two post-deploy items stay open.
+
+- [ ] All of PRs 11-21 are `merged-to-dev` (gate for merging PR 22 itself).
+- [x] `/sitemap.xml` lists `/es` URLs; every entry carries `xhtml:link` alternates for `en`, `es` and `x-default` (-> `/en`). 26 URLs, 78 alternate links.
+- [x] `<meta name="robots">` on `/es/*` is `index, follow`; `robots.txt` unchanged (`Allow: /`, `Disallow: /api/`).
+- [x] Page `<head>` on both locales emits `hreflang` for `en`, `es` and `x-default`; canonical stays self-referential per locale.
+- [x] `<html lang="es">` on every `/es` route. Known, accepted gap: a missing `/es/work/<slug>` returns the global 404 shell with `lang="en"` (Next 16.2 limitation recorded in PR 1).
+- [x] Language switch renders on `/en` (`Switch to Spanish`) and `/es` (`Cambiar a inglés`).
+- [x] `/` -> 307 `/es` for `Accept-Language: es-MX` and for `preferred_locale=es`; `/` -> `/en` for `en-US` and for unsupported languages (`fr-FR`).
+- [x] `og:locale` is `es_US` on `/es` with `og:locale:alternate` `en_US`, and the reverse on `/en`.
+- [x] JSON-LD on `/es`: `Person.jobTitle` and `WebSite.description` in Spanish (read from the content modules since PR 11).
+- [x] Legacy URL `/work/<slug>` -> 308 `/en/work/<slug>` still works.
 - [ ] Post-deploy (after `dev` -> `main`): request indexing for `/es` in Google Search Console; confirm the property covers the whole domain, not only the English prefix.
 
 #### Slice 2 open decisions
@@ -750,7 +755,9 @@ Slice 2 decisions live in the "Slice 2 open decisions" list above.
 
 - 2026-10-08 — Slice 2 plan reviewed against `dev` (`03ec478`) and rewritten as a PR table (PRs 10-22). Four gaps added that the first inventory missed: page `generateMetadata` titles/descriptions hardcoded in `page.tsx`, English error strings in `src/app/api/contact/route.ts`, the `validate-content.ts` assertion that `es` has no case studies, and English-only `resume.pdf` / `og-image.png`. Order changed: style guide first, then one structural PR that removes every remaining hardcoded string, then copy-only PRs (home, for-agencies, static pages, one PR per case study), then a one-line activation PR. Next: PR 10 (`docs/es-style-guide.md`), approve it, then PR 11.
 
+- 2026-10-08 — Slice 2 executed end to end as stacked PRs #10-#22 (style guide; structural chrome PR; home; for-agencies; static pages + `resume-es.pdf`; seven case studies, one per PR; activation as a draft). Every PR: `pnpm run verify` green and the prerendered `/en` HTML compared text-identical to a pre-Slice-2 baseline. A sweep of every `/es` page after PR 21 finds no English copy left. PR 11 found ~20 more hardcoded strings than the first inventory (case-study page labels, `/work` index copy, aria-labels, project enum labels, mobile menu toggle), all moved into `uiContent` / `project-labels.ts`; `CaseStudy.contentLocale` keeps question-chip anchors valid while a slug falls back to English. PR 22 also adds `x-default` and sitemap `xhtml:link` alternates (no-ops with one indexable locale). Open: editorial sign-off on #10-#21, then merge in order, then #22, then `dev` -> `main` on the user's call.
+
 **Where a new session picks this up:**
 - To review Slice 1 end to end: stay on `dev`, inspect the merge commits through `49a8a2b`, and run `pnpm run verify`.
-- To continue the migration: read "Slice 2 — Spanish copy: execution plan" above, take the first PR in its table that is not `merged-to-dev`, cut the branch from `dev`. Do not touch `main` until PR 22 is merged and the user explicitly asks for a production merge.
+- To continue the migration: PRs #10-#22 are open and stacked (each targets the previous branch; GitHub retargets to `dev` as each merges). Merge in order after editorial sign-off, re-running `pnpm run verify` on `dev` after #11 and after #22. Do not touch `main` until PR 22 is merged and the user explicitly asks for a production merge; then do the two post-deploy Search Console items in the activation checklist.
 - What's deliberately NOT done, i.e. Slice 2 (real content, not structure): write actual Spanish copy for `src/content/es/{home,for-agencies,static-pages,ui}.ts` and `src/content/es/case-studies/*.mdx` (Phase 9 — translate by search intent, not word-for-word, against the `es_US` audience decision); once a locale's content is real, add `'es'` to `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — that one flip turns on `hreflang`, sitemap inclusion, and removes `noindex` together (see Phase 6/7). Also still open: CSRF on the contact form (pre-existing gap, its own change) and the four raw-JSX paragraphs on `contact`/`resume` pages noted above (translate in place when real copy lands).

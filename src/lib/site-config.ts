@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { INDEXABLE_LOCALES, isIndexableLocale, type Locale } from '@/lib/i18n'
+import { DEFAULT_LOCALE, INDEXABLE_LOCALES, isIndexableLocale, type Locale } from '@/lib/i18n'
 
 // Single source of truth for the site's canonical production identity.
 // Every canonical URL, Open Graph/Twitter tag, sitemap entry, robots rule,
@@ -67,9 +67,10 @@ const OG_LOCALE_BY_LANG: Record<Locale, string> = {
 // "/work/foo"). Only locales in INDEXABLE_LOCALES get an `alternates.languages`
 // entry or count toward `alternateLocale` — see docs/bilingual-seo-
 // migration-plan.md Phase 6/7 and the INDEXABLE_LOCALES comment in
-// src/lib/i18n.ts. No `x-default` alternate yet: Phase 6's x-default rule
-// applies once both language versions are indexable, which isn't the case
-// while INDEXABLE_LOCALES has a single entry.
+// src/lib/i18n.ts. PR 22: once more than one locale is indexable, an
+// `x-default` alternate pointing at the DEFAULT_LOCALE URL is emitted too
+// (Phase 6 x-default rule) — it tells Google which version to show for
+// languages the site doesn't serve.
 export function buildLocaleMetadataFields(
     lang: Locale,
     path: string
@@ -85,7 +86,10 @@ export function buildLocaleMetadataFields(
 
     return {
         canonical: localizedUrl(lang),
-        languages: Object.fromEntries(INDEXABLE_LOCALES.map((locale) => [locale, localizedUrl(locale)])),
+        languages: {
+            ...Object.fromEntries(INDEXABLE_LOCALES.map((locale) => [locale, localizedUrl(locale)])),
+            ...(INDEXABLE_LOCALES.length > 1 ? { 'x-default': localizedUrl(DEFAULT_LOCALE) } : {})
+        },
         ogLocale: OG_LOCALE_BY_LANG[lang],
         ...(otherIndexableLocales.length > 0
             ? { ogAlternateLocale: otherIndexableLocales.map((locale) => OG_LOCALE_BY_LANG[locale]) }
