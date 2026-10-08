@@ -133,14 +133,12 @@ export type ContactErrorCode = keyof UiContent['contactForm']['errors']
 // tuple to an array) so a locale file can `satisfies` the English shape
 // without having to repeat the English strings. Used by ../es/ui.ts; the
 // same helper works for any other content module.
-export type ContentShape<T> = {
-    [K in keyof T]: T[K] extends string
-        ? string
-        : T[K] extends (...args: infer A) => string
-          ? (...args: A) => string
-          : T[K] extends readonly (infer U)[]
-            ? readonly ContentShape<U>[]
-            : ContentShape<T[K]>
-}
+export type ContentShape<T> = T extends string
+    ? string
+    : T extends (...args: infer A) => string
+      ? (...args: A) => string
+      : T extends readonly (infer U)[]
+        ? readonly ContentShape<U>[]
+        : { [K in keyof T]: ContentShape<T[K]> }
 
 export type UiContentShape = ContentShape<UiContent>
