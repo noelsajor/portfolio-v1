@@ -1,0 +1,86 @@
+---
+title: Sitio web y traspaso de infraestructura para Vita Organica
+client: Vita Organica, fabricante B2B de suplementos de marca privada
+type: Marketing Website
+capabilities:
+  - Custom Websites
+segment: B2B
+industry: Bienes de consumo / Fabricación por contrato de suplementos (B2B)
+roles:
+  - Desarrollador full-stack
+  - Infraestructura y traspaso al cliente
+services:
+  - Desarrollo web (Astro + CMS headless)
+  - Implementación front-end
+  - Herramientas de generación de leads
+  - Traspaso de infraestructura de producción
+summary: Construí un sitio de marketing B2B con un embudo de generación de leads a medida y una herramienta interactiva de mockups de producto para un fabricante de suplementos de marca privada, y después ejecuté el traspaso completo de la infraestructura de producción a las cuentas del propio cliente sin tiempo de inactividad.
+challenge: La marca necesitaba un sitio B2B capaz de convertir a posibles clientes de marca privada en leads calificados, incluyendo que pudieran previsualizar su propio empaque sobre los formatos reales de producto del fabricante. Y, una vez construido, necesitaba la propiedad total de la infraestructura de producción transferida a sus propias cuentas, sin inactividad ni reescribir código.
+outcome: Entregué un sitio de marketing B2B en funcionamiento, con un embudo de generación de leads operativo y una herramienta de mockups a medida, y completé el traspaso total de la infraestructura (código, hosting, CMS y email transferidos a las cuentas del cliente) sin que quedara ningún acceso de la agencia.
+year: "2026"
+duration: Unas pocas semanas (2026)
+team: Contratado a través de una agencia intermediaria de marketing y staffing; único desarrollador responsable de la construcción y del traspaso completo de la infraestructura.
+featured: false
+order: 5
+status: published
+updatedAt: "2026-08-31"
+liveUrl: https://vitaorganicasupps.com
+coverImage: /images/case-studies/vita-organica-cover.webp
+coverAlt: Logotipo de Vita Organica Supplements en blanco sobre un fondo verde lima con un gráfico abstracto de hoja delineada
+gallery:
+  - id: vita-organica-lead-funnel
+    status: ready
+    src: /images/case-studies/vita-organica-lead-funnel.webp
+    alt: Hero de la página de inicio de Vita Organica junto al formulario de descarga de la guía, el formulario de cotización personalizada y la vista previa de la herramienta de mockups
+  - id: vita-organica-mockup-generator
+    status: ready
+    src: /images/case-studies/vita-organica-mockup-generator.webp
+    alt: Generador interactivo de mockups de Vita Organica, pasando por la selección de formato, la carga del arte y una vista previa en vivo del producto con la marca
+  - id: vita-organica-cta-footer
+    status: ready
+    src: /images/case-studies/vita-organica-cta-footer.webp
+    alt: Sección final de llamada a la acción y pie de página del sitio de Vita Organica, con el flujo de solicitud de cotización
+seoTitle: Vita Organica — Sitio B2B y traspaso de infraestructura | Jose Leon
+seoDescription: "Sitio B2B para Vita Organica, fabricante de suplementos de marca privada: embudo de leads, herramienta de mockups y traspaso completo de la infraestructura."
+---
+
+## Resumen
+
+Vita Organica es un fabricante B2B de suplementos de marca privada: las marcas acuden a ellos para que formulen, empaquen y produzcan sus propios suplementos. Me incorporé a través de una agencia intermediaria de marketing y staffing como único desarrollador para construir su sitio de marketing B2B: un embudo de generación de leads para posibles clientes de marca privada, más una herramienta interactiva a medida que permite a un prospecto previsualizar su propia etiqueta sobre los formatos reales de producto del fabricante antes de solicitar una cotización. Una vez que el sitio estuvo en producción, también lideré el traspaso completo de la infraestructura a las cuentas del propio cliente.
+
+## Contexto
+
+La fabricación de suplementos de marca privada es una venta B2B: una marca interesada necesita convencerse de que el fabricante puede producir su producto, en su empaque, con la calidad y la escala que necesita, antes de que ocurra una sola conversación con una persona real. El sitio tenía que lograr ese convencimiento por sí solo: explicar la capacidad de fabricación y dejar que el prospecto avanzara por su cuenta hacia una cotización real, en lugar de terminar en una página estática de "contáctanos".
+
+## Desafío
+
+Había que resolver dos problemas separados, en dos momentos distintos. Primero, el sitio en sí: un embudo de generación de leads con tres caminos diferenciados (solicitar una cotización, descargar una guía y generar un mockup de la propia etiqueta del prospecto sobre los formatos reales de producto del fabricante), construido sobre un CMS headless para que el equipo de marketing pudiera gestionar el contenido sin tocar código. Segundo, una vez que ese sitio estuviera en producción, el negocio necesitaba ser dueño total de él: su propio GitHub, su propio hosting, su propio proyecto de CMS, su propio email transaccional. No un sitio que dependiera en silencio e indefinidamente de la infraestructura de una agencia.
+
+## Solución
+
+Construí el sitio en Astro con una configuración de renderizado híbrido (páginas estáticas por defecto, con una ruta de API serverless para el manejo de formularios), combinado con Sanity como CMS headless para que el personal no técnico pudiera gestionar el contenido de las páginas sin cambios de código. Las piezas interactivas, incluidos los formularios de leads y la herramienta de mockups, se construyeron como islas de React aisladas en lugar de agregar JavaScript del lado del cliente a todo el sitio, así que el sitio se mantuvo rápido por defecto y solo cargaba interactividad donde realmente hacía falta.
+
+El generador de mockups fue la pieza más compleja: una herramienta que toma el arte de la etiqueta de un prospecto y lo coloca sobre los formatos reales de producto del fabricante, para que un posible cliente vea su propia marca en un producto real antes de hablar con alguien de ventas. Convierte la pregunta abstracta de "¿pueden fabricar mi producto?" en algo que puede ver por sí mismo. Los tres caminos de leads pasan por una única canalización de email transaccional y llegan directamente a la bandeja del equipo de ventas como un lead real y accionable, no como un envío de formulario olvidado en una base de datos que nadie revisa.
+
+Una vez que el sitio estuvo en producción, planifiqué y ejecuté el traspaso completo: transferir el repositorio de GitHub, el proyecto de hosting, el proyecto del CMS y el dominio de email transaccional a cuentas propiedad absoluta del cliente, sin que quedara infraestructura de la agencia en el circuito. Eso implicó migrar el gestor de paquetes, reescribir la documentación interna de build como guías operativas para el cliente y ejecutar un cambio de DNS sin tiempo de inactividad, de modo que el negocio terminara siendo dueño de su infraestructura en lugar de alquilársela a quien la construyó.
+
+## Resultado
+
+Vita Organica pasó de no tener ninguna forma de autoservicio para convertir prospectos de marca privada a un sitio B2B en funcionamiento con un embudo de generación de leads operativo, incluida una herramienta de mockups que permite a los prospectos previsualizar su marca antes de solicitar una cotización. Más allá de la construcción, toda la infraestructura de producción (código, hosting, CMS y email) vive ahora por completo en las cuentas del propio cliente, sin ninguna dependencia continua de la agencia que lo construyó.
+
+## Mis contribuciones
+
+- Construí un sitio de marketing B2B en Astro con un CMS headless Sanity, para que el personal no técnico pudiera gestionar el contenido de forma independiente
+- Diseñé y construí una herramienta interactiva a medida de generación de mockups que previsualiza la etiqueta de un prospecto sobre los formatos reales de producto del fabricante
+- Construí un embudo de generación de leads de tres caminos (solicitud de cotización, descarga de guía, solicitud de mockup), canalizado por una única tubería de email transaccional
+- Usé islas de React para todas las piezas interactivas, manteniendo el resto del sitio estático y rápido por defecto
+- Planifiqué y ejecuté el traspaso completo de la infraestructura de producción (repositorio de código, hosting, CMS y email transaccional) a las cuentas del propio cliente
+- Ejecuté un cambio de DNS sin tiempo de inactividad y reescribí la documentación interna de build como guías operativas para el cliente
+- Verifiqué que no quedara ningún acceso de la agencia en ningún sistema después del traspaso
+
+## Tecnologías
+
+- **Plataforma**: Astro (renderizado híbrido), Vercel
+- **Lenguajes**: TypeScript, JavaScript, CSS
+- **Framework / CMS**: Astro Islands (React), CMS headless Sanity (GROQ)
+- **Herramientas**: Git, Resend (email transaccional), pnpm
