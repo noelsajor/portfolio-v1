@@ -5,18 +5,15 @@ import { getProjects } from '@/lib/projects'
 import { resumeContent as resumeContentEn } from '@/content/en/static-pages'
 import { resumeContent as resumeContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
+import { getUiContent } from '@/lib/ui-content'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
 
-    return buildPageMetadata({
-        title: 'Resume',
-        description:
-            'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.',
-        path: '/resume',
-        lang
-    })
+    const { metadata } = lang === 'es' ? resumeContentEs : resumeContentEn
+
+    return buildPageMetadata({ ...metadata, path: '/resume', lang })
 }
 
 const linkClass =
@@ -27,6 +24,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const resumeContent = lang === 'es' ? resumeContentEs : resumeContentEn
     const { skillGroups, experience } = resumeContent
+    const { resumePage } = getUiContent(lang)
     const projects = getProjects(lang)
 
     return (
@@ -36,22 +34,22 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{resumeContent.name}</h1>
                 <p className="max-w-2xl text-lg text-white/80">{resumeContent.title}</p>
                 <p className="max-w-2xl text-white/70">{resumeContent.intro}</p>
-                {/* PR 5: CTA buttons with href/download/data-tracking attributes — left as JSX; localize in place when real Spanish copy lands */}
+                {/* CTA labels, PDF path and download filename come from uiContent.resumePage; data-tracking ids never change per locale */}
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link
                         href={`mailto:${siteConfig.email}`}
                         className="inline-flex w-fit items-center justify-center rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
                         data-tracking="resume_email_cta"
                     >
-                        Reach out about a role
+                        {resumePage.reachOutCta}
                     </Link>
                     <Link
-                        href="/resume.pdf"
-                        download="Jose-Leon-Resume.pdf"
+                        href={resumePage.pdfHref}
+                        download={resumePage.downloadFilename}
                         className="inline-flex w-fit items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
                         data-tracking="resume_download_cta"
                     >
-                        Download CV
+                        {resumePage.downloadCta}
                     </Link>
                 </div>
             </header>
@@ -116,7 +114,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
             <section className="space-y-3">
                 <h2 className="text-lg font-semibold">{resumeContent.getInTouchHeading}</h2>
                 <p className="text-white/70">{resumeContent.getInTouchIntro}</p>
-                {/* PR 5: contains a data-tracking mailto Link — left as JSX; localize in place when real Spanish copy lands */}
+                {/* data-tracking mailto Link — the visible text is the address itself, nothing to localize */}
                 <Link href={`mailto:${siteConfig.email}`} className={linkClass} data-tracking="resume_email_link">
                     {siteConfig.email}
                 </Link>

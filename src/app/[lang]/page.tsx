@@ -8,27 +8,32 @@ import { WhyMeSection } from '@/components/home/WhyMeSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
 import { buildLocaleMetadataFields, defaultOgImage, siteConfig } from '@/lib/site-config'
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
 
-// No `title` key here on purpose: siteConfig.title is already the fully
-// branded title (it contains "Jose Leon" once), so it must render as-is on
-// the home page rather than through the layout's `%s | Jose Leon` template —
-// omitting `title` lets Next fall back to the layout's `title.default`
-// instead. Open Graph doesn't get that same template fallback and this
-// page-level object replaces the layout's whole `openGraph` key, so its
-// title/description/images are restated explicitly here.
+// `title.absolute` on purpose: the home title is already fully branded (it
+// contains "Jose Leon" once), so it must bypass the layout's `%s | Jose Leon`
+// template. PR 11: title/description come from homeContent.metadata so each
+// locale authors its own (for `en` they equal siteConfig.title/description,
+// which is also the layout's `title.default`). Open Graph doesn't get a
+// template fallback and this page-level object replaces the layout's whole
+// `openGraph` key, so its title/description/images are restated here.
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang: rawLang } = await params
   const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
   const { canonical, languages, ogLocale, ogAlternateLocale, robots } = buildLocaleMetadataFields(lang, '/')
+  const { metadata } = lang === 'es' ? homeContentEs : homeContentEn
 
   return {
+    title: { absolute: metadata.title },
+    description: metadata.description,
     alternates: { canonical, languages },
     openGraph: {
       type: 'website',
       url: canonical,
       siteName: siteConfig.name,
-      title: siteConfig.title,
-      description: siteConfig.description,
+      title: metadata.title,
+      description: metadata.description,
       locale: ogLocale,
       ...(ogAlternateLocale ? { alternateLocale: ogAlternateLocale } : {}),
       images: [defaultOgImage]

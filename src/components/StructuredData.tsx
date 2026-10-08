@@ -1,20 +1,24 @@
 import { siteConfig } from '@/lib/site-config'
 import type { Locale } from '@/lib/i18n'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
+import { resumeContent as resumeContentEn } from '@/content/en/static-pages'
+import { resumeContent as resumeContentEs } from '@/content/es/static-pages'
 
 // PR 4: `WebSite.description` and `Person.jobTitle` are the fields Phase 8
 // (docs/bilingual-seo-migration-plan.md) calls out as genuinely locale-
 // specific — both are rendered from page-visible text elsewhere on the
-// site. Real Spanish copy lands in PR 5; until then both locales read the
-// same English string on purpose (do not invent Spanish copy here) so this
-// lookup only needs its `es` values swapped once that content exists.
+// site. PR 11: they now read that text from the content modules themselves
+// (home metadata description, resume title) instead of a parallel copy, so
+// the Spanish copy PRs localize JSON-LD for free.
 const localizedDescription: Record<Locale, string> = {
-    en: siteConfig.description,
-    es: siteConfig.description
+    en: homeContentEn.metadata.description,
+    es: homeContentEs.metadata.description
 }
 
 const localizedJobTitle: Record<Locale, string> = {
-    en: 'Multidisciplinary Designer & Front-End Production Specialist',
-    es: 'Multidisciplinary Designer & Front-End Production Specialist'
+    en: resumeContentEn.title,
+    es: resumeContentEs.title
 }
 
 // Person + WebSite JSON-LD. sameAs only lists profiles that are verified
