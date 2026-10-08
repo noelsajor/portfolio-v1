@@ -13,7 +13,7 @@ export const homeContent = {
         // this is the only home-page string where the em dash is kept.
         title: 'Jose Leon — Diseño de producto e implementación front-end',
         description:
-            'Diseñador de producto y desarrollador front-end freelance. Ayudo a agencias y equipos digitales a convertir ideas en sitios web y productos listos para producción, con diseño UI/UX, desarrollo front-end e implementación en Shopify.'
+            'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos digitales a convertir ideas en sitios web y productos listos para producción.'
     },
     hero: {
         eyebrow: 'DISEÑO DE PRODUCTO + IMPLEMENTACIÓN FRONT-END',
@@ -102,7 +102,7 @@ export const homeContent = {
             {
                 title: 'Diseño y código en un solo flujo',
                 description:
-                    'Entiendo tanto la intención visual como las restricciones de implementación, lo que reduce la distancia entre los mockups y producción.'
+                    'Entiendo tanto la intención visual como las restricciones de implementación, lo que reduce la distancia entre los mockups y la producción.'
             },
             {
                 title: 'Hecho para colaborar',
@@ -118,7 +118,7 @@ export const homeContent = {
     },
     finalCTA: {
         heading: '¿Necesitas un par de manos extra que se haga cargo del diseño y de la implementación?',
-        body: 'Cuéntame qué estás construyendo, dónde está trabado el proyecto y qué necesita entregar tu equipo.',
+        body: 'Cuéntame qué estás construyendo, dónde está atascado el proyecto y qué necesita entregar tu equipo.',
         primaryCta: { label: 'Hablemos de tu proyecto', href: '/contact' },
         secondaryLink: { label: 'Escríbeme directamente', href: `mailto:${siteConfig.email}` }
     }
