@@ -21,7 +21,7 @@ export function isLocale(value: string): value is Locale {
 // `/es/*` as not-yet-indexable without touching routing. See
 // docs/bilingual-seo-migration-plan.md Phase 6/7 and the PR 4 "Slice 2
 // unlock" note — flip a locale on here once its real content ships.
-export const INDEXABLE_LOCALES: readonly Locale[] = ['en']
+export const INDEXABLE_LOCALES: readonly Locale[] = ['en', 'es']
 
 export function isIndexableLocale(locale: Locale): boolean {
     return (INDEXABLE_LOCALES as readonly string[]).includes(locale)
