@@ -77,8 +77,8 @@ export const uiContent = {
     resumePage: {
         reachOutCta: 'Escríbeme sobre una vacante',
         downloadCta: 'Descargar CV',
-        // Switched to /resume-es.pdf in PR 14 once the Spanish PDF exists.
-        pdfHref: '/resume.pdf',
+        // PR 14: Spanish PDF, same one-page layout as /resume.pdf.
+        pdfHref: '/resume-es.pdf',
         downloadFilename: 'Jose-Leon-CV.pdf'
     },
     contactForm: {
