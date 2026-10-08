@@ -13,7 +13,7 @@ export const homeContent = {
         // this is the only home-page string where the em dash is kept.
         title: 'Jose Leon — Diseño de producto e implementación front-end',
         description:
-            'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos digitales a convertir ideas en sitios web y productos listos para producción.'
+            'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos a convertir ideas en sitios web y productos listos para producción.'
     },
     hero: {
         eyebrow: 'DISEÑO DE PRODUCTO + IMPLEMENTACIÓN FRONT-END',
