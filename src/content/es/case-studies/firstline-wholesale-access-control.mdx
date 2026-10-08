@@ -1,0 +1,84 @@
+---
+title: Reconstrucción del control de acceso mayorista de Firstline
+client: Firstline, distribuidor mayorista B2B (tabaco y vape)
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: B2B
+industry: Distribución mayorista de tabaco y vape (B2B, WooCommerce)
+roles:
+  - Desarrollador WordPress/WooCommerce
+  - Arquitectura de sistemas de control de acceso
+services:
+  - Sistema de control de acceso solo para mayoristas
+  - Refuerzo del registro y la aprobación de compradores
+  - Auditoría de catálogo y taxonomías
+  - Estrategia de caché y rendimiento
+summary: Reconstruí el control de acceso de una tienda mayorista existente en WooCommerce con 17.5k SKUs. Bloqueo del lado del servidor según el estado del comprador, un flujo de registro y aprobación reforzado y una política de caché segura para contenido dinámico específico de cada comprador, entregados a través de una hoja de ruta por fases con aprobación en cada una.
+challenge: La tienda WooCommerce de Firstline exponía todo su catálogo y sus precios a cualquier persona, y su flujo de registro de compradores no estaba lo bastante reforzado para restringir con seguridad un catálogo mayorista de 17.5k productos en producción solo a compradores aprobados y con licencia verificada.
+outcome: Entregué el bloqueo del catálogo del lado del servidor solo para mayoristas, un flujo de registro y aprobación reforzado y basado en estados, y una política de caché segura para contenido específico de cada comprador. El QA final y el lanzamiento público quedan pendientes mientras continúa el proyecto por fases.
+year: "2026"
+duration: Proyecto en curso (2026)
+team: Contratado directamente por el cliente; único desarrollador responsable de la auditoría, la hoja de ruta y la implementación.
+featured: false
+order: 6
+status: published
+liveUrl: https://firstlinewholesale.com/
+coverImage: /images/case-studies/firstline-cover.webp
+coverAlt: Logo de FirstLine Distribution sobre una foto de marca con iluminación azul de ambiente
+gallery:
+  - id: firstline-buyer-onboarding-wireframes
+    status: ready
+    src: /images/case-studies/firstline-buyer-onboarding-wireframes.webp
+    alt: Wireframes de alta fidelidad para escritorio y móvil del flujo de incorporación de compradores mayoristas de Firstline, incluidos el formulario de solicitud y el estado de aprobación pendiente
+  - id: firstline-access-state-pages
+    status: ready
+    src: /images/case-studies/firstline-access-state-pages.webp
+    alt: Diagrama de los estados críticos de acceso del comprador en el bloqueo mayorista de Firstline, como inicio de sesión requerido, solicitud pendiente, sin stock, checkout no disponible y otros
+seoTitle: Firstline — Control de acceso mayorista en WooCommerce | Jose Leon
+seoDescription: "Control de acceso solo para mayoristas en WooCommerce para Firstline: bloqueo por estado del comprador, registro reforzado y caché segura para catálogo B2B."
+---
+
+## Resumen
+
+Firstline es un distribuidor mayorista B2B que vende a través de una tienda WooCommerce existente construida sobre un catálogo grande (alrededor de 17,500 SKUs) sincronizado en vivo desde Cin7, su sistema de inventario y ERP. A algunos compradores se les exige una licencia vigente de tabaco o vape para registrarse. Me contrataron como único desarrollador para convertir la tienda en solo mayorista: ningún producto, precio ni stock visible para nadie hasta que un comprador se registra y es aprobado, construido alrededor del sistema de registro personalizado que la tienda ya tenía, en lugar de reemplazarlo.
+
+## Contexto
+
+Distribuir productos mayoristas regulados directamente al consumidor no es viable: cada comprador tiene que ser un negocio verificado y con licencia, y la propia tienda tiene que hacer cumplir eso antes de mostrar un solo precio o SKU. Firstline ya tenía un catálogo completamente poblado y sincronizado en vivo desde Cin7, y un flujo personalizado de registro e inicio de sesión de compradores integrado en su tema, pero ni el bloqueo del catálogo ni el refuerzo del registro se habían construido al nivel que un requisito de solo mayorista exige en realidad.
+
+## Desafío
+
+El catálogo completo de la tienda, con precios y stock, era visible públicamente, sin restringirse a compradores mayoristas aprobados. El sistema de registro e inicio de sesión existente no se había auditado en busca de brechas de seguridad: las verificaciones de nonce y de capacidades, la verificación obligatoria de email y una máquina formal de estados del comprador faltaban o estaban incompletas. Nada del contenido del catálogo privado (estado, precio, stock, carrito, checkout) podía pasar con seguridad por una caché HTML de página completa, pero la tienda igual tenía que mantenerse rápida con su plugin de caché existente. El filtrado por marca y departamento en todo el catálogo ya existía, pero arrastraba patrones de consultas lentas documentados que cualquier trabajo nuevo de filtrado debía evitar repetir. Y cada cambio tenía que ocurrir sin romper la sincronización en vivo con Cin7 ni introducir nuevos roles de WordPress que crearan riesgo de migración sobre una base de usuarios existente con roles mixtos.
+
+## Solución
+
+Propuse y obtuve la aprobación de una hoja de ruta secuenciada antes de tocar producción: estabilizar primero caché, respaldos y staging; auditar la autenticación y el modelo de datos existentes; definir estados formales de acceso del comprador; optimizar el filtrado basado en taxonomías; implementar el bloqueo del catálogo del lado del servidor; y solo entonces elegir un plugin de precios mayoristas, deliberadamente en ese orden, para que las decisiones de precios no se tomaran antes de tener resueltos las reglas de acceso, la seguridad de la caché y el modelo de datos.
+
+El acceso de los compradores se rige por el estado del usuario, no por roles nuevos de WordPress: una función central de verificación de acceso exige un estado de comprador aprobado y con email verificado (o una capacidad de staff), respaldada por caché de objetos para no agregar una consulta a cada carga de página. Lo construí como un plugin propio en lugar de agregarlo al tema, precisamente por separación de responsabilidades y para poder revertirlo con seguridad en una tienda en producción. Páginas específicas por estado (pendiente, rechazado, bloqueado y un flujo de verificación existente) dirigen a los compradores no aprobados a la pantalla correcta en lugar de a una rota, reutilizando el shortcode de verificación que la tienda ya tenía en vez de construir un segundo flujo que compitiera con él.
+
+Como el estado del comprador, los precios, el stock y el carrito o la sesión son todos dinámicos, configuré el plugin de caché para que nunca guarde en caché de página nada bajo las rutas del catálogo privado, la cuenta o el checkout, y para mantener desactivada la caché de usuarios con sesión iniciada. El rendimiento del catálogo privado se apoya en consultas por taxonomía, caché de objetos y paginación, no en caché HTML. Audité el filtrado existente por marca y departamento y confirmé que ya se basa en taxonomías y no en postmeta, documenté los patrones de consultas lentas ya presentes para que no se trasladaran a la nueva UX de filtros y dejé deliberadamente deshabilitada una ruta de código de búsqueda riesgosa e inactiva, en lugar de reactivarla sin un rediseño. Para los precios mayoristas, recomendé un plugin de precios modular montado sobre el flujo de registro existente y la sincronización con Cin7, en lugar de un plugin B2B todo en uno que se habría solapado con sistemas ya en producción y habría corrido el riesgo de romperlos.
+
+Durante todo el proyecto trabajé en fases acotadas y aprobadas una por una (auditar y proponer antes de implementar, y cerrar cada fase con un resumen escrito), de modo que ningún cambio al control de acceso de una tienda en producción con una base activa de compradores saliera sin un visto bueno explícito del cliente.
+
+## Resultado
+
+El catálogo privado de Firstline ahora está bloqueado del lado del servidor según el estado verificado del comprador, el flujo de registro y aprobación se reforzó y se conectó a ese modelo de estados, las páginas de estado dirigen correctamente a los compradores no aprobados y la capa de caché es segura para contenido dinámico específico de cada comprador. El filtrado basado en taxonomías está auditado y documentado, y el camino hacia un plugin de precios mayoristas está elegido y listo. El QA final y el lanzamiento público de la tienda completamente mayorista son las fases que quedan mientras continúa el proyecto.
+
+## Mis contribuciones
+
+- Definí y obtuve la aprobación de una hoja de ruta secuenciada por fases para convertir en solo mayorista una tienda WooCommerce en producción con 17.5k SKUs
+- Audité el flujo existente de registro e inicio de sesión de compradores y definí formalmente los estados, permisos y transiciones del comprador
+- Construí un plugin independiente de control de acceso que aplica, del lado del servidor y según el estado, el bloqueo de catálogo, precios, carrito y checkout
+- Implementé páginas de estado específicas (pendiente, rechazado, bloqueado, verificación) integradas con el flujo de verificación existente
+- Definí una política de caché que mantiene la tienda rápida en las páginas públicas sin guardar nunca en caché el contenido privado del catálogo, la cuenta o el checkout específico de cada comprador
+- Audité el filtrado existente por marca y departamento basado en taxonomías y documenté los patrones de consultas lentas para orientar la reconstrucción de los filtros
+- Recomendé un plugin modular de precios mayoristas en lugar de un plugin B2B todo en uno, para no entrar en conflicto con el flujo de registro existente y la sincronización con Cin7
+- Diseñé wireframes de alta fidelidad para escritorio y móvil de la experiencia de incorporación y catálogo de cara al comprador
+
+## Tecnologías
+
+- **Plataforma**: WordPress, WooCommerce
+- **Lenguajes**: PHP, MySQL, JavaScript, CSS
+- **Framework / CMS**: tema de WordPress a medida, Advanced Custom Fields (ACF), Elementor
+- **Herramientas**: Cin7 (sincronización de ERP e inventario), Pencil (wireframing), Git
