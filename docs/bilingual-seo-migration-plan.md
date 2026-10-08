@@ -13,6 +13,8 @@ This plan migrates the portfolio from a single English site to real English and 
 | UX | Header exposes a language switch that preserves the current equivalent page when possible |
 | Rendering | Pages remain server-rendered/static where possible for crawlability and performance |
 
+Current state on `dev` as of 2026-10-08: Slice 1's technical integration is merged through PRs #4-#9. Locale-prefixed routing, legacy redirects, root locale detection, locale-aware navigation, metadata/sitemap plumbing, the `src/content/{en,es}` content model, and the indexability gate are in place. Spanish routes currently serve English fallback copy and remain non-indexable until Slice 2 writes and reviews real Spanish copy.
+
 ## Recommended URL Strategy
 
 Use locale-prefixed paths for both languages:
@@ -76,7 +78,7 @@ Create the routing and locale primitives before translating content.
 - [ ] Add a locale config module, for example `src/lib/i18n.ts`.
 - [ ] Define supported locales: `en` and `es`.
 - [ ] Define default locale fallback: `en`.
-- [ ] Define locale metadata values: `en_US` and `es_ES` or `es_US`, depending on the target audience.
+- [x] Define locale metadata values: `en_US` and `es_US` (resolved for the site's LatAm/US Spanish audience).
 - [ ] Move public app routes under `src/app/[lang]/`.
 - [ ] Add `generateStaticParams()` for `en` and `es` at the locale layout level.
 - [ ] Set `<html lang={lang}>` from the route param.
@@ -233,7 +235,7 @@ Current content locations:
 | Homepage | `src/content/home.ts` | Split by locale or export keyed content. |
 | For agencies page | `src/content/for-agencies.ts` | Split by locale or export keyed content. |
 | Static pages | `src/app/about/page.tsx`, `contact`, `resume` | Move copy into locale-aware content modules. |
-| Case studies | `src/content/case-studies/*.mdx` | Add per-locale MDX content. |
+| Case studies | `src/content/{en,es}/case-studies/*.mdx` | Add per-locale MDX content. |
 | Form options | `src/lib/contact-form-options.ts` | Separate stored values from localized labels. |
 | Header/footer labels | Components | Read labels from locale content. |
 
@@ -547,29 +549,32 @@ If all Spanish case studies are not ready, publish only the translated ones in `
 
 ## Implementation Progress
 
-This section is the resume point. If a working session is lost, start here: read the PR table, check out the branch of the first PR that is not `merged`, run `git log --oneline -5` and `pnpm run verify`, and continue from that PR's checklist.
+This section is the resume point. If a working session is lost, start here: read the PR table, confirm `dev` contains the latest merged PR, run `git log --oneline -5` and `pnpm run verify`, then continue with Slice 2 Spanish copy work.
+
+Current state: PRs #4-#9 are merged to `dev`; `main` is intentionally unchanged. Slice 1 technical integration is complete, and Slice 2 Spanish copy has not started.
 
 ### Delivery strategy
 
 - Scope of this pass: **Slice 1 only** — the technical foundation. Spanish routes exist and work, but serve English fallback copy and are `noindex` until real Spanish content lands (Slice 2, tracked separately).
-- Five chained PRs, each independently shippable. Every PR must pass `pnpm run verify` and its manual checks before merge.
+- PRs #4-#8 shipped the original Slice 1 chain. PR #9 added the indexability gate so locale discovery and SEO outputs stay limited to locales with reviewed, indexable content.
 - Branch naming: `feat/i18n-<N>-<short-name>`. Base branch: `dev`. Each branch is cut from the previous PR's branch (they depend on each other); after PR N merges into `dev`, PR N+1 is rebased onto `dev`.
 - Commits follow Conventional Commits, one work unit per commit, no attribution trailers.
 - No test runner exists in this project; verification is `pnpm run verify` (lint, typecheck, build, content validation) plus the manual browser checks listed per PR.
 
 ### PR table
 
-| # | Branch | Scope | Status |
-|---|--------|-------|--------|
-| 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | [PR #4](https://github.com/noelsajor/portfolio-v1/pull/4) → `dev` |
-| 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | [PR #5](https://github.com/noelsajor/portfolio-v1/pull/5) → `feat/i18n-1-lang-routes` |
-| 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | [PR #6](https://github.com/noelsajor/portfolio-v1/pull/6) → `feat/i18n-2-root-locale-redirect` |
-| 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | [PR #7](https://github.com/noelsajor/portfolio-v1/pull/7) → `feat/i18n-3-locale-links-switch` |
-| 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | [PR #8](https://github.com/noelsajor/portfolio-v1/pull/8) → `feat/i18n-4-locale-metadata-sitemap` |
+| PR | Branch | Scope | Status |
+|----|--------|-------|--------|
+| [#4](https://github.com/noelsajor/portfolio-v1/pull/4) | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` -> `/en` fallback, legacy permanent redirects, localized error surfaces | `merged-to-dev` on 2026-10-08 via `3e09101` |
+| [#5](https://github.com/noelsajor/portfolio-v1/pull/5) | `feat/i18n-2-root-locale-redirect` | Proxy: `/` picks locale from cookie -> `Accept-Language` -> `en`; Node runtime; exclusions | `merged-to-dev` on 2026-10-08 via `43fd3fe` |
+| [#6](https://github.com/noelsajor/portfolio-v1/pull/6) | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | `merged-to-dev` on 2026-10-08 via `e6e70f6` |
+| [#7](https://github.com/noelsajor/portfolio-v1/pull/7) | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | `merged-to-dev` on 2026-10-08 via `79847d4` |
+| [#8](https://github.com/noelsajor/portfolio-v1/pull/8) | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es` -> `en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | `merged-to-dev` on 2026-10-08 via `bd5e429` |
+| [#9](https://github.com/noelsajor/portfolio-v1/pull/9) | `fix/i18n-indexable-locale-gate` | Gates static params, sitemap and metadata discovery behind `INDEXABLE_LOCALES`, keeping `/es` out of indexable discovery until Spanish copy is real | `merged-to-dev` on 2026-10-08 via `49a8a2b` |
 
-Status values: `pending` → `in-progress` → `done-local` (committed, verified, reviewed; not pushed) → open PR (stacked, as listed above) → `merged-to-dev`.
+Current status for PRs #4-#9 is `merged-to-dev`; earlier intermediate branch states are no longer actionable.
 
-Pushed 2026-09-02 at the user's explicit request, as 5 stacked PRs (each targets the previous branch; PR #4 targets `dev`). Merge oldest first (#4 → #5 → #6 → #7 → #8) since each branch contains every prior commit.
+Pushed 2026-09-02 at the user's explicit request, as 5 stacked PRs. Merged 2026-10-08 oldest first (#4 -> #5 -> #6 -> #7 -> #8) into `dev` with merge commits; PR #9 was then merged into `dev` as the indexability safety gate.
 
 ### PR 1 — Locale foundation
 
@@ -610,10 +615,10 @@ Result: 3 commits on `feat/i18n-2-root-locale-redirect` (helper, proxy + config,
 
 Start state: internal links still point to unprefixed paths and rely on the 301s.
 
-- [ ] `localizedPath(lang, path)` in `src/lib/i18n.ts`.
-- [ ] `SiteHeader`, `SiteFooter`, project cards, resume internal links, CTAs use it.
-- [ ] `LanguageSwitch` component in the header: swaps the locale segment of the current path, sets `preferred_locale` (`Secure`, `SameSite=Lax`, `Path=/`, `Max-Age` ≈ 1 year).
-- [ ] Switch never lands on a 404: if the equivalent page does not exist in the target locale, go to that locale's `/work` (case studies) or home.
+- [x] `localizedPath(lang, path)` in `src/lib/i18n.ts`.
+- [x] `SiteHeader`, `SiteFooter`, project cards, resume internal links, CTAs use it.
+- [x] `LanguageSwitch` component in the header: swaps the locale segment of the current path, sets `preferred_locale` (`Secure`, `SameSite=Lax`, `Path=/`, `Max-Age` about 1 year).
+- [x] Switch preserves the equivalent route; missing Spanish case-study content currently falls back to English at the content layer and stays non-indexable.
 
 Manual checks: navigate the whole site under `/es` without ever leaving `/es`; switch preserves the equivalent page; cookie is set after a manual switch.
 
@@ -654,6 +659,16 @@ Left as raw JSX, not extracted (Deliverable 3 scope boundary): `contact/page.tsx
 
 Result: 6 commits on `feat/i18n-5-locale-content-model` (case studies → home/for-agencies → static pages → UI dictionary → contact labels → post-review fix), 43 files, +377/−157. `pnpm run verify` green.
 
+### PR 6 — Indexability gate
+
+Start state: Slice 1 had locale routes and English fallback content for `es`, but SEO discovery needed one extra guard to ensure non-indexable locales do not appear in static discovery surfaces before real copy lands.
+
+- [x] `generateStaticParams()` for locale-sensitive content uses `INDEXABLE_LOCALES` where the page should only be discoverable for reviewed, indexable locales.
+- [x] Sitemap and metadata discovery remain tied to `INDEXABLE_LOCALES` so the same switch controls `hreflang`, sitemap inclusion, and `noindex` removal.
+- [x] Spanish routes can still be visited directly for QA, but they are not promoted as indexable content until Slice 2 is complete.
+
+Result: [PR #9](https://github.com/noelsajor/portfolio-v1/pull/9) merged to `dev` on 2026-10-08 via merge commit `49a8a2b66918a21a0ba419f54a47ce698cf5c79b`. `pnpm run verify` green.
+
 ### Open decisions (must close before Slice 2)
 
 - ~~Target audience for Spanish: `es_ES` vs `es_US`/LatAm.~~ Resolved in PR 4: `es_US` (LatAm/US client base, not Spain) — drives `openGraph.locale` today; still the assumption to write Spanish copy against in PR 9/Phase 9.
@@ -662,13 +677,14 @@ Result: 6 commits on `feat/i18n-5-locale-content-model` (case studies → home/f
 ### Session log
 
 - 2026-09-02 — Plan reviewed twice against the codebase; added legacy 301 redirects, security/cache sections, localized error surfaces, Node-runtime note. Implementation starts with PR 1.
-- 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes` (local only). Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
-- 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect` (local only). Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
+- 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes`; it is now [PR #4](https://github.com/noelsajor/portfolio-v1/pull/4), merged to `dev`. Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
+- 2026-09-02 — PR 2 implemented and verified on `feat/i18n-2-root-locale-redirect`; it is now [PR #5](https://github.com/noelsajor/portfolio-v1/pull/5), merged to `dev`. Next: PR 3 (locale-aware links + language switch that sets `preferred_locale`), branch from `feat/i18n-2-root-locale-redirect`.
 - 2026-09-02 — PR 3 implemented on `feat/i18n-3-locale-links-switch`; fresh review found two should-fix a11y/UX items (mobile menu not closing on switch, unlabeled wrapper), both fixed. Next: PR 4, branch from `feat/i18n-3-locale-links-switch`.
 - 2026-09-02 — PR 4 implemented on `feat/i18n-4-locale-metadata-sitemap`; home page metadata was missed in the first pass, caught and fixed in the same PR. `es_US` OG-locale decision closed. Next: PR 5 (content model — `src/content/{en,es}`, project loader takes `lang`, contact form labels, UI dictionary; flips `es` into `INDEXABLE_LOCALES` once real content lands), branch from `feat/i18n-4-locale-metadata-sitemap`.
-- 2026-09-02 — PR 5 implemented on `feat/i18n-5-locale-content-model`; fresh review found two should-fix items (mobile "Discuss a Project" CTA left hardcoded English, nav `data-tracking` ids derived from label text instead of href), both fixed. **All 5 PRs are now done-local — the technical/structural half of this migration (Slice 1) is complete.** Nothing pushed to any remote; all five branches are local only, chained `feat/i18n-1-...` → `feat/i18n-5-...`, each based on the previous.
+- 2026-09-02 — PR 5 implemented on `feat/i18n-5-locale-content-model`; fresh review found two should-fix items (mobile "Discuss a Project" CTA left hardcoded English, nav `data-tracking` ids derived from label text instead of href), both fixed. Current state is [PR #8](https://github.com/noelsajor/portfolio-v1/pull/8) merged to `dev`.
+- 2026-10-08 — PRs #4-#8 merged sequentially to `dev` with merge commits (`3e09101`, `43fd3fe`, `e6e70f6`, `79847d4`, `bd5e429`). PR #9 then merged the indexability gate to `dev` (`49a8a2b`), keeping static discovery and SEO surfaces constrained to `INDEXABLE_LOCALES` while Spanish copy remains fallback-only. Slice 1 technical integration is complete on `dev`; `pnpm run verify` passed. `main` intentionally remains unchanged at `1778505`. Slice 2 Spanish copy has not started. Known manual QA warnings: Next permanent redirects return 308, Spanish missing routes use the English global 404 shell, and preview contact-form testing is blocked by Vercel Authentication.
 
 **Where a new session picks this up:**
-- To review the whole migration end to end: `git diff dev...feat/i18n-5-locale-content-model` (or check out `feat/i18n-5-locale-content-model` and run `pnpm run verify`).
-- To ship it: merge/push the chain in order (`i18n-1` → `i18n-2` → `i18n-3` → `i18n-4` → `i18n-5`) into `dev`, or open them as 5 stacked PRs — ask the user first, nothing is pushed automatically per the session's no-push rule.
+- To review Slice 1 end to end: stay on `dev`, inspect the merge commits through `49a8a2b`, and run `pnpm run verify`.
+- To continue the migration: start Slice 2 Spanish copy from `dev`; do not touch `main` until the user explicitly asks for a production merge.
 - What's deliberately NOT done, i.e. Slice 2 (real content, not structure): write actual Spanish copy for `src/content/es/{home,for-agencies,static-pages,ui}.ts` and `src/content/es/case-studies/*.mdx` (Phase 9 — translate by search intent, not word-for-word, against the `es_US` audience decision); once a locale's content is real, add `'es'` to `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — that one flip turns on `hreflang`, sitemap inclusion, and removes `noindex` together (see Phase 6/7). Also still open: CSRF on the contact form (pre-existing gap, its own change) and the four raw-JSX paragraphs on `contact`/`resume` pages noted above (translate in place when real copy lands).

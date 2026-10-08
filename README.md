@@ -54,9 +54,9 @@ pnpm verify        # All four, in sequence
 
 ```
 src/
-  app/            Routes (App Router) — pages, the contact API route, robots.ts, sitemap.ts
+  app/            Routes (App Router) — locale-prefixed pages under [lang], the contact API route, robots.ts, sitemap.ts
   components/     UI components (PascalCase.tsx) — layout, home sections, MDX, forms
-  content/        MDX case studies (src/content/case-studies/) and homepage copy (home.ts)
+  content/        Locale content under src/content/{en,es}/, including MDX case studies and page copy
   lib/            Config, data access, and validation modules (kebab-case.ts) —
                   site-config.ts, project-schema.ts, projects.ts, rate-limiter.ts, email-config.ts
 scripts/          One-off scripts (currently just validate-content.ts)
@@ -67,7 +67,7 @@ See the [Master Architecture Guide](docs/master-architecture-guide.md) for what 
 
 ## Content Workflow
 
-Case studies live in `src/content/case-studies/` as MDX files, validated against a Zod schema on every read — invalid frontmatter fails the dev server or build loudly, not silently.
+Case studies live in `src/content/{en,es}/case-studies/` as MDX files, validated against a Zod schema on every read — invalid frontmatter fails the dev server or build loudly, not silently. English is the current source catalog; Spanish case-study files are added when real Spanish copy is ready.
 
 To add a project: copy `_template.mdx`, rename it to the project's slug (lowercase, hyphenated — e.g. `my-project.mdx`), fill in the fields it documents, and set `status: draft` until it's ready to publish. Run `pnpm validate:content` or `pnpm dev` to check it. Full field-by-field documentation is in the [Master Architecture Guide](docs/master-architecture-guide.md) under "Content & Data Schema".
 
