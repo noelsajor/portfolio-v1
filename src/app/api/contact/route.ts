@@ -9,6 +9,22 @@ const MAX_EMAIL_LENGTH = 320
 const MAX_MESSAGE_LENGTH = 5000
 const MAX_BUDGET_LENGTH = 200
 
+// PR 11: every error response carries a stable `code` the client maps to a
+// localized message (uiContent.contactForm.errors in src/content/{en,es}/
+// ui.ts). `error` stays as the English text for anything that still reads
+// it. Add a code here and a string in both dictionaries together.
+const ERRORS = {
+    rate_limited: 'Too many requests. Please try again later.',
+    not_configured: 'Contact form is not configured.',
+    invalid_body: 'Invalid request body.',
+    validation: 'Please fill in all required fields with valid values.',
+    send_failed: 'Message could not be sent. Please try again later.'
+} as const
+
+function errorBody(code: keyof typeof ERRORS) {
+    return { code, error: ERRORS[code] }
+}
+
 // The name is interpolated into the email subject line — reject control
 // characters (newlines in particular) so a submission can't inject extra
 // lines into the subject.
@@ -24,7 +40,7 @@ export async function POST(request: Request) {
     if (!rateLimit.success) {
         const retryAfterSeconds = Math.max(0, Math.ceil((rateLimit.reset - Date.now()) / 1000))
         return NextResponse.json(
-            { error: 'Too many requests. Please try again later.' },
+            errorBody('rate_limited'),
             { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
         )
     }
@@ -35,14 +51,14 @@ export async function POST(request: Request) {
     const emailConfig = resolveEmailConfig()
     if (!emailConfig.ok) {
         console.error(`Contact form: ${emailConfig.reason}`)
-        return NextResponse.json({ error: 'Contact form is not configured.' }, { status: 500 })
+        return NextResponse.json(errorBody('not_configured'), { status: 500 })
     }
 
     let body: unknown
     try {
         body = await request.json()
     } catch {
-        return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
+        return NextResponse.json(errorBody('invalid_body'), { status: 400 })
     }
 
     const { name, email, message, website, supportType, timeline, budget } = (body ?? {}) as Record<string, unknown>
@@ -70,10 +86,7 @@ export async function POST(request: Request) {
         !TIMELINES.includes(timeline as (typeof TIMELINES)[number]) ||
         (budget !== undefined && budget !== null && budget !== '' && (typeof budget !== 'string' || budget.length > MAX_BUDGET_LENGTH || hasControlCharacters(budget)))
     ) {
-        return NextResponse.json(
-            { error: 'Please fill in all required fields with valid values.' },
-            { status: 400 }
-        )
+        return NextResponse.json(errorBody('validation'), { status: 400 })
     }
 
     const budgetLine = typeof budget === 'string' && budget.trim() ? budget.trim() : 'Not specified'
@@ -91,18 +104,12 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error('Contact form: Resend returned an error', error)
-            return NextResponse.json(
-                { error: 'Message could not be sent. Please try again later.' },
-                { status: 502 }
-            )
+            return NextResponse.json(errorBody('send_failed'), { status: 502 })
         }
 
         return NextResponse.json({ success: true })
     } catch (err) {
         console.error('Contact form: send failed', err)
-        return NextResponse.json(
-            { error: 'Message could not be sent. Please try again later.' },
-            { status: 500 }
-        )
+        return NextResponse.json(errorBody('send_failed'), { status: 500 })
     }
 }
