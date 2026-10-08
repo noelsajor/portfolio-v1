@@ -26,7 +26,7 @@ export const dynamicParams = false
 export async function generateMetadata({
     params
 }: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ lang: string; slug: string }>
 }): Promise<Metadata> {
     const { slug } = await params
     const data = getProjectBySlug(slug)
@@ -75,7 +75,7 @@ export async function generateMetadata({
 export default async function CaseStudyPage({
     params
 }: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ lang: string; slug: string }>
 }) {
     const { slug } = await params
 

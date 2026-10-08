@@ -81,24 +81,25 @@ Create the routing and locale primitives before translating content.
 - [ ] Add `generateStaticParams()` for `en` and `es` at the locale layout level.
 - [ ] Set `<html lang={lang}>` from the route param.
 - [ ] Keep global providers, analytics, header, footer, and structured data in the locale layout.
-- [ ] Localize the error surfaces: add `[lang]/not-found.tsx` and `[lang]/error.tsx` so a visitor inside `/es/...` sees Spanish error copy.
-- [ ] Add a `[lang]/[...rest]/page.tsx` catch-all that calls `notFound()`, so unmatched URLs under a locale render the localized 404 inside the locale layout instead of the root one.
-- [ ] Keep the root `not-found.tsx` and `global-error.tsx` locale-neutral; they render outside the `[lang]` segment and cannot read the locale param.
+- [ ] Keep `[lang]/error.tsx` (runtime error boundary, client-rendered by nature) and `global-error.tsx`.
+- [ ] Serve every 404 from the statically prerendered global `src/app/not-found.tsx`, rendered with the full site shell (`<html lang="en">`, header, footer). Set `dynamicParams = false` on `[lang]/layout.tsx` so an unknown locale (`/fr`) is an unmatched route and gets that same static 404.
+- [ ] Extract the shared chrome into `src/components/SiteShell.tsx` so the locale layout and the global 404 render the same shell.
+- [ ] Do NOT add a `[lang]/[...rest]` catch-all or a `[lang]/not-found.tsx` (see the limitation below).
 
-Likely route structure:
+Route structure:
 
 ```txt
 src/app/
-  layout.tsx
-  page.tsx
-  not-found.tsx
+  layout.tsx          ← pass-through (returns children); exists only so the global 404 has a root layout
+  not-found.tsx       ← static global 404, renders <SiteShell lang="en">
   global-error.tsx
+  robots.ts
+  sitemap.ts
+  api/
   [lang]/
-    layout.tsx
+    layout.tsx        ← <SiteShell lang={lang}>: <html lang>, <body>, metadata, header, footer; dynamicParams = false
     page.tsx
-    not-found.tsx
     error.tsx
-    [...rest]/page.tsx
     about/page.tsx
     contact/page.tsx
     resume/page.tsx
@@ -107,7 +108,9 @@ src/app/
     work/[slug]/page.tsx
 ```
 
-Implementation note: the root `src/app/layout.tsx` may need to stay minimal because Next requires a root layout. The locale-aware shell can live in `src/app/[lang]/layout.tsx`.
+Implementation note — Next 16.2 limitation, verified 2026-09-02: a `notFound()` thrown from a **dynamic** render (a `[...rest]` catch-all, or any non-prerendered route) always aborts the SSR shell. Next then serves `<html id="__next_error__">` with no `lang` and no site chrome, and only the client re-render shows the real not-found UI. Wrapping `{children}` in `<Suspense>` keeps the shell but turns the response into a **200** (soft-404), which is worse for SEO. There is no server-rendered localized 404 in Next 16.2 without hacks. Today's `dev` never hits that path because every 404 is served from the static `_not-found.html`, so the migration keeps that model: one static, English 404 for all locales (no regression), and localized 404 copy is deferred. If a Spanish 404 is ever wanted, the trade-off is a client-rendered 404 (catch-all + `[lang]/not-found.tsx`), not an SSR one.
+
+`/` is handled by a redirect (temporary `permanent: false` rule in `next.config.ts`, replaced by `src/proxy.ts` in Phase 2).
 
 ### Phase 2: Root Redirect And Language Preference
 
@@ -467,8 +470,8 @@ Manual browser checks:
 - [ ] Case-study links stay in the current locale.
 - [ ] Missing translations do not produce broken language-switch links.
 - [ ] `html lang` changes between `en` and `es`.
-- [ ] An unknown URL under `/es/...` renders the Spanish 404 inside the locale layout, not the root English one.
-- [ ] A runtime error inside `/es/...` renders the Spanish error boundary.
+- [ ] An unknown URL under `/es/...` (and `/fr`, `/nope`) returns 404 with the static global 404 page: `<html lang="en">`, header and footer present, no `__next_error__` shell. (Localized 404 copy is deferred — Next 16.2 limitation, see Phase 1.)
+- [ ] A runtime error inside `/es/...` renders the `[lang]` error boundary.
 - [ ] Canonical URLs point to the current localized page.
 - [ ] `hreflang` links point to equivalent pages.
 - [ ] `hreflang` includes a valid `x-default` fallback where both language versions exist.
@@ -561,35 +564,40 @@ This section is the resume point. If a working session is lost, start here: read
 
 | # | Branch | Scope | Status |
 |---|--------|-------|--------|
-| 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | pending |
+| 1 | `feat/i18n-1-lang-routes` | Locale config, move public routes under `[lang]`, root `/` → `/en` fallback, legacy 301 redirects, localized error surfaces | done-local |
 | 2 | `feat/i18n-2-root-locale-redirect` | Middleware: `/` picks locale from cookie → `Accept-Language` → `en`; Node runtime; exclusions | pending |
 | 3 | `feat/i18n-3-locale-links-switch` | `localizedPath()` helper, header/footer/card/resume links keep locale, language switch component that sets `preferred_locale` | pending |
 | 4 | `feat/i18n-4-locale-metadata-sitemap` | `buildPageMetadata(lang)`, canonical + `hreflang`, OG locale, `StructuredData(lang)`, sitemap for indexable locales, `noindex` for locales without real content | pending |
 | 5 | `feat/i18n-5-locale-content-model` | `src/content/{en,es}` with `es → en` fallback, project loader takes `lang`, contact form labels split from values, UI label dictionary | pending |
 
-Status values: `pending` → `in-progress` → `pr-open (#n)` → `merged`.
+Status values: `pending` → `in-progress` → `done-local` (committed on its branch, verified, reviewed; NOT pushed) → `merged-to-dev`.
+
+Nothing is pushed to `origin` unless the user explicitly asks. Each finished slice stays as a local branch until then.
 
 ### PR 1 — Locale foundation
 
 Start state: all routes live at `src/app/<route>`; no locale concept exists.
 
-- [ ] `src/lib/i18n.ts`: `LOCALES = ['en', 'es']`, `DEFAULT_LOCALE = 'en'`, `type Locale`, `isLocale()` guard.
-- [ ] Move `page.tsx`, `about/`, `contact/`, `resume/`, `for-agencies/`, `work/`, `work/[slug]/` under `src/app/[lang]/`.
-- [ ] `src/app/[lang]/layout.tsx` renders `<html lang={lang}>` + `<body>`, holds providers/header/footer/analytics/structured data, exports `generateStaticParams()` for both locales, and calls `notFound()` for an unsupported `lang`.
-- [ ] `src/app/layout.tsx` becomes a pass-through (`return children`) so the root `not-found.tsx` still has a root layout.
-- [ ] `src/app/page.tsx` does `redirect('/en')` as the safety net until PR 2 adds smart detection.
-- [ ] `src/app/[lang]/not-found.tsx`, `src/app/[lang]/error.tsx`, `src/app/[lang]/[...rest]/page.tsx` (calls `notFound()`).
-- [ ] `next.config.ts` `redirects()`: permanent redirects `/about`, `/work`, `/contact`, `/resume`, `/for-agencies`, `/work/:slug` → `/en/...`.
-- [ ] `work/[slug]` keeps `dynamicParams = false` and `generateStaticParams()` now returns `{ lang, slug }` pairs.
-- [ ] Build output shows the locale pages as static (`○`/`●`), not dynamic (`ƒ`).
+- [x] `src/lib/i18n.ts`: `LOCALES = ['en', 'es']`, `DEFAULT_LOCALE = 'en'`, `type Locale`, `isLocale()` guard.
+- [x] Move `page.tsx`, `about/`, `contact/`, `resume/`, `for-agencies/`, `work/`, `work/[slug]/` under `src/app/[lang]/`.
+- [x] `src/app/[lang]/layout.tsx` renders `<html lang={lang}>` + `<body>`, holds providers/header/footer/analytics/structured data, exports `generateStaticParams()` for both locales, and calls `notFound()` for an unsupported `lang`.
+- [x] `src/app/layout.tsx` is a pass-through root layout; `src/app/not-found.tsx` is the static global 404 rendered with `<SiteShell lang="en">`. First attempt used a `[lang]/[...rest]` catch-all + `[lang]/not-found.tsx` for localized 404s — reverted after the fresh review reproduced `<html id="__next_error__">` (no `lang`, no header) on every dynamic 404; see the Next 16.2 limitation note in Phase 1.
+- [x] `/` → `/en` handled by a non-permanent redirect in `next.config.ts` until PR 2 adds smart detection in `src/proxy.ts`.
+- [x] `[lang]/layout.tsx` has `dynamicParams = false`; unknown locales are unmatched routes and get the static global 404. No `rewrites()` needed.
+- [x] `src/components/SiteShell.tsx` shared by the locale layout and the global 404. `src/app/[lang]/error.tsx` kept.
+- [x] `next.config.ts` `redirects()`: permanent redirects `/about`, `/work`, `/contact`, `/resume`, `/for-agencies`, `/work/:slug` → `/en/...`.
+- [x] `work/[slug]` keeps `dynamicParams = false`. Its `generateStaticParams()` still returns `{ slug }` only — Next multiplies child params by the parent `[lang]` params, producing 7 projects × 2 locales = 14 prerendered pages. No manual pairing needed.
+- [x] Build output shows the locale pages as static (`●`), not dynamic (`ƒ`). Only `[lang]/[...rest]` is dynamic, by design.
 
 Finished state: `/en/*` and `/es/*` render the current English site; every legacy URL 301s to `/en/*`; `/` lands on `/en`.
 
-Manual checks: `/about` → 301 → `/en/about`; `/work/brand-website-build` → 301; `/es/about` renders; `/es/does-not-exist` renders the `[lang]` 404; `html lang` is `es` under `/es`.
+Manual checks (verified with `next start` + curl on 2026-09-02): `/about` → 308 → `/en/about`; `/work/brand-website-build` → 308; `/` → 307 → `/en`; `/es/about` → 200 with `<html lang="es">`; `/es/does-not-exist` → 404.
+
+Result: 4 code commits on `feat/i18n-1-lang-routes` (locale config → move routes → redirects → document shell + static 404), 14 files, +227/−122. `pnpm run verify` green. Fresh-context review found the 404 regression; fixed and re-verified with curl on 2026-09-02 (`/en/nope`, `/es/nope`, `/fr`, `/nope`, `/en/work/unknown-slug` → 404 with `<html lang="en">` + header, no `__next_error__`).
 
 ### PR 2 — Root locale detection
 
-Start state: `/` always goes to `/en`.
+Start state: `/` always goes to `/en` via a temporary `permanent: false` redirect in `next.config.ts`; remove that rule when the proxy takes over.
 
 - [ ] Middleware in `src/proxy.ts` (Next 16 name for middleware) on the default Node runtime (no `runtime = 'edge'`), matched only on `/`.
 - [ ] Order: `preferred_locale` cookie (validated with `isLocale`) → `Accept-Language` best match → `en`.
@@ -645,3 +653,4 @@ Manual checks: `pnpm run validate:content` passes; `/es` renders (English fallba
 ### Session log
 
 - 2026-09-02 — Plan reviewed twice against the codebase; added legacy 301 redirects, security/cache sections, localized error surfaces, Node-runtime note. Implementation starts with PR 1.
+- 2026-09-02 — PR 1 implemented on `feat/i18n-1-lang-routes` (local only). Fresh review caught that dynamic 404s lost `<html lang>`; root-caused to a Next 16.2 limitation, resolved by serving all 404s from the static global page. Localized 404 copy deferred. Next: PR 2 (`src/proxy.ts` locale detection), branch from `feat/i18n-1-lang-routes`.
