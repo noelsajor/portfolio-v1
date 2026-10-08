@@ -1,14 +1,21 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { ContactForm } from '@/components/ContactForm'
 import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
-export const metadata = buildPageMetadata({
-    title: 'Contact',
-    description:
-        'Tell me what your team is building. Get in touch about freelance projects, agency production support, Shopify work, or front-end implementation.',
-    path: '/contact'
-})
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
+    return buildPageMetadata({
+        title: 'Contact',
+        description:
+            'Tell me what your team is building. Get in touch about freelance projects, agency production support, Shopify work, or front-end implementation.',
+        path: '/contact',
+        lang
+    })
+}
 
 export default async function ContactPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params

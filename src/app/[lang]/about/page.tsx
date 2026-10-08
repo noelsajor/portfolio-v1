@@ -1,11 +1,19 @@
+import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/site-config'
+import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 
-export const metadata = buildPageMetadata({
-    title: 'About',
-    description:
-        'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.',
-    path: '/about'
-})
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
+    return buildPageMetadata({
+        title: 'About',
+        description:
+            'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.',
+        path: '/about',
+        lang
+    })
+}
 
 export default function AboutPage() {
     return (

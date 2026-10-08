@@ -24,7 +24,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
                 >
                     Skip to main content
                 </a>
-                <StructuredData />
+                <StructuredData lang={lang} />
                 <SiteHeader lang={lang} />
                 <main
                     id="main-content"
