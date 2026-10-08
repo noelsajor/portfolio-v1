@@ -10,7 +10,7 @@ export const forAgenciesContent = {
     metadata: {
         title: 'Para agencias',
         description:
-            'Soporte white-label en diseño UI/UX, Shopify y front-end para agencias con más trabajo que capacidad de producción. Producción web para agencias, sin capas de gestión.'
+            'Soporte white-label en diseño UI/UX, Shopify y front-end para agencias con más trabajo que capacidad de producción, sin capas de gestión.'
     },
     hero: {
         eyebrow: 'PARA AGENCIAS',
@@ -25,7 +25,7 @@ export const forAgenciesContent = {
             {
                 title: 'Traspaso entre diseño y desarrollo',
                 description:
-                    'Los diseños aprobados se quedan esperando a un desarrollador que los interprete con precisión, sin idas y vueltas interminables.'
+                    'Los diseños aprobados se quedan esperando a un desarrollador que los interprete con precisión sin idas y vueltas interminables.'
             },
             {
                 title: 'Backlog de proyectos Shopify',
@@ -38,7 +38,7 @@ export const forAgenciesContent = {
                     'El trabajo de cara al cliente tiene que salir con el nombre de tu agencia, sin que se note la costura de un subcontratista.'
             },
             {
-                title: 'Refuerzo de producción con poco aviso',
+                title: 'Soporte de producción con poca antelación',
                 description: 'Un proyecto necesita manos adicionales por un período definido, no una contratación de tiempo completo.'
             }
         ]
@@ -92,7 +92,7 @@ export const forAgenciesContent = {
     },
     assurance: {
         heading: 'White-label y confidencial, por defecto.',
-        body: 'Es trabajo de producción hecho por una sola persona, no un equipo subcontratado. Los nombres de clientes, los detalles de los proyectos y los entregables se mantienen confidenciales salvo que indiques lo contrario, y todo sale con la marca de tu agencia, no con la mía.'
+        body: 'Es trabajo de producción que hago yo mismo, una sola persona, no un equipo subcontratado. Los nombres de clientes, los detalles de los proyectos y los entregables se mantienen confidenciales salvo que indiques lo contrario, y todo sale con la marca de tu agencia, no con la mía.'
     },
     faq: {
         heading: 'Preguntas frecuentes',
