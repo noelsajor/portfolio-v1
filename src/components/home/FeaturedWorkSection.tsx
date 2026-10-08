@@ -6,11 +6,13 @@ import { homeContent as homeContentEs } from '@/content/es/home'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
+import { getUiContent } from '@/lib/ui-content'
 
 export function FeaturedWorkSection({ lang }: { lang: Locale }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { featuredWork } = homeContent
     const featured = getFeaturedProjects(lang).slice(0, 3)
+    const { links } = getUiContent(lang)
 
     return (
         <section className="space-y-6">
@@ -32,10 +34,10 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
                             key={project.slug}
                             className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
                         >
-                            <ProjectCardPreview project={project} />
+                            <ProjectCardPreview lang={lang} project={project} />
                             <div className="flex flex-1 flex-col gap-3">
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <CapabilityChips capabilities={project.capabilities} />
+                                    <CapabilityChips lang={lang} capabilities={project.capabilities} />
                                 </div>
                                 <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
                                     <Link
@@ -63,8 +65,9 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
                                             data-tracking={`project_card_${project.slug}_live`}
                                             className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
                                         >
-                                            Visit live site <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                                            <span className="sr-only"> (opens in a new tab)</span>
+                                            {`${links.visitLiveSite} `}
+                                            <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                                            <span className="sr-only">{links.opensInNewTab}</span>
                                         </a>
                                     ) : null}
                                 </div>

@@ -60,7 +60,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
         <footer className="border-t border-white/10">
             <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
                 <p>© {new Date().getFullYear()} Jose Leon</p>
-                <nav aria-label="Footer links" className="flex flex-wrap gap-3">
+                <nav aria-label={footer.ariaFooterLinks} className="flex flex-wrap gap-3">
                     <Link
                         className={footerLinkClass}
                         href={`mailto:${siteConfig.email}`}

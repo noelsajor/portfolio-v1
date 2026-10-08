@@ -42,6 +42,11 @@ export type CaseStudyFrontmatter = ProjectFrontmatter & { slug: string }
 export type CaseStudy = {
     frontmatter: CaseStudyFrontmatter
     content: string
+    /** The locale of the file actually read — differs from the requested
+     *  `lang` while a slug still falls back to the `en` file (PR 11). The
+     *  case-study page uses it to pick question-chip anchors that match the
+     *  headings really present in the body. */
+    contentLocale: Locale
 }
 
 function isPublished(project: CaseStudyFrontmatter): boolean {
@@ -54,10 +59,10 @@ function isPublished(project: CaseStudyFrontmatter): boolean {
  *  studies one at a time by dropping a matching .mdx into
  *  src/content/es/case-studies/ without needing every slug translated at
  *  once. */
-function resolveProjectFilePath(lang: Locale, slug: string): string {
+function resolveProjectFilePath(lang: Locale, slug: string): { fullPath: string; contentLocale: Locale } {
     const localizedPath = path.join(CONTENT_ROOT, lang, 'case-studies', `${slug}.mdx`)
-    if (fs.existsSync(localizedPath)) return localizedPath
-    return path.join(CONTENT_ROOT, 'en', 'case-studies', `${slug}.mdx`)
+    if (fs.existsSync(localizedPath)) return { fullPath: localizedPath, contentLocale: lang }
+    return { fullPath: path.join(CONTENT_ROOT, DEFAULT_LOCALE, 'case-studies', `${slug}.mdx`), contentLocale: DEFAULT_LOCALE }
 }
 
 /** Content is external, untrusted input: this is the only place frontmatter
@@ -66,7 +71,7 @@ function resolveProjectFilePath(lang: Locale, slug: string): string {
  *  slug, failing field(s), and a human-readable reason — the build/dev
  *  server fails loudly rather than silently publishing or dropping bad data. */
 function readProjectFile(lang: Locale, slug: string): CaseStudy | null {
-    const fullPath = resolveProjectFilePath(lang, slug)
+    const { fullPath, contentLocale } = resolveProjectFilePath(lang, slug)
     const filename = path.basename(fullPath)
     if (!fs.existsSync(fullPath)) return null
 
@@ -83,7 +88,8 @@ function readProjectFile(lang: Locale, slug: string): CaseStudy | null {
 
     return {
         frontmatter: { ...result.data, slug },
-        content
+        content,
+        contentLocale
     }
 }
 
