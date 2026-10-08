@@ -1,0 +1,98 @@
+---
+title: Marca y tienda SANA
+client: SANA, marca D2C de bienestar
+liveUrl: https://sanavitahoney.com/
+coverImage: /images/case-studies/sana-storefront-cover.webp
+coverAlt: Ilustración de la marca SANA VitaHoney con cinco abejas mascota de caricatura en poses de médico, lectura y ejercicio sobre un fondo de atardecer naranja
+gallery:
+  - id: sana-storefront-hero
+    status: ready
+    src: /images/case-studies/sana-storefront-hero.webp
+    alt: Hero de la página de inicio de SANA mostrando las seis fórmulas de cucharadas de miel, en escritorio y móvil
+  - id: sana-product-template
+    status: ready
+    src: /images/case-studies/sana-product-template.webp
+    alt: Página de producto de SANA construida sobre metafields, con beneficios, ingredientes e información nutricional del suplemento en escritorio y móvil
+  - id: sana-lighthouse-audit
+    status: ready
+    src: /images/case-studies/sana-lighthouse-audit.webp
+    alt: Comparación lado a lado de auditorías Lighthouse en móvil para la tienda SANA
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+  - Brand & Identity
+segment: D2C
+industry: Bienes de consumo / Bienestar y suplementos
+roles:
+  - Desarrollador Shopify
+  - Diseño de marca e identidad
+  - Optimización de rendimiento
+services:
+  - Diseño de marca e identidad
+  - Desarrollo de tema Shopify
+  - Optimización de rendimiento mobile-first
+  - Metafields y arquitectura de datos de producto
+  - UX de suscripciones y descuentos por volumen
+  - Implementación de analítica y tracking
+  - Gestión de medios pagados (Meta y Google Ads)
+summary: "Construí la identidad de marca y la tienda Shopify de SANA desde cero: logo, voz y sistema de color, una arquitectura de producto basada en metafields, suscripciones y descuentos por volumen, trabajo de rendimiento mobile-first y las primeras campañas de medios pagados de la marca."
+challenge: SANA necesitaba una marca y una tienda Shopify construidas desde la nada (logo, voz, colores), con una complejidad de línea de producto que exigía una arquitectura real de metafields en lugar de ediciones puntuales de plantilla, además de un trabajo continuo de rendimiento mobile-first a medida que la tienda evolucionaba.
+outcome: Entregué la identidad de marca y la tienda Shopify de SANA desde cero, un sistema de producto basado en metafields, suscripciones y descuentos por volumen funcionando, una experiencia móvil más rápida con mejoras medibles y las primeras campañas de medios pagados de la marca basadas en datos.
+year: "2026"
+duration: ~2 meses (2026)
+team: Contratado a través de una agencia intermediaria de marketing y staffing; único desarrollador responsable de la construcción de la marca, el desarrollo Shopify, el rendimiento, el tracking y el trabajo inicial de medios pagados.
+featured: false
+order: 3
+status: published
+updatedAt: "2026-09-01"
+seoTitle: SANA — Marca y tienda Shopify para suplementos | Jose Leon
+seoDescription: "Identidad de marca y tienda Shopify para SANA, marca D2C de bienestar: arquitectura de producto con metafields, suscripciones y descuentos por volumen."
+---
+
+## Resumen
+
+SANA es una marca D2C de bienestar que vende suplementos monodosis a base de miel. Me sumé al proyecto a través de una agencia de marketing y staffing que se encargaba de la captación de clientes, construyendo la identidad de marca de SANA desde cero (logo, voz y tono, sistema de color y personalidad general de la marca) y después la tienda Shopify alrededor de ella. A partir de ahí mi alcance creció hacia trabajo continuo de rendimiento mobile-first, una arquitectura de datos de producto basada en metafields, compra por suscripción y con descuentos por volumen, configuración de tracking y las primeras campañas de medios pagados de la marca.
+
+## Contexto
+
+El proyecto llegó a través de una agencia intermediaria de marketing y staffing. Fui el único desarrollador responsable de convertir a SANA de un concepto en una marca y una tienda en funcionamiento, y luego de mantenerla: desarrollo de tema, rendimiento, arquitectura de datos de producto, tracking y los primeros medios pagados.
+
+## Desafío
+
+Dos cosas hicieron de esto algo más que una construcción de tema estándar. Primero, la complejidad de la línea de producto: cada variante monodosis necesitaba sus propios beneficios, ingredientes, recomendaciones y tratamiento de color en la UI, así que una plantilla de producto estándar de Shopify no podía contener esos datos sin convertirse en una pila inmanejable de ediciones puntuales. Segundo, el rendimiento en móvil necesitaba atención continua: un layout mobile-first solo se mantiene rápido si se vuelve a revisar cada vez que cambia una sección, no si se audita una vez y se deja.
+
+## Solución
+
+Primero construí la identidad de marca de SANA (logo, voz y tono, paleta de color y la personalidad general que llevarían la tienda y el marketing) y después la tienda Shopify alrededor de ella, con un layout mobile-first desde el primer día.
+
+Para manejar la complejidad de la línea de producto, configuré una arquitectura de metafields en el admin de Shopify: cada producto lleva sus propios beneficios, recomendaciones, ingredientes, contenido relacionado y colores de acento de la UI como metafields estructurados, no como contenido fijo en la plantilla, así que agregar o editar una variante no implica tocar el código de la plantilla.
+
+Diseñé y construí la UI/UX de compra por suscripción y con descuentos por volumen, con actualizaciones continuas de código y de interfaz centradas en mantenerla rápida y usable en móvil a medida que la funcionalidad evolucionaba.
+
+En el lado del rendimiento, una auditoría técnica completa reveló un conjunto específico y corregible de problemas: Google Tag Manager disparaba una etiqueta GA4 duplicada sobre el propio canal de analítica de Shopify; 85 archivos huérfanos de una app de constructor de páginas usada al inicio (descartada a favor de secciones nativas del tema) seguían cargando CSS y JavaScript sin uso en cada página; la imagen hero que determinaba el Largest Contentful Paint no tenía preload; y a varias secciones les faltaban los atributos width, height y alt necesarios para evitar saltos de layout y pasar las verificaciones de accesibilidad. Corregir cada uno de ellos mejoró la auditoría Lighthouse en móvil de la tienda, medida con ejecuciones antes y después, no estimada. También corregí problemas de schema de producto en Shopify Merchant Center (un campo de marca duplicado y la falta de identificadores globales) que Google Search Console había marcado, y arreglé problemas de SEO on-page como enlaces internos que apuntaban al dominio equivocado.
+
+Monté el stack de tracking de la marca desde cero (Google Tag Manager, Meta Pixel y X (Twitter) Pixel) y lo usé para ejecutar las primeras campañas de medios pagados de SANA: campañas exploratorias en Meta Ads y Google Ads, con una optimización continua guiada directamente por lo que mostraban esos datos.
+
+## Resultado
+
+SANA pasó de ser un concepto de marca a una tienda Shopify mobile-first en funcionamiento, con un sistema de producto basado en metafields, suscripciones y descuentos por volumen operativos y una experiencia móvil más rápida y más accesible, con mejoras medibles. El stack de tracking que construí también impulsó las primeras campañas de medios pagados de la marca en Meta y Google, con decisiones de optimización basadas en datos reales de campaña y no en suposiciones.
+
+## Mis contribuciones
+
+- Construí la identidad de marca de SANA desde cero: logo, voz y tono, sistema de color y personalidad general de la marca
+- Construí la tienda Shopify con un layout mobile-first
+- Diseñé una arquitectura de metafields que vincula cada producto con sus propios beneficios, recomendaciones, ingredientes, contenido relacionado y colores de UI
+- Diseñé y construí la UI/UX de compra por suscripción y con descuentos por volumen, con actualizaciones continuas de rendimiento en móvil
+- Diagnostiqué y corregí una regresión de Core Web Vitals en móvil, verificada con auditorías Lighthouse antes y después
+- Eliminé el tracking de analítica duplicado y 85 archivos huérfanos de una app de constructor de páginas usada al inicio
+- Corregí problemas de schema de producto en Shopify Merchant Center y problemas de SEO on-page, incluidos enlaces internos que apuntaban al dominio equivocado
+- Monté el stack de tracking de la marca: Google Tag Manager, Meta Pixel y X (Twitter) Pixel
+- Ejecuté las primeras campañas exploratorias de SANA en Meta Ads y Google Ads y las optimicé con base en los datos resultantes
+
+## Tecnologías
+
+- **Plataforma**: Shopify
+- **Lenguajes**: Liquid, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0, metafields
+- **Tracking y anuncios**: Google Tag Manager, Meta Pixel, X (Twitter) Pixel, Meta Ads Manager, Google Ads
+- **Herramientas**: Git, Shopify CLI, Google Search Console, Lighthouse
