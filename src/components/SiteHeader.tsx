@@ -95,7 +95,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                     aria-expanded={open}
                     aria-controls="mobile-menu"
                 >
-                    {open ? 'Close' : 'Menu'}
+                    {open ? header.menuClose : header.menuOpen}
                 </button>
             </div>
 

@@ -165,6 +165,7 @@ Use these exact strings wherever the English equivalent appears. They are the so
 | Message could not be sent. Please try again later. | No se pudo enviar el mensaje. Inténtalo de nuevo más tarde. |
 | Switch to Spanish / Switch to English | Cambiar a español / Cambiar a inglés |
 | Primary (nav aria-label) | Principal |
+| Menu / Close (mobile nav toggle) | Menú / Cerrar |
 | Footer links | Enlaces del pie de página |
 | Experience summary | Resumen de experiencia |
 | Language | Idioma |

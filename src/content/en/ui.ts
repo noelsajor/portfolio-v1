@@ -15,7 +15,9 @@ export const uiContent = {
         navAbout: 'About',
         navContact: 'Contact',
         discussProject: 'Discuss a Project',
-        ariaPrimaryNav: 'Primary'
+        ariaPrimaryNav: 'Primary',
+        menuOpen: 'Menu',
+        menuClose: 'Close'
     },
     footer: {
         ariaEmail: (email: string) => `Email ${email}`,
