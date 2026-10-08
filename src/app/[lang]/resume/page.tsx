@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 import { getProjects } from '@/lib/projects'
+import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
 export const metadata = buildPageMetadata({
     title: 'Resume',
@@ -52,7 +53,9 @@ const experience = [
     }
 ]
 
-export default function ResumePage() {
+export default async function ResumePage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const projects = getProjects()
 
     return (
@@ -123,14 +126,14 @@ export default function ResumePage() {
                     <ul className="space-y-2 text-sm">
                         {projects.map((project) => (
                             <li key={project.slug}>
-                                <Link href={`/work/${project.slug}`} className={linkClass}>
+                                <Link href={localizedPath(lang, `/work/${project.slug}`)} className={linkClass}>
                                     {project.title} — {project.summary}
                                 </Link>
                             </li>
                         ))}
                     </ul>
                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
-                        <Link href="/work" className={linkClass}>
+                        <Link href={localizedPath(lang, '/work')} className={linkClass}>
                             See all work →
                         </Link>
                         <Link href={siteConfig.sameAs.github} target="_blank" rel="noopener noreferrer" className={linkClass}>

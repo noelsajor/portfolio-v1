@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { PROJECT_CAPABILITIES } from '@/lib/project-schema'
 import { getProjects } from '@/lib/projects'
 import { buildPageMetadata } from '@/lib/site-config'
+import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
@@ -16,7 +17,9 @@ export const metadata = buildPageMetadata({
     path: '/work'
 })
 
-export default function WorkPage() {
+export default async function WorkPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const projects = getProjects()
     const projectSections = PROJECT_CAPABILITIES.map((capability) => ({
         capability,
@@ -53,7 +56,7 @@ export default function WorkPage() {
                                             </div>
                                             <h3 className="text-xl font-semibold tracking-tight">
                                                 <Link
-                                                    href={`/work/${project.slug}`}
+                                                    href={localizedPath(lang, `/work/${project.slug}`)}
                                                     data-tracking={`portfolio_item_${project.slug}`}
                                                     className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
                                                 >
@@ -63,7 +66,7 @@ export default function WorkPage() {
                                             <p className="text-sm text-white/70">{project.summary}</p>
                                             <div className="mt-auto flex flex-wrap items-center gap-4 pt-4">
                                                 <Link
-                                                    href={`/work/${project.slug}`}
+                                                    href={localizedPath(lang, `/work/${project.slug}`)}
                                                     data-tracking={`portfolio_item_${project.slug}`}
                                                     className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
                                                 >

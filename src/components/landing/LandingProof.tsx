@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { getFeaturedProjects } from '@/lib/projects'
+import { localizedPath, type Locale } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
-export function LandingProof({ heading }: { heading: string }) {
+export function LandingProof({ lang, heading }: { lang: Locale; heading: string }) {
     const projects = getFeaturedProjects()
 
     if (projects.length === 0) return null
@@ -15,7 +16,7 @@ export function LandingProof({ heading }: { heading: string }) {
                 {projects.map((project) => (
                     <li key={project.slug} className="h-full">
                         <Link
-                            href={`/work/${project.slug}`}
+                            href={localizedPath(lang, `/work/${project.slug}`)}
                             data-tracking={`landing_proof_${project.slug}`}
                             className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >

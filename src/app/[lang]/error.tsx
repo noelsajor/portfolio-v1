@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
 // English copy for now — PR 5 localizes this string per locale. Rendered
 // wrapped in [lang]/layout.tsx for a runtime error thrown inside the locale
@@ -13,6 +15,17 @@ export default function LocaleError({
     error: Error & { digest?: string }
     reset: () => void
 }) {
+    // error.tsx only receives `error`/`reset` from Next.js, not `params` —
+    // useParams() reads the matched [lang] segment instead. Unlike the
+    // static global 404 (src/app/not-found.tsx), this boundary only ever
+    // mounts inside a real /en/* or /es/* route, so — unlike the pitfall
+    // documented on SiteHeader/LanguageSwitch — usePathname()-style
+    // derivation isn't needed here; useParams() reads the actual matched
+    // route segment.
+    const params = useParams<{ lang?: string }>()
+    const rawLang = params?.lang
+    const lang = typeof rawLang === 'string' && isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
     useEffect(() => {
         console.error(error)
     }, [error])
@@ -35,7 +48,7 @@ export default function LocaleError({
                     Try again
                 </button>
                 <Link
-                    href="/"
+                    href={localizedPath(lang, '/')}
                     className="inline-flex items-center justify-center rounded-full border border-white/15 px-8 py-4 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
                 >
                     Return Home

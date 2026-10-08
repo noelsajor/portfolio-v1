@@ -2,10 +2,11 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { getFeaturedProjects } from '@/lib/projects'
 import { homeContent } from '@/content/home'
+import { localizedPath, type Locale } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
-export function FeaturedWorkSection() {
+export function FeaturedWorkSection({ lang }: { lang: Locale }) {
     const { featuredWork } = homeContent
     const featured = getFeaturedProjects().slice(0, 3)
 
@@ -14,7 +15,7 @@ export function FeaturedWorkSection() {
             <div className="flex items-end justify-between gap-4">
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{featuredWork.heading}</h2>
                 <Link
-                    href={featuredWork.viewAllHref}
+                    href={localizedPath(lang, featuredWork.viewAllHref)}
                     data-tracking="view_all_work"
                     className="text-sm font-semibold text-white/70 hover:text-white"
                 >
@@ -36,7 +37,7 @@ export function FeaturedWorkSection() {
                                 </div>
                                 <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
                                     <Link
-                                        href={`/work/${project.slug}`}
+                                        href={localizedPath(lang, `/work/${project.slug}`)}
                                         data-tracking={`project_card_${project.slug}`}
                                         className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
                                     >
@@ -46,7 +47,7 @@ export function FeaturedWorkSection() {
                                 <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
                                 <div className="mt-auto flex flex-wrap items-center gap-4 pt-4">
                                     <Link
-                                        href={`/work/${project.slug}`}
+                                        href={localizedPath(lang, `/work/${project.slug}`)}
                                         data-tracking={`project_card_${project.slug}`}
                                         className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
                                     >

@@ -25,7 +25,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
                     Skip to main content
                 </a>
                 <StructuredData />
-                <SiteHeader />
+                <SiteHeader lang={lang} />
                 <main
                     id="main-content"
                     tabIndex={-1}
@@ -33,7 +33,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
                 >
                     {children}
                 </main>
-                <SiteFooter />
+                <SiteFooter lang={lang} />
                 {process.env.NODE_ENV === 'production' && gaMeasurementId ? (
                     <>
                         <GoogleAnalytics gaId={gaMeasurementId} />

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { FileText, Mail } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
+import { localizedPath, type Locale } from '@/lib/i18n'
 
 const footerLinkClass =
     'flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/70 transition-colors duration-200 hover:border-white/60 hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30'
@@ -49,7 +50,7 @@ function LinkedInIcon() {
     )
 }
 
-export function SiteFooter() {
+export function SiteFooter({ lang }: { lang: Locale }) {
     return (
         <footer className="border-t border-white/10">
             <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
@@ -105,7 +106,7 @@ export function SiteFooter() {
                     </Link>
                     <Link
                         className={footerLinkClass}
-                        href="/resume"
+                        href={localizedPath(lang, '/resume')}
                         data-tracking="footer_resume"
                         aria-label="Resume"
                     >

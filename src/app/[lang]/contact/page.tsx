@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ContactForm } from '@/components/ContactForm'
 import { buildPageMetadata, siteConfig } from '@/lib/site-config'
+import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
 export const metadata = buildPageMetadata({
     title: 'Contact',
@@ -9,7 +10,10 @@ export const metadata = buildPageMetadata({
     path: '/contact'
 })
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang: rawLang } = await params
+    const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
+
     return (
         <div className="space-y-12">
             <div className="space-y-6">
@@ -21,7 +25,7 @@ export default function ContactPage() {
                 <p className="max-w-2xl text-sm text-white/50">
                     Recruiter or hiring manager? See my{' '}
                     <Link
-                        href="/resume"
+                        href={localizedPath(lang, '/resume')}
                         className="rounded-sm underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                     >
                         resume
