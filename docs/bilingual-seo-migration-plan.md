@@ -553,6 +553,65 @@ This section is the resume point. If a working session is lost, start here: read
 
 Current state: PRs #4-#9 are merged to `dev`; `main` is intentionally unchanged. Slice 1 technical integration is complete, and Slice 2 Spanish copy has not started.
 
+### Slice 2 — Spanish copy: execution plan
+
+This is the resume point for Slice 2. Phase 9 and Phase 10 above remain the detailed spec; this section is the execution order, one PR per row, cut from `dev` and merged back into `dev` with merge commits. Nothing goes to `main` until the activation PR is merged and the user asks for a production release.
+
+Reviewed 2026-10-08 against `dev` at `03ec478`. The inventory below corrects the first draft in four places: page metadata (`title`/`description`) is hardcoded in each `page.tsx`, not in the content modules; the contact API returns English error strings; `scripts/validate-content.ts` (lines ~259-270) asserts that `es` has no case studies and will fail on the first Spanish MDX; and `public/resume.pdf` / `public/og-image.png` are English-only assets that need a decision.
+
+Audience: `es_US`. Translate for search intent and natural phrasing, not word-for-word. Preserve slugs, URLs, tracking IDs, frontmatter schema, anonymization, factual claims, metrics, roles and seniority. Never invent or soften a claim.
+
+#### Slice 2 PR table
+
+| PR | Branch | Scope | Status |
+|----|--------|-------|--------|
+| 10 | `docs/i18n-es-style-guide` | `docs/es-style-guide.md`: tone (`tú` profesional unless decided otherwise), terms kept in English vs translated, brand/product names, number and date formats, CTA verb conventions. Approved by the user before any copy PR starts. | `pending` |
+| 11 | `feat/i18n-6-es-chrome` | Last structural PR. (a) `src/content/es/ui.ts` real copy. (b) The four raw-JSX paragraphs in `src/app/[lang]/contact/page.tsx` and `src/app/[lang]/resume/page.tsx` moved into the UI dictionary. (c) `src/components/ContactForm.tsx` labels, placeholders, submit/success/error states moved into a per-locale dictionary. (d) `src/app/api/contact/route.ts` returns a stable `code` alongside `error`; the client maps `code` to localized text. (e) Move the hardcoded `generateMetadata` `title`/`description` of `about`, `contact`, `for-agencies`, `resume` and `work` into the locale content modules (English unchanged, `es` falls back). (f) Replace the fallback assertion in `scripts/validate-content.ts` with a parity check: every `es` MDX slug must exist in `en`, same frontmatter schema, `es` files optional. | `pending` |
+| 12 | `feat/i18n-7-es-home` | `src/content/es/home.ts` real copy plus home metadata. Position around Shopify, ecommerce, front-end and remote collaboration for the `es_US` market (see Phase 9 keyword table). | `pending` |
+| 13 | `feat/i18n-8-es-for-agencies` | `src/content/es/for-agencies.ts` real copy plus metadata. Highest commercial intent page: white-label, production capacity, confidentiality, Shopify, UI/UX. | `pending` |
+| 14 | `feat/i18n-9-es-static-pages` | `src/content/es/static-pages.ts` real copy plus metadata for About, Contact, Resume and Work index. Resolve the resume PDF decision (see open decisions) in this PR. | `pending` |
+| 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `pending` |
+| 16 | `feat/i18n-11-es-cs-strike-hemp` | `src/content/es/case-studies/strike-hemp-cannabis-storefront.mdx` | `pending` |
+| 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `pending` |
+| 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `pending` |
+| 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `pending` |
+| 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `pending` |
+| 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `pending` |
+| 22 | `feat/i18n-17-es-activation` | `INDEXABLE_LOCALES = ['en', 'es']` in `src/lib/i18n.ts`. Nothing else in this PR. | `pending` |
+
+Status values: `pending` -> `in-progress` -> `in-review` (open PR, awaiting editorial sign-off) -> `merged-to-dev`.
+
+Why this order: PR 11 removes every remaining hardcoded English string and every structural blocker first, so PRs 12-21 are copy-only and can be reviewed by a non-developer. Chrome (nav, footer, form, errors) is what every `/es` page shares, so it goes before any page. `for-agencies` goes before the static pages because it carries the clearest commercial search intent. Case studies ship one per PR because the project loader falls back per file, so each one can land independently, and a seven-MDX PR would not get a real editorial read. Case-study order is a suggestion (Shopify storefronts first); reorder by commercial priority if needed. `_template.mdx` stays English-only and unpublished.
+
+#### Per-PR checklist (PRs 11-21)
+
+- [ ] `docs/es-style-guide.md` followed; new terminology decisions added to the guide in the same PR.
+- [ ] `pnpm run verify` green.
+- [ ] `/en` routes render byte-identical copy to before the PR (English is never touched by a copy PR).
+- [ ] Affected `/es` routes checked in the browser: desktop and mobile nav, CTAs, forms, 404.
+- [ ] Rendered-source check: `curl` of the affected `/es` route shows Spanish copy server-rendered, no English leftovers (grep for a handful of English phrases from the `en` source).
+- [ ] Case-study PRs only: frontmatter passes the strict schema, `seoTitle` and `seoDescription` authored for Spanish search intent (not translated), image alt text and gallery labels translated, slug unchanged, metrics and anonymization identical to `en`.
+- [ ] Editorial sign-off by the user (native Spanish speaker) recorded in the PR description before merge.
+
+#### Activation PR (22) checklist
+
+- [ ] All of PRs 11-21 are `merged-to-dev`.
+- [ ] `/sitemap.xml` lists `/es` URLs with `hreflang` alternates in both directions, `x-default` to `/en`.
+- [ ] `/robots.txt` and page `<meta name="robots">` no longer `noindex` for `/es`.
+- [ ] `<html lang="es">` on every `/es` route, including the 404 shell (known gap from PR 1: missing Spanish routes currently use the English global 404 shell; decide whether to fix here or accept).
+- [ ] Language switch visible on `/en` and `/es`; `/` redirects to `/es` for `Accept-Language: es` and for `preferred_locale=es`.
+- [ ] `openGraph.locale` is `es_US` on `/es`, `alternateLocale` lists `en_US`.
+- [ ] Structured data on `/es` carries `inLanguage: es`.
+- [ ] Post-deploy (after `dev` -> `main`): request indexing for `/es` in Google Search Console; confirm the property covers the whole domain, not only the English prefix.
+
+#### Slice 2 open decisions
+
+- [ ] `tú` vs `usted`. Recommendation: `tú` profesional (LatAm/US agency and SMB audience). Close in PR 10.
+- [ ] `public/resume.pdf` is English-only. Options: add `public/resume-es.pdf` and switch the download path by locale, or keep the English PDF and label it as such on `/es/resume`. Close in PR 14.
+- [ ] `public/og-image.png` is a single English asset. Acceptable for `es_US` launch; revisit after activation if social shares in Spanish matter.
+- [ ] Contact emails sent via Resend: keep internal English labels (`Support type`, `Timeline`) since they are operational, but include the visitor's locale in the email body. Close in PR 11.
+- [ ] Case-study order (PRs 15-21) is a suggestion; confirm or reorder before PR 15 starts.
+
 ### Delivery strategy
 
 - Scope of this pass: **Slice 1 only** — the technical foundation. Spanish routes exist and work, but serve English fallback copy and are `noindex` until real Spanish content lands (Slice 2, tracked separately).
@@ -669,7 +728,10 @@ Start state: Slice 1 had locale routes and English fallback content for `es`, bu
 
 Result: [PR #9](https://github.com/noelsajor/portfolio-v1/pull/9) merged to `dev` on 2026-10-08 via merge commit `49a8a2b66918a21a0ba419f54a47ce698cf5c79b`. `pnpm run verify` green.
 
-### Open decisions (must close before Slice 2)
+### Open decisions (Slice 1)
+
+Slice 2 decisions live in the "Slice 2 open decisions" list above.
+
 
 - ~~Target audience for Spanish: `es_ES` vs `es_US`/LatAm.~~ Resolved in PR 4: `es_US` (LatAm/US client base, not Spain) — drives `openGraph.locale` today; still the assumption to write Spanish copy against in PR 9/Phase 9.
 - CSRF token on the contact form is a pre-existing gap, out of scope here; handle in its own change.
@@ -684,7 +746,9 @@ Result: [PR #9](https://github.com/noelsajor/portfolio-v1/pull/9) merged to `dev
 - 2026-09-02 — PR 5 implemented on `feat/i18n-5-locale-content-model`; fresh review found two should-fix items (mobile "Discuss a Project" CTA left hardcoded English, nav `data-tracking` ids derived from label text instead of href), both fixed. Current state is [PR #8](https://github.com/noelsajor/portfolio-v1/pull/8) merged to `dev`.
 - 2026-10-08 — PRs #4-#8 merged sequentially to `dev` with merge commits (`3e09101`, `43fd3fe`, `e6e70f6`, `79847d4`, `bd5e429`). PR #9 then merged the indexability gate to `dev` (`49a8a2b`), keeping static discovery and SEO surfaces constrained to `INDEXABLE_LOCALES` while Spanish copy remains fallback-only. Slice 1 technical integration is complete on `dev`; `pnpm run verify` passed. `main` intentionally remains unchanged at `1778505`. Slice 2 Spanish copy has not started. Known manual QA warnings: Next permanent redirects return 308, Spanish missing routes use the English global 404 shell, and preview contact-form testing is blocked by Vercel Authentication.
 
+- 2026-10-08 — Slice 2 plan reviewed against `dev` (`03ec478`) and rewritten as a PR table (PRs 10-22). Four gaps added that the first inventory missed: page `generateMetadata` titles/descriptions hardcoded in `page.tsx`, English error strings in `src/app/api/contact/route.ts`, the `validate-content.ts` assertion that `es` has no case studies, and English-only `resume.pdf` / `og-image.png`. Order changed: style guide first, then one structural PR that removes every remaining hardcoded string, then copy-only PRs (home, for-agencies, static pages, one PR per case study), then a one-line activation PR. Next: PR 10 (`docs/es-style-guide.md`), approve it, then PR 11.
+
 **Where a new session picks this up:**
 - To review Slice 1 end to end: stay on `dev`, inspect the merge commits through `49a8a2b`, and run `pnpm run verify`.
-- To continue the migration: start Slice 2 Spanish copy from `dev`; do not touch `main` until the user explicitly asks for a production merge.
+- To continue the migration: read "Slice 2 — Spanish copy: execution plan" above, take the first PR in its table that is not `merged-to-dev`, cut the branch from `dev`. Do not touch `main` until PR 22 is merged and the user explicitly asks for a production merge.
 - What's deliberately NOT done, i.e. Slice 2 (real content, not structure): write actual Spanish copy for `src/content/es/{home,for-agencies,static-pages,ui}.ts` and `src/content/es/case-studies/*.mdx` (Phase 9 — translate by search intent, not word-for-word, against the `es_US` audience decision); once a locale's content is real, add `'es'` to `INDEXABLE_LOCALES` in `src/lib/i18n.ts` — that one flip turns on `hreflang`, sitemap inclusion, and removes `noindex` together (see Phase 6/7). Also still open: CSRF on the contact form (pre-existing gap, its own change) and the four raw-JSX paragraphs on `contact`/`resume` pages noted above (translate in place when real copy lands).
