@@ -575,7 +575,7 @@ Audience: `es_US`. Translate for search intent and natural phrasing, not word-fo
 | 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `in-review` ([PR #17](https://github.com/noelsajor/portfolio-v1/pull/17)) |
 | 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `in-review` ([PR #18](https://github.com/noelsajor/portfolio-v1/pull/18)) |
 | 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `in-review` ([PR #19](https://github.com/noelsajor/portfolio-v1/pull/19)) |
-| 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `pending` |
+| 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `in-review` ([PR #20](https://github.com/noelsajor/portfolio-v1/pull/20)) |
 | 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `pending` |
 | 22 | `feat/i18n-17-es-activation` | `INDEXABLE_LOCALES = ['en', 'es']` in `src/lib/i18n.ts`. Nothing else in this PR. | `pending` |
 
