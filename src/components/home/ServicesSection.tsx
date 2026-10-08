@@ -1,5 +1,7 @@
 import { Layers, Component, Braces, ShoppingBag, type LucideIcon } from 'lucide-react'
-import { homeContent } from '@/content/home'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
+import type { Locale } from '@/lib/i18n'
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
     'Product & UX Design': Layers,
@@ -8,7 +10,8 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
     'E-commerce Development': ShoppingBag
 }
 
-export function ServicesSection() {
+export function ServicesSection({ lang }: { lang: Locale }) {
+    const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { services } = homeContent
 
     return (

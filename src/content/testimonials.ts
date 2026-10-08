@@ -1,5 +1,10 @@
 // BLOCKED — APPROVED TESTIMONIALS REQUIRED.
 //
+// PR 5: deliberately NOT moved into src/content/{en,es}/ and NOT
+// locale-wrapped. These are verbatim client quotes, not authored copy —
+// there's no English "original" to translate, so there's nothing here for a
+// future Spanish-copy PR to localize. Stays at this path, untouched.
+//
 // No testimonial goes in this array until all of these are true:
 //   1. The quote is real, from a real stakeholder.
 //   2. Their name, role, and company are confirmed accurate.

@@ -31,7 +31,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { lang: rawLang, slug } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
-    const data = getProjectBySlug(slug)
+    const data = getProjectBySlug(slug, lang)
     if (!data) return {}
 
     const { frontmatter } = data
@@ -94,7 +94,7 @@ export default async function CaseStudyPage({
     const { lang: rawLang, slug } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
 
-    const data = getProjectBySlug(slug)
+    const data = getProjectBySlug(slug, lang)
     if (!data) return notFound()
 
     const { frontmatter, content } = data

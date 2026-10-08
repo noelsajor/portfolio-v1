@@ -1,5 +1,7 @@
 import { Search, PenTool, Code2, Sparkles, type LucideIcon } from 'lucide-react'
-import { homeContent } from '@/content/home'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
+import type { Locale } from '@/lib/i18n'
 
 const STEP_ICONS: Record<string, LucideIcon> = {
     Understand: Search,
@@ -8,7 +10,8 @@ const STEP_ICONS: Record<string, LucideIcon> = {
     Refine: Sparkles
 }
 
-export function ProcessSection() {
+export function ProcessSection({ lang }: { lang: Locale }) {
+    const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { process } = homeContent
 
     return (

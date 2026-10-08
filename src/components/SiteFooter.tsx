@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { FileText, Mail } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { localizedPath, type Locale } from '@/lib/i18n'
+import { uiContent as uiContentEn } from '@/content/en/ui'
+import { uiContent as uiContentEs } from '@/content/es/ui'
 
 const footerLinkClass =
     'flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/70 transition-colors duration-200 hover:border-white/60 hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30'
@@ -51,6 +53,9 @@ function LinkedInIcon() {
 }
 
 export function SiteFooter({ lang }: { lang: Locale }) {
+    const uiContent = lang === 'es' ? uiContentEs : uiContentEn
+    const { footer } = uiContent
+
     return (
         <footer className="border-t border-white/10">
             <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
@@ -60,7 +65,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         className={footerLinkClass}
                         href={`mailto:${siteConfig.email}`}
                         data-tracking="footer_email"
-                        aria-label={`Email ${siteConfig.email}`}
+                        aria-label={footer.ariaEmail(siteConfig.email)}
                     >
                         <Mail aria-hidden="true" className="h-6 w-6" />
                     </Link>
@@ -70,7 +75,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-tracking="footer_linkedin"
-                        aria-label="LinkedIn"
+                        aria-label={footer.ariaLinkedin}
                     >
                         <LinkedInIcon />
                     </Link>
@@ -80,7 +85,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-tracking="footer_behance"
-                        aria-label="Behance"
+                        aria-label={footer.ariaBehance}
                     >
                         <BehanceIcon />
                     </Link>
@@ -90,7 +95,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-tracking="footer_github"
-                        aria-label="GitHub"
+                        aria-label={footer.ariaGithub}
                     >
                         <GitHubIcon />
                     </Link>
@@ -100,7 +105,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-tracking="footer_figma"
-                        aria-label="Figma Community"
+                        aria-label={footer.ariaFigma}
                     >
                         <FigmaIcon />
                     </Link>
@@ -108,7 +113,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                         className={footerLinkClass}
                         href={localizedPath(lang, '/resume')}
                         data-tracking="footer_resume"
-                        aria-label="Resume"
+                        aria-label={footer.ariaResume}
                     >
                         <FileText aria-hidden="true" className="h-6 w-6" />
                     </Link>

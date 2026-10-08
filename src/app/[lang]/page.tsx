@@ -44,11 +44,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <div className="space-y-24">
       <HeroSection lang={lang} />
-      <ServicesSection />
+      <ServicesSection lang={lang} />
       <FeaturedWorkSection lang={lang} />
       <TestimonialsSection />
-      <ProcessSection />
-      <WhyMeSection />
+      <ProcessSection lang={lang} />
+      <WhyMeSection lang={lang} />
       <FinalCTASection lang={lang} />
     </div>
   )

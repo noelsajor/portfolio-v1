@@ -31,10 +31,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // getProjects() (not getProjectSlugs()) so updatedAt is available here —
     // same published-only, schema-validated data the rest of the app reads,
-    // not a second source of truth. Every locale currently shares the same
-    // project data (per-locale case studies land in PR 5), so this maps the
-    // same project list across each indexable locale rather than reading a
-    // second, locale-specific source.
+    // not a second source of truth. PR 5: getProjects() now takes an
+    // optional `lang` (defaulting to DEFAULT_LOCALE, 'en') — left as a
+    // no-args call here on purpose, since INDEXABLE_LOCALES is `['en']`
+    // only, so the sitemap should only ever emit English URLs anyway.
     const projects = getProjects()
     const projectRoutes: MetadataRoute.Sitemap = INDEXABLE_LOCALES.flatMap((lang) =>
         projects.map((project) => ({

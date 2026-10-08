@@ -2,6 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { buildPageMetadata, siteConfig } from '@/lib/site-config'
 import { getProjects } from '@/lib/projects'
+import { resumeContent as resumeContentEn } from '@/content/en/static-pages'
+import { resumeContent as resumeContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -20,60 +22,21 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 const linkClass =
     'rounded-sm text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30'
 
-const skillGroups = [
-    {
-        title: 'Design',
-        skills: ['Figma', 'UI/UX Design', 'Responsive Design', 'Design Systems', 'Visual Design']
-    },
-    {
-        title: 'Front End',
-        skills: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'React', 'Next.js', 'Astro']
-    },
-    {
-        title: 'Commerce',
-        skills: ['Shopify Online Store 2.0', 'Liquid', 'Theme Customization', 'Product & Collection Templates', 'Metafields & Schema']
-    },
-    {
-        title: 'Workflow',
-        skills: [
-            'Git & GitHub',
-            'Accessibility-Aware Implementation',
-            'Responsive QA',
-            'AI-Assisted Production with Manual Review',
-            'English and Spanish'
-        ]
-    }
-]
-
-const experience = [
-    {
-        title: 'Brand & Website Build (B2B IoT company)',
-        role: 'UI/UX Design & Front-End Implementation (official title: Graphic Designer)',
-        period: '2026, ~5–6 months',
-        detail: 'Full-time remote. Brand identity system and bilingual production website for a multi-division IoT company.'
-    },
-    {
-        title: 'Intimacy Storefront Design & Build (via marketing agency)',
-        role: 'Shopify Developer & UI/UX Designer',
-        period: '2025, ~6–7 months',
-        detail: 'Shopify storefront redesign for a direct-to-consumer brand relaunch in a heavily ad-restricted product category.'
-    }
-]
-
 export default async function ResumePage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
-    const projects = getProjects()
+    const resumeContent = lang === 'es' ? resumeContentEs : resumeContentEn
+    const { skillGroups, experience } = resumeContent
+    const projects = getProjects(lang)
 
     return (
         <div className="space-y-12">
             <header className="space-y-3">
-                <p className="text-xs font-semibold uppercase tracking-widest text-white/60">Resume</p>
-                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Jose Leon</h1>
-                <p className="max-w-2xl text-lg text-white/80">Multidisciplinary Designer &amp; Front-End Production Specialist</p>
-                <p className="max-w-2xl text-white/70">
-                    For recruiters and hiring managers evaluating contract, short-term, or permanent roles.
-                </p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{resumeContent.eyebrow}</p>
+                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{resumeContent.name}</h1>
+                <p className="max-w-2xl text-lg text-white/80">{resumeContent.title}</p>
+                <p className="max-w-2xl text-white/70">{resumeContent.intro}</p>
+                {/* PR 5: CTA buttons with href/download/data-tracking attributes — left as JSX; localize in place when real Spanish copy lands */}
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link
                         href={`mailto:${siteConfig.email}`}
@@ -94,7 +57,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
             </header>
 
             <section className="space-y-4">
-                <h2 className="text-lg font-semibold">Skills</h2>
+                <h2 className="text-lg font-semibold">{resumeContent.skillsHeading}</h2>
                 <div className="grid gap-6 sm:grid-cols-2">
                     {skillGroups.map((group) => (
                         <div key={group.title} className="space-y-2">
@@ -112,7 +75,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
             </section>
 
             <section className="space-y-4">
-                <h2 className="text-lg font-semibold">Experience</h2>
+                <h2 className="text-lg font-semibold">{resumeContent.experienceHeading}</h2>
                 <ul className="space-y-5">
                     {experience.map((role) => (
                         <li key={role.title} className="space-y-1">
@@ -129,7 +92,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
 
             {projects.length > 0 ? (
                 <section className="space-y-3">
-                    <h2 className="text-lg font-semibold">Selected work</h2>
+                    <h2 className="text-lg font-semibold">{resumeContent.selectedWorkHeading}</h2>
                     <ul className="space-y-2 text-sm">
                         {projects.map((project) => (
                             <li key={project.slug}>
@@ -141,18 +104,19 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                     </ul>
                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
                         <Link href={localizedPath(lang, '/work')} className={linkClass}>
-                            See all work →
+                            {resumeContent.seeAllWorkLabel}
                         </Link>
                         <Link href={siteConfig.sameAs.github} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                            GitHub →
+                            {resumeContent.githubLabel}
                         </Link>
                     </div>
                 </section>
             ) : null}
 
             <section className="space-y-3">
-                <h2 className="text-lg font-semibold">Get in touch</h2>
-                <p className="text-white/70">Reach out directly about a role:</p>
+                <h2 className="text-lg font-semibold">{resumeContent.getInTouchHeading}</h2>
+                <p className="text-white/70">{resumeContent.getInTouchIntro}</p>
+                {/* PR 5: contains a data-tracking mailto Link — left as JSX; localize in place when real Spanish copy lands */}
                 <Link href={`mailto:${siteConfig.email}`} className={linkClass} data-tracking="resume_email_link">
                     {siteConfig.email}
                 </Link>

@@ -1,6 +1,9 @@
-import { homeContent } from '@/content/home'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
+import type { Locale } from '@/lib/i18n'
 
-export function WhyMeSection() {
+export function WhyMeSection({ lang }: { lang: Locale }) {
+    const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { whyMe } = homeContent
 
     return (

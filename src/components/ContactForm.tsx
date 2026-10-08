@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { sendGAEvent } from '@next/third-parties/google'
-import { SUPPORT_TYPES, TIMELINES } from '@/lib/contact-form-options'
+import { SUPPORT_TYPES, TIMELINES, SUPPORT_TYPE_LABELS, TIMELINE_LABELS } from '@/lib/contact-form-options'
+import type { Locale } from '@/lib/i18n'
 
-export function ContactForm() {
+export function ContactForm({ lang }: { lang: Locale }) {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const successRef = useRef<HTMLDivElement>(null)
@@ -142,7 +143,7 @@ export function ContactForm() {
                         </option>
                         {SUPPORT_TYPES.map((type) => (
                             <option key={type} value={type}>
-                                {type}
+                                {SUPPORT_TYPE_LABELS[lang][type]}
                             </option>
                         ))}
                     </select>
@@ -161,7 +162,7 @@ export function ContactForm() {
                         </option>
                         {TIMELINES.map((timeline) => (
                             <option key={timeline} value={timeline}>
-                                {timeline}
+                                {TIMELINE_LABELS[lang][timeline]}
                             </option>
                         ))}
                     </select>

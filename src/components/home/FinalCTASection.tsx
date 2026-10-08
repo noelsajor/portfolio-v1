@@ -1,8 +1,10 @@
 import Link from 'next/link'
-import { homeContent } from '@/content/home'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
 import { localizedPath, type Locale } from '@/lib/i18n'
 
 export function FinalCTASection({ lang }: { lang: Locale }) {
+    const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { finalCTA } = homeContent
 
     return (

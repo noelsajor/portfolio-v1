@@ -1,14 +1,16 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { getFeaturedProjects } from '@/lib/projects'
-import { homeContent } from '@/content/home'
+import { homeContent as homeContentEn } from '@/content/en/home'
+import { homeContent as homeContentEs } from '@/content/es/home'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 
 export function FeaturedWorkSection({ lang }: { lang: Locale }) {
+    const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { featuredWork } = homeContent
-    const featured = getFeaturedProjects().slice(0, 3)
+    const featured = getFeaturedProjects(lang).slice(0, 3)
 
     return (
         <section className="space-y-6">
