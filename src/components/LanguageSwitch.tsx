@@ -4,14 +4,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { INDEXABLE_LOCALES, swapLocaleInPath, type Locale } from '@/lib/i18n'
 
+import { getUiContent } from '@/lib/ui-content'
+
+// Each language is named in itself (and tagged with its own `lang`
+// attribute below), so this is deliberately not localized.
 const LOCALE_LABEL: Record<Locale, string> = {
     en: 'English',
     es: 'Español'
-}
-
-const SWITCH_ARIA_LABEL: Record<Locale, string> = {
-    en: 'Switch to English',
-    es: 'Switch to Spanish'
 }
 
 // Rendered in SiteHeader for every page once at least two locales are
@@ -23,13 +22,14 @@ const SWITCH_ARIA_LABEL: Record<Locale, string> = {
 // being true.
 export function LanguageSwitch({ lang, onNavigate }: { lang: Locale; onNavigate?: () => void }) {
     const pathname = usePathname()
+    const { languageSwitch } = getUiContent(lang)
 
     if (INDEXABLE_LOCALES.length < 2) {
         return null
     }
 
     return (
-        <nav className="flex items-center gap-1 text-sm" aria-label="Language">
+        <nav className="flex items-center gap-1 text-sm" aria-label={languageSwitch.ariaLabel}>
             {INDEXABLE_LOCALES.map((locale) => {
                 const isCurrent = locale === lang
                 const href = swapLocaleInPath(pathname ?? '/', locale)
@@ -39,7 +39,7 @@ export function LanguageSwitch({ lang, onNavigate }: { lang: Locale; onNavigate?
                         key={locale}
                         href={href}
                         hrefLang={locale}
-                        aria-label={SWITCH_ARIA_LABEL[locale]}
+                        aria-label={languageSwitch.switchTo[locale]}
                         aria-current={isCurrent ? 'true' : undefined}
                         // Only the link that actually changes locale carries
                         // tracking data — clicking the already-active locale

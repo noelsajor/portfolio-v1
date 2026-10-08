@@ -20,9 +20,9 @@ export function LandingProof({ lang, heading }: { lang: Locale; heading: string 
                             data-tracking={`landing_proof_${project.slug}`}
                             className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
-                            <ProjectCardPreview project={project} />
+                            <ProjectCardPreview lang={lang} project={project} />
                             <div className="flex flex-wrap items-center gap-2">
-                                <CapabilityChips capabilities={project.capabilities} />
+                                <CapabilityChips lang={lang} capabilities={project.capabilities} />
                             </div>
                             <h3 className="mt-2 text-lg font-semibold tracking-tight">{project.title}</h3>
                             <p className="mt-2 text-sm text-white/70">{project.summary}</p>

@@ -73,7 +73,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 </Link>
 
                 {/* Desktop nav */}
-                <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
+                <nav aria-label={header.ariaPrimaryNav} className="hidden items-center gap-6 md:flex">
                     {nav.map((item) => (
                         <NavLink key={item.href} lang={lang} href={item.href} label={item.label} />
                     ))}
@@ -104,7 +104,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 real element; visibility is CSS-only via the hidden/block swap. */}
             <nav
                 id="mobile-menu"
-                aria-label="Primary"
+                aria-label={header.ariaPrimaryNav}
                 className={[open ? 'block' : 'hidden', 'border-t border-white/10 bg-black/80 md:hidden'].join(' ')}
             >
                 <div className="mx-auto max-w-5xl px-4 py-4">

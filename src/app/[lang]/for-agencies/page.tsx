@@ -14,27 +14,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
 
-    return buildPageMetadata({
-        title: 'For Agencies',
-        description:
-            'White-label design, Shopify, and front-end production support for agencies with more work than available capacity.',
-        path: '/for-agencies',
-        lang
-    })
+    const { metadata } = lang === 'es' ? forAgenciesContentEs : forAgenciesContentEn
+
+    return buildPageMetadata({ ...metadata, path: '/for-agencies', lang })
 }
 
 export default async function ForAgenciesPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const forAgenciesContent = lang === 'es' ? forAgenciesContentEs : forAgenciesContentEn
-    const { hero, problems, services, process, assurance, faq, cta } = forAgenciesContent
+    const { hero, problems, services, process, proof, assurance, faq, cta } = forAgenciesContent
 
     return (
         <div className="space-y-16">
             <LandingHero lang={lang} {...hero} />
             <LandingFeatureList label={problems.label} heading={problems.heading} items={problems.items} />
             <LandingFeatureList label={services.label} heading={services.heading} items={services.items} />
-            <LandingProof lang={lang} heading="Selected proof" />
+            <LandingProof lang={lang} heading={proof.heading} />
             <LandingFeatureList label={process.label} heading={process.heading} items={process.steps} numbered />
             <LandingTextBlock heading={assurance.heading} body={assurance.body} />
             <LandingFaq heading={faq.heading} items={faq.items} />
