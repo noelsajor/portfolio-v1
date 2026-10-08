@@ -15,12 +15,12 @@ export const aboutContent = {
     metadata: {
         title: 'Sobre mí',
         description:
-            'Diseñador multidisciplinario y especialista en producción front-end: diseño de producto, UI/UX, Shopify e implementación front-end para agencias y equipos digitales.'
+            'Diseñador multidisciplinario y especialista en producción front-end: diseño de producto, UI/UX, Shopify e implementación front-end.'
     },
     heading: 'Sobre mí',
     paragraphs: [
         'Soy Jose Leon, diseñador multidisciplinario y desarrollador front-end con más de una década de experiencia en branding, UI/UX, e-commerce, productos digitales e implementación web.',
-        'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',
+        'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas a medida, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',
         'Uso IA para acelerar la investigación, la documentación y el trabajo de implementación repetitivo. Reviso y adapto cada resultado a los objetivos reales del proyecto, a la marca y a sus restricciones técnicas: el criterio creativo y técnico sigue siendo mío.',
         'Colaboro de forma remota con equipos internacionales (fundadores, equipos de marketing, diseñadores y otros desarrolladores) sin procesos innecesarios de por medio.'
     ]
@@ -41,7 +41,7 @@ export const resumeContent = {
     metadata: {
         title: 'CV',
         description:
-            'Jose Leon, diseñador multidisciplinario y especialista en producción front-end. Habilidades, experiencia y proyectos seleccionados para reclutadores y responsables de contratación.'
+            'CV de Jose Leon, diseñador multidisciplinario y especialista en producción front-end: habilidades, experiencia y proyectos para reclutadores.'
     },
     eyebrow: 'CV',
     name: 'Jose Leon',
@@ -59,7 +59,7 @@ export const resumeContent = {
             skills: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'React', 'Next.js', 'Astro']
         },
         {
-            title: 'Commerce',
+            title: 'E-commerce',
             skills: [
                 'Shopify Online Store 2.0',
                 'Liquid',
@@ -88,7 +88,7 @@ export const resumeContent = {
             detail: 'Tiempo completo, remoto. Sistema de identidad de marca y sitio web de producción bilingüe para una empresa de IoT con varias divisiones.'
         },
         {
-            title: 'Diseño y construcción de tienda de intimidad (vía agencia de marketing)',
+            title: 'Diseño y construcción de tienda de bienestar íntimo (vía agencia de marketing)',
             role: 'Desarrollador Shopify y diseñador UI/UX',
             period: '2025, 6 a 7 meses aprox.',
             detail: 'Rediseño de una tienda Shopify para el relanzamiento de una marca D2C en una categoría de producto con fuertes restricciones publicitarias.'
@@ -105,7 +105,7 @@ export const workContent = {
     metadata: {
         title: 'Proyectos',
         description:
-            'Proyectos seleccionados de diseño de producto, implementación front-end y desarrollo Shopify: sistemas de marca, sitios web de marketing y tiendas de e-commerce.'
+            'Proyectos de diseño de producto, implementación front-end y desarrollo Shopify: sistemas de marca, sitios web de marketing y tiendas de e-commerce.'
     },
     heading: 'Proyectos',
     intro: 'Una selección de proyectos de diseño de producto, Shopify e implementación front-end: desde sistemas de marca y sitios web de marketing hasta tiendas de e-commerce.',
