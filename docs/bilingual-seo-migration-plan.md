@@ -570,7 +570,7 @@ Audience: `es_US`. Translate for search intent and natural phrasing, not word-fo
 | 12 | `feat/i18n-7-es-home` | `src/content/es/home.ts` real copy plus home metadata. Position around Shopify, ecommerce, front-end and remote collaboration for the `es_US` market (see Phase 9 keyword table). | `in-review` ([PR #12](https://github.com/noelsajor/portfolio-v1/pull/12)) |
 | 13 | `feat/i18n-8-es-for-agencies` | `src/content/es/for-agencies.ts` real copy plus metadata. Highest commercial intent page: white-label, production capacity, confidentiality, Shopify, UI/UX. | `in-review` ([PR #13](https://github.com/noelsajor/portfolio-v1/pull/13)) |
 | 14 | `feat/i18n-9-es-static-pages` | `src/content/es/static-pages.ts` real copy plus metadata for About, Contact, Resume and Work index. Resolve the resume PDF decision (see open decisions) in this PR. | `in-review` ([PR #14](https://github.com/noelsajor/portfolio-v1/pull/14)) |
-| 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `pending` |
+| 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `in-review` ([PR #15](https://github.com/noelsajor/portfolio-v1/pull/15)) |
 | 16 | `feat/i18n-11-es-cs-strike-hemp` | `src/content/es/case-studies/strike-hemp-cannabis-storefront.mdx` | `pending` |
 | 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `pending` |
 | 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `pending` |
