@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LOCALES, swapLocaleInPath, type Locale } from '@/lib/i18n'
+import { INDEXABLE_LOCALES, swapLocaleInPath, type Locale } from '@/lib/i18n'
 
 const LOCALE_LABEL: Record<Locale, string> = {
     en: 'English',
@@ -14,18 +14,23 @@ const SWITCH_ARIA_LABEL: Record<Locale, string> = {
     es: 'Switch to Spanish'
 }
 
-// Rendered in SiteHeader for every page. Swaps the locale segment of the
-// current path (see swapLocaleInPath in src/lib/i18n.ts) rather than
-// sending the visitor to a fixed page, so switching language never loses
-// the page you're on. Every route in this slice exists in both locales, so
-// this never lands on a 404 — see the comment on swapLocaleInPath for the
-// PR 5 caveat once that stops being true.
+// Rendered in SiteHeader for every page once at least two locales are
+// indexable. Swaps the locale segment of the current path (see
+// swapLocaleInPath in src/lib/i18n.ts) rather than sending the visitor to a
+// fixed page, so switching language never loses the page you're on. Every
+// route in this slice exists in both locales, so this never lands on a 404 —
+// see the comment on swapLocaleInPath for the PR 5 caveat once that stops
+// being true.
 export function LanguageSwitch({ lang, onNavigate }: { lang: Locale; onNavigate?: () => void }) {
     const pathname = usePathname()
 
+    if (INDEXABLE_LOCALES.length < 2) {
+        return null
+    }
+
     return (
         <nav className="flex items-center gap-1 text-sm" aria-label="Language">
-            {LOCALES.map((locale) => {
+            {INDEXABLE_LOCALES.map((locale) => {
                 const isCurrent = locale === lang
                 const href = swapLocaleInPath(pathname ?? '/', locale)
 

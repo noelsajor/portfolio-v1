@@ -2,7 +2,7 @@
 // separate from the proxy itself so the priority order — cookie, then
 // Accept-Language, then the default — can be reasoned about and reused
 // without touching Next.js request/response types.
-import { DEFAULT_LOCALE, isLocale, type Locale } from '@/lib/i18n'
+import { DEFAULT_LOCALE, INDEXABLE_LOCALES, isIndexableLocale, isLocale, type Locale } from '@/lib/i18n'
 
 interface ResolveLocaleInput {
     cookieValue: string | undefined
@@ -10,9 +10,9 @@ interface ResolveLocaleInput {
 }
 
 /**
- * Parses an `Accept-Language` header value and returns the supported locale
+ * Parses an `Accept-Language` header value and returns the indexable locale
  * with the highest q-value, matching on the primary language subtag (e.g.
- * `es` from `es-AR` or `es-419`). Returns `null` when no supported locale is
+ * `es` from `es-AR` or `es-419`). Returns `null` when no indexable locale is
  * present.
  */
 function resolveFromAcceptLanguage(acceptLanguage: string | null): Locale | null {
@@ -52,7 +52,7 @@ function resolveFromAcceptLanguage(acceptLanguage: string | null): Locale | null
         .sort((a, b) => b.quality - a.quality)
 
     for (const candidate of candidates) {
-        if (isLocale(candidate.primarySubtag)) {
+        if (isLocale(candidate.primarySubtag) && isIndexableLocale(candidate.primarySubtag)) {
             return candidate.primarySubtag
         }
     }
@@ -60,18 +60,31 @@ function resolveFromAcceptLanguage(acceptLanguage: string | null): Locale | null
     return null
 }
 
+function resolveFallbackLocale(): Locale {
+    if (isIndexableLocale(DEFAULT_LOCALE)) {
+        return DEFAULT_LOCALE
+    }
+
+    const [firstIndexableLocale] = INDEXABLE_LOCALES
+    if (firstIndexableLocale === undefined) {
+        throw new Error('INDEXABLE_LOCALES must contain at least one locale for root locale resolution.')
+    }
+
+    return firstIndexableLocale
+}
+
 /**
  * Resolves which locale `/` should redirect to, in priority order:
- * 1. `preferred_locale` cookie, only if it is a valid, supported locale.
- * 2. `Accept-Language`, matching the highest q-value supported locale.
- * 3. `DEFAULT_LOCALE`.
+ * 1. `preferred_locale` cookie, only if it is a valid, indexable locale.
+ * 2. `Accept-Language`, matching the highest q-value indexable locale.
+ * 3. `DEFAULT_LOCALE` when indexable, otherwise the first indexable locale.
  *
- * The return value is always a member of `LOCALES` — never a raw header or
- * cookie value — so callers can build a redirect destination from it without
- * further validation (open-redirect safety).
+ * The return value is always a member of `INDEXABLE_LOCALES` — never a raw
+ * header or cookie value — so callers can build a redirect destination from it
+ * without further validation (open-redirect safety).
  */
 export function resolveLocale({ cookieValue, acceptLanguage }: ResolveLocaleInput): Locale {
-    if (cookieValue !== undefined && isLocale(cookieValue)) {
+    if (cookieValue !== undefined && isLocale(cookieValue) && isIndexableLocale(cookieValue)) {
         return cookieValue
     }
 
@@ -80,5 +93,5 @@ export function resolveLocale({ cookieValue, acceptLanguage }: ResolveLocaleInpu
         return fromHeader
     }
 
-    return DEFAULT_LOCALE
+    return resolveFallbackLocale()
 }
