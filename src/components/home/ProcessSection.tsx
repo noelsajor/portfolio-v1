@@ -21,31 +21,33 @@ export function ProcessSection({ lang }: { lang: Locale }) {
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{process.heading}</h2>
             </div>
 
+            {/* md+: a 3-row grid (cards above / connector row / cards below) that every step
+                subgrids into. Both outer rows are 1fr, so they share the height of the tallest
+                card and the horizontal line at 50% always runs through the connector row; the
+                section grows with its content instead of relying on a fixed height. */}
             <div className="relative">
                 <span aria-hidden="true" className="absolute bottom-0 left-0.5 top-0 w-px bg-white/15 md:hidden" />
                 <span aria-hidden="true" className="absolute left-0 top-1/2 hidden h-px w-full bg-white/15 md:block" />
 
-                <ol role="list" className="relative space-y-6 md:grid md:min-h-[34rem] md:grid-cols-4 md:space-y-0">
+                <ol role="list" className="relative space-y-6 md:grid md:grid-cols-4 md:grid-rows-[1fr_8rem_1fr] md:space-y-0">
                     {process.steps.map((step, index) => {
                         const Icon = STEP_ICONS[step.title]
                         const isTopStep = index % 2 === 0
 
                         return (
-                            <li
-                                key={step.number}
-                                className="relative pl-5 md:min-h-[34rem] md:px-3 md:pl-0"
-                            >
-                                <span aria-hidden="true" className="absolute left-0.5 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-white/70 md:left-1/2 md:top-1/2 md:z-10 md:h-3 md:w-3 md:-translate-x-1/2 md:-translate-y-1/2" />
+                            <li key={step.number} className="relative pl-5 md:row-span-3 md:grid md:grid-rows-subgrid md:px-3">
                                 <span
                                     aria-hidden="true"
-                                    className={`absolute left-1/2 hidden h-16 w-px -translate-x-1/2 bg-white/20 md:block ${
-                                        isTopStep ? 'top-1/2 -translate-y-full' : 'top-1/2'
-                                    }`}
+                                    className="absolute left-0.5 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-white/70 md:hidden"
                                 />
+                                <span aria-hidden="true" className="relative hidden md:row-start-2 md:block">
+                                    <span className="absolute left-1/2 top-1/2 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70" />
+                                    <span className={`absolute left-1/2 h-16 w-px -translate-x-1/2 bg-white/20 ${isTopStep ? 'top-0' : 'bottom-0'}`} />
+                                </span>
 
                                 <article
-                                    className={`space-y-3 rounded-2xl border border-white/10 bg-black p-5 md:absolute md:left-3 md:right-3 ${
-                                        isTopStep ? 'md:bottom-[calc(50%+4rem)]' : 'md:top-[calc(50%+4rem)]'
+                                    className={`space-y-3 rounded-2xl border border-white/10 bg-black p-5 ${
+                                        isTopStep ? 'md:row-start-1 md:self-end' : 'md:row-start-3 md:self-start'
                                     }`}
                                 >
                                     <div className="flex items-center justify-between">
