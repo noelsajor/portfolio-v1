@@ -9,7 +9,7 @@ import { ProjectCarousel } from '@/components/home/ProjectCarousel'
 export function FeaturedWorkSection({ lang }: { lang: Locale }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { featuredWork } = homeContent
-    const { links, carousel } = getUiContent(lang)
+    const { carousel } = getUiContent(lang)
 
     // Every published case study, featured ones first (then the usual
     // `order`), so the carousel has enough cards to be worth scrolling.
@@ -35,10 +35,7 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
                     labels={{
                         ariaLabel: carousel.ariaLabel,
                         previous: carousel.previous,
-                        next: carousel.next,
-                        projectCta: featuredWork.projectCtaLabel,
-                        visitLiveSite: links.visitLiveSite,
-                        opensInNewTab: links.opensInNewTab
+                        next: carousel.next
                     }}
                 />
             ) : (

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { CaseStudyFrontmatter } from '@/lib/projects'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
@@ -12,21 +12,18 @@ type Labels = {
     ariaLabel: string
     previous: string
     next: string
-    projectCta: string
-    visitLiveSite: string
-    opensInNewTab: string
 }
 
 // Horizontal carousel for the home's featured projects. The track is a
 // native scroll container with scroll-snap, so swipe, trackpad and keyboard
-// scrolling work without JavaScript; a gradient mask on the track's edges
-// dissolves the side cards into the background.
+// scrolling work without JavaScript. On md+ exactly three portrait cards
+// fill the row, so nothing is cut at the edges.
 //
 // The carousel loops: the list is rendered COPIES times, the view starts on
 // the middle copy, and once scrolling settles near either outer copy the
 // track jumps silently by one set width (identical cards and gaps, so the
 // jump is invisible). That is also why there is never an empty edge: the
-// first card always has the last one fading out to its left. Only the
+// list can be scrolled backwards from the first card too. Only the
 // middle copy is exposed to assistive tech; the clones are aria-hidden
 // and unfocusable. All styling is static Tailwind classes (the site's CSP
 // blocks inline styles). Cards share the markup and card style of every
@@ -90,70 +87,42 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
 
     return (
         <div className="space-y-4" role="region" aria-roledescription="carousel" aria-label={labels.ariaLabel}>
-            {/* Mask fades the edges on md+ so side cards dissolve into the page; below md one card fills the width and the next one peeks. */}
-            <div className="-mx-4 md:[mask-image:linear-gradient(to_right,transparent,black_6rem,black_calc(100%-6rem),transparent)]">
-                <ul
-                    ref={trackRef}
-                    role="list"
-                    className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-[calc(50%-17rem)]"
-                >
-                    {Array.from({ length: COPIES }, (_, copy) => copy).flatMap((copy) =>
-                        projects.map((project) => {
-                            const clone = copy !== REAL_COPY
-                            return (
-                                <li
-                                    key={`${copy}-${project.slug}`}
-                                    aria-hidden={clone || undefined}
-                                    className="group relative flex w-[85%] flex-none snap-center flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[70%] md:w-[34rem]"
-                                >
-                                    <ProjectCardPreview lang={lang} project={project} />
-                                    <div className="flex flex-1 flex-col gap-3">
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <CapabilityChips lang={lang} capabilities={project.capabilities} />
-                                        </div>
-                                        <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
-                                            <Link
-                                                href={localizedPath(lang, `/work/${project.slug}`)}
-                                                data-tracking={`project_card_${project.slug}`}
-                                                tabIndex={clone ? -1 : undefined}
-                                                className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
-                                            >
-                                                {project.title}
-                                            </Link>
-                                        </h3>
-                                        <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
-                                        <div className="mt-auto flex flex-wrap items-center gap-4 pt-4">
-                                            <Link
-                                                href={localizedPath(lang, `/work/${project.slug}`)}
-                                                data-tracking={`project_card_${project.slug}`}
-                                                tabIndex={clone ? -1 : undefined}
-                                                className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
-                                            >
-                                                {`${labels.projectCta} `}
-                                                <span aria-hidden="true">→</span>
-                                            </Link>
-                                            {project.liveUrl ? (
-                                                <a
-                                                    href={project.liveUrl}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    data-tracking={`project_card_${project.slug}_live`}
-                                                    tabIndex={clone ? -1 : undefined}
-                                                    className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                                                >
-                                                    {`${labels.visitLiveSite} `}
-                                                    <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                                                    <span className="sr-only">{labels.opensInNewTab}</span>
-                                                </a>
-                                            ) : null}
-                                        </div>
+            {/* Three portrait cards fill the row on md+; below md one card plus a peek of the next, bleeding into the page gutter. */}
+            <ul
+                ref={trackRef}
+                role="list"
+                className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0"
+            >
+                {Array.from({ length: COPIES }, (_, copy) => copy).flatMap((copy) =>
+                    projects.map((project) => {
+                        const clone = copy !== REAL_COPY
+                        return (
+                            <li
+                                key={`${copy}-${project.slug}`}
+                                aria-hidden={clone || undefined}
+                                className="group relative flex w-[62%] flex-none snap-start flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[46%] md:w-[calc((100%-2rem)/3)]"
+                            >
+                                <ProjectCardPreview lang={lang} project={project} aspect="portrait" />
+                                <div className="flex flex-col gap-3">
+                                    <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
+                                        <Link
+                                            href={localizedPath(lang, `/work/${project.slug}`)}
+                                            data-tracking={`project_card_${project.slug}`}
+                                            tabIndex={clone ? -1 : undefined}
+                                            className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
+                                        >
+                                            {project.title}
+                                        </Link>
+                                    </h3>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <CapabilityChips lang={lang} capabilities={project.capabilities} />
                                     </div>
-                                </li>
-                            )
-                        })
-                    )}
-                </ul>
-            </div>
+                                </div>
+                            </li>
+                        )
+                    })
+                )}
+            </ul>
 
             <div className="hidden justify-end gap-2 md:flex">
                 <button type="button" onClick={() => scrollByCard(-1)} aria-label={labels.previous} className={arrowClass}>
