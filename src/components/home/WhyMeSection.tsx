@@ -45,10 +45,12 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
             {/* Below md this is a horizontal scroller; its vertical padding gives the card's -my-5 overhang room, since overflow-x clips the y axis too. On md+ it is a plain wrapper. */}
             <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-8 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className={['relative grid min-w-[42rem] grid-cols-[7rem_14rem_10.5rem_10.5rem] md:min-w-0 md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
-                    {/* Card behind the highlighted column: same raised-panel treatment as the final CTA (white/5 + soft radial glow). */}
+                    {/* Card behind the highlighted column: same raised-panel treatment as the final CTA (white/5 + soft radial glow).
+                        md+ only: on mobile a spanning card would slide under the sticky criterion column as one rounded slab, so there
+                        the highlight is painted per cell instead (header + me cells below), which clips cleanly while scrolling. */}
                     <div
                         aria-hidden="true"
-                        className="col-start-2 row-span-full row-start-1 -my-8 rounded-2xl border border-white/10 bg-white/5 bg-[radial-gradient(80%_120%_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"
+                        className="col-start-2 row-span-full row-start-1 -my-8 rounded-2xl border border-white/10 bg-white/5 bg-[radial-gradient(80%_120%_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)] max-md:hidden"
                     />
 
                     {/* Header row */}
@@ -61,7 +63,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     >
                         {criterionLabel}
                     </p>
-                    <div className="relative col-start-2 row-start-1 px-5 pb-4">
+                    <div className="relative col-start-2 row-start-1 px-5 pb-4 max-md:-mt-8 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-8">
                         <span className="inline-block rounded-full border border-white/25 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-white/80">
                             {options[0]}
                         </span>
@@ -79,6 +81,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     {/* Criterion rows */}
                     {rows.map((row, rowIndex) => {
                         const rowClass = ROW_START[rowIndex]
+                        const isLastRow = rowIndex === rows.length - 1
                         return [
                             <p
                                 key={`${row.label}-label`}
@@ -98,7 +101,9 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                         rowClass,
                                         COL_START[cellIndex],
                                         cellIndex === 0
-                                            ? 'px-5 border-t border-white/10 text-white'
+                                            ? `px-5 border-t border-white/10 text-white max-md:border-x max-md:bg-white/5${
+                                                  isLastRow ? ' max-md:rounded-b-2xl max-md:border-b max-md:pb-12' : ''
+                                              }`
                                             : 'px-5 border-t border-dashed border-white/15 text-white/55'
                                     ].join(' ')}
                                 >
