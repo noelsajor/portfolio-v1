@@ -6,11 +6,14 @@ import { INDEXABLE_LOCALES, swapLocaleInPath, type Locale } from '@/lib/i18n'
 
 import { getUiContent } from '@/lib/ui-content'
 
-// Each language is named in itself (and tagged with its own `lang`
-// attribute below), so this is deliberately not localized.
+// Short ISO codes as the visible label (the full language name lives in
+// each link's aria-label, so screen readers still hear "Switch to Spanish"
+// / "Cambiar a español"). Two-letter codes keep the switch from reading as
+// two more navigation items next to the page links. Tagged with each
+// locale's own `lang` attribute below; deliberately not localized.
 const LOCALE_LABEL: Record<Locale, string> = {
-    en: 'English',
-    es: 'Español'
+    en: 'EN',
+    es: 'ES'
 }
 
 // Rendered in SiteHeader for every page once at least two locales are
@@ -64,7 +67,7 @@ export function LanguageSwitch({ lang, onNavigate }: { lang: Locale; onNavigate?
                             onNavigate?.()
                         }}
                         className={[
-                            'rounded-sm px-1.5 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30',
+                            'rounded-sm px-1.5 py-1 text-xs font-semibold uppercase tracking-wider transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30',
                             isCurrent ? 'text-white' : 'text-white/50 hover:text-white'
                         ].join(' ')}
                     >
