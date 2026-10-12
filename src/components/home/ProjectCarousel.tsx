@@ -87,11 +87,11 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
 
     return (
         <div className="space-y-4" role="region" aria-roledescription="carousel" aria-label={labels.ariaLabel}>
-            {/* Three portrait cards fill the row on md+; below md one card plus a peek of the next, bleeding into the page gutter. */}
+            {/* Three portrait cards fill the row on md+. Below md the track bleeds into the page gutter and scroll-padding keeps the snapped card aligned with it, with ~20% of the next card peeking. */}
             <ul
                 ref={trackRef}
                 role="list"
-                className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0"
+                className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 scroll-pl-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:scroll-pl-0"
             >
                 {Array.from({ length: COPIES }, (_, copy) => copy).flatMap((copy) =>
                     projects.map((project) => {
@@ -100,7 +100,7 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
                             <li
                                 key={`${copy}-${project.slug}`}
                                 aria-hidden={clone || undefined}
-                                className="group relative flex w-[62%] flex-none snap-start flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[46%] md:w-[calc((100%-2rem)/3)]"
+                                className="group relative flex w-[80%] flex-none snap-start flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[46%] md:w-[calc((100%-2rem)/3)]"
                             >
                                 <ProjectCardPreview lang={lang} project={project} aspect="portrait" />
                                 <div className="flex flex-col gap-3">
