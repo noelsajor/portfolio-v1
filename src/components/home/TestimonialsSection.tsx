@@ -1,9 +1,7 @@
-import { ArrowUpRight, Quote } from 'lucide-react'
+import { Quote } from 'lucide-react'
 import { homeContent as homeContentEn } from '@/content/en/home'
 import { homeContent as homeContentEs } from '@/content/es/home'
-import { siteConfig } from '@/lib/site-config'
 import type { Locale } from '@/lib/i18n'
-import { getUiContent } from '@/lib/ui-content'
 
 // ~18s per card, so the pace stays steady as reviews are added. Literal
 // classes (not a template string) so Tailwind's scanner emits them; counts
@@ -38,8 +36,7 @@ function Cards({ items }: { items: ReadonlyArray<{ readonly quote: string; reado
     )
 }
 
-// Client testimonials from LinkedIn recommendations (the link below the
-// marquee points at the originals). The row drifts right-to-left in a
+// Client testimonials from LinkedIn recommendations. The row drifts right-to-left in a
 // seamless loop: the cards render twice (second copy aria-hidden) and the
 // track slides by half its width; CSS lives in globals.css (.marquee-*),
 // since the CSP rules out inline styles. Hover pauses it, and with reduced
@@ -47,7 +44,6 @@ function Cards({ items }: { items: ReadonlyArray<{ readonly quote: string; reado
 export function TestimonialsSection({ lang }: { lang: Locale }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { testimonials } = homeContent
-    const { links } = getUiContent(lang)
     const duration = MARQUEE_DURATION[Math.min(Math.max(testimonials.items.length, 2), 8)]
 
     return (
@@ -67,17 +63,6 @@ export function TestimonialsSection({ lang }: { lang: Locale }) {
                 </div>
             </div>
 
-            <a
-                href={siteConfig.sameAs.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                data-tracking="testimonials_linkedin"
-                className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-            >
-                {testimonials.linkedinLabel}
-                <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                <span className="sr-only">{links.opensInNewTab}</span>
-            </a>
         </section>
     )
 }
