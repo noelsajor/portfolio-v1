@@ -102,7 +102,7 @@ export const homeContent = {
             criterionLabel: 'What changes',
             options: ['Working with me', 'Several freelancers', 'An agency'],
             // Subtitle shown inside the highlighted (first) column.
-            highlightTagline: 'One person, from idea to production',
+            highlightTagline: 'Working with me',
             rows: [
                 {
                     label: 'Who you talk to',
