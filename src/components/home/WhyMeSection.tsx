@@ -40,7 +40,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
     return (
         // space-y-12 (not 8): the highlighted card overhangs the grid by 2rem, so the heading needs the extra room.
         <section className="space-y-12">
-            <h2 className="text-center text-2xl font-semibold tracking-tight md:text-3xl">{whyMe.heading}</h2>
+            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{whyMe.heading}</h2>
 
             {/* Below md this is a horizontal scroller; its vertical padding gives the card's -my-5 overhang room, since overflow-x clips the y axis too. On md+ it is a plain wrapper. */}
             <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-8 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -118,7 +118,8 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                 {scrollHint}
             </p>
 
-            <p className="max-w-3xl text-sm leading-relaxed text-white/60">{note}</p>
+            {/* Footnote treatment: hairline left rule + smaller, dimmer type, so the honest caveat reads as an aside to the table, not stray body copy. */}
+            <p className="max-w-2xl border-l-2 border-white/20 pl-4 text-sm leading-relaxed text-white/50">{note}</p>
         </section>
     )
 }
