@@ -103,8 +103,12 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
                                 className="group relative flex w-[80%] flex-none snap-start flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[46%] md:w-[calc((100%-2rem)/3)]"
                             >
                                 <ProjectCardPreview lang={lang} project={project} aspect="portrait" />
+                                {/* Fixed-height text block so every card lines up whatever the title length: one row of chips (extra chips scroll out of sight, never wrap) and a two-line slot for the title. */}
                                 <div className="flex flex-col gap-3">
-                                    <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
+                                    <div className="flex h-7 shrink-0 items-center gap-2 overflow-hidden whitespace-nowrap [&>*]:shrink-0">
+                                        <CapabilityChips lang={lang} capabilities={project.capabilities} />
+                                    </div>
+                                    <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-7 tracking-tight group-hover:text-white">
                                         <Link
                                             href={localizedPath(lang, `/work/${project.slug}`)}
                                             data-tracking={`project_card_${project.slug}`}
@@ -114,9 +118,6 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
                                             {project.title}
                                         </Link>
                                     </h3>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <CapabilityChips lang={lang} capabilities={project.capabilities} />
-                                    </div>
                                 </div>
                             </li>
                         )
