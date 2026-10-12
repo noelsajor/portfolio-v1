@@ -29,9 +29,10 @@ export const homeContent = {
         ]
     },
     services: {
-        label: 'SERVICES',
+        // Empty on purpose: the section drops the label and intro (ServicesSection skips them when empty).
+        label: '',
         heading: 'What I do.',
-        intro: 'I cover everything from the concept to the interface design and the code. Fewer meetings, fewer things lost between the mockup and what ships to production.',
+        intro: '',
         items: [
             {
                 title: 'Product & UX Design',

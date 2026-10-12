@@ -13,9 +13,9 @@ export function ServicesSection({ lang }: { lang: Locale }) {
     return (
         <section id="services" className="scroll-mt-24 space-y-8">
             <div className="space-y-4">
-                <p className="text-sm font-semibold tracking-wide text-white/70">{services.label}</p>
+                {services.label ? <p className="text-sm font-semibold tracking-wide text-white/70">{services.label}</p> : null}
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{services.heading}</h2>
-                <p className="max-w-2xl text-white/70">{services.intro}</p>
+                {services.intro ? <p className="max-w-2xl text-white/70">{services.intro}</p> : null}
             </div>
 
             {/* Same card style as the other home sections (process steps, projects, comparison). */}
