@@ -17,6 +17,11 @@ import { SegmentBadge } from '@/components/SegmentBadge'
 import { Chip } from '@/components/Chip'
 import { getUiContent } from '@/lib/ui-content'
 import { projectTypeLabel } from '@/lib/project-labels'
+import { JsonLd } from '@/components/JsonLd'
+import { buildBreadcrumbTrail, localizedAbsoluteUrl } from '@/lib/page-schema'
+import { buildArticleSchema, buildWebPageSchema } from '@/lib/structured-data'
+import { workContent as workContentEn } from '@/content/en/static-pages'
+import { workContent as workContentEs } from '@/content/es/static-pages'
 
 export function generateStaticParams() {
     return getProjectSlugs().map((slug) => ({ slug }))
@@ -109,8 +114,43 @@ export default async function CaseStudyPage({
         (item): item is typeof item & { src: string } => item.status === 'ready' && Boolean(item.src)
     )
 
+    // Article JSON-LD for the case study (see buildArticleSchema for why
+    // Article and why author/publisher are both the Person node), plus the
+    // WebPage node that carries the Home > Work > <title> breadcrumb. Every
+    // value is frontmatter the page already renders; `dateModified` is only
+    // present when the author set `updatedAt` by hand.
+    const pageUrl = localizedAbsoluteUrl(lang, `/work/${slug}`)
+    const description = frontmatter.seoDescription ?? frontmatter.summary
+    const workIndex = (lang === 'es' ? workContentEs : workContentEn).metadata.title
+    const jsonLd = [
+        buildWebPageSchema({
+            lang,
+            url: pageUrl,
+            name: frontmatter.title,
+            description,
+            breadcrumb: buildBreadcrumbTrail(lang, [
+                { name: workIndex, path: '/work' },
+                { name: frontmatter.title, path: `/work/${slug}` }
+            ]),
+            ...(frontmatter.updatedAt ? { dateModified: frontmatter.updatedAt } : {})
+        }),
+        buildArticleSchema({
+            lang,
+            url: pageUrl,
+            headline: frontmatter.title,
+            description,
+            ...(frontmatter.coverImage
+                ? { image: { url: absoluteUrl(frontmatter.coverImage), width: 1600, height: 900, alt: frontmatter.coverAlt } }
+                : {}),
+            ...(frontmatter.updatedAt ? { dateModified: frontmatter.updatedAt } : {}),
+            keywords: [...frontmatter.services, ...frontmatter.capabilities],
+            ...(frontmatter.industry ? { about: frontmatter.industry } : {})
+        })
+    ]
+
     return (
         <div className="space-y-10">
+            <JsonLd nodes={jsonLd} />
             <div className="space-y-6">
                 <Link
                     href={localizedPath(lang, '/work')}

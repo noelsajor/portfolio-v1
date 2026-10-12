@@ -23,6 +23,9 @@ export const uiContent = {
         ariaFooterLinks: 'Enlaces del pie de página'
     },
     shell: {
+        // Name of the site root in BreadcrumbList JSON-LD (not rendered as
+        // visible UI; the header logo is the visual home link).
+        breadcrumbHome: 'Inicio',
         skipToMain: 'Saltar al contenido principal'
     },
     languageSwitch: {

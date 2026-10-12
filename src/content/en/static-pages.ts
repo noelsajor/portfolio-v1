@@ -18,7 +18,22 @@ export const aboutContent = {
         'What started as visual and brand design work grew into UI/UX and front-end implementation — I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
         "I use AI to speed up research, documentation, and repetitive implementation work. Every output is reviewed and adapted to the project’s actual goals, brand, and technical constraints — the creative and technical judgment stays mine.",
         'I collaborate remotely with international teams — founders, marketers, designers, and other developers — without unnecessary process overhead.'
-    ]
+    ],
+    // GEO block: the same facts as the paragraphs above, as label/value
+    // pairs a retrieval model can lift verbatim ("Languages: English and
+    // Spanish"). Rendered as a <dl> under the paragraphs. Only restate what
+    // the paragraphs, resume and home page already say.
+    facts: {
+        heading: 'At a glance',
+        items: [
+            { label: 'Role', value: 'Product designer and front-end developer' },
+            { label: 'Focus', value: 'UI/UX, design systems, front-end implementation and Shopify' },
+            { label: 'Works with', value: 'Agencies, digital teams and founders' },
+            { label: 'Collaboration', value: 'Remote, white-label, project-based or ongoing' },
+            { label: 'Languages', value: 'English and Spanish' },
+            { label: 'Experience', value: 'More than a decade across design and digital production' }
+        ]
+    }
 } as const
 
 export const contactContent = {

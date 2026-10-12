@@ -6,6 +6,8 @@ import { contactContent as contactContentEn } from '@/content/en/static-pages'
 import { contactContent as contactContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { getUiContent } from '@/lib/ui-content'
+import { JsonLd } from '@/components/JsonLd'
+import { buildPageNode } from '@/lib/page-schema'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang: rawLang } = await params
@@ -21,9 +23,21 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const contactContent = lang === 'es' ? contactContentEs : contactContentEn
     const { contactPage } = getUiContent(lang)
+    const { metadata } = contactContent
+    const jsonLd = [
+        buildPageNode({
+            lang,
+            path: '/contact',
+            title: metadata.title,
+            description: metadata.description,
+            type: 'ContactPage',
+            trail: [{ name: metadata.title, path: '/contact' }]
+        })
+    ]
 
     return (
         <div className="space-y-12">
+            <JsonLd nodes={jsonLd} />
             <div className="space-y-6">
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{contactContent.heading}</h1>
                 <p className="max-w-2xl text-white/70">{contactContent.intro}</p>

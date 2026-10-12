@@ -23,7 +23,18 @@ export const aboutContent = {
         'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas a medida, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',
         'Uso IA para acelerar la investigación, la documentación y el trabajo de implementación repetitivo. Reviso y adapto cada resultado a los objetivos reales del proyecto, a la marca y a sus restricciones técnicas: el criterio creativo y técnico sigue siendo mío.',
         'Colaboro de forma remota con equipos internacionales (fundadores, equipos de marketing, diseñadores y otros desarrolladores) sin procesos innecesarios de por medio.'
-    ]
+    ],
+    facts: {
+        heading: 'En resumen',
+        items: [
+            { label: 'Rol', value: 'Diseñador de producto y desarrollador front-end' },
+            { label: 'Enfoque', value: 'UI/UX, sistemas de diseño, implementación front-end y Shopify' },
+            { label: 'Trabajo con', value: 'Agencias, equipos digitales y fundadores' },
+            { label: 'Colaboración', value: 'Remota, white-label, por proyecto o continua' },
+            { label: 'Idiomas', value: 'Inglés y español' },
+            { label: 'Experiencia', value: 'Más de una década en diseño y producción digital' }
+        ]
+    }
 } as const satisfies ContentShape<typeof aboutContentEn>
 
 export const contactContent = {
