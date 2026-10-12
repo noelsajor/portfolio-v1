@@ -77,6 +77,9 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                     {nav.map((item) => (
                         <NavLink key={item.href} lang={lang} href={item.href} label={item.label} />
                     ))}
+                    {/* Vertical rule: separates the language switch from the page
+                        links so EN/ES don't read as two more nav items. */}
+                    <span aria-hidden="true" className="h-4 w-px bg-white/20" />
                     <LanguageSwitch lang={lang} />
                     <Link
                         href={localizedPath(lang, '/contact')}
@@ -118,7 +121,9 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                                 onClick={() => setOpen(false)}
                             />
                         ))}
-                        <LanguageSwitch lang={lang} onNavigate={() => setOpen(false)} />
+                        <div className="border-t border-white/10 pt-4">
+                            <LanguageSwitch lang={lang} onNavigate={() => setOpen(false)} />
+                        </div>
                         <Link
                             href={localizedPath(lang, '/contact')}
                             onClick={() => setOpen(false)}
