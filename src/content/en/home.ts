@@ -10,7 +10,8 @@ export const homeContent = {
         description: siteConfig.description
     },
     hero: {
-        eyebrow: 'PRODUCT DESIGN + IMPLEMENTATION',
+        // Empty on purpose: the hero drops the eyebrow line (HeroSection skips it when empty).
+        eyebrow: '',
         headline: ['From idea', 'to production.'],
         supportingText: 'I design and build websites and digital products. One person, from idea to production.',
         primaryCta: { label: 'Work With Me', href: '/contact' },

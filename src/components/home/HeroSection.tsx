@@ -9,7 +9,7 @@ export function HeroSection({ lang }: { lang: Locale }) {
 
     return (
         <section className="space-y-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{hero.eyebrow}</p>
+            {hero.eyebrow ? <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{hero.eyebrow}</p> : null}
             <h1 className="text-5xl font-semibold leading-tight tracking-tight md:text-6xl lg:text-7xl">
                 {hero.headline.map((line) => (
                     <span key={line} className="block">

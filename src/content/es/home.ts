@@ -16,7 +16,8 @@ export const homeContent = {
             'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos a convertir ideas en sitios web y productos listos para producción.'
     },
     hero: {
-        eyebrow: 'DISEÑO DE PRODUCTO + IMPLEMENTACIÓN',
+        // Empty on purpose: the hero drops the eyebrow line (HeroSection skips it when empty).
+        eyebrow: '',
         headline: ['De la idea', 'a producción.'],
         supportingText:
             'Diseño y desarrollo sitios web y productos digitales. Una sola persona, de la idea a producción.',
