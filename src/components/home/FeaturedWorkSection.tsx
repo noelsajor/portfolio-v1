@@ -1,18 +1,19 @@
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
-import { getFeaturedProjects } from '@/lib/projects'
+import { getProjects } from '@/lib/projects'
 import { homeContent as homeContentEn } from '@/content/en/home'
 import { homeContent as homeContentEs } from '@/content/es/home'
 import { localizedPath, type Locale } from '@/lib/i18n'
-import { CapabilityChips } from '@/components/CapabilityChips'
-import { ProjectCardPreview } from '@/components/ProjectCardPreview'
 import { getUiContent } from '@/lib/ui-content'
+import { ProjectCarousel } from '@/components/home/ProjectCarousel'
 
 export function FeaturedWorkSection({ lang }: { lang: Locale }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { featuredWork } = homeContent
-    const featured = getFeaturedProjects(lang).slice(0, 3)
-    const { links } = getUiContent(lang)
+    const { links, carousel } = getUiContent(lang)
+
+    // Every published case study, featured ones first (then the usual
+    // `order`), so the carousel has enough cards to be worth scrolling.
+    const projects = [...getProjects(lang)].sort((a, b) => Number(b.featured === true) - Number(a.featured === true))
 
     return (
         <section className="space-y-6">
@@ -27,54 +28,19 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
                 </Link>
             </div>
 
-            {featured.length > 0 ? (
-                <ul role="list" className="grid gap-4 md:grid-cols-2">
-                    {featured.map((project) => (
-                        <li
-                            key={project.slug}
-                            className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5"
-                        >
-                            <ProjectCardPreview lang={lang} project={project} />
-                            <div className="flex flex-1 flex-col gap-3">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <CapabilityChips lang={lang} capabilities={project.capabilities} />
-                                </div>
-                                <h3 className="text-lg font-semibold tracking-tight group-hover:text-white">
-                                    <Link
-                                        href={localizedPath(lang, `/work/${project.slug}`)}
-                                        data-tracking={`project_card_${project.slug}`}
-                                        className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
-                                    >
-                                        {project.title}
-                                    </Link>
-                                </h3>
-                                <p className="text-sm leading-relaxed text-white/70">{project.summary}</p>
-                                <div className="mt-auto flex flex-wrap items-center gap-4 pt-4">
-                                    <Link
-                                        href={localizedPath(lang, `/work/${project.slug}`)}
-                                        data-tracking={`project_card_${project.slug}`}
-                                        className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
-                                    >
-                                        {featuredWork.projectCtaLabel} <span aria-hidden="true">→</span>
-                                    </Link>
-                                    {project.liveUrl ? (
-                                        <a
-                                            href={project.liveUrl}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            data-tracking={`project_card_${project.slug}_live`}
-                                            className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                                        >
-                                            {`${links.visitLiveSite} `}
-                                            <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                                            <span className="sr-only">{links.opensInNewTab}</span>
-                                        </a>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            {projects.length > 0 ? (
+                <ProjectCarousel
+                    lang={lang}
+                    projects={projects}
+                    labels={{
+                        ariaLabel: carousel.ariaLabel,
+                        previous: carousel.previous,
+                        next: carousel.next,
+                        projectCta: featuredWork.projectCtaLabel,
+                        visitLiveSite: links.visitLiveSite,
+                        opensInNewTab: links.opensInNewTab
+                    }}
+                />
             ) : (
                 <p className="text-sm text-white/60">{featuredWork.emptyStateMessage}</p>
             )}

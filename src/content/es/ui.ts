@@ -42,6 +42,11 @@ export const uiContent = {
     trustStrip: {
         ariaLabel: 'Resumen de experiencia'
     },
+    carousel: {
+        ariaLabel: 'Proyectos destacados',
+        previous: 'Proyecto anterior',
+        next: 'Proyecto siguiente'
+    },
     notFound: {
         heading: 'Página no encontrada',
         body: 'La página que buscas no existe o fue movida. Usa el botón para volver a un lugar seguro.',

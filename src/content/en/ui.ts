@@ -52,6 +52,11 @@ export const uiContent = {
     trustStrip: {
         ariaLabel: 'Experience summary'
     },
+    carousel: {
+        ariaLabel: 'Featured projects',
+        previous: 'Previous project',
+        next: 'Next project'
+    },
     notFound: {
         heading: 'Page not found',
         body: "The requested page doesn't exist or has been moved. Use the button below to head back to safety.",
