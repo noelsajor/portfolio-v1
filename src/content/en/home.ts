@@ -92,29 +92,49 @@ export const homeContent = {
     },
     whyMe: {
         heading: 'Less handoff. Less management. More ownership.',
-        reasons: [
-            {
-                title: 'Design and code in one workflow',
-                description:
-                    'I understand both visual intent and implementation constraints, reducing the disconnect between mockups and production.'
-            },
-            {
-                title: 'Built for collaboration',
-                description:
-                    'I can work directly with founders, marketers, designers or development teams without forcing a rigid process.'
-            },
-            {
-                title: 'Small-team responsiveness',
-                description:
-                    'You work directly with the person doing the work, without account-management layers or unnecessary meetings.'
-            }
-        ]
+        // Comparison table: one column per way of getting the work done.
+        // `options[0]` is the highlighted column. `note` renders under the
+        // table as the honest "when I'm not the right fit" line.
+        comparison: {
+            criterionLabel: 'What changes',
+            options: ['Working with me', 'Several freelancers', 'An agency'],
+            rows: [
+                {
+                    label: 'Who you talk to',
+                    cells: ['The person who designs and codes', 'Each specialist, separately', 'An account manager']
+                },
+                {
+                    label: 'Design-to-dev handoff',
+                    cells: ["There isn't one: the same person does both", 'You coordinate it', 'Internal; you pay for it but never see it']
+                },
+                {
+                    label: 'Time to start',
+                    cells: ['Days', 'Weeks: finding, hiring and aligning people', 'Weeks: onboarding and process']
+                },
+                {
+                    label: 'Who coordinates',
+                    cells: ['Me', 'You', 'The agency, through its management layer']
+                },
+                {
+                    label: 'Cost',
+                    cells: [
+                        'One rate; no coordination or duplicated hours',
+                        'The sum of every rate, plus the time you spend coordinating',
+                        'Team rate plus account management and margin'
+                    ]
+                },
+                {
+                    label: 'Best for',
+                    cells: [
+                        'Getting from an idea to a prototype or product you can test and iterate on, fast and with a small upfront investment',
+                        'Projects with very well-defined specialties',
+                        'Large projects with many fronts at once'
+                    ]
+                }
+            ],
+            note: "If you need a flawlessly polished final product in its first version, or a five-person team from day one, there are better options. If you need to get from an idea to something you can put in front of people, I'm probably the fastest way there."
+        }
     },
-    // GEO block: short, self-contained answers to the questions people (and
-    // AI search engines) ask about a freelancer before they reach out. Each
-    // answer must stand alone when quoted out of context and must only
-    // restate facts already on the site (resume skills, about paragraphs,
-    // trust strip). Also emitted as FAQPage JSON-LD on the home page.
     faq: {
         heading: 'Frequently asked',
         items: [

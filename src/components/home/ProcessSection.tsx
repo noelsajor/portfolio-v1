@@ -48,7 +48,8 @@ export function ProcessSection({ lang }: { lang: Locale }) {
                                         isTopStep ? 'md:bottom-[calc(50%+4rem)]' : 'md:top-[calc(50%+4rem)]'
                                     }`}
                                 >
-                                    <div className="flex items-center">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs font-semibold tracking-widest text-white/40">{step.number}</span>
                                         {Icon ? <Icon aria-hidden="true" className="h-5 w-5 text-white/70" /> : null}
                                     </div>
                                     <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>

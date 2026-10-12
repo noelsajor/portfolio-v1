@@ -35,8 +35,8 @@ export const homeContent = {
         ]
     },
     services: {
-        label: 'EN QUÉ PUEDO AYUDAR',
-        heading: 'Un solo aliado para diseño e implementación.',
+        label: 'SERVICIOS',
+        heading: 'Qué hago.',
         intro: 'Cubro desde la conceptualización hasta el diseño de la interfaz y la implementación del código. Menos reuniones, menos cosas que se pierden entre el mockup y lo que sale en producción.',
         items: [
             {
@@ -99,29 +99,46 @@ export const homeContent = {
     },
     whyMe: {
         heading: 'Hablas con quien hace el trabajo.',
-        reasons: [
-            {
-                title: 'Diseño y código en un solo flujo',
-                description:
-                    'Entiendo tanto la intención visual como las restricciones de implementación, lo que reduce la distancia entre los mockups y la producción.'
-            },
-            {
-                title: 'Hecho para colaborar',
-                description:
-                    'Puedo trabajar directamente con fundadores, equipos de marketing, diseñadores o equipos de desarrollo sin imponer un proceso rígido.'
-            },
-            {
-                title: 'La agilidad de un equipo pequeño',
-                description:
-                    'Trabajas directamente con la persona que hace el trabajo, sin capas de gestión de cuentas ni reuniones innecesarias.'
-            }
-        ]
+        comparison: {
+            criterionLabel: 'Qué cambia',
+            options: ['Trabajar conmigo', 'Varios freelancers', 'Una agencia'],
+            rows: [
+                {
+                    label: 'Con quién hablas',
+                    cells: ['Con quien diseña y programa', 'Con cada especialista por separado', 'Con un gestor de cuenta']
+                },
+                {
+                    label: 'Traspaso diseño → desarrollo',
+                    cells: ['No existe: lo hace la misma persona', 'Lo coordinas tú', 'Interno; lo pagas pero no lo ves']
+                },
+                {
+                    label: 'Arranque',
+                    cells: ['Días', 'Semanas: buscar, contratar y alinear', 'Semanas: onboarding y proceso']
+                },
+                {
+                    label: 'Quién coordina',
+                    cells: ['Yo', 'Tú', 'La agencia, con su capa de gestión']
+                },
+                {
+                    label: 'Costo',
+                    cells: [
+                        'Una sola tarifa; no pagas coordinación ni horas duplicadas',
+                        'Suma de tarifas más el tiempo que inviertes coordinando',
+                        'Tarifa de equipo más gestión de cuenta y margen'
+                    ]
+                },
+                {
+                    label: 'Para qué soy ideal',
+                    cells: [
+                        'Pasar de una idea a un prototipo o producto que se pueda probar e iterar, rápido y con poca inversión inicial',
+                        'Proyectos con especialidades muy definidas',
+                        'Proyectos grandes con muchos frentes a la vez'
+                    ]
+                }
+            ],
+            note: 'Si lo que necesitas es un producto final extremadamente pulido en su primera versión, o un equipo de cinco personas desde el día uno, hay mejores opciones. Si necesitas pasar de una idea a algo que se pueda probar, probablemente soy la más rápida.'
+        }
     },
-    // Bloque GEO: respuestas cortas y autocontenidas a lo que una persona (o
-    // un buscador con IA) pregunta sobre un freelance antes de escribir.
-    // Cada respuesta debe sostenerse sola si se cita fuera de contexto y
-    // solo repite hechos que ya están en el sitio. También se emite como
-    // FAQPage en JSON-LD en la home.
     faq: {
         heading: 'Preguntas frecuentes',
         items: [
