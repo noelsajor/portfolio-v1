@@ -102,6 +102,7 @@ export const homeContent = {
         comparison: {
             criterionLabel: 'Qué cambia',
             options: ['Trabajar conmigo', 'Varios freelancers', 'Una agencia'],
+            highlightTagline: 'Una persona, de la idea a producción',
             rows: [
                 {
                     label: 'Con quién hablas',

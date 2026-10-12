@@ -98,6 +98,8 @@ export const homeContent = {
         comparison: {
             criterionLabel: 'What changes',
             options: ['Working with me', 'Several freelancers', 'An agency'],
+            // Subtitle shown inside the highlighted (first) column.
+            highlightTagline: 'One person, from idea to production',
             rows: [
                 {
                     label: 'Who you talk to',
