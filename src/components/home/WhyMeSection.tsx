@@ -118,8 +118,8 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                 {scrollHint}
             </p>
 
-            {/* Footnote treatment: hairline left rule + smaller, dimmer type, so the honest caveat reads as an aside to the table, not stray body copy. */}
-            <p className="max-w-2xl border-l-2 border-white/20 pl-4 text-sm leading-relaxed text-white/50">{note}</p>
+            {/* Caption treatment: centered under the table, dimmer and small, wide enough to wrap in two lines on desktop. */}
+            <p className="mx-auto max-w-[54rem] text-center text-sm leading-relaxed text-white/45">{note}</p>
         </section>
     )
 }
