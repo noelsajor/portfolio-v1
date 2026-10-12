@@ -64,10 +64,9 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                         {criterionLabel}
                     </p>
                     <div className="relative col-start-2 row-start-1 px-5 pb-4 max-md:-mt-8 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-8">
-                        <span className="inline-block rounded-full border border-white/25 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-white/80">
-                            {options[0]}
-                        </span>
-                        <p className="mt-3 text-lg font-semibold leading-snug tracking-tight text-white">{highlightTagline}</p>
+                        {/* The option's name stays for assistive tech; visually the tagline is the column header. */}
+                        <span className="sr-only">{options[0]}</span>
+                        <p className="text-lg font-semibold leading-snug tracking-tight text-white">{highlightTagline}</p>
                     </div>
                     {options.slice(1).map((option, index) => (
                         <p
