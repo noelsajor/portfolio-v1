@@ -137,6 +137,7 @@ export const homeContent = {
                     ]
                 }
             ],
+            scrollHint: 'Desliza para ver las otras columnas →',
             note: 'Si lo que necesitas es un producto final extremadamente pulido en su primera versión, o un equipo de cinco personas desde el día uno, hay mejores opciones. Si necesitas pasar de una idea a algo que se pueda probar, probablemente soy la más rápida.'
         }
     },

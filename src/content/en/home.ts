@@ -134,6 +134,8 @@ export const homeContent = {
                     ]
                 }
             ],
+            // Shown under the table below md, where the option columns scroll horizontally.
+            scrollHint: 'Swipe to see the other columns →',
             note: "If you need a flawlessly polished final product in its first version, or a five-person team from day one, there are better options. If you need to get from an idea to something you can put in front of people, I'm probably the fastest way there."
         }
     },
