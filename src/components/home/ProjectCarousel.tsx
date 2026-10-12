@@ -1,12 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { CaseStudyFrontmatter } from '@/lib/projects'
-import { localizedPath, type Locale } from '@/lib/i18n'
-import { CapabilityChips } from '@/components/CapabilityChips'
-import { ProjectCardPreview } from '@/components/ProjectCardPreview'
+import type { Locale } from '@/lib/i18n'
+import { PROJECT_CARD_CLASS, ProjectPortraitCardBody } from '@/components/ProjectPortraitCard'
 
 type Labels = {
     ariaLabel: string
@@ -100,25 +98,9 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
                             <li
                                 key={`${copy}-${project.slug}`}
                                 aria-hidden={clone || undefined}
-                                className="group relative flex w-[80%] flex-none snap-start flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 sm:w-[46%] md:w-[calc((100%-2rem)/3)]"
+                                className={`${PROJECT_CARD_CLASS} w-[80%] flex-none snap-start sm:w-[46%] md:w-[calc((100%-2rem)/3)]`}
                             >
-                                <ProjectCardPreview lang={lang} project={project} aspect="portrait" />
-                                {/* Fixed-height text block so every card lines up whatever the title length: one row of chips (extra chips scroll out of sight, never wrap) and a two-line slot for the title. */}
-                                <div className="flex flex-col gap-3">
-                                    <div className="flex h-7 shrink-0 items-center gap-2 overflow-hidden whitespace-nowrap [&>*]:shrink-0">
-                                        <CapabilityChips lang={lang} capabilities={project.capabilities} />
-                                    </div>
-                                    <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-7 tracking-tight group-hover:text-white">
-                                        <Link
-                                            href={localizedPath(lang, `/work/${project.slug}`)}
-                                            data-tracking={`project_card_${project.slug}`}
-                                            tabIndex={clone ? -1 : undefined}
-                                            className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
-                                        >
-                                            {project.title}
-                                        </Link>
-                                    </h3>
-                                </div>
+                                <ProjectPortraitCardBody lang={lang} project={project} tracking={`project_card_${project.slug}`} tabbable={!clone} />
                             </li>
                         )
                     })

@@ -1,15 +1,11 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowUpRight } from 'lucide-react'
 import { PROJECT_CAPABILITIES } from '@/lib/project-schema'
 import { getProjects } from '@/lib/projects'
 import { buildPageMetadata } from '@/lib/site-config'
-import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
-import { CapabilityChips } from '@/components/CapabilityChips'
-import { ProjectCardPreview } from '@/components/ProjectCardPreview'
+import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
+import { PROJECT_CARD_CLASS, ProjectPortraitCardBody } from '@/components/ProjectPortraitCard'
 import { workContent as workContentEn } from '@/content/en/static-pages'
 import { workContent as workContentEs } from '@/content/es/static-pages'
-import { getUiContent } from '@/lib/ui-content'
 import { capabilityLabel } from '@/lib/project-labels'
 import { JsonLd } from '@/components/JsonLd'
 import { buildPageNode, localizedAbsoluteUrl } from '@/lib/page-schema'
@@ -32,7 +28,6 @@ export default async function WorkPage({ params }: { params: Promise<{ lang: str
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const workContent = lang === 'es' ? workContentEs : workContentEn
-    const { work, links } = getUiContent(lang)
     const projects = getProjects(lang)
     const projectSections = PROJECT_CAPABILITIES.map((capability) => ({
         capability,
@@ -76,51 +71,11 @@ export default async function WorkPage({ params }: { params: Promise<{ lang: str
                             <h2 id={capabilityId(section.capability)} className="text-2xl font-semibold tracking-tight">
                                 {capabilityLabel(lang, section.capability)}
                             </h2>
-                            <ul role="list" className="grid gap-4 md:grid-cols-2">
+                            {/* Same portrait card as the home carousel, in a static grid. */}
+                            <ul role="list" className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                                 {section.projects.map((project) => (
-                                    <li
-                                        key={project.slug}
-                                        className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5"
-                                    >
-                                        <ProjectCardPreview lang={lang} project={project} />
-                                        <div className="flex flex-1 flex-col gap-2">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <CapabilityChips lang={lang} capabilities={project.capabilities} />
-                                            </div>
-                                            <h3 className="text-xl font-semibold tracking-tight">
-                                                <Link
-                                                    href={localizedPath(lang, `/work/${project.slug}`)}
-                                                    data-tracking={`portfolio_item_${project.slug}`}
-                                                    className="static outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-white/30"
-                                                >
-                                                    {project.title}
-                                                </Link>
-                                            </h3>
-                                            <p className="text-sm text-white/70">{project.summary}</p>
-                                            <div className="mt-auto flex flex-wrap items-center gap-4 pt-4">
-                                                <Link
-                                                    href={localizedPath(lang, `/work/${project.slug}`)}
-                                                    data-tracking={`portfolio_item_${project.slug}`}
-                                                    className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
-                                                >
-                                                    {`${work.viewCaseStudy} `}
-                                                    <span aria-hidden="true">→</span>
-                                                </Link>
-                                                {project.liveUrl ? (
-                                                    <a
-                                                        href={project.liveUrl}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        data-tracking={`portfolio_item_${project.slug}_live`}
-                                                        className="relative z-10 inline-flex w-fit items-center justify-center gap-1 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                                                    >
-                                                        {`${links.visitLiveSite} `}
-                                                        <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                                                        <span className="sr-only">{links.opensInNewTab}</span>
-                                                    </a>
-                                                ) : null}
-                                            </div>
-                                        </div>
+                                    <li key={project.slug} className={PROJECT_CARD_CLASS}>
+                                        <ProjectPortraitCardBody lang={lang} project={project} tracking={`portfolio_item_${project.slug}`} />
                                     </li>
                                 ))}
                             </ul>
