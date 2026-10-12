@@ -18,7 +18,7 @@ export function LandingProof({ lang, heading }: { lang: Locale; heading: string 
                         <Link
                             href={localizedPath(lang, `/work/${project.slug}`)}
                             data-tracking={`landing_proof_${project.slug}`}
-                            className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                            className="group flex h-full flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/30"
                         >
                             <ProjectCardPreview lang={lang} project={project} />
                             <div className="flex flex-wrap items-center gap-2">

@@ -32,7 +32,7 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
                     {featured.map((project) => (
                         <li
                             key={project.slug}
-                            className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
+                            className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-black p-5 transition hover:bg-white/5"
                         >
                             <ProjectCardPreview lang={lang} project={project} />
                             <div className="flex flex-1 flex-col gap-3">

@@ -38,7 +38,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                 {/* Card behind the highlighted column */}
                 <div
                     aria-hidden="true"
-                    className="col-start-2 row-span-full row-start-1 -mx-6 -my-5 rounded-3xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] shadow-[0_30px_60px_-30px_rgba(255,255,255,0.15)]"
+                    className="col-start-2 row-span-full row-start-1 -mx-5 -my-5 rounded-2xl border border-white/10 bg-black"
                 />
 
                 {/* Header row */}
@@ -78,7 +78,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                     rowClass,
                                     COL_START[cellIndex],
                                     cellIndex === 0
-                                        ? 'border-t border-white/15 text-white'
+                                        ? 'border-t border-white/10 text-white'
                                         : 'border-t border-dashed border-white/15 text-white/55'
                                 ].join(' ')}
                             >
@@ -96,7 +96,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                         key={option}
                         className={
                             optionIndex === 0
-                                ? 'rounded-3xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-5'
+                                ? 'rounded-2xl border border-white/10 bg-black p-5'
                                 : 'px-1'
                         }
                     >
@@ -116,7 +116,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                     key={`${option}-${row.label}`}
                                     className={[
                                         'py-3',
-                                        optionIndex === 0 ? 'border-t border-white/15' : 'border-t border-dashed border-white/15'
+                                        optionIndex === 0 ? 'border-t border-white/10' : 'border-t border-dashed border-white/15'
                                     ].join(' ')}
                                 >
                                     <dt className="text-[11px] font-semibold uppercase tracking-widest text-white/45">{row.label}</dt>
