@@ -44,10 +44,10 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
             {/* Below md this is a horizontal scroller; its vertical padding gives the card's -my-5 overhang room, since overflow-x clips the y axis too. On md+ it is a plain wrapper. */}
             <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-5 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className={['relative grid min-w-[42rem] grid-cols-[7rem_14rem_10.5rem_10.5rem] md:min-w-0 md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
-                    {/* Card behind the highlighted column */}
+                    {/* Card behind the highlighted column: same raised-panel treatment as the final CTA (white/5 + soft radial glow). */}
                     <div
                         aria-hidden="true"
-                        className="col-start-2 row-span-full row-start-1 -my-5 rounded-2xl border border-white/10 bg-black"
+                        className="col-start-2 row-span-full row-start-1 -my-5 rounded-2xl border border-white/10 bg-white/5 bg-[radial-gradient(80%_120%_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"
                     />
 
                     {/* Header row */}
