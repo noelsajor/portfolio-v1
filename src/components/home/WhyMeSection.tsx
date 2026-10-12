@@ -38,23 +38,24 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
     const rowCount = (rows.length + 1) as keyof typeof GRID_ROWS // header row + one per criterion
 
     return (
-        <section className="space-y-8">
+        // space-y-12 (not 8): the highlighted card overhangs the grid by 2rem, so the heading needs the extra room.
+        <section className="space-y-12">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{whyMe.heading}</h2>
 
             {/* Below md this is a horizontal scroller; its vertical padding gives the card's -my-5 overhang room, since overflow-x clips the y axis too. On md+ it is a plain wrapper. */}
-            <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-5 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-8 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className={['relative grid min-w-[42rem] grid-cols-[7rem_14rem_10.5rem_10.5rem] md:min-w-0 md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
                     {/* Card behind the highlighted column: same raised-panel treatment as the final CTA (white/5 + soft radial glow). */}
                     <div
                         aria-hidden="true"
-                        className="col-start-2 row-span-full row-start-1 -my-5 rounded-2xl border border-white/10 bg-white/5 bg-[radial-gradient(80%_120%_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"
+                        className="col-start-2 row-span-full row-start-1 -my-8 rounded-2xl border border-white/10 bg-white/5 bg-[radial-gradient(80%_120%_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]"
                     />
 
                     {/* Header row */}
                     <p
                         className={[
                             // flex + items-end (not self-end) and the -mt-5/pt-5 overhang: the cell fills the whole header row, card overhang included, so when sticky it covers what scrolls under it.
-                            'col-start-1 row-start-1 -mt-5 flex items-end pb-4 pr-5 pt-5 text-xs font-semibold uppercase tracking-widest text-white/45 md:mt-0 md:pt-0',
+                            'col-start-1 row-start-1 -mt-8 flex items-end pb-4 pr-5 pt-8 text-xs font-semibold uppercase tracking-widest text-white/45 md:mt-0 md:pt-0',
                             STICKY_LABEL
                         ].join(' ')}
                     >
