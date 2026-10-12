@@ -6,6 +6,8 @@ import { resumeContent as resumeContentEn } from '@/content/en/static-pages'
 import { resumeContent as resumeContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { getUiContent } from '@/lib/ui-content'
+import { JsonLd } from '@/components/JsonLd'
+import { buildPageNode } from '@/lib/page-schema'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang: rawLang } = await params
@@ -26,9 +28,21 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
     const { skillGroups, experience } = resumeContent
     const { resumePage } = getUiContent(lang)
     const projects = getProjects(lang)
+    const { metadata } = resumeContent
+    const jsonLd = [
+        buildPageNode({
+            lang,
+            path: '/resume',
+            title: metadata.title,
+            description: metadata.description,
+            profile: true,
+            trail: [{ name: metadata.title, path: '/resume' }]
+        })
+    ]
 
     return (
         <div className="space-y-12">
+            <JsonLd nodes={jsonLd} />
             <header className="space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{resumeContent.eyebrow}</p>
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{resumeContent.name}</h1>

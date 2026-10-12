@@ -116,6 +116,36 @@ export const homeContent = {
             }
         ]
     },
+    // Bloque GEO: respuestas cortas y autocontenidas a lo que una persona (o
+    // un buscador con IA) pregunta sobre un freelance antes de escribir.
+    // Cada respuesta debe sostenerse sola si se cita fuera de contexto y
+    // solo repite hechos que ya están en el sitio. También se emite como
+    // FAQPage en JSON-LD en la home.
+    faq: {
+        heading: 'Preguntas frecuentes',
+        items: [
+            {
+                question: '¿Qué hace Jose Leon?',
+                answer: 'Soy diseñador de producto y desarrollador front-end freelance. Diseño flujos de usuario, interfaces y sistemas de diseño, y luego los implemento como front-ends responsive y accesibles, incluyendo tiendas Shopify y WooCommerce a medida.'
+            },
+            {
+                question: '¿Con quién trabajas?',
+                answer: 'Con agencias que necesitan soporte de producción white-label, y con equipos digitales, fundadores y equipos de marketing que prefieren que una sola persona se haga cargo del diseño y de la implementación, en lugar de coordinar especialistas por separado.'
+            },
+            {
+                question: '¿Trabajas de forma remota y en qué idiomas?',
+                answer: 'Sí. Trabajo de forma remota con equipos internacionales, en inglés y en español, por proyecto o como soporte continuo.'
+            },
+            {
+                question: '¿Cuál es tu stack técnico?',
+                answer: 'Figma para diseño; HTML, CSS, TypeScript, React, Next.js, Astro y Tailwind CSS para el front-end; Shopify Online Store 2.0 y Liquid para e-commerce.'
+            },
+            {
+                question: '¿Cómo empiezo un proyecto contigo?',
+                answer: 'Envíame un brief corto desde la página de contacto: qué estás construyendo, dónde está atascado y el plazo. Te respondo con el siguiente paso más útil.'
+            }
+        ]
+    },
     finalCTA: {
         heading: '¿Necesitas un par de manos extra que se haga cargo del diseño y de la implementación?',
         body: 'Cuéntame qué estás construyendo, dónde está atascado el proyecto y qué necesita entregar tu equipo.',

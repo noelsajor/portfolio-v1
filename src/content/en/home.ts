@@ -110,6 +110,36 @@ export const homeContent = {
             }
         ]
     },
+    // GEO block: short, self-contained answers to the questions people (and
+    // AI search engines) ask about a freelancer before they reach out. Each
+    // answer must stand alone when quoted out of context and must only
+    // restate facts already on the site (resume skills, about paragraphs,
+    // trust strip). Also emitted as FAQPage JSON-LD on the home page.
+    faq: {
+        heading: 'Frequently asked',
+        items: [
+            {
+                question: 'What does Jose Leon do?',
+                answer: 'I am a freelance product designer and front-end developer. I design user flows, interfaces and design systems, then implement them as responsive, accessible front-ends, including custom Shopify and WooCommerce storefronts.'
+            },
+            {
+                question: 'Who do you work with?',
+                answer: 'Agencies that need white-label production support, and digital teams, founders and marketers who want one person to own both design and implementation instead of coordinating separate specialists.'
+            },
+            {
+                question: 'Do you work remotely, and in which languages?',
+                answer: 'Yes. I work remotely with international teams, in English and Spanish, on project-based or ongoing engagements.'
+            },
+            {
+                question: 'What is your technical stack?',
+                answer: 'Figma for design; HTML, CSS, TypeScript, React, Next.js, Astro and Tailwind CSS for front-end work; Shopify Online Store 2.0 and Liquid for e-commerce.'
+            },
+            {
+                question: 'How do I start a project with you?',
+                answer: 'Send a short brief through the contact page: what you are building, where it is blocked and the timeline. I reply with the most useful next step.'
+            }
+        ]
+    },
     finalCTA: {
         heading: 'Need an extra pair of hands that can own both design and implementation?',
         body: 'Tell me what you are building, where the project is blocked and what your team needs help delivering.',

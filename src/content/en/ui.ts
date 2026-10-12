@@ -29,6 +29,9 @@ export const uiContent = {
         ariaFooterLinks: 'Footer links'
     },
     shell: {
+        // Name of the site root in BreadcrumbList JSON-LD (not rendered as
+        // visible UI; the header logo is the visual home link).
+        breadcrumbHome: 'Home',
         skipToMain: 'Skip to main content'
     },
     languageSwitch: {

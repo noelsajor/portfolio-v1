@@ -5,12 +5,19 @@ import { DEFAULT_LOCALE, INDEXABLE_LOCALES, isIndexableLocale, type Locale } fro
 // Every canonical URL, Open Graph/Twitter tag, sitemap entry, robots rule,
 // and JSON-LD block reads from this file — update siteUrl here once the
 // production domain is live instead of hardcoding it elsewhere.
+//
+// Canonical host is `www.noelsajor.com` (decided 2026-10-12). The apex
+// `noelsajor.com` 308-redirects to `www` at the Vercel domain level, so
+// every self-referencing URL the app emits must already be the `www` form:
+// before this change the canonical/OG/sitemap URLs pointed at the apex
+// while visitors and crawlers were being redirected to `www`, which made
+// Google see two hosts for every page.
 export const siteConfig = {
     name: 'Jose Leon',
     title: 'Jose Leon — Product Design & Front-End Implementation',
     description:
         'I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences through product design, front-end development and Shopify implementation.',
-    siteUrl: 'https://noelsajor.com',
+    siteUrl: 'https://www.noelsajor.com',
     email: 'noelsajor@gmail.com',
     locale: 'en_US',
     keywords: [
@@ -23,15 +30,40 @@ export const siteConfig = {
     ],
     author: {
         name: 'Jose Leon',
-        url: 'https://noelsajor.com'
+        url: 'https://www.noelsajor.com'
     },
+    // The handle used on the domain, the email and every profile below.
+    // Emitted as Person.alternateName so search and AI engines can reconcile
+    // "Jose Leon" with the `noelsajor` identity they find everywhere else.
+    handle: 'noelsajor',
     // Verified real profiles only — do not add unconfirmed accounts.
     sameAs: {
         behance: 'https://www.behance.net/noelsajor',
         figma: 'https://www.figma.com/@noelsajor',
         github: 'https://github.com/noelsajor',
         linkedin: 'https://www.linkedin.com/in/noelsajor'
-    }
+    },
+    // Locale-independent entity facts for JSON-LD (Person.knowsAbout and
+    // Person.knowsLanguage). Tool, platform and discipline names stay in
+    // English in both locales (docs/es-style-guide.md section 5), so they
+    // are not duplicated per locale. Keep this to what the site's visible
+    // copy and resume actually claim — never pad it for ranking.
+    knowsAbout: [
+        'Product Design',
+        'UI/UX Design',
+        'Design Systems',
+        'Front-End Development',
+        'Shopify Development',
+        'Shopify Liquid',
+        'WooCommerce',
+        'React',
+        'Next.js',
+        'TypeScript',
+        'Tailwind CSS',
+        'Figma',
+        'Web Accessibility'
+    ],
+    knowsLanguage: ['en', 'es']
 }
 
 export function absoluteUrl(path: string = ''): string {

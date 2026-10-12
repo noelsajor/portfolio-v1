@@ -9,6 +9,9 @@ import { LandingProof } from '@/components/landing/LandingProof'
 import { LandingTextBlock } from '@/components/landing/LandingTextBlock'
 import { LandingFaq } from '@/components/landing/LandingFaq'
 import { LandingCta } from '@/components/landing/LandingCta'
+import { JsonLd } from '@/components/JsonLd'
+import { buildPageNode, localizedAbsoluteUrl } from '@/lib/page-schema'
+import { buildFaqSchema } from '@/lib/structured-data'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang: rawLang } = await params
@@ -23,10 +26,24 @@ export default async function ForAgenciesPage({ params }: { params: Promise<{ la
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const forAgenciesContent = lang === 'es' ? forAgenciesContentEs : forAgenciesContentEn
-    const { hero, problems, services, process, proof, assurance, faq, cta } = forAgenciesContent
+    const { metadata, hero, problems, services, process, proof, assurance, faq, cta } = forAgenciesContent
+
+    // The page's own FAQ (4 items) as FAQPage — per docs/best-practices/
+    // 01-seo-geo-guidelines.md ("more than 3 FAQs").
+    const jsonLd = [
+        buildPageNode({
+            lang,
+            path: '/for-agencies',
+            title: metadata.title,
+            description: metadata.description,
+            trail: [{ name: metadata.title, path: '/for-agencies' }]
+        }),
+        buildFaqSchema({ lang, url: localizedAbsoluteUrl(lang, '/for-agencies'), items: faq.items })
+    ]
 
     return (
         <div className="space-y-16">
+            <JsonLd nodes={jsonLd} />
             <LandingHero lang={lang} {...hero} />
             <LandingFeatureList label={problems.label} heading={problems.heading} items={problems.items} />
             <LandingFeatureList label={services.label} heading={services.heading} items={services.items} />
