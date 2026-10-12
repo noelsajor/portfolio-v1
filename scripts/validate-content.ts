@@ -5,7 +5,10 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { projectFrontmatterSchema } from '../src/lib/project-schema'
+import matter from 'gray-matter'
 import { getProjectSlugs, getProjects } from '../src/lib/projects'
+import { uiContent as uiContentEn } from '../src/content/en/ui'
+import { uiContent as uiContentEs } from '../src/content/es/ui'
 
 let failures = 0
 
@@ -256,20 +259,115 @@ Temporary validation fixture.
     tempFiles.pop()
 }
 
-// PR 5: no Spanish case-study MDX exists yet (src/content/es/case-studies/
-// is an empty, git-tracked directory) — every slug must fall back to the
-// `en` file. This proves that fallback rather than re-testing the schema.
+// --- Locale parity ---------------------------------------------------------
+//
+// PR 11 (replaces the PR 5 "es falls back to en" assertion, which would have
+// failed on the first real Spanish MDX). Spanish case studies land one file
+// at a time (per-file fallback in src/lib/projects.ts), so the invariants
+// are: every `es` file matches an `en` slug, the slug catalog is identical
+// in both locales, `es` frontmatter keeps the locale-independent fields
+// byte-identical to `en`, and every file in a locale carries the canonical
+// H2 headings the case-study page's question chips link to
+// (uiContent.work.askChips in src/content/<locale>/ui.ts, see
+// docs/es-style-guide.md section 7).
+
+console.log('\nLocale parity:')
+
 {
-    const enSlugs = getProjects('en')
+    const enSlugs = getProjects('en', { includeDrafts: true })
         .map((project) => project.slug)
         .sort()
-    const esSlugs = getProjects('es')
+    const esSlugs = getProjects('es', { includeDrafts: true })
         .map((project) => project.slug)
         .sort()
     check(
-        "getProjects('es') falls back to getProjects('en') (same slugs, empty es/case-studies)",
+        "getProjects('es') exposes the same slug catalog as getProjects('en')",
         esSlugs.length === enSlugs.length && esSlugs.every((slug, i) => slug === enSlugs[i])
     )
+
+    const esDir = path.join(process.cwd(), 'src/content/es/case-studies')
+    const esFiles = fs.existsSync(esDir)
+        ? fs.readdirSync(esDir).filter((f) => f.endsWith('.mdx') && !f.startsWith('_'))
+        : []
+    const enDir = path.join(process.cwd(), 'src/content/en/case-studies')
+    const enFiles = fs.readdirSync(enDir).filter((f) => f.endsWith('.mdx') && !f.startsWith('_'))
+
+    check(
+        'every es case-study file has a matching en file',
+        esFiles.every((f) => fs.existsSync(path.join(enDir, f)))
+    )
+
+    // Fields that must stay identical across locales: anything that drives
+    // routing, grouping, ordering, publication, images or outbound links.
+    const LOCALE_INDEPENDENT_FIELDS = [
+        'type',
+        'capabilities',
+        'segment',
+        'year',
+        'featured',
+        'order',
+        'status',
+        'updatedAt',
+        'coverImage',
+        'liveUrl',
+        'repositoryUrl'
+    ] as const
+
+    for (const file of esFiles) {
+        const en = matter(fs.readFileSync(path.join(enDir, file), 'utf8'))
+        const es = matter(fs.readFileSync(path.join(esDir, file), 'utf8'))
+        const drift = LOCALE_INDEPENDENT_FIELDS.filter(
+            (field) => JSON.stringify(en.data[field] ?? null) !== JSON.stringify(es.data[field] ?? null)
+        )
+        check(`${file}: locale-independent frontmatter matches en${drift.length ? ` (drift: ${drift.join(', ')})` : ''}`, drift.length === 0)
+
+        const enGallery = (en.data.gallery ?? []) as { id: string; status: string; src?: string }[]
+        const esGallery = (es.data.gallery ?? []) as { id: string; status: string; src?: string }[]
+        check(
+            `${file}: gallery ids/status/src match en`,
+            JSON.stringify(enGallery.map(({ id, status, src }) => [id, status, src ?? null])) ===
+                JSON.stringify(esGallery.map(({ id, status, src }) => [id, status, src ?? null]))
+        )
+    }
+
+    // rehype-slug uses github-slugger: lowercase, strip everything that is
+    // not a letter, number, space or hyphen (Unicode-aware), spaces -> '-'.
+    function slugify(heading: string): string {
+        return heading
+            .trim()
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}\s-]/gu, '')
+            .replace(/\s+/g, '-')
+    }
+
+    function headingIds(markdown: string): Set<string> {
+        return new Set(
+            markdown
+                .split('\n')
+                .filter((line) => /^##\s+/.test(line))
+                .map((line) => slugify(line.replace(/^##\s+/, '')))
+        )
+    }
+
+    const REQUIRED_ANCHORS: Record<'en' | 'es', string[]> = {
+        en: uiContentEn.work.askChips.map((chip) => chip.href.slice(1)),
+        es: uiContentEs.work.askChips.map((chip) => chip.href.slice(1))
+    }
+
+    for (const [locale, dir, files] of [
+        ['en', enDir, enFiles],
+        ['es', esDir, esFiles]
+    ] as const) {
+        for (const file of files) {
+            const { content } = matter(fs.readFileSync(path.join(dir, file), 'utf8'))
+            const ids = headingIds(content)
+            const missing = REQUIRED_ANCHORS[locale].filter((anchor) => !ids.has(anchor))
+            check(
+                `${locale}/${file}: has the H2 headings the question chips link to${missing.length ? ` (missing #${missing.join(', #')})` : ''}`,
+                missing.length === 0
+            )
+        }
+    }
 }
 
 console.log()

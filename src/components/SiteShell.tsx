@@ -7,6 +7,7 @@ import { GoogleAnalyticsPageViews } from '@/components/GoogleAnalyticsPageViews'
 import { GoogleAnalyticsClickTracking } from '@/components/GoogleAnalyticsClickTracking'
 import { gaMeasurementId } from '@/lib/analytics-config'
 import type { Locale } from '@/lib/i18n'
+import { getUiContent } from '@/lib/ui-content'
 
 // The document shell shared by every locale page (via src/app/[lang]/layout.tsx)
 // and the global static 404 (src/app/not-found.tsx). Extracted so both can
@@ -15,6 +16,8 @@ import type { Locale } from '@/lib/i18n'
 // caller — the not-found page passes a literal 'en' since Next.js 16.2
 // cannot serve a curl-visible localized 404 (see src/app/not-found.tsx).
 export function SiteShell({ lang, children }: { lang: Locale; children: React.ReactNode }) {
+    const { shell } = getUiContent(lang)
+
     return (
         <html lang={lang}>
             <body className="min-h-dvh">
@@ -22,7 +25,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
                     href="#main-content"
                     className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
                 >
-                    Skip to main content
+                    {shell.skipToMain}
                 </a>
                 <StructuredData lang={lang} />
                 <SiteHeader lang={lang} />

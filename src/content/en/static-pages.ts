@@ -7,6 +7,11 @@
 // comments at each call site.
 
 export const aboutContent = {
+    metadata: {
+        title: 'About',
+        description:
+            'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.'
+    },
     heading: 'About',
     paragraphs: [
         "I’m Jose Leon, a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
@@ -17,12 +22,22 @@ export const aboutContent = {
 } as const
 
 export const contactContent = {
+    metadata: {
+        title: 'Contact',
+        description:
+            'Tell me what your team is building. Get in touch about freelance projects, agency production support, Shopify work, or front-end implementation.'
+    },
     heading: 'Tell me what your team is building.',
     intro: "Share the project, production gap, or backlog you need help with. I'll respond with the most useful next step.",
     otherChannelsHeading: 'Other channels'
 } as const
 
 export const resumeContent = {
+    metadata: {
+        title: 'Resume',
+        description:
+            'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
+    },
     eyebrow: 'Resume',
     name: 'Jose Leon',
     title: 'Multidisciplinary Designer & Front-End Production Specialist',
@@ -78,4 +93,15 @@ export const resumeContent = {
     githubLabel: 'GitHub →',
     getInTouchHeading: 'Get in touch',
     getInTouchIntro: 'Reach out directly about a role:'
+} as const
+
+// PR 11: the /work index used to hardcode these in page.tsx.
+export const workContent = {
+    metadata: {
+        title: 'Work',
+        description: 'Selected product design, front-end implementation and Shopify projects.'
+    },
+    heading: 'Work',
+    intro: 'A curated set of product design, Shopify, and front-end implementation projects — from brand systems and marketing websites to e-commerce storefronts.',
+    emptyStateMessage: 'No projects published yet.'
 } as const

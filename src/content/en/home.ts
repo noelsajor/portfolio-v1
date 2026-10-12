@@ -1,6 +1,14 @@
 import { siteConfig } from '@/lib/site-config'
 
 export const homeContent = {
+    // PR 11: page metadata lives with the page copy so a locale can author
+    // its own <title>/description. `title` is the full branded title (it
+    // bypasses the layout's `%s | Jose Leon` template via title.absolute);
+    // it also feeds WebSite.description in StructuredData.
+    metadata: {
+        title: siteConfig.title,
+        description: siteConfig.description
+    },
     hero: {
         eyebrow: 'PRODUCT DESIGN + FRONT-END IMPLEMENTATION',
         headline: ['From idea', 'to production.'],

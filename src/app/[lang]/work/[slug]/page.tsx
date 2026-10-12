@@ -15,6 +15,8 @@ import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
 import { CapabilityChips } from '@/components/CapabilityChips'
 import { SegmentBadge } from '@/components/SegmentBadge'
 import { Chip } from '@/components/Chip'
+import { getUiContent } from '@/lib/ui-content'
+import { projectTypeLabel } from '@/lib/project-labels'
 
 export function generateStaticParams() {
     return getProjectSlugs().map((slug) => ({ slug }))
@@ -97,7 +99,12 @@ export default async function CaseStudyPage({
     const data = getProjectBySlug(slug, lang)
     if (!data) return notFound()
 
-    const { frontmatter, content } = data
+    const { frontmatter, content, contentLocale } = data
+    const { work, links } = getUiContent(lang)
+    // Chips link to heading anchors inside the MDX body, so they must follow
+    // the locale of the body actually rendered (English fallback until this
+    // slug's Spanish file exists), not the page locale.
+    const { askChips } = getUiContent(contentLocale).work
     const readyGalleryItems = (frontmatter.gallery ?? []).filter(
         (item): item is typeof item & { src: string } => item.status === 'ready' && Boolean(item.src)
     )
@@ -109,13 +116,14 @@ export default async function CaseStudyPage({
                     href={localizedPath(lang, '/work')}
                     className="inline-flex rounded-sm text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                 >
-                    <span aria-hidden="true">←</span> Back to work
+                    <span aria-hidden="true">←</span>
+                    {` ${work.backToWork}`}
                 </Link>
 
                 <header className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
-                    <CapabilityChips capabilities={frontmatter.capabilities} />
-                    <Chip variant="secondary">{frontmatter.type}</Chip>
+                    <CapabilityChips lang={lang} capabilities={frontmatter.capabilities} />
+                    <Chip variant="secondary">{projectTypeLabel(lang, frontmatter.type)}</Chip>
                     <SegmentBadge segment={frontmatter.segment} />
                     {frontmatter.industry ? (
                         <p className="text-xs font-semibold tracking-wide text-white/70">{frontmatter.industry}</p>
@@ -132,29 +140,29 @@ export default async function CaseStudyPage({
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
-                                Visit live site
+                                {links.visitLiveSite}
                                 <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                                <span className="sr-only"> (opens in a new tab)</span>
+                                <span className="sr-only">{links.opensInNewTab}</span>
                             </Link>
                         ) : null}
 
                         <div className="grid gap-3 sm:grid-cols-2">
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Problem</p>
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">{work.theProblem}</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.challenge}</p>
                             </div>
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">The Solution</p>
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">{work.theSolution}</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.outcome}</p>
                             </div>
                             {frontmatter.duration ? (
                                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-                                    <p className="text-xs font-semibold uppercase tracking-wide text-white/50">Timeline</p>
+                                    <p className="text-xs font-semibold uppercase tracking-wide text-white/50">{work.timeline}</p>
                                     <p className="mt-1 text-sm text-white/80">{frontmatter.duration}</p>
                                 </div>
                             ) : null}
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">My Role</p>
+                                <p className="text-xs font-semibold uppercase tracking-wide text-white/50">{work.myRole}</p>
                                 <p className="mt-1 text-sm text-white/80">{frontmatter.roles.join(' · ')}</p>
                                 {frontmatter.team ? <p className="mt-1 text-xs text-white/60">{frontmatter.team}</p> : null}
                             </div>
@@ -162,20 +170,13 @@ export default async function CaseStudyPage({
                     </div>
 
                     <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4 lg:self-start">
-                        <p className="text-sm font-semibold text-white/80">Want to ask me a question?</p>
+                        <p className="text-sm font-semibold text-white/80">{work.askHeading}</p>
                         <div className="flex flex-wrap gap-2">
-                            <Chip variant="primary" href="#challenge">
-                                What problem was this solving?
-                            </Chip>
-                            <Chip variant="primary" href="#my-contributions">
-                                What was your role here?
-                            </Chip>
-                            <Chip variant="primary" href="#outcome">
-                                How did you define success?
-                            </Chip>
-                            <Chip variant="primary" href="#solution">
-                                What was your approach?
-                            </Chip>
+                            {askChips.map((chip) => (
+                                <Chip key={chip.href} variant="primary" href={chip.href}>
+                                    {chip.label}
+                                </Chip>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -212,7 +213,7 @@ export default async function CaseStudyPage({
 
             {readyGalleryItems.length > 0 ? (
                 <section className="space-y-4">
-                    <h2 className="text-xl font-semibold tracking-tight md:text-2xl">Gallery</h2>
+                    <h2 className="text-xl font-semibold tracking-tight md:text-2xl">{work.gallery}</h2>
                     {/* Columns, not a grid: gallery images mix landscape and
                         portrait (e.g. mobile screenshots) sources, and a grid
                         forces row-pairing that leaves awkward gaps next to a

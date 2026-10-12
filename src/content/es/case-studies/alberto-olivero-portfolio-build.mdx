@@ -1,0 +1,76 @@
+---
+title: Construcción del portafolio de Alberto Olivero
+client: Alberto Olivero, diseñador gráfico independiente
+liveUrl: https://alberto-portfolio-beta.vercel.app/
+coverImage: /images/case-studies/alberto-portfolio-cover.webp
+coverAlt: Hero de la página de inicio del portafolio de Alberto Olivero con el texto "Hybrid Creative Direction & Visual Strategy for Purpose-Driven Brands" junto a un avatar de personaje dibujado a mano
+gallery:
+  - id: alberto-homepage-and-case-study
+    status: ready
+    src: /images/case-studies/alberto-homepage-and-case-study.webp
+    alt: Cuadrícula de proyectos de la página de inicio del portafolio de Alberto Olivero junto a la página de detalle del caso de estudio "La Lechona"
+type: Marketing Website
+capabilities:
+  - Custom Websites
+roles:
+  - Desarrollador full-stack
+services:
+  - Desarrollo web (Next.js)
+  - Arquitectura de contenido para casos de estudio
+  - Migración de dependencias y herramientas
+  - Actualizaciones de seguridad de dependencias
+  - Auditoría de rendimiento y calidad de código
+summary: Construí un portafolio en Next.js para un diseñador gráfico independiente, para presentar su trabajo de branding y diseño como casos de estudio estructurados, y después migré sus herramientas y lo audité en rendimiento y calidad de código.
+challenge: El sitio necesitaba la misma arquitectura de casos de estudio que uso en mi propio portafolio, adaptada al trabajo de diseño de un amigo. Pero la construcción se había desviado hacia una ruta de renderizado MDX sin uso y una versión de dependencia marcada por seguridad que nadie había vuelto a revisar.
+outcome: Entregué un portafolio funcional en Next.js reutilizando la arquitectura de mi propio sitio, después una migración de gestor de paquetes que sacó a la luz y eliminó la ruta MDX muerta con sus dependencias, y una auditoría documentada de rendimiento y calidad de código con hallazgos listos para implementar.
+year: "2026"
+duration: Intermitente, marzo a julio de 2026
+team: Proyecto personal para un amigo; desarrollador en solitario.
+featured: false
+order: 7
+status: published
+updatedAt: "2026-08-31"
+seoTitle: Portafolio de Alberto Olivero — Next.js | Jose Leon
+seoDescription: Portafolio en Next.js, migración de herramientas y auditoría de rendimiento para el diseñador gráfico Alberto Olivero.
+---
+
+## Resumen
+
+Alberto Olivero es un diseñador gráfico independiente que trabaja en branding, afiches de conciertos y diseño de identidad. Construí su portafolio desde cero en Next.js (una cuadrícula de inicio, una página "sobre mí" y un sistema de casos de estudio para presentar cada proyecto por separado: Boosted, Caribombo, Diamonds y otros) y después volví para migrar sus herramientas y auditarlo en rendimiento y calidad de código.
+
+## Contexto
+
+Como amigo y desarrollador independiente, lo tomé como un proyecto personal: un portafolio en funcionamiento al que Alberto pudiera enviar a la gente. Partí de la misma arquitectura de sitio que uso en mi propio portafolio (cuadrícula de inicio, página "sobre mí", un sistema de casos de estudio con una plantilla de detalle por proyecto y contacto), reutilizada como plantilla de partida y adaptada a su contenido en lugar de construida desde cero, de modo que cada proyecto de diseño tiene su propia página en vez de una galería plana de imágenes.
+
+## Desafío
+
+Más allá de la construcción inicial, el código había heredado dos problemas reales. Primero, una ruta de renderizado de contenido construida alrededor de `next-mdx-remote`, traída del mismo patrón de casos de estudio basado en MDX que mi propio portafolio sigue usando, estaba fijada en una versión marcada bajo la CVE-2026-0969. Segundo, a diferencia de mi portafolio, las páginas de casos de estudio de esta construcción terminaron renderizándose por completo desde un archivo de datos TypeScript plano en lugar de MDX en vivo, lo que significaba que la dependencia vulnerable, sus librerías de soporte y los componentes construidos alrededor se estaban publicando sin uso. La misma plantilla de partida, pero una implementación divergente que nadie había vuelto a reconciliar.
+
+## Solución
+
+Primero construí la estructura central del sitio: una página de inicio con una cuadrícula de proyectos, una página "sobre mí" y una plantilla de detalle de caso de estudio alimentada por un archivo central `src/data/projects.ts` en lugar de documentos MDX individuales, además del header, el footer y el trabajo de miniaturas y assets necesario para poner proyectos reales en el sitio. En el camino, actualicé la dependencia `next-mdx-remote` marcada a la v6 para cerrar la CVE.
+
+Más adelante, migrar el proyecto de npm a pnpm se convirtió en algo más que un cambio de herramienta. El enlazado estricto y sin hoisting de pnpm sacó a la luz de inmediato un error de TypeScript (`Cannot find module 'mdx/types'`) que el hoisting plano de `node_modules` de npm había estado ocultando en silencio. Rastrear ese error confirmó que la ruta de renderizado MDX realmente no se usaba, así que la eliminé por completo: el loader y los componentes MDX sin uso, un archivo de ejemplo de caso de estudio huérfano y cinco dependencias que existían solo para sostener esa ruta muerta. 146 paquetes menos en el árbol de dependencias, con `pnpm run build` y `pnpm run lint` pasando limpios después.
+
+Luego ejecuté una auditoría completa de rendimiento y calidad de código sobre el código en producción. Reveló una lista específica y priorizada: varias imágenes de proyecto publicadas como PNG de 700KB a 2.2MB sin la prop `sizes` de `next/image` y sin la pista `priority` en la imagen más grande por encima del pliegue; marcado de iconos SVG inline duplicado entre las páginas de inicio y "sobre mí" en lugar de un componente compartido; un hook `usePathname()` llamado por separado en cada enlace de navegación en vez de resolverse una sola vez; nombres de archivo de imágenes con espacios; una entrada de proyecto que todavía tenía texto Lorem ipsum de relleno e imágenes prestadas de otros proyectos; y la falta de `metadataBase` en el layout raíz. Esos hallazgos están documentados y priorizados, pero todavía no implementados en este código.
+
+## Resultado
+
+El portafolio corre sobre un árbol de dependencias limpio y correctamente delimitado: sin versiones de paquetes vulnerables, sin rutas de renderizado muertas y con una migración que validó la limpieza al atrapar un error oculto de resolución de tipos que npm había estado escondiendo. La auditoría de rendimiento y calidad de código produjo una lista de tareas concreta y lista para ejecutar, no consejos vagos: la próxima pasada sobre este proyecto es implementación, no más descubrimiento.
+
+## Mis contribuciones
+
+- Construí el sitio desde cero: cuadrícula de proyectos en el inicio, página "sobre mí" y una plantilla de detalle de caso de estudio alimentada por un archivo de datos central
+- Actualicé una dependencia `next-mdx-remote` marcada con una CVE a la versión corregida
+- Migré el proyecto de npm a pnpm, lo que sacó a la luz un error real y oculto de resolución de módulos de TypeScript enmascarado por el hoisting plano de dependencias de npm
+- Rastreé ese error hasta una ruta de renderizado MDX completamente sin uso y la eliminé: componentes, loader, un archivo de ejemplo huérfano y cinco dependencias ya innecesarias (146 paquetes menos)
+- Verifiqué que `pnpm run build` y `pnpm run lint` pasan limpios después de la limpieza
+- Ejecuté una auditoría completa de rendimiento y calidad de código, produciendo una lista priorizada y específica de hallazgos abiertos (optimización de imágenes, props de `next/image`, duplicación de componentes, higiene en nombres de archivo, contenido de relleno, metadata SEO faltante)
+
+## Tecnologías
+
+- **Framework**: Next.js 16, React 19
+- **Estilos**: Tailwind CSS 4
+- **Lenguaje**: TypeScript
+- **Gestor de paquetes**: pnpm
+- **Herramientas**: Git, GitHub, ESLint

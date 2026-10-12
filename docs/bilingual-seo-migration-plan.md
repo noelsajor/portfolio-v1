@@ -566,20 +566,22 @@ Audience: `es_US`. Translate for search intent and natural phrasing, not word-fo
 | PR | Branch | Scope | Status |
 |----|--------|-------|--------|
 | 10 | `docs/i18n-es-style-guide` | `docs/es-style-guide.md`: tone (`tú` profesional unless decided otherwise), terms kept in English vs translated, brand/product names, number and date formats, CTA verb conventions. Approved by the user before any copy PR starts. | `pending` |
-| 11 | `feat/i18n-6-es-chrome` | Last structural PR. (a) `src/content/es/ui.ts` real copy. (b) The four raw-JSX paragraphs in `src/app/[lang]/contact/page.tsx` and `src/app/[lang]/resume/page.tsx` moved into the UI dictionary. (c) `src/components/ContactForm.tsx` labels, placeholders, submit/success/error states moved into a per-locale dictionary. (d) `src/app/api/contact/route.ts` returns a stable `code` alongside `error`; the client maps `code` to localized text. (e) Move the hardcoded `generateMetadata` `title`/`description` of `about`, `contact`, `for-agencies`, `resume` and `work` into the locale content modules (English unchanged, `es` falls back). (f) Replace the fallback assertion in `scripts/validate-content.ts` with a parity check: every `es` MDX slug must exist in `en`, same frontmatter schema, `es` files optional. | `pending` |
-| 12 | `feat/i18n-7-es-home` | `src/content/es/home.ts` real copy plus home metadata. Position around Shopify, ecommerce, front-end and remote collaboration for the `es_US` market (see Phase 9 keyword table). | `pending` |
-| 13 | `feat/i18n-8-es-for-agencies` | `src/content/es/for-agencies.ts` real copy plus metadata. Highest commercial intent page: white-label, production capacity, confidentiality, Shopify, UI/UX. | `pending` |
-| 14 | `feat/i18n-9-es-static-pages` | `src/content/es/static-pages.ts` real copy plus metadata for About, Contact, Resume and Work index. Resolve the resume PDF decision (see open decisions) in this PR. | `pending` |
-| 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `pending` |
-| 16 | `feat/i18n-11-es-cs-strike-hemp` | `src/content/es/case-studies/strike-hemp-cannabis-storefront.mdx` | `pending` |
-| 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `pending` |
-| 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `pending` |
-| 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `pending` |
-| 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `pending` |
-| 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `pending` |
+| 11 | `feat/i18n-6-es-chrome` | Last structural PR. (a) `src/content/es/ui.ts` real copy. (b) The four raw-JSX paragraphs in `src/app/[lang]/contact/page.tsx` and `src/app/[lang]/resume/page.tsx` moved into the UI dictionary. (c) `src/components/ContactForm.tsx` labels, placeholders, submit/success/error states moved into a per-locale dictionary. (d) `src/app/api/contact/route.ts` returns a stable `code` alongside `error`; the client maps `code` to localized text. (e) Move the hardcoded `generateMetadata` `title`/`description` of `about`, `contact`, `for-agencies`, `resume` and `work` into the locale content modules (English unchanged, `es` falls back). (f) Replace the fallback assertion in `scripts/validate-content.ts` with a parity check: every `es` MDX slug must exist in `en`, same frontmatter schema, `es` files optional. | `in-review` ([PR #11](https://github.com/noelsajor/portfolio-v1/pull/11)) |
+| 12 | `feat/i18n-7-es-home` | `src/content/es/home.ts` real copy plus home metadata. Position around Shopify, ecommerce, front-end and remote collaboration for the `es_US` market (see Phase 9 keyword table). | `in-review` ([PR #12](https://github.com/noelsajor/portfolio-v1/pull/12)) |
+| 13 | `feat/i18n-8-es-for-agencies` | `src/content/es/for-agencies.ts` real copy plus metadata. Highest commercial intent page: white-label, production capacity, confidentiality, Shopify, UI/UX. | `in-review` ([PR #13](https://github.com/noelsajor/portfolio-v1/pull/13)) |
+| 14 | `feat/i18n-9-es-static-pages` | `src/content/es/static-pages.ts` real copy plus metadata for About, Contact, Resume and Work index. Resolve the resume PDF decision (see open decisions) in this PR. | `in-review` ([PR #14](https://github.com/noelsajor/portfolio-v1/pull/14)) |
+| 15 | `feat/i18n-10-es-cs-d2c-intimacy` | `src/content/es/case-studies/d2c-intimacy-wellness-storefront.mdx` | `in-review` ([PR #15](https://github.com/noelsajor/portfolio-v1/pull/15)) |
+| 16 | `feat/i18n-11-es-cs-strike-hemp` | `src/content/es/case-studies/strike-hemp-cannabis-storefront.mdx` | `in-review` ([PR #16](https://github.com/noelsajor/portfolio-v1/pull/16)) |
+| 17 | `feat/i18n-12-es-cs-sana-wellness` | `src/content/es/case-studies/sana-wellness-storefront.mdx` | `in-review` ([PR #17](https://github.com/noelsajor/portfolio-v1/pull/17)) |
+| 18 | `feat/i18n-13-es-cs-vita-organica` | `src/content/es/case-studies/vita-organica-supplement-manufacturer-site.mdx` | `in-review` ([PR #18](https://github.com/noelsajor/portfolio-v1/pull/18)) |
+| 19 | `feat/i18n-14-es-cs-brand-website` | `src/content/es/case-studies/brand-website-build.mdx` | `in-review` ([PR #19](https://github.com/noelsajor/portfolio-v1/pull/19)) |
+| 20 | `feat/i18n-15-es-cs-firstline` | `src/content/es/case-studies/firstline-wholesale-access-control.mdx` | `in-review` ([PR #20](https://github.com/noelsajor/portfolio-v1/pull/20)) |
+| 21 | `feat/i18n-16-es-cs-alberto-olivero` | `src/content/es/case-studies/alberto-olivero-portfolio-build.mdx` | `in-review` ([PR #21](https://github.com/noelsajor/portfolio-v1/pull/21)) |
 | 22 | `feat/i18n-17-es-activation` | `INDEXABLE_LOCALES = ['en', 'es']` in `src/lib/i18n.ts`. Nothing else in this PR. | `pending` |
 
 Status values: `pending` -> `in-progress` -> `in-review` (open PR, awaiting editorial sign-off) -> `merged-to-dev`.
+
+Scope found during PR 11 (beyond the first inventory): the case-study page labels (`Back to work`, `The Problem`, `The Solution`, `Timeline`, `My Role`, `Gallery`, the four question chips), the `/work` index heading/intro/empty state, `View case study`, `Visit live site`, the sr-only `(opens in a new tab)`, the skip link, nav/footer/language-switch aria-labels, `Selected proof` on For Agencies, and the project enum display labels (`type`, `capabilities`) shown on cards and chips. All moved into `uiContent` / `project-labels.ts`. The question chips now follow the locale of the MDX actually rendered (`CaseStudy.contentLocale`), so `/es` pages that still fall back to English content keep working anchors.
 
 Why this order: PR 11 removes every remaining hardcoded English string and every structural blocker first, so PRs 12-21 are copy-only and can be reviewed by a non-developer. Chrome (nav, footer, form, errors) is what every `/es` page shares, so it goes before any page. `for-agencies` goes before the static pages because it carries the clearest commercial search intent. Case studies ship one per PR because the project loader falls back per file, so each one can land independently, and a seven-MDX PR would not get a real editorial read. Case-study order is a suggestion (Shopify storefronts first); reorder by commercial priority if needed. `_template.mdx` stays English-only and unpublished.
 
@@ -606,11 +608,11 @@ Why this order: PR 11 removes every remaining hardcoded English string and every
 
 #### Slice 2 open decisions
 
-- [ ] `tú` vs `usted`. Recommendation: `tú` profesional (LatAm/US agency and SMB audience). Close in PR 10.
-- [ ] `public/resume.pdf` is English-only. Options: add `public/resume-es.pdf` and switch the download path by locale, or keep the English PDF and label it as such on `/es/resume`. Close in PR 14.
+- [x] `tú` vs `usted`. Decided 2026-10-08: `tú` profesional (docs/es-style-guide.md section 1).
+- [x] `public/resume.pdf` is English-only. Decided 2026-10-08: `public/resume-es.pdf` added in PR 14 (same one-page layout, content translated, metrics and employer names identical); `/es/resume` links to it via `uiContent.resumePage.pdfHref`.
 - [ ] `public/og-image.png` is a single English asset. Acceptable for `es_US` launch; revisit after activation if social shares in Spanish matter.
 - [ ] Contact emails sent via Resend: keep internal English labels (`Support type`, `Timeline`) since they are operational, but include the visitor's locale in the email body. Close in PR 11.
-- [ ] Case-study order (PRs 15-21) is a suggestion; confirm or reorder before PR 15 starts.
+- [x] Case-study order (PRs 15-21) confirmed 2026-10-08 as listed.
 
 ### Delivery strategy
 

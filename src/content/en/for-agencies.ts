@@ -1,4 +1,9 @@
 export const forAgenciesContent = {
+    metadata: {
+        title: 'For Agencies',
+        description:
+            'White-label design, Shopify, and front-end production support for agencies with more work than available capacity.'
+    },
     hero: {
         eyebrow: 'FOR AGENCIES',
         headline: 'White-label design, Shopify, and front-end support for agencies with more work than available production capacity.',
@@ -73,6 +78,9 @@ export const forAgenciesContent = {
                 description: "Ship under your agency's name, with clean, documented work your team can maintain."
             }
         ]
+    },
+    proof: {
+        heading: 'Selected proof'
     },
     assurance: {
         heading: 'White-label and confidential, by default.',

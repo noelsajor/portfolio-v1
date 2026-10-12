@@ -165,6 +165,7 @@ Use these exact strings wherever the English equivalent appears. They are the so
 | Message could not be sent. Please try again later. | No se pudo enviar el mensaje. Inténtalo de nuevo más tarde. |
 | Switch to Spanish / Switch to English | Cambiar a español / Cambiar a inglés |
 | Primary (nav aria-label) | Principal |
+| Menu / Close (mobile nav toggle) | Menú / Cerrar |
 | Footer links | Enlaces del pie de página |
 | Experience summary | Resumen de experiencia |
 | Language | Idioma |
@@ -202,6 +203,7 @@ Project enum display labels (values stay English in frontmatter):
 ## 6. SEO strings
 
 - `title` (page metadata): 2 to 4 words, sentence case, no brand suffix (the layout template appends ` | Jose Leon`). `Sobre mí`, `Contacto`, `Para agencias`, `Proyectos`, `CV`.
+- Home `title` is the one fully branded title and keeps the English pattern `Jose Leon — <tagline>` (em dash included); it bypasses the layout template.
 - `description`: 140 to 160 characters, one complete sentence, contains the page's primary Spanish search term from the Phase 9 keyword table (`desarrollador Shopify freelance`, `soporte white-label para agencias`, `diseñador UI UX`, `desarrollador frontend`). Written for the Spanish searcher, not translated from the English description.
 - Case-study `seoTitle`: `<Project> — <angle> | Jose Leon` mirrors the English pattern (this is the one place an em dash is kept, because the English pattern is parsed by `work/[slug]/page.tsx`, which strips the ` | Jose Leon` suffix). Keep under 60 characters before the suffix.
 - Case-study `seoDescription`: authored for Spanish intent, 140 to 160 characters, never a literal translation of the English one.

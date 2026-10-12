@@ -8,13 +8,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
 
-    return buildPageMetadata({
-        title: 'About',
-        description:
-            'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.',
-        path: '/about',
-        lang
-    })
+    const { metadata } = lang === 'es' ? aboutContentEs : aboutContentEn
+
+    return buildPageMetadata({ ...metadata, path: '/about', lang })
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
