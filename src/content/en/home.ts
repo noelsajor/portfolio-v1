@@ -142,6 +142,33 @@ export const homeContent = {
             note: "If you need a flawlessly polished final product in its first version, or a five-person team from day one, there are better options. If you need to get from an idea to something you can put in front of people, I'm probably the fastest way there."
         }
     },
+    // Real LinkedIn recommendations (profile > Recommendations > Received).
+    // Quotes are verbatim; to add one, append an item here and its Spanish
+    // translation in ../es/home.ts.
+    testimonials: {
+        heading: 'What clients say',
+        linkedinLabel: 'See the recommendations on LinkedIn',
+        items: [
+            {
+                quote: 'I highly recommend Jose for his exceptional skills in packaging, branding, and other graphic design tasks. Throughout our collaboration, he consistently showcased an impressive level of creativity and innovation, bringing fresh ideas to every project. His communication skills were great, making the entire process smooth and efficient.',
+                name: 'Bibi Nucci',
+                role: 'Co-Founder, Creative Home and Kitchen',
+                context: 'Managed Jose directly'
+            },
+            {
+                quote: 'They greatly improved my presentation with their creativity, attention to detail, and ability to translate ideas. Jose is a professional, timely, and dedicated designer who consistently delivers high-quality work. I look forward to working with them again in the future.',
+                name: 'Alex Wanderley',
+                role: 'GTM, IoT & Asset Visibility | Enterprise Sales',
+                context: 'Worked with Jose'
+            },
+            {
+                quote: "Jose's work is excellent!!! It has style and elegance, with engaging graphics. Jose is easy to work with. Overall, it was a super positive experience.",
+                name: 'Lena Zaritsky',
+                role: 'Creative Empowerment Strategist & Entrepreneur',
+                context: "Was Jose's client"
+            }
+        ]
+    },
     faq: {
         heading: 'Frequently asked',
         items: [

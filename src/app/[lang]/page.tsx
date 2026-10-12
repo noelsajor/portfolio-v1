@@ -66,7 +66,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <HeroSection lang={lang} />
       <ServicesSection lang={lang} />
       <FeaturedWorkSection lang={lang} />
-      <TestimonialsSection />
+      <TestimonialsSection lang={lang} />
       <ProcessSection lang={lang} />
       <WhyMeSection lang={lang} />
       <LandingFaq heading={faq.heading} items={faq.items} />

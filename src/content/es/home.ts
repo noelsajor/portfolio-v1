@@ -144,6 +144,32 @@ export const homeContent = {
             note: 'Si lo que necesitas es un producto final extremadamente pulido en su primera versión, o un equipo de cinco personas desde el día uno, hay mejores opciones. Si necesitas pasar de una idea a algo que se pueda probar, probablemente soy la más rápida.'
         }
     },
+    // Recomendaciones reales de LinkedIn; las citas originales están en
+    // inglés en el perfil, aquí traducidas (el enlace lleva al original).
+    testimonials: {
+        heading: 'Lo que dicen mis clientes',
+        linkedinLabel: 'Ver las recomendaciones en LinkedIn',
+        items: [
+            {
+                quote: 'Recomiendo mucho a Jose por sus habilidades excepcionales en packaging, branding y otras tareas de diseño gráfico. Durante nuestra colaboración mostró de forma constante un nivel impresionante de creatividad e innovación, aportando ideas frescas a cada proyecto. Su comunicación fue excelente e hizo que todo el proceso fuera fluido y eficiente.',
+                name: 'Bibi Nucci',
+                role: 'Cofundadora, Creative Home and Kitchen',
+                context: 'Fue jefa directa de Jose'
+            },
+            {
+                quote: 'Mejoró muchísimo mi presentación con su creatividad, su atención al detalle y su capacidad para traducir ideas. Jose es un diseñador profesional, puntual y dedicado que entrega trabajo de alta calidad de forma consistente. Espero volver a trabajar con él en el futuro.',
+                name: 'Alex Wanderley',
+                role: 'GTM, IoT & Asset Visibility | Ventas Enterprise',
+                context: 'Trabajó con Jose'
+            },
+            {
+                quote: 'El trabajo de Jose es excelente. Tiene estilo y elegancia, con gráficos que enganchan. Es muy fácil trabajar con él. En general, fue una experiencia súper positiva.',
+                name: 'Lena Zaritsky',
+                role: 'Estratega de Empoderamiento Creativo y emprendedora',
+                context: 'Fue clienta de Jose'
+            }
+        ]
+    },
     faq: {
         heading: 'Preguntas frecuentes',
         items: [
