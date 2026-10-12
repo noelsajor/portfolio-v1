@@ -71,7 +71,8 @@ export const homeContent = {
         emptyStateMessage: 'Todavía no hay proyectos destacados. Vuelve pronto.'
     },
     process: {
-        label: 'CÓMO TRABAJO',
+        // Empty on purpose: the section drops the label (ProcessSection skips it when empty).
+        label: '',
         heading: 'Un camino directo del concepto al lanzamiento.',
         steps: [
             {

@@ -17,7 +17,7 @@ export function ProcessSection({ lang }: { lang: Locale }) {
     return (
         <section className="space-y-8">
             <div className="space-y-4">
-                <p className="text-sm font-semibold tracking-wide text-white/70">{process.label}</p>
+                {process.label ? <p className="text-sm font-semibold tracking-wide text-white/70">{process.label}</p> : null}
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{process.heading}</h2>
             </div>
 

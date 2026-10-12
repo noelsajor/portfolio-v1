@@ -64,7 +64,8 @@ export const homeContent = {
         emptyStateMessage: 'No featured projects yet. Check back soon.'
     },
     process: {
-        label: 'HOW I WORK',
+        // Empty on purpose: the section drops the label (ProcessSection skips it when empty).
+        label: '',
         heading: 'A direct path from concept to launch.',
         steps: [
             {
