@@ -16,14 +16,15 @@ export const homeContent = {
             'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos a convertir ideas en sitios web y productos listos para producción.'
     },
     hero: {
-        eyebrow: 'DISEÑO DE PRODUCTO + IMPLEMENTACIÓN FRONT-END',
+        eyebrow: 'DISEÑO DE PRODUCTO + IMPLEMENTACIÓN',
         headline: ['De la idea', 'a producción.'],
         supportingText:
-            'Ayudo a agencias y equipos digitales a convertir ideas en sitios web y experiencias de producto pulidas y listas para producción, sin tener que coordinar diseñadores y desarrolladores front-end por separado.',
+            'Diseño y desarrollo sitios web y productos digitales. Una sola persona, de la idea a producción.',
         primaryCta: { label: 'Trabaja conmigo', href: '/contact' },
-        secondaryCta: { label: 'Ver mi trabajo', href: '/work' },
-        availability: 'Disponible para colaboraciones remotas, white-label y por proyecto.',
-        recruiterNote: { label: '¿Eres reclutador o responsable de contratación? Mira mi CV', href: '/resume' }
+        secondaryCta: { label: 'Mis proyectos', href: '/work' },
+        // Empty on purpose: the Spanish hero drops the availability line (HeroSection skips it when empty).
+        availability: '',
+        recruiterNote: { label: '¿Eres reclutador? Mira mi CV', href: '/resume' }
     },
     trustStrip: {
         points: [
@@ -36,7 +37,7 @@ export const homeContent = {
     services: {
         label: 'EN QUÉ PUEDO AYUDAR',
         heading: 'Un solo aliado para diseño e implementación.',
-        intro: 'Trabajo en las partes de un proyecto digital que normalmente se reparten entre varios especialistas, para que los equipos reduzcan la fricción en las entregas y avancen más rápido.',
+        intro: 'Cubro desde la conceptualización hasta el diseño de la interfaz y la implementación del código. Menos reuniones, menos cosas que se pierden entre el mockup y lo que sale en producción.',
         items: [
             {
                 title: 'Diseño de producto y UX',
@@ -97,7 +98,7 @@ export const homeContent = {
         ]
     },
     whyMe: {
-        heading: 'Menos traspasos. Menos gestión. Más responsabilidad.',
+        heading: 'Hablas con quien hace el trabajo.',
         reasons: [
             {
                 title: 'Diseño y código en un solo flujo',
@@ -126,30 +127,27 @@ export const homeContent = {
         items: [
             {
                 question: '¿Qué hace Jose Leon?',
-                answer: 'Soy diseñador de producto y desarrollador front-end freelance. Diseño flujos de usuario, interfaces y sistemas de diseño, y luego los implemento como front-ends responsive y accesibles, incluyendo tiendas Shopify y WooCommerce a medida.'
+                answer: 'Soy un generalista del diseño que crea productos y soluciones digitales. Diseño flujos de usuario, interfaces y sistemas de diseño, y luego los implemento como front-ends responsive y accesibles, incluyendo tiendas Shopify y WooCommerce a medida.'
             },
             {
                 question: '¿Con quién trabajas?',
-                answer: 'Con agencias que necesitan soporte de producción white-label, y con equipos digitales, fundadores y equipos de marketing que prefieren que una sola persona se haga cargo del diseño y de la implementación, en lugar de coordinar especialistas por separado.'
+                answer: 'Con fundadores y equipos de marketing que prefieren que una sola persona se haga cargo del diseño y de la implementación en lugar de coordinar especialistas por separado. También trabajo con agencias que necesitan soporte de producción white-label, y con equipos digitales remotos.'
             },
             {
                 question: '¿Trabajas de forma remota y en qué idiomas?',
                 answer: 'Sí. Trabajo de forma remota con equipos internacionales, en inglés y en español, por proyecto o como soporte continuo.'
             },
             {
-                question: '¿Cuál es tu stack técnico?',
-                answer: 'Figma para diseño; HTML, CSS, TypeScript, React, Next.js, Astro y Tailwind CSS para el front-end; Shopify Online Store 2.0 y Liquid para e-commerce.'
-            },
-            {
                 question: '¿Cómo empiezo un proyecto contigo?',
-                answer: 'Envíame un brief corto desde la página de contacto: qué estás construyendo, dónde está atascado y el plazo. Te respondo con el siguiente paso más útil.'
+                answer: 'Envíame un brief corto desde la página de contacto: qué estás construyendo o qué quieres construir y el plazo. Te respondo con el siguiente paso más útil.'
             }
         ]
     },
     finalCTA: {
-        heading: '¿Necesitas un par de manos extra que se haga cargo del diseño y de la implementación?',
-        body: 'Cuéntame qué estás construyendo, dónde está atascado el proyecto y qué necesita entregar tu equipo.',
+        heading: '¿Tienes un proyecto entre diseño y desarrollo?',
+        body: 'Cuéntame qué estás construyendo y te respondo con una propuesta concreta, no con un formulario de descubrimiento.',
         primaryCta: { label: 'Hablemos de tu proyecto', href: '/contact' },
-        secondaryLink: { label: 'Escríbeme directamente', href: `mailto:${siteConfig.email}` }
+        // Empty label on purpose: the Spanish final CTA drops the email link (FinalCTASection skips it when empty).
+        secondaryLink: { label: '', href: `mailto:${siteConfig.email}` }
     }
 } as const satisfies ContentShape<typeof homeContentEn>

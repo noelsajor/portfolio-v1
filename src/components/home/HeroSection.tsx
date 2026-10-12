@@ -36,7 +36,7 @@ export function HeroSection({ lang }: { lang: Locale }) {
                 </Link>
             </div>
 
-            <p className="text-sm text-white/60">{hero.availability}</p>
+            {hero.availability ? <p className="text-sm text-white/60">{hero.availability}</p> : null}
             <p className="text-sm text-white/50">
                 <Link
                     href={localizedPath(lang, hero.recruiterNote.href)}

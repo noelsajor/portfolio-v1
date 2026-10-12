@@ -19,13 +19,15 @@ export function FinalCTASection({ lang }: { lang: Locale }) {
                 >
                     {finalCTA.primaryCta.label}
                 </Link>
-                <Link
-                    href={localizedPath(lang, finalCTA.secondaryLink.href)}
-                    data-tracking="final_cta_email"
-                    className="text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                >
-                    {finalCTA.secondaryLink.label}
-                </Link>
+                {finalCTA.secondaryLink.label ? (
+                    <Link
+                        href={localizedPath(lang, finalCTA.secondaryLink.href)}
+                        data-tracking="final_cta_email"
+                        className="text-sm font-semibold text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    >
+                        {finalCTA.secondaryLink.label}
+                    </Link>
+                ) : null}
             </div>
         </section>
     )
