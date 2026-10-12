@@ -10,14 +10,14 @@ export const homeContent = {
         description: siteConfig.description
     },
     hero: {
-        eyebrow: 'PRODUCT DESIGN + FRONT-END IMPLEMENTATION',
+        eyebrow: 'PRODUCT DESIGN + IMPLEMENTATION',
         headline: ['From idea', 'to production.'],
-        supportingText:
-            "I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences—without coordinating separate designers and front-end developers.",
+        supportingText: 'I design and build websites and digital products. One person, from idea to production.',
         primaryCta: { label: 'Work With Me', href: '/contact' },
-        secondaryCta: { label: 'View My Work', href: '/work' },
-        availability: 'Available for remote, white-label and project-based collaborations.',
-        recruiterNote: { label: 'Recruiter or hiring manager? See my resume', href: '/resume' }
+        secondaryCta: { label: 'My work', href: '/work' },
+        // Empty on purpose: the hero drops the availability line (HeroSection skips it when empty).
+        availability: '',
+        recruiterNote: { label: 'Recruiter? See my resume', href: '/resume' }
     },
     trustStrip: {
         points: [
@@ -28,9 +28,9 @@ export const homeContent = {
         ]
     },
     services: {
-        label: 'WHAT I HELP WITH',
-        heading: 'One partner across design and implementation.',
-        intro: 'I work across the parts of a digital project that are normally divided between several specialists, helping teams reduce handoff friction and move faster.',
+        label: 'SERVICES',
+        heading: 'What I do.',
+        intro: 'I cover everything from the concept to the interface design and the code. Fewer meetings, fewer things lost between the mockup and what ships to production.',
         items: [
             {
                 title: 'Product & UX Design',
@@ -55,11 +55,11 @@ export const homeContent = {
         ]
     },
     featuredWork: {
-        heading: 'Selected work',
-        viewAllLabel: 'See all',
+        heading: 'Featured projects',
+        viewAllLabel: 'View all',
         viewAllHref: '/work',
-        projectCtaLabel: 'View Project',
-        emptyStateMessage: 'No featured projects yet — check back soon.'
+        projectCtaLabel: 'View project',
+        emptyStateMessage: 'No featured projects yet. Check back soon.'
     },
     process: {
         label: 'HOW I WORK',
@@ -91,7 +91,7 @@ export const homeContent = {
         ]
     },
     whyMe: {
-        heading: 'Less handoff. Less management. More ownership.',
+        heading: 'You talk to the person doing the work.',
         // Comparison table: one column per way of getting the work done.
         // `options[0]` is the highlighted column. `note` renders under the
         // table as the honest "when I'm not the right fit" line.
@@ -142,30 +142,27 @@ export const homeContent = {
         items: [
             {
                 question: 'What does Jose Leon do?',
-                answer: 'I am a freelance product designer and front-end developer. I design user flows, interfaces and design systems, then implement them as responsive, accessible front-ends, including custom Shopify and WooCommerce storefronts.'
+                answer: 'I am a design generalist who builds digital products and solutions. I design user flows, interfaces and design systems, then implement them as responsive, accessible front-ends, including custom Shopify and WooCommerce storefronts.'
             },
             {
                 question: 'Who do you work with?',
-                answer: 'Agencies that need white-label production support, and digital teams, founders and marketers who want one person to own both design and implementation instead of coordinating separate specialists.'
+                answer: 'Founders and marketing teams who would rather have one person own both design and implementation than coordinate separate specialists. I also work with agencies that need white-label production support, and with remote digital teams.'
             },
             {
                 question: 'Do you work remotely, and in which languages?',
                 answer: 'Yes. I work remotely with international teams, in English and Spanish, on project-based or ongoing engagements.'
             },
             {
-                question: 'What is your technical stack?',
-                answer: 'Figma for design; HTML, CSS, TypeScript, React, Next.js, Astro and Tailwind CSS for front-end work; Shopify Online Store 2.0 and Liquid for e-commerce.'
-            },
-            {
                 question: 'How do I start a project with you?',
-                answer: 'Send a short brief through the contact page: what you are building, where it is blocked and the timeline. I reply with the most useful next step.'
+                answer: 'Send a short brief through the contact page: what you are building or want to build, and the timeline. I reply with the most useful next step.'
             }
         ]
     },
     finalCTA: {
-        heading: 'Need an extra pair of hands that can own both design and implementation?',
-        body: 'Tell me what you are building, where the project is blocked and what your team needs help delivering.',
+        heading: 'Have a project somewhere between design and development?',
+        body: 'Tell me what you are building and I reply with a concrete proposal, not a discovery form.',
         primaryCta: { label: 'Discuss Your Project', href: '/contact' },
-        secondaryLink: { label: 'Email me directly', href: `mailto:${siteConfig.email}` }
+        // Empty label on purpose: the final CTA drops the email link (FinalCTASection skips it when empty).
+        secondaryLink: { label: '', href: `mailto:${siteConfig.email}` }
     }
 } as const
