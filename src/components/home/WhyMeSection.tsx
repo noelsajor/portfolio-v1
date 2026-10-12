@@ -34,18 +34,18 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{whyMe.heading}</h2>
 
             {/* md+: aligned grid with the first option as a raised card */}
-            <div className={['relative hidden gap-x-7 md:grid md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
+            <div className={['relative hidden md:grid md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
                 {/* Card behind the highlighted column */}
                 <div
                     aria-hidden="true"
-                    className="col-start-2 row-span-full row-start-1 -mx-5 -my-5 rounded-2xl border border-white/10 bg-black"
+                    className="col-start-2 row-span-full row-start-1 -my-5 rounded-2xl border border-white/10 bg-black"
                 />
 
                 {/* Header row */}
-                <p className="col-start-1 row-start-1 self-end pb-4 text-xs font-semibold uppercase tracking-widest text-white/45">
+                <p className="col-start-1 row-start-1 self-end pb-4 pr-5 text-xs font-semibold uppercase tracking-widest text-white/45">
                     {criterionLabel}
                 </p>
-                <div className="relative col-start-2 row-start-1 pb-4">
+                <div className="relative col-start-2 row-start-1 px-5 pb-4">
                     <span className="inline-block rounded-full border border-white/25 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-white/80">
                         {options[0]}
                     </span>
@@ -54,7 +54,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                 {options.slice(1).map((option, index) => (
                     <p
                         key={option}
-                        className={['relative row-start-1 self-end pb-4 text-lg font-semibold tracking-tight text-white/70', COL_START[index + 1]].join(' ')}
+                        className={['relative row-start-1 self-end px-5 pb-4 text-lg font-semibold tracking-tight text-white/70', COL_START[index + 1]].join(' ')}
                     >
                         {option}
                     </p>
@@ -66,7 +66,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     return [
                         <p
                             key={`${row.label}-label`}
-                            className={['col-start-1 border-t border-dashed border-white/15 py-4 text-sm font-semibold text-white', rowClass].join(' ')}
+                            className={['col-start-1 border-t border-dashed border-white/15 py-4 pr-5 text-sm font-semibold text-white', rowClass].join(' ')}
                         >
                             {row.label}
                         </p>,
@@ -78,8 +78,8 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                     rowClass,
                                     COL_START[cellIndex],
                                     cellIndex === 0
-                                        ? 'border-t border-white/10 text-white'
-                                        : 'border-t border-dashed border-white/15 text-white/55'
+                                        ? 'px-5 border-t border-white/10 text-white'
+                                        : 'px-5 border-t border-dashed border-white/15 text-white/55'
                                 ].join(' ')}
                             >
                                 {cell}
