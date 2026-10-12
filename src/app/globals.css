@@ -33,3 +33,28 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Testimonials marquee: the track holds the cards twice and slides left by
+   half its own width, so the loop is seamless. Duration is set per item
+   count by a Tailwind arbitrary-property class on the track (these rules
+   are unlayered and would otherwise beat the utility, so no duration here).
+   Hover or keyboard focus pauses it. Under reduced motion the global rule
+   above freezes the animation; the rules below then hide the cloned copy
+   and let the row scroll by hand instead. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee-clone { display: none; }
+}

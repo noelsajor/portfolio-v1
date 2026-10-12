@@ -153,20 +153,17 @@ export const homeContent = {
             {
                 quote: 'Recomiendo mucho a Jose por sus habilidades excepcionales en packaging, branding y otras tareas de diseño gráfico. Durante nuestra colaboración mostró de forma constante un nivel impresionante de creatividad e innovación, aportando ideas frescas a cada proyecto. Su comunicación fue excelente e hizo que todo el proceso fuera fluido y eficiente.',
                 name: 'Bibi Nucci',
-                role: 'Cofundadora, Creative Home and Kitchen',
-                context: 'Fue jefa directa de Jose'
+                role: 'Cofundadora, Creative Home and Kitchen'
             },
             {
                 quote: 'Mejoró muchísimo mi presentación con su creatividad, su atención al detalle y su capacidad para traducir ideas. Jose es un diseñador profesional, puntual y dedicado que entrega trabajo de alta calidad de forma consistente. Espero volver a trabajar con él en el futuro.',
                 name: 'Alex Wanderley',
-                role: 'GTM, IoT & Asset Visibility | Ventas Enterprise',
-                context: 'Trabajó con Jose'
+                role: 'GTM, IoT & Asset Visibility | Ventas Enterprise'
             },
             {
                 quote: 'El trabajo de Jose es excelente. Tiene estilo y elegancia, con gráficos que enganchan. Es muy fácil trabajar con él. En general, fue una experiencia súper positiva.',
                 name: 'Lena Zaritsky',
-                role: 'Estratega de Empoderamiento Creativo y emprendedora',
-                context: 'Fue clienta de Jose'
+                role: 'Estratega de Empoderamiento Creativo y emprendedora'
             }
         ]
     },
