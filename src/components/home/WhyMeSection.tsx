@@ -34,7 +34,7 @@ const STICKY_LABEL = 'sticky left-0 z-20 bg-black shadow-[8px_0_12px_-8px_#000] 
 export function WhyMeSection({ lang }: { lang: Locale }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { whyMe } = homeContent
-    const { criterionLabel, options, highlightTagline, rows, note, scrollHint } = whyMe.comparison
+    const { criterionLabel, options, rows, note, scrollHint } = whyMe.comparison
     const rowCount = (rows.length + 1) as keyof typeof GRID_ROWS // header row + one per criterion
 
     return (
@@ -44,7 +44,13 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
 
             {/* Below md this is a horizontal scroller; its vertical padding gives the card's -my-5 overhang room, since overflow-x clips the y axis too. On md+ it is a plain wrapper. */}
             <div className="max-md:-mr-4 max-md:overflow-x-auto max-md:py-8 max-md:pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className={['relative grid min-w-[42rem] grid-cols-[7rem_14rem_10.5rem_10.5rem] md:min-w-0 md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}>
+                {/* ARIA table semantics over the CSS grid: the row wrappers are display:contents, so cells still
+                    place themselves on the one shared grid, but crawlers and screen readers get real rows/cells. */}
+                <div
+                    role="table"
+                    aria-label={whyMe.heading}
+                    className={['relative grid min-w-[42rem] grid-cols-[7rem_14rem_10.5rem_10.5rem] md:min-w-0 md:grid-cols-[11rem_1.3fr_1fr_1fr]', GRID_ROWS[rowCount]].join(' ')}
+                >
                     {/* Card behind the highlighted column: same raised-panel treatment as the final CTA (white/5 + soft radial glow).
                         md+ only: on mobile a spanning card would slide under the sticky criterion column as one rounded slab, so there
                         the highlight is painted per cell instead (header + me cells below), which clips cleanly while scrolling. */}
@@ -54,7 +60,9 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     />
 
                     {/* Header row */}
+                    <div role="row" className="contents">
                     <p
+                        role="columnheader"
                         className={[
                             // flex + items-end (not self-end) and the -mt-5/pt-5 overhang: the cell fills the whole header row, card overhang included, so when sticky it covers what scrolls under it.
                             'col-start-1 row-start-1 -mt-8 flex items-end pb-4 pr-5 pt-8 text-xs font-semibold uppercase tracking-widest text-white/45 md:mt-0 md:pt-0',
@@ -63,25 +71,31 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     >
                         {criterionLabel}
                     </p>
-                    <div className="relative col-start-2 row-start-1 px-5 pb-4 max-md:-mt-8 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-8">
-                        <p className="text-lg font-semibold leading-snug tracking-tight text-white">{highlightTagline}</p>
+                    <div
+                        role="columnheader"
+                        className="relative col-start-2 row-start-1 flex items-end px-5 pb-4 max-md:-mt-8 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-8"
+                    >
+                        <p className="text-lg font-semibold leading-snug tracking-tight text-white">{options[0]}</p>
                     </div>
                     {options.slice(1).map((option, index) => (
                         <p
                             key={option}
+                            role="columnheader"
                             className={['relative row-start-1 self-end px-5 pb-4 text-lg font-semibold tracking-tight text-white/70', COL_START[index + 1]].join(' ')}
                         >
                             {option}
                         </p>
                     ))}
+                    </div>
 
                     {/* Criterion rows */}
                     {rows.map((row, rowIndex) => {
                         const rowClass = ROW_START[rowIndex]
                         const isLastRow = rowIndex === rows.length - 1
-                        return [
+                        return (
+                            <div key={row.label} role="row" className="contents">
                             <p
-                                key={`${row.label}-label`}
+                                role="rowheader"
                                 className={[
                                     'col-start-1 border-t border-dashed border-white/15 py-4 pr-5 text-sm font-semibold text-white',
                                     STICKY_LABEL,
@@ -89,10 +103,11 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                 ].join(' ')}
                             >
                                 {row.label}
-                            </p>,
-                            ...row.cells.map((cell, cellIndex) => (
+                            </p>
+                            {row.cells.map((cell, cellIndex) => (
                                 <p
                                     key={`${row.label}-${options[cellIndex]}`}
+                                    role="cell"
                                     className={[
                                         'relative py-4 text-sm leading-relaxed',
                                         rowClass,
@@ -106,8 +121,9 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                 >
                                     {cell}
                                 </p>
-                            ))
-                        ]
+                            ))}
+                            </div>
+                        )
                     })}
                 </div>
             </div>

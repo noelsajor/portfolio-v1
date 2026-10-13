@@ -33,6 +33,7 @@ const CONTENT = {
             services: 'Services',
             caseStudies: 'Case studies',
             faq: 'Frequently asked',
+            comparison: 'Working with me vs several freelancers vs an agency',
             profiles: 'Profiles',
             contactLine: 'Email'
         }
@@ -50,6 +51,7 @@ const CONTENT = {
             services: 'Servicios',
             caseStudies: 'Casos de estudio',
             faq: 'Preguntas frecuentes',
+            comparison: 'Trabajar conmigo vs varios freelancers vs una agencia',
             profiles: 'Perfiles',
             contactLine: 'Email'
         }
@@ -88,6 +90,16 @@ function section(lang: Locale): string {
         lines.push(`- [${project.title}](${url(lang, `/work/${project.slug}`)}): ${summary}`)
     }
     lines.push('')
+
+    // The home comparison, flattened to one claim per criterion, so an AI
+    // answering "freelancer vs agency?" can quote it without parsing a grid.
+    lines.push(`### ${labels.comparison}`, '')
+    for (const row of home.whyMe.comparison.rows) {
+        const [me, freelancers, agency] = row.cells
+        const [optMe, optFreelancers, optAgency] = home.whyMe.comparison.options
+        lines.push(`- ${row.label}: ${optMe}: ${me}. ${optFreelancers}: ${freelancers}. ${optAgency}: ${agency}.`)
+    }
+    lines.push(home.whyMe.comparison.note, '')
 
     lines.push(`### ${labels.faq}`, '')
     for (const item of [...home.faq.items, ...forAgencies.faq.items]) {

@@ -104,39 +104,50 @@ export const homeContent = {
         heading: 'Hablas con quien hace el trabajo.',
         comparison: {
             criterionLabel: 'Qué cambia',
-            options: ['Trabajar conmigo', 'Varios freelancers', 'Una agencia'],
-            highlightTagline: 'Trabajando conmigo',
+            options: ['Conmigo', 'Con varios freelancers', 'Con una agencia'],
             rows: [
                 {
-                    label: 'Con quién hablas',
-                    cells: ['Con quien diseña y programa', 'Con cada especialista por separado', 'Con un gestor de cuenta']
+                    label: 'Hablas con',
+                    cells: ['La persona que diseña y programa', 'Cada especialista por separado', 'Un gestor de cuenta']
                 },
                 {
-                    label: 'Traspaso diseño → desarrollo',
-                    cells: ['No existe: lo hace la misma persona', 'Lo coordinas tú', 'Interno; lo pagas pero no lo ves']
-                },
-                {
-                    label: 'Arranque',
-                    cells: ['Días', 'Semanas: buscar, contratar y alinear', 'Semanas: onboarding y proceso']
-                },
-                {
-                    label: 'Quién coordina',
-                    cells: ['Yo', 'Tú', 'La agencia, con su capa de gestión']
-                },
-                {
-                    label: 'Costo',
+                    label: 'Entre el diseño y el código',
                     cells: [
-                        'Una sola tarifa; no pagas coordinación ni horas duplicadas',
-                        'Suma de tarifas más el tiempo que inviertes coordinando',
-                        'Tarifa de equipo más gestión de cuenta y margen'
+                        'No se pierde nada: lo hace la misma persona',
+                        'Tú conectas al diseñador con el developer',
+                        'Se traduce internamente y pagas esas horas'
                     ]
                 },
                 {
-                    label: 'Para qué soy ideal',
+                    label: 'Empiezas',
+                    cells: ['El mismo día', 'En semanas: buscar y alinear gente', 'En semanas: onboarding y proceso']
+                },
+                {
+                    label: 'Algo que probar',
+                    cells: ['Al día siguiente, a veces el mismo día', 'Cuando cada parte se integra', 'Al cierre de la primera fase']
+                },
+                {
+                    label: 'Coordina',
+                    cells: ['Yo', 'Tú', 'La agencia']
+                },
+                {
+                    label: 'Pagas',
                     cells: [
-                        'Pasar de una idea a un prototipo o producto que se pueda probar e iterar, rápido y con poca inversión inicial',
+                        'Una sola tarifa, pensada para validar sin una gran inversión',
+                        'Varias tarifas que suman rápido',
+                        'Tarifa de equipo, más gestión y margen'
+                    ]
+                },
+                {
+                    label: 'Tu tiempo',
+                    cells: ['Revisar y decidir', 'Perseguir entregas y conectar piezas', 'Reuniones de seguimiento y aprobaciones']
+                },
+                {
+                    label: 'Ideal para',
+                    cells: [
+                        'Pasar de una idea a un producto que se pueda probar, rápido',
                         'Proyectos con especialidades muy definidas',
-                        'Proyectos grandes con muchos frentes a la vez'
+                        'Proyectos grandes con muchos frentes'
                     ]
                 }
             ],

@@ -96,44 +96,54 @@ export const homeContent = {
     whyMe: {
         heading: 'You talk to the person doing the work.',
         // Comparison table: one column per way of getting the work done.
-        // `options[0]` is the highlighted column. `note` renders under the
-        // table as the honest "when I'm not the right fit" line.
+        // `options[0]` is the highlighted column and doubles as its visible
+        // header. `note` renders under the table as the honest caveat.
         comparison: {
             criterionLabel: 'What changes',
-            options: ['Working with me', 'Several freelancers', 'An agency'],
-            // Subtitle shown inside the highlighted (first) column.
-            highlightTagline: 'Working with me',
+            options: ['With me', 'With several freelancers', 'With an agency'],
             rows: [
                 {
-                    label: 'Who you talk to',
+                    label: 'You talk to',
                     cells: ['The person who designs and codes', 'Each specialist, separately', 'An account manager']
                 },
                 {
-                    label: 'Design-to-dev handoff',
-                    cells: ["There isn't one: the same person does both", 'You coordinate it', 'Internal; you pay for it but never see it']
-                },
-                {
-                    label: 'Time to start',
-                    cells: ['Days', 'Weeks: finding, hiring and aligning people', 'Weeks: onboarding and process']
-                },
-                {
-                    label: 'Who coordinates',
-                    cells: ['Me', 'You', 'The agency, through its management layer']
-                },
-                {
-                    label: 'Cost',
+                    label: 'Between design and code',
                     cells: [
-                        'One rate; no coordination or duplicated hours',
-                        'The sum of every rate, plus the time you spend coordinating',
-                        'Team rate plus account management and margin'
+                        'Nothing gets lost: the same person does both',
+                        'You connect the designer with the developer',
+                        'It gets translated internally and you pay for those hours'
                     ]
+                },
+                {
+                    label: 'You start',
+                    cells: ['The same day', 'In weeks: finding and aligning people', 'In weeks: onboarding and process']
+                },
+                {
+                    label: 'Something to try',
+                    cells: ['The next day, sometimes the same day', 'When every piece comes together', 'At the end of the first phase']
+                },
+                {
+                    label: 'Coordination',
+                    cells: ['Me', 'You', 'The agency']
+                },
+                {
+                    label: 'You pay',
+                    cells: [
+                        'One rate, sized to validate without a big investment',
+                        'Several rates that add up fast',
+                        'A team rate, plus management and margin'
+                    ]
+                },
+                {
+                    label: 'Your time',
+                    cells: ['Reviewing and deciding', 'Chasing deliveries and connecting pieces', 'Status meetings and approvals']
                 },
                 {
                     label: 'Best for',
                     cells: [
-                        'Getting from an idea to a prototype or product you can test and iterate on, fast and with a small upfront investment',
-                        'Projects with very well-defined specialties',
-                        'Large projects with many fronts at once'
+                        'Going from an idea to a testable product, fast',
+                        'Projects with very defined specialties',
+                        'Large projects with many fronts'
                     ]
                 }
             ],
