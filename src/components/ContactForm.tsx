@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { sendGAEvent } from '@next/third-parties/google'
 import { SUPPORT_TYPES, TIMELINES, SUPPORT_TYPE_LABELS, TIMELINE_LABELS } from '@/lib/contact-form-options'
 import type { Locale } from '@/lib/i18n'
@@ -141,12 +142,14 @@ export function ContactForm({ lang }: { lang: Locale }) {
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                     <label htmlFor="supportType" className="text-sm font-medium text-white/70">{t.supportTypeLabel}</label>
+                    {/* appearance-none hides the native arrow (whose position ignores padding) so the chevron can sit with real right padding. */}
+                    <div className="relative">
                     <select
                         required
                         id="supportType"
                         name="supportType"
                         defaultValue=""
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                     >
                         <option value="" disabled>
                             {t.selectOne}
@@ -157,15 +160,19 @@ export function ContactForm({ lang }: { lang: Locale }) {
                             </option>
                         ))}
                     </select>
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                    </div>
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="timeline" className="text-sm font-medium text-white/70">{t.timelineLabel}</label>
+                    {/* appearance-none hides the native arrow (whose position ignores padding) so the chevron can sit with real right padding. */}
+                    <div className="relative">
                     <select
                         required
                         id="timeline"
                         name="timeline"
                         defaultValue=""
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                     >
                         <option value="" disabled>
                             {t.selectOne}
@@ -176,6 +183,8 @@ export function ContactForm({ lang }: { lang: Locale }) {
                             </option>
                         ))}
                     </select>
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                    </div>
                 </div>
             </div>
 
