@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ContactForm } from '@/components/ContactForm'
-import { buildPageMetadata, siteConfig } from '@/lib/site-config'
+import { buildPageMetadata } from '@/lib/site-config'
 import { contactContent as contactContentEn } from '@/content/en/static-pages'
 import { contactContent as contactContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale, localizedPath } from '@/lib/i18n'
@@ -54,31 +54,11 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 </p>
             </div>
 
-            <div className="grid gap-12 md:grid-cols-2">
+            {/* The form takes the freed width (the Otros canales column is gone;
+                email and LinkedIn live in the footer on every page). Capped at
+                3xl so single inputs keep a sane line length. */}
+            <div className="max-w-3xl">
                 <ContactForm lang={lang} />
-
-                {/* Address links carry data-tracking attributes — ids never change per locale */}
-                <div className="space-y-6">
-                    <h2 className="text-lg font-semibold">{contactContent.otherChannelsHeading}</h2>
-                    <address className="not-italic space-y-3">
-                        <Link
-                            className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
-                            href={`mailto:${siteConfig.email}`}
-                            data-tracking="contact_email_link"
-                        >
-                            {siteConfig.email}
-                        </Link>
-                        <Link
-                            className="block text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm"
-                            href={siteConfig.sameAs.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            data-tracking="contact_linkedin_link"
-                        >
-                            {contactPage.linkedinLabel}
-                        </Link>
-                    </address>
-                </div>
             </div>
         </div>
     )
