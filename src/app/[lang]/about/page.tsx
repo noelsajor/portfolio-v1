@@ -5,6 +5,9 @@ import { aboutContent as aboutContentEs } from '@/content/es/static-pages'
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 import { JsonLd } from '@/components/JsonLd'
 import { buildPageNode } from '@/lib/page-schema'
+import { FeaturedWorkSection } from '@/components/home/FeaturedWorkSection'
+import { TestimonialsSection } from '@/components/home/TestimonialsSection'
+import { FinalCTASection } from '@/components/home/FinalCTASection'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang: rawLang } = await params
@@ -19,7 +22,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     const { lang: rawLang } = await params
     const lang = isLocale(rawLang) ? rawLang : DEFAULT_LOCALE
     const aboutContent = lang === 'es' ? aboutContentEs : aboutContentEn
-    const { metadata, facts } = aboutContent
+    const { metadata } = aboutContent
 
     // ProfilePage (Google's documented type for an "about the author" page)
     // whose mainEntity is the site-wide Person node from SiteShell.
@@ -35,7 +38,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     ]
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-24">
             <JsonLd nodes={jsonLd} />
             <div className="space-y-6">
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{aboutContent.heading}</h1>
@@ -46,22 +49,12 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 ))}
             </div>
 
-            {/* GEO block: the same facts as the prose, as label/value pairs
-                (see aboutContent.facts). A definition list so the pairing is
-                explicit in the markup, not only visually. */}
-            <section aria-labelledby="about-facts-heading" className="space-y-4">
-                <h2 id="about-facts-heading" className="text-xl font-semibold tracking-tight md:text-2xl">
-                    {facts.heading}
-                </h2>
-                <dl className="grid gap-x-8 gap-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 sm:grid-cols-2 md:p-6">
-                    {facts.items.map((item) => (
-                        <div key={item.label} className="space-y-1">
-                            <dt className="text-xs font-semibold uppercase tracking-wide text-white/50">{item.label}</dt>
-                            <dd className="text-sm text-white/80">{item.value}</dd>
-                        </div>
-                    ))}
-                </dl>
-            </section>
+            {/* The conversion path the home uses, reused: proof, social proof, next step.
+                The En resumen facts block is gone from the UI; aboutContent.facts stays
+                in the content module because llms.txt still serves it to crawlers. */}
+            <FeaturedWorkSection lang={lang} />
+            <TestimonialsSection lang={lang} />
+            <FinalCTASection lang={lang} />
         </div>
     )
 }
