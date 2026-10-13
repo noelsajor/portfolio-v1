@@ -33,19 +33,15 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     ]
 
     return (
-        <div className="space-y-12">
+        // Same centered, capped container as the home FAQ (mx-auto max-w-3xl).
+        <div className="mx-auto max-w-3xl space-y-12">
             <JsonLd nodes={jsonLd} />
-            <div className="space-y-6">
+            <div className="space-y-6 text-center">
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{contactContent.heading}</h1>
-                <p className="max-w-2xl text-white/70">{contactContent.intro}</p>
+                <p className="mx-auto max-w-2xl text-white/70">{contactContent.intro}</p>
             </div>
 
-            {/* The form takes the freed width (the Otros canales column is gone;
-                email and LinkedIn live in the footer on every page). Capped at
-                3xl so single inputs keep a sane line length. */}
-            <div className="max-w-3xl">
-                <ContactForm lang={lang} />
-            </div>
+            <ContactForm lang={lang} />
         </div>
     )
 }
