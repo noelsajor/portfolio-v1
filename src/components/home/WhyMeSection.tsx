@@ -69,7 +69,8 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                             STICKY_LABEL
                         ].join(' ')}
                     >
-                        {criterionLabel}
+                        {/* Visually hidden by request; the cell itself stays, since on mobile its solid background covers what scrolls under the sticky column, and ARIA still gets the column's name. */}
+                        <span className="sr-only">{criterionLabel}</span>
                     </p>
                     <div
                         role="columnheader"
