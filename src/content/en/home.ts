@@ -107,7 +107,7 @@ export const homeContent = {
                     cells: ['The person who designs and codes', 'Each specialist, separately', 'An account manager']
                 },
                 {
-                    label: 'Between design and code',
+                    label: 'From design to code',
                     cells: [
                         'Nothing gets lost: the same person does both',
                         'You connect the designer with the developer',
@@ -115,15 +115,15 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'You start',
+                    label: 'You start your project',
                     cells: ['The same day', 'In weeks: finding and aligning people', 'In weeks: onboarding and process']
                 },
                 {
-                    label: 'Something to try',
+                    label: 'You validate your idea',
                     cells: ['The next day, sometimes the same day', 'When every piece comes together', 'At the end of the first phase']
                 },
                 {
-                    label: 'Coordination',
+                    label: 'Who coordinates it',
                     cells: ['Me', 'You', 'The agency']
                 },
                 {
@@ -135,7 +135,7 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'Your time',
+                    label: 'Your time goes to',
                     cells: ['Reviewing and deciding', 'Chasing deliveries and connecting pieces', 'Status meetings and approvals']
                 },
                 {

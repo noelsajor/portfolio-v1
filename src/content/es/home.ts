@@ -111,7 +111,7 @@ export const homeContent = {
                     cells: ['La persona que diseña y programa', 'Cada especialista por separado', 'Un gestor de cuenta']
                 },
                 {
-                    label: 'Entre el diseño y el código',
+                    label: 'Del diseño al código',
                     cells: [
                         'No se pierde nada: lo hace la misma persona',
                         'Tú conectas al diseñador con el developer',
@@ -119,15 +119,15 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'Empiezas',
+                    label: 'Empiezas tu proyecto',
                     cells: ['El mismo día', 'En semanas: buscar y alinear gente', 'En semanas: onboarding y proceso']
                 },
                 {
-                    label: 'Algo que probar',
+                    label: 'Validas tu idea',
                     cells: ['Al día siguiente, a veces el mismo día', 'Cuando cada parte se integra', 'Al cierre de la primera fase']
                 },
                 {
-                    label: 'Coordina',
+                    label: 'Quién lo coordina',
                     cells: ['Yo', 'Tú', 'La agencia']
                 },
                 {
@@ -139,7 +139,7 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'Tu tiempo',
+                    label: 'Inviertes tu tiempo en',
                     cells: ['Revisar y decidir', 'Perseguir entregas y conectar piezas', 'Reuniones de seguimiento y aprobaciones']
                 },
                 {
