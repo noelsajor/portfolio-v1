@@ -74,7 +74,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                     </p>
                     <div
                         role="columnheader"
-                        className="relative col-start-2 row-start-1 flex items-end px-5 pb-4 max-md:-mt-8 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-8"
+                        className="relative col-start-2 row-start-1 flex items-end px-5 pb-4 max-md:-mt-4 max-md:rounded-t-2xl max-md:border max-md:border-b-0 max-md:border-white/10 max-md:bg-white/5 max-md:pt-4"
                     >
                         <p className="text-lg font-semibold leading-snug tracking-tight text-white">{options[0]}</p>
                     </div>
@@ -115,7 +115,7 @@ export function WhyMeSection({ lang }: { lang: Locale }) {
                                         COL_START[cellIndex],
                                         cellIndex === 0
                                             ? `px-5 border-t border-white/10 text-white max-md:border-x max-md:bg-white/5${
-                                                  isLastRow ? ' max-md:rounded-b-2xl max-md:border-b max-md:pb-12' : ''
+                                                  isLastRow ? ' max-md:rounded-b-2xl max-md:border-b max-md:pb-6' : ''
                                               }`
                                             : 'px-5 border-t border-dashed border-white/15 text-white/55'
                                     ].join(' ')}
