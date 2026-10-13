@@ -103,14 +103,18 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
             </section>
 
             {projects.length > 0 ? (
-                <section className="space-y-3">
+                <section className="space-y-4">
                     <h2 className="text-lg font-semibold">{resumeContent.selectedWorkHeading}</h2>
-                    <ul className="space-y-2 text-sm">
+                    {/* Same shape as the Experience entries: bold title line, muted detail below. */}
+                    <ul className="space-y-5">
                         {projects.map((project) => (
-                            <li key={project.slug}>
-                                <Link href={localizedPath(lang, `/work/${project.slug}`)} className={linkClass}>
-                                    {project.title} — {project.summary}
-                                </Link>
+                            <li key={project.slug} className="space-y-1">
+                                <p className="font-semibold text-white">
+                                    <Link href={localizedPath(lang, `/work/${project.slug}`)} className={linkClass}>
+                                        {project.title}
+                                    </Link>
+                                </p>
+                                <p className="text-sm text-white/70">{project.summary}</p>
                             </li>
                         ))}
                     </ul>
