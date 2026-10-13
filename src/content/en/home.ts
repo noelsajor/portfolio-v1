@@ -115,12 +115,12 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'You start your project',
-                    cells: ['The same day', 'In weeks: finding and aligning people', 'In weeks: onboarding and process']
-                },
-                {
-                    label: 'You validate your idea',
-                    cells: ['The next day, sometimes the same day', 'When every piece comes together', 'At the end of the first phase']
+                    label: 'You start and validate',
+                    cells: [
+                        'You start today and have something to try the next day',
+                        'You start in weeks and test when everything comes together',
+                        'You start in weeks and test at the end of the first phase'
+                    ]
                 },
                 {
                     label: 'Who coordinates it',

@@ -119,12 +119,12 @@ export const homeContent = {
                     ]
                 },
                 {
-                    label: 'Empiezas tu proyecto',
-                    cells: ['El mismo día', 'En semanas: buscar y alinear gente', 'En semanas: onboarding y proceso']
-                },
-                {
-                    label: 'Validas tu idea',
-                    cells: ['Al día siguiente, a veces el mismo día', 'Cuando cada parte se integra', 'Al cierre de la primera fase']
+                    label: 'Empiezas y validas',
+                    cells: [
+                        'Empiezas hoy y tienes algo que probar al día siguiente',
+                        'Empiezas en semanas y pruebas cuando todo se integra',
+                        'Empiezas en semanas y pruebas al cierre de la primera fase'
+                    ]
                 },
                 {
                     label: 'Quién lo coordina',
