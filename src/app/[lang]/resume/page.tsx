@@ -68,23 +68,6 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                 </div>
             </header>
 
-            <section className="space-y-4">
-                <h2 className="text-lg font-semibold">{resumeContent.skillsHeading}</h2>
-                <div className="grid gap-6 sm:grid-cols-2">
-                    {skillGroups.map((group) => (
-                        <div key={group.title} className="space-y-2">
-                            <h3 className="text-sm font-semibold text-white/90">{group.title}</h3>
-                            <ul className="flex flex-wrap gap-2 text-sm text-white/70">
-                                {group.skills.map((skill) => (
-                                    <li key={skill} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
-                                        {skill}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </section>
 
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">{resumeContent.experienceHeading}</h2>
@@ -128,6 +111,25 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                     </div>
                 </section>
             ) : null}
+
+            {/* Skills come after the evidence: recruiters scan experience and projects first, the keyword index last. */}
+            <section className="space-y-4">
+                <h2 className="text-lg font-semibold">{resumeContent.skillsHeading}</h2>
+                <div className="grid gap-6 sm:grid-cols-2">
+                    {skillGroups.map((group) => (
+                        <div key={group.title} className="space-y-2">
+                            <h3 className="text-sm font-semibold text-white/90">{group.title}</h3>
+                            <ul className="flex flex-wrap gap-2 text-sm text-white/70">
+                                {group.skills.map((skill) => (
+                                    <li key={skill} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                                        {skill}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </section>
 
             <section className="space-y-3">
                 <h2 className="text-lg font-semibold">{resumeContent.getInTouchHeading}</h2>
