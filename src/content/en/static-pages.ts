@@ -53,7 +53,8 @@ export const resumeContent = {
         description:
             'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
     },
-    eyebrow: 'Resume',
+    // Empty on purpose: the resume page drops the eyebrow (the page skips it when empty).
+    eyebrow: '',
     name: 'Jose Leon',
     title: 'Multidisciplinary Designer & Front-End Production Specialist',
     intro: 'For recruiters and hiring managers evaluating contract, short-term, or permanent roles.',

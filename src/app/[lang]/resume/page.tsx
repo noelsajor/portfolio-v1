@@ -44,7 +44,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
         <div className="space-y-12">
             <JsonLd nodes={jsonLd} />
             <header className="space-y-3">
-                <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{resumeContent.eyebrow}</p>
+                {resumeContent.eyebrow ? <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{resumeContent.eyebrow}</p> : null}
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{resumeContent.name}</h1>
                 <p className="max-w-2xl text-lg text-white/80">{resumeContent.title}</p>
                 <p className="max-w-2xl text-white/70">{resumeContent.intro}</p>

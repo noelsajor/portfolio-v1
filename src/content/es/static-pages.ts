@@ -54,7 +54,8 @@ export const resumeContent = {
         description:
             'CV de Jose Leon, diseñador multidisciplinario y especialista en producción front-end: habilidades, experiencia y proyectos para reclutadores.'
     },
-    eyebrow: 'CV',
+    // Empty on purpose: the resume page drops the eyebrow (the page skips it when empty).
+    eyebrow: '',
     name: 'Jose Leon',
     // Also used as Person.jobTitle in JSON-LD (StructuredData.tsx).
     title: 'Diseñador multidisciplinario y especialista en producción front-end',
