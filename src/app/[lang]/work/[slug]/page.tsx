@@ -16,10 +16,12 @@ import { CapabilityChips } from '@/components/CapabilityChips'
 import { SegmentBadge } from '@/components/SegmentBadge'
 import { Chip } from '@/components/Chip'
 import { getUiContent } from '@/lib/ui-content'
+import { headingIds } from '@/lib/mdx-headings'
 import { projectTypeLabel } from '@/lib/project-labels'
 import { JsonLd } from '@/components/JsonLd'
 import { buildBreadcrumbTrail, localizedAbsoluteUrl } from '@/lib/page-schema'
 import { buildArticleSchema, buildWebPageSchema } from '@/lib/structured-data'
+import { FeaturedWorkSection } from '@/components/home/FeaturedWorkSection'
 import { workContent as workContentEn } from '@/content/en/static-pages'
 import { workContent as workContentEs } from '@/content/es/static-pages'
 
@@ -110,6 +112,8 @@ export default async function CaseStudyPage({
     // the locale of the body actually rendered (English fallback until this
     // slug's Spanish file exists), not the page locale.
     const { askChips } = getUiContent(contentLocale).work
+    const presentHeadings = headingIds(content)
+    const visibleAskChips = askChips.filter((chip) => presentHeadings.has(decodeURIComponent(chip.href.slice(1))))
     const readyGalleryItems = (frontmatter.gallery ?? []).filter(
         (item): item is typeof item & { src: string } => item.status === 'ready' && Boolean(item.src)
     )
@@ -170,7 +174,11 @@ export default async function CaseStudyPage({
                     ) : null}
                 </div>
 
-                <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
+                {/* Two columns only when there is a chip box to put in the second one;
+                    otherwise the header would leave a third of the row empty. Both class
+                    strings are written out in full because the CSP forbids inline styles,
+                    so Tailwind's scanner has to see each one literally. */}
+                <div className={visibleAskChips.length > 0 ? 'grid gap-8 lg:grid-cols-[2fr_1fr]' : 'grid gap-8'}>
                     <div className="space-y-4">
                         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{frontmatter.title}</h1>
                         {frontmatter.liveUrl ? (
@@ -209,16 +217,22 @@ export default async function CaseStudyPage({
                         </div>
                     </div>
 
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4 lg:self-start">
-                        <p className="text-sm font-semibold text-white/80">{work.askHeading}</p>
-                        <div className="flex flex-wrap gap-2">
-                            {askChips.map((chip) => (
-                                <Chip key={chip.href} variant="primary" href={chip.href}>
-                                    {chip.label}
-                                </Chip>
-                            ))}
+                    {/* Only the chips whose heading this case study actually has: shorter
+                        ones (a self-initiated concept, say) don't carry all four sections,
+                        and a chip pointing at a missing anchor is a dead link. With none
+                        left the whole box goes, rather than leaving an empty panel. */}
+                    {visibleAskChips.length > 0 ? (
+                        <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4 lg:self-start">
+                            <p className="text-sm font-semibold text-white/80">{work.askHeading}</p>
+                            <div className="flex flex-wrap gap-2">
+                                {visibleAskChips.map((chip) => (
+                                    <Chip key={chip.href} variant="primary" href={chip.href}>
+                                        {chip.label}
+                                    </Chip>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    ) : null}
                 </div>
 
                 {frontmatter.coverImage ? (
@@ -277,6 +291,8 @@ export default async function CaseStudyPage({
                     </div>
                 </section>
             ) : null}
+
+            <FeaturedWorkSection lang={lang} heading={work.moreProjects} excludeSlug={slug} />
         </div>
     )
 }

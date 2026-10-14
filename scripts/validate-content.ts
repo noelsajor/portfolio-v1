@@ -7,6 +7,7 @@ import path from 'node:path'
 import { projectFrontmatterSchema } from '../src/lib/project-schema'
 import matter from 'gray-matter'
 import { getProjectSlugs, getProjects } from '../src/lib/projects'
+import { headingIds } from '../src/lib/mdx-headings'
 import { uiContent as uiContentEn } from '../src/content/en/ui'
 import { uiContent as uiContentEs } from '../src/content/es/ui'
 
@@ -290,7 +291,6 @@ console.log('\nLocale parity:')
         ? fs.readdirSync(esDir).filter((f) => f.endsWith('.mdx') && !f.startsWith('_'))
         : []
     const enDir = path.join(process.cwd(), 'src/content/en/case-studies')
-    const enFiles = fs.readdirSync(enDir).filter((f) => f.endsWith('.mdx') && !f.startsWith('_'))
 
     check(
         'every es case-study file has a matching en file',
@@ -330,43 +330,34 @@ console.log('\nLocale parity:')
         )
     }
 
-    // rehype-slug uses github-slugger: lowercase, strip everything that is
-    // not a letter, number, space or hyphen (Unicode-aware), spaces -> '-'.
-    function slugify(heading: string): string {
-        return heading
-            .trim()
-            .toLowerCase()
-            .replace(/[^\p{L}\p{N}\s-]/gu, '')
-            .replace(/\s+/g, '-')
+    // The case-study page renders only the question chips whose heading the
+    // document actually has, so a shorter case study is allowed to carry
+    // fewer sections. What must not drift is which chips the two locales
+    // offer for the same project: a reader switching language should get the
+    // same navigation, not a box that appears on /es and vanishes on /en.
+    const CHIP_ANCHORS: Record<'en' | 'es', string[]> = {
+        en: uiContentEn.work.askChips.map((chip) => decodeURIComponent(chip.href.slice(1))),
+        es: uiContentEs.work.askChips.map((chip) => decodeURIComponent(chip.href.slice(1)))
     }
 
-    function headingIds(markdown: string): Set<string> {
-        return new Set(
-            markdown
-                .split('\n')
-                .filter((line) => /^##\s+/.test(line))
-                .map((line) => slugify(line.replace(/^##\s+/, '')))
+    /** The chips a locale's file will show, as their English labels, so the
+     *  two locales' lists are comparable even though their anchors differ. */
+    function chipsShown(locale: 'en' | 'es', dir: string, file: string): string[] {
+        const { content } = matter(fs.readFileSync(path.join(dir, file), 'utf8'))
+        const ids = headingIds(content)
+        return CHIP_ANCHORS[locale]
+            .map((anchor, i): string | null => (ids.has(anchor) ? uiContentEn.work.askChips[i].label : null))
+            .filter((label): label is string => label !== null)
+    }
+
+    for (const file of esFiles) {
+        const en = chipsShown('en', enDir, file)
+        const es = chipsShown('es', esDir, file)
+        const same = en.length === es.length && en.every((label, i) => label === es[i])
+        check(
+            `${file}: shows the same question chips in both locales${same ? '' : ` (en: ${en.join(', ') || 'none'} / es: ${es.join(', ') || 'none'})`}`,
+            same
         )
-    }
-
-    const REQUIRED_ANCHORS: Record<'en' | 'es', string[]> = {
-        en: uiContentEn.work.askChips.map((chip) => chip.href.slice(1)),
-        es: uiContentEs.work.askChips.map((chip) => chip.href.slice(1))
-    }
-
-    for (const [locale, dir, files] of [
-        ['en', enDir, enFiles],
-        ['es', esDir, esFiles]
-    ] as const) {
-        for (const file of files) {
-            const { content } = matter(fs.readFileSync(path.join(dir, file), 'utf8'))
-            const ids = headingIds(content)
-            const missing = REQUIRED_ANCHORS[locale].filter((anchor) => !ids.has(anchor))
-            check(
-                `${locale}/${file}: has the H2 headings the question chips link to${missing.length ? ` (missing #${missing.join(', #')})` : ''}`,
-                missing.length === 0
-            )
-        }
     }
 }
 

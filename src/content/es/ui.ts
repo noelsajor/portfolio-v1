@@ -74,7 +74,8 @@ export const uiContent = {
             { label: '¿Cómo definiste el éxito?', href: '#resultado' },
             { label: '¿Cuál fue el enfoque?', href: '#solución' }
         ],
-        gallery: 'Galería'
+        gallery: 'Galería',
+        moreProjects: 'Otros proyectos'
     },
     contactPage: {
         recruiterPrefix: '¿Eres reclutador o responsable de contratación? Mira mi ',

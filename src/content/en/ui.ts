@@ -89,7 +89,8 @@ export const uiContent = {
             { label: 'How did you define success?', href: '#outcome' },
             { label: 'What was your approach?', href: '#solution' }
         ],
-        gallery: 'Gallery'
+        gallery: 'Gallery',
+        moreProjects: 'More projects'
     },
     contactPage: {
         // Rendered as: {recruiterPrefix}<Link>{recruiterLink}</Link>{recruiterSuffix}

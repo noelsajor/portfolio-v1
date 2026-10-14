@@ -6,19 +6,28 @@ import { localizedPath, type Locale } from '@/lib/i18n'
 import { getUiContent } from '@/lib/ui-content'
 import { ProjectCarousel } from '@/components/home/ProjectCarousel'
 
-export function FeaturedWorkSection({ lang }: { lang: Locale }) {
+/**
+ * The project carousel with its heading and "view all" link.
+ *
+ * Also used at the foot of a case study, where `heading` becomes "Otros
+ * proyectos" and `excludeSlug` drops the project the reader is already on,
+ * so the row is always somewhere else to go.
+ */
+export function FeaturedWorkSection({ lang, heading, excludeSlug }: { lang: Locale; heading?: string; excludeSlug?: string }) {
     const homeContent = lang === 'es' ? homeContentEs : homeContentEn
     const { featuredWork } = homeContent
     const { carousel } = getUiContent(lang)
 
     // Every published case study, featured ones first (then the usual
     // `order`), so the carousel has enough cards to be worth scrolling.
-    const projects = [...getProjects(lang)].sort((a, b) => Number(b.featured === true) - Number(a.featured === true))
+    const projects = [...getProjects(lang)]
+        .filter((project) => project.slug !== excludeSlug)
+        .sort((a, b) => Number(b.featured === true) - Number(a.featured === true))
 
     return (
         <section className="section-stack">
             <div className="flex items-end justify-between gap-4">
-                <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{featuredWork.heading}</h2>
+                <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{heading ?? featuredWork.heading}</h2>
                 <Link
                     href={localizedPath(lang, featuredWork.viewAllHref)}
                     data-tracking="view_all_work"
