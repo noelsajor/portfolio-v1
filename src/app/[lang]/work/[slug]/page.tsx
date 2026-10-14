@@ -189,7 +189,7 @@ export default async function CaseStudyPage({
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white focus:outline-none focus:ring-2 focus:ring-white/30"
                             >
-                                {links.visitLiveSite}
+                                {frontmatter.liveUrlLabel ?? links.visitLiveSite}
                                 <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
                                 <span className="sr-only">{links.opensInNewTab}</span>
                             </Link>

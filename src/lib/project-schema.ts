@@ -60,6 +60,11 @@ export const projectFrontmatterSchema = z
         order: z.number().optional(),
         status: z.enum(['draft', 'published']).optional(),
         liveUrl: z.string().url('liveUrl must be a valid URL').optional(),
+        // Overrides the default "View live site" label. For a case study whose
+        // work never shipped, the live site is the client's current one and the
+        // default label would promise the reader something the link does not
+        // show. Locale-dependent, so each locale's file sets its own.
+        liveUrlLabel: z.string().min(1).optional(),
         repositoryUrl: z.string().url('repositoryUrl must be a valid URL').optional(),
         industry: z.string().min(1).optional(),
         seoTitle: z.string().min(1).optional(),
