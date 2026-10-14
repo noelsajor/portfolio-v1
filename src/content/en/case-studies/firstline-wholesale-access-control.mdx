@@ -49,11 +49,11 @@ This is a production store with active buyers and a live Cin7 sync, so I propose
 
 For the same reason nothing was tested against the real store. I stood up a local WordPress install in Docker and verified every access state there before proposing the change.
 
+I designed the whole flow before building it: registration and a screen of its own for each state, pending, rejected and blocked, plus the verification route. An unapproved buyer has to land on the screen that fits them rather than a broken one, which is the same access problem seen from the other side.
+
 Access is governed by user state rather than new WordPress roles, which would have created migration risk across an existing user base with mixed roles. It lives in its own plugin rather than the theme, so it can be rolled back safely. And because state, pricing, stock, and cart are all dynamic, I took the private catalog routes out of page cache entirely: performance there rests on taxonomy queries and object caching instead.
 
-I also designed the whole flow before building it: registration and a screen of its own for each state, pending, rejected and blocked, plus the verification route. An unapproved buyer has to land on the screen that fits them rather than a broken one, which is the same access problem seen from the other side.
-
-The client paused the project, so final QA and the public launch were never done.
+The client paused the project before final QA, so the catalog locking and the state flow are built and unpublished.
 
 ## Technologies
 

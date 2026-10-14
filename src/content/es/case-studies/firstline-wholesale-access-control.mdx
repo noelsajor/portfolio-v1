@@ -49,11 +49,11 @@ Es una tienda en producción, con compradores activos y sincronización en vivo 
 
 Por la misma razón nada se probó contra la tienda real. Levanté una instalación local de WordPress en Docker y ahí verifiqué cada estado de acceso antes de proponer el cambio.
 
+El flujo lo diseñé completo antes de implementarlo: el registro y una pantalla propia para cada estado, pendiente, rechazado y bloqueado, además de la ruta de verificación. Un comprador no aprobado tiene que llegar a la pantalla que le corresponde y no a una rota, que es el mismo problema de acceso visto desde el otro lado.
+
 El acceso se rige por el estado del usuario y no por roles nuevos de WordPress, que habrían creado riesgo de migración sobre una base de usuarios con roles mixtos. Vive en un plugin propio y no en el tema, para poder revertirlo con seguridad. Y como el estado, los precios, el stock y el carrito son todos dinámicos, saqué las rutas del catálogo privado de la caché de página por completo: ahí el rendimiento se apoya en consultas por taxonomía y caché de objetos.
 
-También diseñé el flujo completo antes de implementarlo: el registro y una pantalla propia para cada estado, pendiente, rechazado y bloqueado, además de la ruta de verificación. Un comprador no aprobado tiene que llegar a la pantalla que le corresponde y no a una rota, que es el mismo problema de acceso visto desde el otro lado.
-
-El cliente pausó el proyecto, así que el QA final y el lanzamiento público quedaron sin hacer.
+El cliente pausó el proyecto antes del QA final, así que el bloqueo de catálogo y el flujo de estados quedaron construidos y sin publicar.
 
 ## Tecnologías
 
