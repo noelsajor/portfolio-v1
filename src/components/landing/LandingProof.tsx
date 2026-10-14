@@ -10,7 +10,7 @@ export function LandingProof({ lang, heading }: { lang: Locale; heading: string 
     if (projects.length === 0) return null
 
     return (
-        <section className="space-y-6">
+        <section className="section-stack">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{heading}</h2>
             <ul role="list" className="grid gap-4 md:grid-cols-2">
                 {projects.map((project) => (

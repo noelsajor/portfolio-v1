@@ -16,7 +16,7 @@ export function FeaturedWorkSection({ lang }: { lang: Locale }) {
     const projects = [...getProjects(lang)].sort((a, b) => Number(b.featured === true) - Number(a.featured === true))
 
     return (
-        <section className="space-y-6">
+        <section className="section-stack">
             <div className="flex items-end justify-between gap-4">
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{featuredWork.heading}</h2>
                 <Link

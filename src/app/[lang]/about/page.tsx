@@ -38,7 +38,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     ]
 
     return (
-        <div className="space-y-24">
+        <div className="page-sections">
             <JsonLd nodes={jsonLd} />
             <div className="space-y-6">
                 <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{aboutContent.heading}</h1>

@@ -20,6 +20,40 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* The site's vertical rhythm, defined once here so it can be re-tuned from a
+   single place instead of hunting for space-y-* in every section component.
+
+   Both mirror how Tailwind's own space-y-* is built: zero specificity via
+   :where(), and the margin on every child but the last. Margin-block-end
+   rather than -start on purpose, because several pages open with a <JsonLd>
+   script tag: a script generates no box, so its margin collapses away by
+   itself, where a top margin on the following sibling would push the first
+   real section down by a full gap. */
+
+/* Between a section's heading and the content under it. */
+@utility section-stack {
+  :where(& > :not(:last-child)) {
+    margin-block-end: 2.5rem;
+  }
+  @media (width >= 48rem) {
+    :where(& > :not(:last-child)) {
+      margin-block-end: 3.5rem;
+    }
+  }
+}
+
+/* Between one section and the next. */
+@utility page-sections {
+  :where(& > :not(:last-child)) {
+    margin-block-end: 6rem;
+  }
+  @media (width >= 48rem) {
+    :where(& > :not(:last-child)) {
+      margin-block-end: 8rem;
+    }
+  }
+}
+
 /* Respect the user's OS-level reduced-motion preference: collapse every
    transition/animation to effectively instant instead of removing them,
    so hover/focus states still work but without the motion itself. */

@@ -42,7 +42,7 @@ export default async function ForAgenciesPage({ params }: { params: Promise<{ la
     ]
 
     return (
-        <div className="space-y-16">
+        <div className="page-sections">
             <JsonLd nodes={jsonLd} />
             <LandingHero lang={lang} {...hero} />
             <LandingFeatureList label={problems.label} heading={problems.heading} items={problems.items} />

@@ -61,7 +61,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   ]
 
   return (
-    <div className="space-y-24">
+    <div className="page-sections">
       <JsonLd nodes={jsonLd} />
       <HeroSection lang={lang} />
       <ServicesSection lang={lang} />

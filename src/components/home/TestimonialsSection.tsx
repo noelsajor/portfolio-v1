@@ -47,7 +47,7 @@ export function TestimonialsSection({ lang }: { lang: Locale }) {
     const duration = MARQUEE_DURATION[Math.min(Math.max(testimonials.items.length, 2), 8)]
 
     return (
-        <section className="space-y-8">
+        <section className="section-stack">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{testimonials.heading}</h2>
 
             <div className="marquee -mx-4 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_3rem,black_calc(100%-3rem),transparent)] md:mx-0 md:px-0">

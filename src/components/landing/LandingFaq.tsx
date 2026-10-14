@@ -13,7 +13,7 @@ export function LandingFaq({
 }) {
     return (
         // mx-auto: the capped-width FAQ sits centered in the page, heading included.
-        <section className="mx-auto max-w-3xl space-y-6">
+        <section className="section-stack mx-auto max-w-3xl">
             <h2 className="text-center text-2xl font-semibold tracking-tight md:text-3xl">{heading}</h2>
             <div className="divide-y divide-white/10 border-t border-white/10">
                 {items.map((item, index) => (

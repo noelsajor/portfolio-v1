@@ -32,7 +32,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
                 <main
                     id="main-content"
                     tabIndex={-1}
-                    className="mx-auto max-w-5xl px-4 py-12 focus:outline-none"
+                    className="mx-auto max-w-5xl px-4 pb-24 pt-12 focus:outline-none md:pb-32"
                 >
                     {children}
                 </main>
