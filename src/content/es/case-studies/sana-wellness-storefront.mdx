@@ -49,28 +49,13 @@ seoTitle: SANA — Marca y tienda Shopify para suplementos | Noelsajor
 seoDescription: "Identidad de marca y tienda Shopify para SANA, marca D2C de bienestar: arquitectura de producto con metafields, suscripciones y descuentos por volumen."
 ---
 
-## Desafío
+## El problema real
 
-Dos cosas sacaron esto de un tema estándar de Shopify.
+Cada variante monodosis necesita sus propios beneficios, ingredientes, recomendaciones y color de acento en la interfaz. En una plantilla de producto normal eso termina siendo una pila de excepciones que nadie puede mantener, así que monté una arquitectura de metafields: esos datos viven en cada producto y no dentro de la plantilla, y agregar una variante dejó de ser trabajo de código. Sobre eso construí la interfaz de compra por suscripción y con descuentos por volumen.
 
-Cada variante monodosis necesita sus propios beneficios, ingredientes, recomendaciones y color de acento en la interfaz. Con una plantilla de producto normal eso termina siendo una pila de excepciones que nadie puede mantener.
+El otro frente fue el rendimiento, que en una tienda viva no se audita una sola vez. La revisión encontró cosas concretas: Google Tag Manager disparaba una etiqueta GA4 duplicada encima del canal de analítica propio de Shopify, quedaban 85 archivos huérfanos de una app de page builder que habíamos descartado cargando CSS y JavaScript sin uso en cada página, la imagen hero que determinaba el LCP no tenía preload, y a varias secciones les faltaban width, height y alt. Corregir cada punto mejoró la auditoría Lighthouse en móvil, medido con ejecuciones antes y después.
 
-Y el rendimiento en móvil no es algo que se audita una vez. Un layout mobile-first solo sigue siendo rápido si se revisa cada vez que entra una sección nueva, que en una tienda viva es casi siempre.
-
-## Solución
-
-Monté una arquitectura de metafields en el admin de Shopify: beneficios, recomendaciones, ingredientes, contenido relacionado y colores de UI viven como datos estructurados de cada producto, no dentro de la plantilla. Agregar o editar una variante dejó de ser trabajo de código. Sobre eso diseñé y construí la interfaz de compra por suscripción y con descuentos por volumen.
-
-La auditoría de rendimiento encontró cuatro cosas concretas:
-
-- Google Tag Manager disparaba una etiqueta GA4 duplicada encima del canal de analítica propio de Shopify
-- Quedaban 85 archivos huérfanos de una app de page builder que habíamos descartado a favor de secciones nativas, cargando CSS y JavaScript sin uso en cada página
-- La imagen hero que determinaba el Largest Contentful Paint no tenía preload
-- A varias secciones les faltaban width, height y alt, lo que causaba saltos de layout y fallos de accesibilidad
-
-Corregir cada punto mejoró la auditoría Lighthouse en móvil, medido con ejecuciones antes y después. También limpié errores de schema de producto que Search Console marcaba en Merchant Center, un campo de marca duplicado y la falta de identificadores globales, además de enlaces internos que apuntaban al dominio equivocado.
-
-Al final monté el stack de tracking desde cero (Google Tag Manager, Meta Pixel y X Pixel) y con esos datos corrí las primeras campañas de la marca en Meta Ads y Google Ads.
+También limpié errores de schema de producto que Search Console marcaba en Merchant Center y monté el stack de tracking desde cero, con el que corrí las primeras campañas pagadas de la marca.
 
 ## Tecnologías
 

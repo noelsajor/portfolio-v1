@@ -34,43 +34,17 @@ seoTitle: Alberto Olivero Portfolio Build — Next.js | Noelsajor
 seoDescription: Next.js portfolio site build, tooling migration, and performance audit for graphic designer Alberto Olivero.
 ---
 
-## Overview
+## The real problem
 
-Alberto Olivero is an independent graphic designer working across branding, gig posters, and identity design. I built his portfolio site from scratch in Next.js — a home grid, about page, and a case-study system to present each project (Boosted, Caribombo, Diamonds, and others) individually — then came back later to migrate its tooling and audit it for performance and code quality.
+The site reuses the case-study architecture from my own portfolio, but the implementation drifted along the way: pages ended up rendering from a flat TypeScript data file instead of live MDX, so the whole MDX path was shipping with nothing using it. And that path carried `next-mdx-remote` pinned to a version flagged under CVE-2026-0969.
 
-## Business Context
+I found it sideways. Migrating from npm to pnpm immediately surfaced a TypeScript error, `Cannot find module 'mdx/types'`, that npm's flat hoisting had been quietly hiding. Chasing it confirmed the path was dead, so I removed all of it: the loader, the components, an orphaned example file, and five dependencies that existed only to hold it up. 146 fewer packages in the tree.
 
-As a friend and independent developer, I took this on as a personal project: a working portfolio site Alberto could point people to. I started from the same site architecture I use for my own portfolio — home grid, about page, a case-study system with a detail template per project, and contact — reused as a starting template and adapted to his content instead of built from zero, so each design project gets its own page instead of a flat image gallery.
-
-## Challenge
-
-Beyond the initial build, the codebase had inherited two real problems. First, a content-rendering path built around `next-mdx-remote` — carried over from the same MDX-based case-study pattern my own portfolio still uses — was pinned to a version flagged under CVE-2026-0969. Second, unlike my own portfolio, this build's case-study pages ended up rendering entirely from a plain TypeScript data file instead of live MDX, which meant the vulnerable dependency, its supporting libraries, and the components built around them were shipping unused — the same starting template, but a divergent implementation nobody had gone back to reconcile.
-
-## Solution
-
-I built the site's core structure first: a home page with a project grid, an about page, and a case-study detail template driven by a central `src/data/projects.ts` file rather than individual MDX documents, plus the header, footer, and thumbnail/asset work needed to get real projects on the site. Along the way I patched the flagged `next-mdx-remote` dependency to v6 to close the CVE.
-
-Later, migrating the project from npm to pnpm turned into more than a tooling swap. pnpm's strict, non-hoisted linking immediately surfaced a TypeScript error — `Cannot find module 'mdx/types'` — that npm's flat `node_modules` hoisting had been silently masking. Tracing that error confirmed the MDX rendering path was genuinely unused, so I removed it outright: the unused MDX loader and components, an orphaned example case-study file, and five dependencies that existed only to support that dead path — 146 fewer packages in the dependency tree, with `pnpm run build` and `pnpm run lint` passing clean afterward.
-
-I then ran a full performance and code-quality audit against the live codebase. It surfaced a specific, prioritized list: multiple project images shipping as 700KB–2.2MB PNGs with no `next/image` `sizes` prop and no `priority` hint on the largest above-the-fold image; duplicated inline SVG icon markup between the home and about pages instead of a shared component; a `usePathname()` hook called separately per nav link instead of resolved once; project image filenames containing spaces; one project entry still carrying placeholder Lorem ipsum copy and images borrowed from other projects; and a missing `metadataBase` in the root layout. Those findings are documented and prioritized but not yet implemented against this codebase.
-
-## Outcome
-
-The portfolio runs on a clean, correctly-scoped dependency tree: no vulnerable package versions, no dead rendering path, and a migration that validated the cleanup by catching a hidden type-resolution bug npm had been hiding. The performance and code-quality audit turned up a concrete, ready-to-execute punch list rather than vague advice — the next pass on this project is implementation, not further discovery.
-
-## My Contributions
-
-- Built the site from scratch: home project grid, about page, and a case-study detail template driven by a central data file
-- Patched a CVE-flagged `next-mdx-remote` dependency to the fixed version
-- Migrated the project from npm to pnpm, which surfaced a real hidden TypeScript module-resolution error masked by npm's flat dependency hoisting
-- Diagnosed that error back to an entirely unused MDX rendering path and removed it — components, loader, an orphaned example file, and five now-unnecessary dependencies (146 fewer packages)
-- Verified `pnpm run build` and `pnpm run lint` pass clean after the cleanup
-- Ran a full performance and code-quality audit, producing a prioritized, specific list of open findings (image optimization, `next/image` props, component duplication, file-naming hygiene, placeholder content, missing SEO metadata)
+I then audited the production code. These findings are documented and prioritized, but not yet implemented: project images shipping as 700KB to 2.2MB PNGs with no `sizes` prop and no `priority` on the largest above-the-fold image, inline SVG markup duplicated across pages instead of a shared component, `usePathname()` called once per navigation link, and `metadataBase` missing from the root layout.
 
 ## Technologies
 
-- **Framework**: Next.js 16, React 19
-- **Styling**: Tailwind CSS 4
-- **Language**: TypeScript
-- **Package Manager**: pnpm
-- **Tools**: Git, GitHub, ESLint
+- **Framework**: Next.js (App Router), React, TypeScript
+- **Styling**: Tailwind CSS
+- **Tools**: pnpm, Git, Vercel
+- **Focus areas**: Content architecture, dependency hygiene, performance auditing

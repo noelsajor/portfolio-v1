@@ -49,28 +49,13 @@ seoTitle: SANA — Brand & Shopify Storefront Build | Noelsajor
 seoDescription: Brand identity and Shopify storefront build for SANA — metafields product architecture, subscriptions and volume discounts, mobile-first performance work, and paid media.
 ---
 
-## Challenge
+## The real problem
 
-Two things took this past a standard Shopify theme build.
+Every single-serve variant needs its own benefits, ingredients, recommendations, and accent color in the UI. On a normal product template that becomes a pile of exceptions nobody can maintain, so I set up a metafield architecture: that data lives on each product rather than inside the template, and adding a variant stopped being a code change. On top of it I built the subscription and volume-discount purchase UI.
 
-Every single-serve variant needs its own benefits, ingredients, recommendations, and accent color in the UI. On a normal product template that turns into a pile of exceptions nobody can maintain.
+The other front was performance, which on a live store is not something you audit once. The review turned up concrete things: Google Tag Manager was firing a duplicate GA4 tag on top of Shopify's own analytics channel, 85 orphaned files were left from a page builder app we had dropped and were still loading unused CSS and JavaScript on every page, the hero image driving LCP had no preload, and several sections were missing width, height, and alt. Fixing each one improved the store's mobile Lighthouse audit, measured with before and after runs.
 
-And mobile performance is not something you audit once. A mobile-first layout only stays fast if it gets checked every time a new section lands, which on a live store is most weeks.
-
-## Solution
-
-I set up a metafield architecture in the Shopify admin: benefits, recommendations, ingredients, related content, and UI colors live as structured data on each product rather than inside the template. Adding or editing a variant stopped being a code change. On top of that I designed and built the subscription and volume-discount purchase UI.
-
-The performance audit turned up four concrete things:
-
-- Google Tag Manager was firing a duplicate GA4 tag on top of Shopify's own analytics channel
-- 85 orphaned files were left over from a page builder app we had dropped in favour of native sections, loading unused CSS and JavaScript on every page
-- The hero image driving Largest Contentful Paint had no preload
-- Several sections were missing width, height, and alt, causing layout shift and accessibility failures
-
-Fixing each one improved the store's mobile Lighthouse audit, measured with before and after runs. I also cleared product schema errors Search Console was flagging in Merchant Center, a duplicate brand field and missing global identifiers, along with internal links pointing at the wrong domain.
-
-Last, I built the tracking stack from scratch (Google Tag Manager, Meta Pixel, and X Pixel) and used that data to run the brand's first campaigns on Meta Ads and Google Ads.
+I also cleared product schema errors Search Console was flagging in Merchant Center, and built the tracking stack from scratch, which I then used to run the brand's first paid campaigns.
 
 ## Technologies
 

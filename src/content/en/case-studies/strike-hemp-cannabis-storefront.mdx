@@ -44,40 +44,17 @@ seoTitle: Strike — Hemp & Cannabis Storefront Build | Noelsajor
 seoDescription: Shopify store build for Strike, a direct-to-consumer hemp and cannabis brand — product catalog architecture, strain-based filtering, and a lab-certificate compliance system.
 ---
 
-## Overview
+## The real problem
 
-Strike sells CBD, Delta-8, Delta-9, and medical cannabis products directly to consumers. They came in with an existing logo and brand identity they wanted to keep, but no active Shopify store — my job was to build the storefront from the ground up: setting up the store, migrating and categorizing a large multi-line product catalog, building strain-based filtering across every product line, and standing up an ongoing system to manage each product's lab-tested certificate.
+Strike arrived with a logo and an identity but no live store. The catalog spans eight product lines, across cartridges, pre-rolls, flower, gummies, disposable vapes, and dabs, each with its own strains and pack sizes. Give every line its own filtering and you have eight implementations that fall out of sync on the first change, so I built one reusable filter and wired every line into it.
 
-## Business Context
+What takes this store out of the standard is the regulatory side. Every product needs a visible, verifiable, current Certificate of Analysis: the lab document stating what is actually in it. That is not a field you bolt on at the end, it is a system that has to be maintained. Each product carries a linked, downloadable COA, surfaced through a dedicated grid so a customer can check the lab results before buying, with the ongoing work of keeping them current as new product lands.
 
-Strike already had a logo and visual identity it wanted to keep, but no active storefront — there was nothing to sell online yet. Selling regulated hemp and cannabis products online also carries a documentation requirement most storefronts never have to deal with: each product needs a visible, verifiable lab certificate (a Certificate of Analysis, or COA) showing what's actually in it, kept current as the catalog changes.
-
-## Challenge
-
-Building this storefront wasn't a template install. The catalog spanned eight distinct product lines — cartridges, pre-rolls, flower, gummies, disposable vapes, dabs, and more — each with its own strains and package sizes that needed their own filtering without bleeding into each other. Every product also needed its lab certificate kept current and easy to find, not bolted on as an afterthought. None of it existed yet: there was a logo and a brand, and nothing else built around it.
-
-## Solution
-
-I set up the Shopify store from scratch and built out the product catalog across all eight lines, grouping variants by strain and package size so customers could filter within a line without categories bleeding into each other. Rather than duplicate that filtering logic eight separate times, I built it once as a single reusable component and wired every product line to it, so a fix or improvement made in one place applies everywhere instead of needing to be repeated per line.
-
-Alongside the catalog, I built and maintained the lab-certificate system: each product carries a linked, downloadable Certificate of Analysis, rendered through a dedicated product grid so customers can find and verify lab results before buying. I also built a searchable, paginated product grid with an infinite-scroll alternative, and handled the ongoing admin work of adding new products and keeping their certificates current as the catalog grew.
-
-## Outcome
-
-Strike went from no active Shopify presence to a live, published storefront covering its full multi-line catalog, with strain-based filtering that behaves the same way across every product line and a working lab-certificate system that keeps documentation attached to every product instead of scattered across disconnected PDFs.
-
-## My Contributions
-
-- Set up the Shopify store from scratch for a brand with no prior active storefront
-- Built and categorized the full multi-line product catalog (cartridges, pre-rolls, flower, gummies, disposable vapes, dabs, and more)
-- Designed and built a single, reusable strain-filtering component shared across every product line, replacing what would otherwise have been duplicated per-line logic
-- Built and maintained an ongoing Certificate of Analysis (COA) system, keeping lab-tested documentation linked and current for every product
-- Built a searchable, paginated product grid with an infinite-scroll alternative
-- Managed ongoing product creation and catalog updates via the Shopify Admin API as the store grew
+On that base I built the product grid with search and pagination, with infinite scroll as the fallback.
 
 ## Technologies
 
 - **Platform**: Shopify
 - **Languages**: Liquid, HTML, CSS, JavaScript
-- **Framework / CMS**: Shopify OS 2.0, Metafields, Schema
-- **Tools**: Git, Shopify CLI, Shopify Admin GraphQL API
+- **Framework / CMS**: Shopify OS 2.0, sections, metafields
+- **Focus areas**: Catalog architecture, reusable filtering, compliance documentation

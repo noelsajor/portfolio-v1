@@ -44,40 +44,17 @@ seoTitle: Strike — Tienda Shopify de hemp y cannabis | Noelsajor
 seoDescription: "Tienda Shopify para Strike, marca D2C de hemp y cannabis: arquitectura de catálogo, filtrado por cepa y certificados de laboratorio (COA) por producto."
 ---
 
-## Resumen
+## El problema real
 
-Strike vende productos de CBD, Delta-8, Delta-9 y cannabis medicinal directamente al consumidor. Llegaron con un logo y una identidad de marca que querían conservar, pero sin una tienda Shopify activa. Mi trabajo fue construir la tienda desde cero: configurar la tienda, migrar y categorizar un catálogo grande de varias líneas de producto, construir un filtrado por cepa para todas las líneas y montar un sistema permanente para gestionar el certificado de laboratorio de cada producto.
+Strike llegó con logo e identidad pero sin tienda activa. El catálogo son ocho líneas de producto, entre cartuchos, pre-rolls, flores, gomitas, vapes desechables y dabs, y cada una tiene sus propias cepas y tamaños de empaque. Si cada línea lleva su propio filtrado, son ocho implementaciones que se desincronizan en el primer cambio, así que construí uno solo, reutilizable, y conecté todas las líneas a él.
 
-## Contexto
+Lo que saca a esta tienda de lo estándar es la parte regulatoria. Cada producto necesita su Certificado de Análisis visible, verificable y al día: el documento de laboratorio que dice qué contiene realmente. Eso no es un campo que se agrega al final, es un sistema que hay que mantener. Cada producto lleva su COA enlazado y descargable, presentado en una cuadrícula dedicada para que alguien pueda verificar los resultados antes de comprar, con el trabajo continuo de actualizarlos a medida que entra producto nuevo.
 
-Strike ya tenía un logo y una identidad visual que quería mantener, pero ninguna tienda activa: todavía no había nada que vender en línea. Vender productos regulados de hemp y cannabis en línea trae además un requisito de documentación con el que la mayoría de las tiendas nunca tiene que lidiar: cada producto necesita un certificado de laboratorio visible y verificable (un Certificado de Análisis, o COA) que muestre qué contiene realmente, y que se mantenga actualizado a medida que cambia el catálogo.
-
-## Desafío
-
-Construir esta tienda no era instalar una plantilla. El catálogo abarcaba ocho líneas de producto distintas (cartuchos, pre-rolls, flores, gomitas, vapes desechables, dabs y más), cada una con sus propias cepas y tamaños de empaque que necesitaban su propio filtrado sin mezclarse entre sí. Cada producto necesitaba además su certificado de laboratorio actualizado y fácil de encontrar, no agregado como un parche al final. Nada de eso existía todavía: había un logo y una marca, y nada más construido alrededor.
-
-## Solución
-
-Configuré la tienda Shopify desde cero y construí el catálogo de productos en las ocho líneas, agrupando las variantes por cepa y tamaño de empaque para que los clientes pudieran filtrar dentro de una línea sin que las categorías se mezclaran. En lugar de duplicar esa lógica de filtrado ocho veces, la construí una sola vez como un componente reutilizable y conecté todas las líneas de producto a él, de modo que una corrección o mejora hecha en un solo lugar aplica en todas partes en vez de repetirse línea por línea.
-
-Junto con el catálogo, construí y mantuve el sistema de certificados de laboratorio: cada producto lleva un Certificado de Análisis enlazado y descargable, mostrado a través de una cuadrícula de productos dedicada para que los clientes puedan encontrar y verificar los resultados de laboratorio antes de comprar. También construí una cuadrícula de productos con búsqueda y paginación, con una alternativa de scroll infinito, y me encargué del trabajo administrativo continuo de agregar productos nuevos y mantener sus certificados al día a medida que crecía el catálogo.
-
-## Resultado
-
-Strike pasó de no tener presencia activa en Shopify a una tienda publicada y en funcionamiento que cubre todo su catálogo multilínea, con un filtrado por cepa que se comporta igual en todas las líneas de producto y un sistema de certificados de laboratorio operativo que mantiene la documentación unida a cada producto en lugar de dispersa en PDFs desconectados.
-
-## Mis contribuciones
-
-- Configuré la tienda Shopify desde cero para una marca sin tienda activa previa
-- Construí y categoricé el catálogo completo de varias líneas de producto (cartuchos, pre-rolls, flores, gomitas, vapes desechables, dabs y más)
-- Diseñé y construí un único componente reutilizable de filtrado por cepa compartido entre todas las líneas de producto, en lugar de una lógica duplicada por línea
-- Construí y mantuve un sistema permanente de Certificados de Análisis (COA), manteniendo la documentación de laboratorio enlazada y actualizada para cada producto
-- Construí una cuadrícula de productos con búsqueda y paginación, con una alternativa de scroll infinito
-- Gestioné la creación continua de productos y las actualizaciones del catálogo a través de la Admin API de Shopify a medida que crecía la tienda
+Sobre esa base construí la cuadrícula de productos con búsqueda y paginación, con scroll infinito como alternativa.
 
 ## Tecnologías
 
 - **Plataforma**: Shopify
 - **Lenguajes**: Liquid, HTML, CSS, JavaScript
-- **Framework / CMS**: Shopify OS 2.0, metafields, schema
-- **Herramientas**: Git, Shopify CLI, Shopify Admin GraphQL API
+- **Framework / CMS**: Shopify OS 2.0, secciones, metafields
+- **Áreas de enfoque**: Arquitectura de catálogo, filtrado reutilizable, documentación de cumplimiento

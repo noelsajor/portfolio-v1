@@ -50,19 +50,37 @@ status: draft # omit or set to "published" to make it live; "draft" hides it fro
      frontmatter.title. Starting the body with "## " keeps the heading
      hierarchy correct (h1 -> h2), so copy this file as-is. -->
 
-## Context
-Write 3–5 lines about the client, the product, constraints, and your role.
+<!-- ONE section, then the stack. The page already renders summary,
+     challenge, outcome, duration and roles as cards above the fold, so
+     repeating any of them here is wasted space: the reader sees the same
+     claim twice and nobody reads the second one.
 
-## Problem
-- What was broken?
-- What was confusing or inefficient?
-- What was the business or user impact?
+     Aim for 200 words. The test for every sentence is whether somebody
+     could have written it without doing the work. "Built a premium
+     storefront with reusable sections" passes that test, so it is filler.
+     "85 orphaned files from a page builder we dropped" does not, so it
+     stays. Specifics are not only metrics: a package name, an exact error,
+     a decision you rejected and why, all count.
 
-## Strategy
-Explain the key decisions — hierarchy, structure, trust, mobile, etc.
+     If a project genuinely has none of those, say the constraint and how
+     you worked around it, and stop. A short honest page beats a long one.
 
-## Implementation
-Describe the front-end/technical execution: stack, sections, performance, accessibility.
+     Optional: the question chips in the header appear for whichever of
+     "## Challenge", "## Solution", "## Outcome" and "## My contributions"
+     a file happens to have (Spanish: "## Desafío", "## Solución",
+     "## Resultado", "## Mis contribuciones"). None of the current case
+     studies use them, so no box renders. Add those headings to a longer
+     case study and the chips come back on their own — but both locales
+     have to carry the same ones, which `pnpm run verify` checks. -->
 
-## Outcome
-Describe the result qualitatively. Only include metrics if they are real and verifiable.
+## The real problem
+
+What was actually hard here, and what you did about it. Lead with the part
+that is not obvious from the screenshots.
+
+## Technologies
+
+- **Platform**:
+- **Languages**:
+- **Framework / CMS**:
+- **Focus areas**:
