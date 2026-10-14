@@ -49,7 +49,7 @@ export const siteConfig = {
         behance: 'https://www.behance.net/noelsajor',
         figma: 'https://www.figma.com/@noelsajor',
         github: 'https://github.com/noelsajor',
-        linkedin: 'https://www.linkedin.com/in/noelsajor'
+        linkedin: 'https://www.linkedin.com/in/jose-leon-dev'
     },
     // Locale-independent entity facts for JSON-LD (Person.knowsAbout and
     // Person.knowsLanguage). Tool, platform and discipline names stay in
