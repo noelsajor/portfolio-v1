@@ -46,6 +46,9 @@ export function ContactForm({ lang }: { lang: Locale }) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    // Which language version of the site the visitor used, so
+                    // the notification says which language to reply in.
+                    lang,
                     name: formData.get('name'),
                     email: formData.get('email'),
                     message: formData.get('message'),

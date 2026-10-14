@@ -3,6 +3,8 @@ import { Resend } from 'resend'
 import { checkRateLimit } from '@/lib/rate-limiter'
 import { isValidEmailAddress, resolveEmailConfig } from '@/lib/email-config'
 import { SUPPORT_TYPES, TIMELINES } from '@/lib/contact-form-options'
+import { DEFAULT_LOCALE, isLocale, type Locale } from '@/lib/i18n'
+import { buildContactEmail } from '@/lib/contact-email'
 
 const MAX_NAME_LENGTH = 200
 const MAX_EMAIL_LENGTH = 320
@@ -61,7 +63,7 @@ export async function POST(request: Request) {
         return NextResponse.json(errorBody('invalid_body'), { status: 400 })
     }
 
-    const { name, email, message, website, supportType, timeline, budget } = (body ?? {}) as Record<string, unknown>
+    const { name, email, message, website, supportType, timeline, budget, lang } = (body ?? {}) as Record<string, unknown>
 
     // Honeypot: bots that fill this hidden field are silently accepted without sending anything.
     // Enforced server-side because a bot can POST here directly, bypassing any client-side check.
@@ -90,6 +92,10 @@ export async function POST(request: Request) {
     }
 
     const budgetLine = typeof budget === 'string' && budget.trim() ? budget.trim() : 'Not specified'
+    // Deliberately not part of the validation above: an unknown or missing
+    // locale falls back instead of rejecting a real submission over a label.
+    const locale: Locale = typeof lang === 'string' && isLocale(lang) ? lang : DEFAULT_LOCALE
+    const { subject, text, html } = buildContactEmail({ name, email, message, supportType, timeline, budget: budgetLine, lang: locale })
 
     const resend = new Resend(emailConfig.config.apiKey)
 
@@ -98,8 +104,9 @@ export async function POST(request: Request) {
             from: emailConfig.config.from,
             to: emailConfig.config.to,
             replyTo: email,
-            subject: `New portfolio message from ${name}`,
-            text: `From: ${name} <${email}>\nSupport type: ${supportType}\nTimeline: ${timeline}\nBudget/engagement: ${budgetLine}\n\n${message}`
+            subject,
+            text,
+            html
         })
 
         if (error) {
