@@ -8,9 +8,19 @@ import type { NextConfig } from "next";
 // regression for a mostly-static portfolio. 'unsafe-eval' was removed after
 // confirming (same browser check) nothing in production actually needs it —
 // it's a dev-mode-only requirement (eval-based source maps).
-// style-src has no 'unsafe-inline': this app has no inline `style=`
-// attributes anywhere, confirmed by a repo-wide search, and removing it
-// produced zero CSP violations across every route.
+// style-src has no 'unsafe-inline': nothing in this repo writes an inline
+// `style=` attribute. One still reaches the browser, because next/image
+// stamps every <img> it renders with `style="color:transparent"` (it hides
+// the alt text while the file loads). That was throwing a CSP error on every
+// page carrying an image, around 20 per page, and the img silently rendered
+// without it.
+// 'unsafe-hashes' plus the hash of that exact declaration allows that one
+// string and nothing else: any other inline style, including any other value
+// for color, is still refused. Keeping the hash beats 'unsafe-inline', which
+// would open every inline style on the site, and beats leaving it broken,
+// since a console full of CSP errors hides the next real one. The hash is of
+// the literal `color:transparent`, so it only changes if Next changes that
+// declaration.
 // script-src/connect-src also allow Google's specific GA4 hosts (added in
 // Step 8): gtag.js is loaded from googletagmanager.com, and it reports
 // events via fetch/beacon to google-analytics.com and googletagmanager.com.
@@ -20,7 +30,7 @@ import type { NextConfig } from "next";
 const csp =
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; " +
-    "style-src 'self'; " +
+    "style-src 'self' 'unsafe-hashes' 'sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk='; " +
     "img-src 'self' blob: data:; " +
     "font-src 'self'; " +
     "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; " +
