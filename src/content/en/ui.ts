@@ -90,6 +90,11 @@ export const uiContent = {
             { label: 'What was your approach?', href: '#solution' }
         ],
         gallery: 'Gallery',
+        galleryOpen: 'Enlarge image',
+        galleryClose: 'Close',
+        galleryPrevious: 'Previous image',
+        galleryNext: 'Next image',
+        galleryCounter: 'Image {current} of {total}',
         moreProjects: 'More projects'
     },
     contactPage: {

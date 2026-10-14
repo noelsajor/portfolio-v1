@@ -75,6 +75,11 @@ export const uiContent = {
             { label: '¿Cuál fue el enfoque?', href: '#solución' }
         ],
         gallery: 'Galería',
+        galleryOpen: 'Ampliar imagen',
+        galleryClose: 'Cerrar',
+        galleryPrevious: 'Imagen anterior',
+        galleryNext: 'Imagen siguiente',
+        galleryCounter: 'Imagen {current} de {total}',
         moreProjects: 'Otros proyectos'
     },
     contactPage: {

@@ -22,6 +22,7 @@ import { JsonLd } from '@/components/JsonLd'
 import { buildBreadcrumbTrail, localizedAbsoluteUrl } from '@/lib/page-schema'
 import { buildArticleSchema, buildWebPageSchema } from '@/lib/structured-data'
 import { FeaturedWorkSection } from '@/components/home/FeaturedWorkSection'
+import { ProjectGallery } from '@/components/ProjectGallery'
 import { workContent as workContentEn } from '@/content/en/static-pages'
 import { workContent as workContentEs } from '@/content/es/static-pages'
 
@@ -268,27 +269,16 @@ export default async function CaseStudyPage({
             {readyGalleryItems.length > 0 ? (
                 <section className="space-y-4">
                     <h2 className="text-xl font-semibold tracking-tight md:text-2xl">{work.gallery}</h2>
-                    {/* Columns, not a grid: gallery images mix landscape and
-                        portrait (e.g. mobile screenshots) sources, and a grid
-                        forces row-pairing that leaves awkward gaps next to a
-                        tall image. Columns let each item flow to its own
-                        natural height instead. */}
-                    <div className="columns-1 gap-4 md:columns-2">
-                        {readyGalleryItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-white/10"
-                            >
-                                <Image
-                                    src={item.src}
-                                    alt={item.alt ?? item.id}
-                                    width={960}
-                                    height={540}
-                                    className="h-auto w-full"
-                                />
-                            </div>
-                        ))}
-                    </div>
+                    <ProjectGallery
+                        items={readyGalleryItems}
+                        labels={{
+                            open: work.galleryOpen,
+                            close: work.galleryClose,
+                            previous: work.galleryPrevious,
+                            next: work.galleryNext,
+                            counter: work.galleryCounter
+                        }}
+                    />
                 </section>
             ) : null}
 
