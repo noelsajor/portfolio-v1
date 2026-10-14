@@ -17,6 +17,7 @@ services:
   - Compliance documentation systems
   - Ongoing store maintenance
   - Approval-gated wholesale access flow
+  - Design system and build specification
   - Shopify to WooCommerce migration
 summary: "Theme design and implementation for a D2C hemp and cannabis brand, with strain filtering shared across eight product lines and a lab certificate on every product. Now migrating to WooCommerce over payment processor restrictions."
 challenge: "The brand had an identity but no store, an eight-line catalog with no consistent structure, and a duty to keep a verifiable lab certificate on every product. Later, the payment processors that will take this category turned out to be incompatible with Shopify checkout."
@@ -55,6 +56,18 @@ gallery:
     status: ready
     src: /images/case-studies/strike-woo-coa-page.webp
     alt: Certificate of Analysis page on WooCommerce, products grouped by category with a link to each one's COA
+  - id: strike-design-file-canvas
+    status: ready
+    src: /images/case-studies/strike-design-file-canvas.webp
+    alt: Design file for the Strike migration with its roughly forty screens mapped out, from the home page through customer account, checkout, wholesale channel and policy pages
+  - id: strike-architecture
+    status: ready
+    src: /images/case-studies/strike-architecture.webp
+    alt: Theme architecture diagram, from theme.json tokens through templates, template parts, patterns and blocks
+  - id: strike-design-tokens
+    status: ready
+    src: /images/case-studies/strike-design-tokens.webp
+    alt: Build spec showing the implementation principle, the theme.json token palette and the type scale per breakpoint
 seoTitle: Strike — Hemp and Cannabis Shopify Storefront | Noelsajor
 seoDescription: "Storefront for Strike, a D2C hemp and cannabis brand: theme design, catalog architecture, lab certificates, and a WooCommerce migration with wholesale access."
 ---
@@ -67,7 +80,9 @@ The catalog spans eight product lines, across cartridges, pre-rolls, flower, gum
 
 What takes this store out of the standard is the regulatory side. Every product needs a visible, verifiable, current Certificate of Analysis: the lab document stating what is actually in it. That is not a field you bolt on at the end, it is a system that has to be maintained. Each product carries a linked, downloadable COA in a dedicated grid, so a customer can check the lab results before buying.
 
-The same regulation ended up deciding the platform. Payment processors treat this product category differently, and the ones that will take it do not fit Shopify's checkout flow. So the store is migrating to WordPress with WooCommerce, where payment can actually be solved. That work is underway, with the preliminary design settled.
+The same regulation ended up deciding the platform. Payment processors treat this product category differently, and the ones that will take it do not fit Shopify's checkout flow. So the store is migrating to WordPress with WooCommerce, and I did that redesign in full before touching code: around forty screens, covering the customer account, cart, checkout, the wholesale channel and the policy pages, not just the home page.
+
+Out of it came a design system in theme.json, with the palette, three type families and a size scale per breakpoint, plus a document mapping every section to its exact Gutenberg block or pattern. The rule I set was to use native blocks in their default presentation and adjust only color and typography through tokens, reserving custom blocks for what has no native equivalent. It costs more up front and it avoids handing over a theme nobody can maintain afterwards.
 
 The migration also brought a new requirement: a wholesale channel. Anyone who registers is held pending approval, and once approved sees wholesale pricing and products that do not exist for other visitors.
 
@@ -75,5 +90,5 @@ The migration also brought a new requirement: a wholesale channel. Anyone who re
 
 - **Platforms**: Shopify, WordPress with WooCommerce (migration underway)
 - **Languages**: Liquid, PHP, HTML, CSS, JavaScript
-- **Framework / CMS**: Shopify OS 2.0, sections, metafields
+- **Framework / CMS**: Shopify OS 2.0, sections, metafields; WordPress FSE, Gutenberg, theme.json, ACF
 - **Focus areas**: Theme design and implementation, catalog architecture, compliance documentation, wholesale access, platform migration
