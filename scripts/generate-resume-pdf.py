@@ -10,7 +10,7 @@ lost. Edit RESUMES below and re-run.
 Naming: the headline is the LEGAL name, unlike the rest of the site, which is
 branded as Noelsajor. A CV feeds contracts, background checks and ATS matching,
 so the legal name leads; the brand is right underneath in the contact line
-(noelsajor.com), which links both identities.
+(noelsajor.com, linkedin.com/in/noelsajor), which links both identities.
 
 Usage:
     pip install reportlab
@@ -31,7 +31,7 @@ MUTED = HexColor("#555555")
 RULE = HexColor("#BBBBBB")
 
 NAME = "JOSE LEON ROJAS"
-CONTACT = "noelsajor@gmail.com   |   noelsajor.com   |   linkedin.com/in/jose-leon-dev"
+CONTACT = "noelsajor@gmail.com   |   noelsajor.com   |   linkedin.com/in/noelsajor"
 
 RESUMES = {
     "resume.pdf": {
