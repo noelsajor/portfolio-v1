@@ -111,7 +111,7 @@ export const homeContent = {
                     cells: [
                         'Nothing gets lost: the same person does both',
                         'You connect the designer with the developer',
-                        'It gets translated internally and you pay for those hours'
+                        'It gets handed off internally, and you pay for those hours'
                     ]
                 },
                 {
