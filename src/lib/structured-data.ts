@@ -44,7 +44,9 @@ export function buildPersonSchema({
         '@type': 'Person',
         '@id': PERSON_ID,
         name: siteConfig.author.name,
-        alternateName: siteConfig.handle,
+        // Both legal forms, so a search for either resolves to this entity
+        // instead of splitting the person's authority across two names.
+        alternateName: [siteConfig.legalName, 'Jose Leon'],
         url: siteConfig.siteUrl,
         email: `mailto:${siteConfig.email}`,
         jobTitle,

@@ -55,12 +55,12 @@ export async function generateMetadata({
         `/work/${slug}`
     )
 
-    // Existing seoTitle values already end in " | Jose Leon" (authored before
+    // Existing seoTitle values already end in " | Noelsajor" (authored before
     // the root layout had a title template). Strip that suffix for the page
     // `title` so the template doesn't append it twice; Open Graph/Twitter
     // don't use the template, so they keep the full authored title as-is.
     const fullTitle = frontmatter.seoTitle ?? frontmatter.title
-    const shortTitle = fullTitle.replace(/\s*\|\s*Jose Leon\s*$/, '')
+    const shortTitle = fullTitle.replace(/\s*\|\s*(Noelsajor|Jose Leon)\s*$/, '')
 
     // Falls back to the default site-wide OG image until a real, approved
     // per-project cover image exists (see coverImage/coverAlt in the schema).

@@ -102,7 +102,7 @@ export const uiContent = {
         reachOutCta: 'Reach out about a role',
         downloadCta: 'Download CV',
         pdfHref: '/resume.pdf',
-        downloadFilename: 'Jose-Leon-Resume.pdf'
+        downloadFilename: 'Jose-Leon-Rojas-Resume.pdf'
     },
     contactForm: {
         nameLabel: 'Name',

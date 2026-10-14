@@ -11,7 +11,7 @@ export const homeContent = {
     metadata: {
         // Branded <title> pattern mirrors the English one (name — tagline);
         // this is the only home-page string where the em dash is kept.
-        title: 'Jose Leon — Diseño de producto e implementación front-end',
+        title: 'Noelsajor — Diseño de producto e implementación front-end',
         description:
             'Diseñador de producto y desarrollador front-end freelance: ayudo a agencias y equipos a convertir ideas en sitios web y productos listos para producción.'
     },
@@ -182,7 +182,7 @@ export const homeContent = {
         heading: 'Preguntas frecuentes',
         items: [
             {
-                question: '¿Qué hace Jose Leon?',
+                question: '¿Qué hace Noelsajor?',
                 answer: 'Soy un generalista del diseño que crea productos y soluciones digitales. Diseño flujos de usuario, interfaces y sistemas de diseño, y luego los implemento como front-ends responsive y accesibles, incluyendo tiendas Shopify y WooCommerce a medida.'
             },
             {

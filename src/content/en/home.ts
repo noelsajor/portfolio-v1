@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/site-config'
 export const homeContent = {
     // PR 11: page metadata lives with the page copy so a locale can author
     // its own <title>/description. `title` is the full branded title (it
-    // bypasses the layout's `%s | Jose Leon` template via title.absolute);
+    // bypasses the layout's `%s | Noelsajor` template via title.absolute);
     // it also feeds WebSite.description in StructuredData.
     metadata: {
         title: siteConfig.title,
@@ -180,7 +180,7 @@ export const homeContent = {
         heading: 'Frequently asked',
         items: [
             {
-                question: 'What does Jose Leon do?',
+                question: 'What does Noelsajor do?',
                 answer: 'I am a design generalist who builds digital products and solutions. I design user flows, interfaces and design systems, then implement them as responsive, accessible front-ends, including custom Shopify and WooCommerce storefronts.'
             },
             {

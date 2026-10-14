@@ -69,7 +69,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                     data-tracking="nav_home"
                     className="text-sm font-semibold tracking-tight text-white"
                 >
-                    Jose Leon
+                    Noelsajor
                 </Link>
 
                 {/* Desktop nav */}

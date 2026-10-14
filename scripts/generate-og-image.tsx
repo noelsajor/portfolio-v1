@@ -20,7 +20,7 @@ async function main() {
                     fontFamily: 'sans-serif'
                 }}
             >
-                <div style={{ display: 'flex', fontSize: 72, fontWeight: 700, color: '#ffffff' }}>Jose Leon</div>
+                <div style={{ display: 'flex', fontSize: 72, fontWeight: 700, color: '#ffffff' }}>Noelsajor</div>
                 <div
                     style={{
                         display: 'flex',

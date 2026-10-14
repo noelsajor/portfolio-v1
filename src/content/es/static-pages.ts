@@ -19,7 +19,7 @@ export const aboutContent = {
     },
     heading: 'Sobre mí',
     paragraphs: [
-        'Soy Jose Leon, diseñador multidisciplinario y desarrollador front-end con más de una década de experiencia en branding, UI/UX, e-commerce, productos digitales e implementación web.',
+        'Soy Noelsajor (Jose Leon Rojas), diseñador multidisciplinario y desarrollador front-end con más de una década de experiencia en branding, UI/UX, e-commerce, productos digitales e implementación web.',
         'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas a medida, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',
         'Uso IA para acelerar la investigación, la documentación y el trabajo de implementación repetitivo. Reviso y adapto cada resultado a los objetivos reales del proyecto, a la marca y a sus restricciones técnicas: el criterio creativo y técnico sigue siendo mío.',
         'Colaboro de forma remota con equipos internacionales (fundadores, equipos de marketing, diseñadores y otros desarrolladores) sin procesos innecesarios de por medio.'
@@ -52,11 +52,12 @@ export const resumeContent = {
     metadata: {
         title: 'CV',
         description:
-            'CV de Jose Leon, diseñador multidisciplinario y especialista en producción front-end: habilidades, experiencia y proyectos para reclutadores.'
+            'CV de Jose Leon Rojas (Noelsajor), diseñador multidisciplinario y especialista en producción front-end: habilidades, experiencia y proyectos para reclutadores.'
     },
     // Empty on purpose: the resume page drops the eyebrow (the page skips it when empty).
     eyebrow: '',
-    name: 'Jose Leon',
+    // Legal name on purpose: see the note in ../en/static-pages.ts.
+    name: 'Jose Leon Rojas',
     // Also used as Person.jobTitle in JSON-LD (StructuredData.tsx).
     title: 'Diseñador multidisciplinario y especialista en producción front-end',
     intro: 'Para reclutadores y responsables de contratación que evalúan roles por contrato, de corto plazo o permanentes.',

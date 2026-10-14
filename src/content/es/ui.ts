@@ -87,7 +87,7 @@ export const uiContent = {
         downloadCta: 'Descargar CV',
         // PR 14: Spanish PDF, same one-page layout as /resume.pdf.
         pdfHref: '/resume-es.pdf',
-        downloadFilename: 'Jose-Leon-CV.pdf'
+        downloadFilename: 'Jose-Leon-Rojas-CV.pdf'
     },
     contactForm: {
         nameLabel: 'Nombre',

@@ -14,7 +14,7 @@ export const aboutContent = {
     },
     heading: 'About',
     paragraphs: [
-        "I’m Jose Leon, a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
+        "I’m Noelsajor (Jose Leon Rojas), a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
         'What started as visual and brand design work grew into UI/UX and front-end implementation — I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
         "I use AI to speed up research, documentation, and repetitive implementation work. Every output is reviewed and adapted to the project’s actual goals, brand, and technical constraints — the creative and technical judgment stays mine.",
         'I collaborate remotely with international teams — founders, marketers, designers, and other developers — without unnecessary process overhead.'
@@ -51,11 +51,14 @@ export const resumeContent = {
     metadata: {
         title: 'Resume',
         description:
-            'Jose Leon — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
+            'Jose Leon Rojas (Noelsajor) — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
     },
     // Empty on purpose: the resume page drops the eyebrow (the page skips it when empty).
     eyebrow: '',
-    name: 'Jose Leon',
+    // Legal name on purpose: this is the recruiter-facing page, the one that
+    // feeds contracts, background checks and ATS matching. The brand name is
+    // in the header, the footer and the domain right above it.
+    name: 'Jose Leon Rojas',
     title: 'Multidisciplinary Designer & Front-End Production Specialist',
     intro: 'For recruiters and hiring managers evaluating contract, short-term, or permanent roles.',
     skillsHeading: 'Skills',

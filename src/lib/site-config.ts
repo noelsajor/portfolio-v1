@@ -13,14 +13,22 @@ import { DEFAULT_LOCALE, INDEXABLE_LOCALES, isIndexableLocale, type Locale } fro
 // while visitors and crawlers were being redirected to `www`, which made
 // Google see two hosts for every page.
 export const siteConfig = {
-    name: 'Jose Leon',
-    title: 'Jose Leon — Product Design & Front-End Implementation',
+    // Public brand name. The pseudonym (surnames reversed: Leon -> Noel,
+    // Rojas -> Sajor) is what the domain, the email and every profile already
+    // use, and unlike "Jose Leon" it is unambiguous in search results.
+    name: 'Noelsajor',
+    // Legal name. Not the brand, but emitted as Person.alternateName and kept
+    // in the About prose and the resume so search engines, recruiters and
+    // contracts can reconcile both identities as one person.
+    legalName: 'Jose Leon Rojas',
+    title: 'Noelsajor — Product Design & Front-End Implementation',
     description:
         'I help agencies and digital teams turn ideas into polished, production-ready websites and product experiences through product design, front-end development and Shopify implementation.',
     siteUrl: 'https://www.noelsajor.com',
     email: 'noelsajor@gmail.com',
     locale: 'en_US',
     keywords: [
+        'Noelsajor',
         'Jose Leon',
         'Product Designer',
         'Front-End Developer',
@@ -29,12 +37,12 @@ export const siteConfig = {
         'Front-End Implementation'
     ],
     author: {
-        name: 'Jose Leon',
+        name: 'Noelsajor',
         url: 'https://www.noelsajor.com'
     },
-    // The handle used on the domain, the email and every profile below.
-    // Emitted as Person.alternateName so search and AI engines can reconcile
-    // "Jose Leon" with the `noelsajor` identity they find everywhere else.
+    // The lowercase handle used on the domain, the email and every profile
+    // below. Same identity as `name`, kept separate because profile URLs and
+    // the email local part need the lowercase form.
     handle: 'noelsajor',
     // Verified real profiles only — do not add unconfirmed accounts.
     sameAs: {

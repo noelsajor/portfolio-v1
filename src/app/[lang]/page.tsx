@@ -16,7 +16,7 @@ import { homeContent as homeContentEn } from '@/content/en/home'
 import { homeContent as homeContentEs } from '@/content/es/home'
 
 // `title.absolute` on purpose: the home title is already fully branded (it
-// contains "Jose Leon" once), so it must bypass the layout's `%s | Jose Leon`
+// contains the brand name once), so it must bypass the layout's `%s | Noelsajor`
 // template. PR 11: title/description come from homeContent.metadata so each
 // locale authors its own (for `en` they equal siteConfig.title/description,
 // which is also the layout's `title.default`). Open Graph doesn't get a
