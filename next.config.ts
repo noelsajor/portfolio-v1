@@ -58,6 +58,21 @@ const nextConfig: NextConfig = {
     },
     async headers() {
         return [
+            // The resume PDFs carry their download name from the server instead
+            // of relying on the <a download> attribute, which browsers ignore
+            // whenever they open the PDF in their built-in viewer (Safari does
+            // this often) and then save it under the URL's filename. `inline`
+            // keeps the in-browser preview working; only the suggested name is
+            // forced. Keep these filenames in sync with resumePage.
+            // downloadFilename in src/content/{en,es}/ui.ts.
+            {
+                source: '/resume.pdf',
+                headers: [{ key: 'Content-Disposition', value: 'inline; filename="Jose-Leon-Rojas-Resume.pdf"' }]
+            },
+            {
+                source: '/resume-es.pdf',
+                headers: [{ key: 'Content-Disposition', value: 'inline; filename="Jose-Leon-Rojas-CV.pdf"' }]
+            },
             {
                 source: '/(.*)',
                 headers: [
