@@ -1,50 +1,62 @@
 ---
-title: Alberto Olivero Portfolio Build
+title: Alberto Olivero Portfolio Site
 client: Alberto Olivero — independent graphic designer
 liveUrl: https://alberto-portfolio-beta.vercel.app/
 coverImage: /images/case-studies/alberto-portfolio-cover.webp
 coverAlt: Alberto Olivero portfolio homepage hero reading "Hybrid Creative Direction & Visual Strategy for Purpose-Driven Brands" next to a hand-drawn character avatar
 gallery:
-  - id: alberto-homepage-and-case-study
+  - id: alberto-site-home
     status: ready
-    src: /images/case-studies/alberto-homepage-and-case-study.webp
-    alt: Alberto Olivero portfolio homepage project grid alongside the "La Lechona" case-study detail page
+    src: /images/case-studies/alberto-site-home.webp
+    alt: Home page of Alberto Olivero's portfolio, with the headline about visual identities over a full-width line illustration
+  - id: alberto-site-work-filters
+    status: ready
+    src: /images/case-studies/alberto-site-work-filters.webp
+    alt: Work page with the filters by service and by industry above the project grid
+  - id: alberto-lighthouse-mobile
+    status: ready
+    src: /images/case-studies/alberto-lighthouse-mobile.webp
+    alt: Mobile Lighthouse audit of the portfolio, scoring 100 performance, 100 accessibility, 96 best practices and 100 SEO
+  - id: alberto-lighthouse-desktop
+    status: ready
+    src: /images/case-studies/alberto-lighthouse-desktop.webp
+    alt: Desktop Lighthouse audit of the portfolio, scoring 95 performance, 96 accessibility, 96 best practices and 100 SEO
 type: Marketing Website
 capabilities:
   - Custom Websites
 roles:
   - Full-Stack Developer
+  - Information Architecture
 services:
-  - Website Development (Next.js)
-  - Case Study Content Architecture
-  - Dependency & Tooling Migration
-  - Security Dependency Updates
-  - Performance & Code-Quality Audit
-summary: Built a Next.js portfolio site for an independent graphic designer to present branding and design work as structured case studies, then migrated its tooling and audited it for performance and code quality.
-challenge: The site needed the same case-study architecture I use for my own portfolio, adapted for a friend's design work — but the build had diverged into an unused MDX rendering path and a security-flagged dependency version nobody had gone back to reconcile.
-outcome: Delivered a working Next.js portfolio reusing my own site's architecture, then a package-manager migration that surfaced and removed the dead MDX path and its dependencies, plus a documented performance and code-quality audit with findings ready to implement.
+  - Web development (Next.js)
+  - Information and content architecture
+  - Front-end implementation
+  - Animations and project filtering
+summary: "Site and portfolio for an independent graphic designer, built from his own ideas: simple navigation, personality in the visuals, and the work always up front."
+challenge: Alberto arrived with loose ideas and references rather than a defined brief. That had to become a site that felt like his, without the interface competing with the work it exists to show.
+outcome: A Next.js portfolio that navigates simply and loads fast, with restrained animations and filters for moving through the projects, visually tied to his personal brand.
 year: "2026"
 duration: Intermittent, March–July 2026
-team: Personal project for a friend; solo developer.
+team: A commission from a designer friend. Alberto brought his ideas and the visual direction; the site's structure and the build were mine.
 featured: false
 order: 7
 status: published
 updatedAt: "2026-08-31"
 seoTitle: Alberto Olivero Portfolio Build — Next.js | Noelsajor
-seoDescription: Next.js portfolio site build, tooling migration, and performance audit for graphic designer Alberto Olivero.
+seoDescription: "Next.js site and portfolio for graphic designer Alberto Olivero: simple navigation, restrained animations and project filters."
 ---
 
 ## The real problem
 
-The site reuses the case-study architecture from my own portfolio, but the implementation drifted along the way: pages ended up rendering from a flat TypeScript data file instead of live MDX, so the whole MDX path was shipping with nothing using it. And that path carried `next-mdx-remote` pinned to a version flagged under CVE-2026-0969.
+Alberto is a graphic designer and he came with ideas, not with a brief. He asked for help building his site, and what I brought was channelling them: working out what belonged, what did not, and in what shape.
 
-I found it sideways. Migrating from npm to pnpm immediately surfaced a TypeScript error, `Cannot find module 'mdx/types'`, that npm's flat hoisting had been quietly hiding. Chasing it confirmed the path was dead, so I removed all of it: the loader, the components, an orphaned example file, and five dependencies that existed only to hold it up. 146 fewer packages in the tree.
+What came out is deliberately simple to navigate. The site's personality lives in the visuals, tied to his personal brand, rather than in the structure, which gets out of the way so the work is what you see.
 
-I then audited the production code. These findings are documented and prioritized, but not yet implemented: project images shipping as 700KB to 2.2MB PNGs with no `sizes` prop and no `priority` on the largest above-the-fold image, inline SVG markup duplicated across pages instead of a shared component, `usePathname()` called once per navigation link, and `metadataBase` missing from the root layout.
+It carries restrained animations and filters for moving through the projects. It is built in Next.js with the App Router, React, TypeScript and Tailwind, and you feel it in use: it loads and moves fast. The mobile Lighthouse audit scores 100 on performance and 100 on accessibility.
 
 ## Technologies
 
 - **Framework**: Next.js (App Router), React, TypeScript
 - **Styling**: Tailwind CSS
 - **Tools**: pnpm, Git, Vercel
-- **Focus areas**: Content architecture, dependency hygiene, performance auditing
+- **Focus areas**: Content architecture, work-first portfolio, navigation performance

@@ -1,50 +1,62 @@
 ---
-title: Construcción del portafolio de Alberto Olivero
+title: Sitio y portafolio de Alberto Olivero
 client: Alberto Olivero, diseñador gráfico independiente
 liveUrl: https://alberto-portfolio-beta.vercel.app/
 coverImage: /images/case-studies/alberto-portfolio-cover.webp
 coverAlt: Hero de la página de inicio del portafolio de Alberto Olivero con el texto "Hybrid Creative Direction & Visual Strategy for Purpose-Driven Brands" junto a un avatar de personaje dibujado a mano
 gallery:
-  - id: alberto-homepage-and-case-study
+  - id: alberto-site-home
     status: ready
-    src: /images/case-studies/alberto-homepage-and-case-study.webp
-    alt: Cuadrícula de proyectos de la página de inicio del portafolio de Alberto Olivero junto a la página de detalle del caso de estudio "La Lechona"
+    src: /images/case-studies/alberto-site-home.webp
+    alt: Portada del portafolio de Alberto Olivero, con el titular sobre identidades visuales y una ilustración de línea a todo el ancho
+  - id: alberto-site-work-filters
+    status: ready
+    src: /images/case-studies/alberto-site-work-filters.webp
+    alt: Página de trabajos con los filtros por servicio y por industria sobre la cuadrícula de proyectos
+  - id: alberto-lighthouse-mobile
+    status: ready
+    src: /images/case-studies/alberto-lighthouse-mobile.webp
+    alt: Auditoría Lighthouse en móvil del portafolio, con 100 en rendimiento, 100 en accesibilidad, 96 en buenas prácticas y 100 en SEO
+  - id: alberto-lighthouse-desktop
+    status: ready
+    src: /images/case-studies/alberto-lighthouse-desktop.webp
+    alt: Auditoría Lighthouse en escritorio del portafolio, con 95 en rendimiento, 96 en accesibilidad, 96 en buenas prácticas y 100 en SEO
 type: Marketing Website
 capabilities:
   - Custom Websites
 roles:
   - Desarrollador full-stack
+  - Arquitectura de información
 services:
   - Desarrollo web (Next.js)
-  - Arquitectura de contenido para casos de estudio
-  - Migración de dependencias y herramientas
-  - Actualizaciones de seguridad de dependencias
-  - Auditoría de rendimiento y calidad de código
-summary: Construí un portafolio en Next.js para un diseñador gráfico independiente, para presentar su trabajo de branding y diseño como casos de estudio estructurados, y después migré sus herramientas y lo audité en rendimiento y calidad de código.
-challenge: El sitio necesitaba la misma arquitectura de casos de estudio que uso en mi propio portafolio, adaptada al trabajo de diseño de un amigo. Pero la construcción se había desviado hacia una ruta de renderizado MDX sin uso y una versión de dependencia marcada por seguridad que nadie había vuelto a revisar.
-outcome: Entregué un portafolio funcional en Next.js reutilizando la arquitectura de mi propio sitio, después una migración de gestor de paquetes que sacó a la luz y eliminó la ruta MDX muerta con sus dependencias, y una auditoría documentada de rendimiento y calidad de código con hallazgos listos para implementar.
+  - Arquitectura de información y contenido
+  - Implementación front-end
+  - Animaciones y filtros de proyectos
+summary: "Sitio y portafolio para un diseñador gráfico independiente, construido a partir de sus propias ideas: navegación simple, personalidad en lo visual y el trabajo siempre al frente."
+challenge: Alberto llegó con ideas sueltas y referencias, no con un encargo definido. Había que convertir eso en un sitio que se sintiera suyo sin que la interfaz le compitiera al trabajo que tiene que mostrar.
+outcome: Un portafolio en Next.js de navegación simple y carga rápida, con animaciones discretas y filtros para recorrer los proyectos, visualmente conectado con su marca personal.
 year: "2026"
 duration: Intermitente, marzo a julio de 2026
-team: Proyecto personal para un amigo; desarrollador en solitario.
+team: Encargo de un diseñador amigo. Alberto aportó sus ideas y la dirección visual; la estructura del sitio y la construcción fueron mías.
 featured: false
 order: 7
 status: published
 updatedAt: "2026-08-31"
 seoTitle: Portafolio de Alberto Olivero — Next.js | Noelsajor
-seoDescription: Portafolio en Next.js, migración de herramientas y auditoría de rendimiento para el diseñador gráfico Alberto Olivero.
+seoDescription: "Sitio y portafolio en Next.js para el diseñador gráfico Alberto Olivero: navegación simple, animaciones discretas y filtros de proyectos."
 ---
 
 ## El problema real
 
-El sitio reutiliza la arquitectura de casos de estudio de mi propio portafolio, pero la implementación se desvió por el camino: las páginas terminaron renderizándose desde un archivo TypeScript plano en lugar de MDX en vivo, así que toda la ruta de MDX se publicaba sin que nadie la usara. Y esa ruta arrastraba `next-mdx-remote` fijado en una versión marcada bajo la CVE-2026-0969.
+Alberto es diseñador gráfico y llegó con ideas, no con un encargo cerrado. Me pidió ayuda para hacer su sitio, y lo que aporté fue canalizarlas: ordenar qué entraba, qué no, y en qué forma.
 
-Lo encontré de forma indirecta. Migrar de npm a pnpm hizo saltar de inmediato un error de TypeScript, `Cannot find module 'mdx/types'`, que el hoisting plano de npm venía ocultando en silencio. Rastrearlo confirmó que la ruta estaba muerta, así que la eliminé completa: el loader, los componentes, un archivo de ejemplo huérfano y cinco dependencias que existían solo para sostenerla. 146 paquetes menos en el árbol.
+El resultado es deliberadamente simple de navegar. La personalidad del sitio está en lo visual, conectado con su marca personal, y no en la estructura, que se quita de en medio para dejar el trabajo al frente.
 
-Después audité el código en producción. Estos hallazgos están documentados y priorizados, pero todavía no implementados: imágenes publicadas como PNG de 700KB a 2.2MB sin la prop `sizes` y sin `priority` en la más grande por encima del pliegue, marcado SVG duplicado entre páginas en lugar de un componente compartido, `usePathname()` llamado una vez por cada enlace de navegación, y `metadataBase` ausente en el layout raíz.
+Lleva animaciones discretas y filtros para recorrer los proyectos. Está construido en Next.js con App Router, React, TypeScript y Tailwind, y se nota al usarlo: carga y se mueve rápido. La auditoría Lighthouse en móvil da 100 en rendimiento y 100 en accesibilidad.
 
 ## Tecnologías
 
 - **Framework**: Next.js (App Router), React, TypeScript
 - **Estilos**: Tailwind CSS
 - **Herramientas**: pnpm, Git, Vercel
-- **Áreas de enfoque**: Arquitectura de contenido, higiene de dependencias, auditoría de rendimiento
+- **Áreas de enfoque**: Arquitectura de contenido, portafolio orientado al trabajo, rendimiento de navegación
