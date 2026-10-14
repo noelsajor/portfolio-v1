@@ -49,13 +49,15 @@ seoDescription: B2B marketing site with a custom lead-generation funnel and prod
 
 The brief came with a business objective, not a specification: turn visitors into qualified leads. In private-label manufacturing that is not trivial, because prospects are not all asking for the same thing and a single form mixes them together.
 
-The call I made was to sort by type of service from inside the site, without adding steps for the visitor, and to do it interactively rather than by lengthening a form. That produced three lead paths, and the one that solves the problem is a mockup generator: the prospect picks one of the formats the plant actually manufactures, drops their label art onto that template, and sees their product before speaking to anyone. It turns "can you make mine?" into something they check for themselves.
+The call I made was to sort by type of service from inside the site, without adding steps for the visitor, and to do it interactively rather than by lengthening a form. That produced three lead paths, and the one that solves the problem is a mockup generator: the prospect picks one of the formats the plant actually manufactures, drops their label art onto that template, and sees their product before speaking to anyone. It turns "can you make mine?" into something they check for themselves, and the lead reaches sales already saying which format they are after.
 
 All three paths run through one transactional email pipeline and land in the sales inbox as actionable leads, not in a database nobody reads.
 
 I built it in Astro with hybrid rendering and Sanity as a headless CMS, so marketing can manage content without touching code, and the interactive pieces as isolated React islands instead of shipping JavaScript across the whole site.
 
 The second half of the engagement was the handover. The repository, the hosting, the CMS project and the transactional email domain all moved to accounts the client owns, with no agency infrastructure left in the loop. That meant migrating the package manager, rewriting internal build notes as operational guides, and running a DNS cutover with no downtime.
+
+What nearly held it up was not technical: the client could not find the credentials for their email accounts, their hosting provider or their domain. It was sorted in an afternoon, in a live working session over a call.
 
 ## Technologies
 

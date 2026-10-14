@@ -49,13 +49,15 @@ seoDescription: "Sitio B2B para Vita Organica, fabricante de suplementos de marc
 
 El encargo venía con un objetivo de negocio, no con una especificación: convertir visitantes en leads calificados. En fabricación de marca privada eso no es trivial, porque no todos los prospectos piden lo mismo y un formulario único los mezcla a todos.
 
-La decisión que tomé fue filtrar por tipo de servicio desde el sitio mismo, sin agregarle pasos al visitante, y hacerlo interactivo en lugar de alargar el formulario. De ahí salieron tres caminos de lead, y el que resuelve el problema es un generador de mockups: el prospecto elige uno de los formatos que la planta realmente fabrica, carga el arte de su etiqueta sobre esa plantilla y ve su producto antes de hablar con nadie. Convierte "¿pueden fabricar lo mío?" en algo que comprueba por su cuenta.
+La decisión que tomé fue filtrar por tipo de servicio desde el sitio mismo, sin agregarle pasos al visitante, y hacerlo interactivo en lugar de alargar el formulario. De ahí salieron tres caminos de lead, y el que resuelve el problema es un generador de mockups: el prospecto elige uno de los formatos que la planta realmente fabrica, carga el arte de su etiqueta sobre esa plantilla y ve su producto antes de hablar con nadie. Convierte "¿pueden fabricar lo mío?" en algo que comprueba por su cuenta, y el lead llega a ventas ya diciendo qué formato le interesa.
 
 Los tres caminos pasan por una misma canalización de email transaccional y llegan a la bandeja de ventas como leads accionables, no a una base de datos que nadie revisa.
 
 Lo construí en Astro con renderizado híbrido y Sanity como CMS headless, para que marketing gestione el contenido sin tocar código, y las piezas interactivas como islas de React aisladas en lugar de cargar JavaScript en todo el sitio.
 
 La segunda mitad del encargo fue el traspaso. El repositorio, el hosting, el proyecto del CMS y el dominio de email transaccional pasaron a cuentas propiedad del cliente, sin que quedara infraestructura de la agencia en el circuito. Eso implicó migrar el gestor de paquetes, reescribir la documentación interna de build como guías operativas y ejecutar un cambio de DNS sin tiempo de inactividad.
+
+Lo que estuvo a punto de frenarlo no fue técnico: el cliente no recordaba los accesos a sus cuentas de correo, ni a su proveedor de hosting, ni al dominio. Se resolvió en una tarde, en una sesión de trabajo en vivo por llamada.
 
 ## Tecnologías
 
