@@ -1,5 +1,5 @@
 ---
-title: Construcción de la tienda Strike
+title: "Tienda Strike: diseño, tema y migración"
 client: Strike, marca D2C de hemp y cannabis
 liveUrl: https://strikebrands.co/
 type: E-commerce
@@ -8,19 +8,22 @@ capabilities:
 segment: D2C
 industry: Bienes de consumo / CBD, Delta-8 y Delta-9, cannabis medicinal
 roles:
+  - Diseñador UI/UX
   - Desarrollador Shopify
   - Sistemas de catálogo y merchandising
 services:
-  - Configuración de tienda Shopify
-  - Implementación front-end
+  - Diseño e implementación de tema Shopify
   - Catálogo de productos y merchandising
   - Sistemas de documentación de cumplimiento
-summary: Construí desde cero una tienda Shopify para una marca D2C de hemp y cannabis, con un catálogo estructurado de varias líneas de producto, un filtrado por cepa compartido entre todas las líneas y un sistema permanente de certificados de laboratorio (COA).
-challenge: La marca tenía logo e identidad, pero ninguna tienda Shopify activa, un catálogo de hemp y cannabis de varias líneas sin una estructura consistente y la obligación regulatoria de mantener un certificado de laboratorio verificable y visible en cada producto. Ninguna de esas cosas la resuelve una plantilla estándar de tienda.
-outcome: Entregué una tienda Shopify publicada y en funcionamiento que cubre todo el catálogo multilínea, con un único componente reutilizable de filtrado por cepa compartido entre todas las líneas de producto y un sistema de certificados de laboratorio operativo, donde antes no había ninguna tienda activa.
+  - Mantenimiento continuo de la tienda
+  - Flujo de acceso mayorista por aprobación
+  - Migración de Shopify a WooCommerce
+summary: "Diseño e implementación del tema Shopify de una marca D2C de hemp y cannabis, con filtrado por cepa compartido entre ocho líneas y certificados de laboratorio por producto. Hoy en migración a WooCommerce por restricciones de pasarelas de pago."
+challenge: "La marca tenía identidad pero ninguna tienda, un catálogo de ocho líneas sin estructura consistente y la obligación de mantener un certificado de laboratorio verificable en cada producto. Después, las pasarelas de pago que aceptan esta categoría resultaron incompatibles con el checkout de Shopify."
+outcome: "Una tienda publicada y en mantenimiento, con un filtrado por cepa reutilizable entre todas las líneas y un sistema de COA operativo. La migración a WooCommerce, con canal mayorista por aprobación, está en curso."
 year: "2026"
-duration: Colaboración de corto plazo (2026)
-team: Contratado directamente por la marca; único desarrollador responsable de la configuración de la tienda, el catálogo y los sistemas de cumplimiento.
+duration: Desde 2026, con mantenimiento continuo; migración en curso
+team: Contratado directamente por la marca; único diseñador y desarrollador responsable del tema, el catálogo, los sistemas de cumplimiento y la migración.
 featured: false
 order: 4
 status: published
@@ -41,20 +44,24 @@ gallery:
     src: /images/case-studies/coa-certificate.webp
     alt: Página de certificados de autenticidad de Strike con las líneas de producto verificadas en laboratorio y sus certificados enlazados
 seoTitle: Strike — Tienda Shopify de hemp y cannabis | Noelsajor
-seoDescription: "Tienda Shopify para Strike, marca D2C de hemp y cannabis: arquitectura de catálogo, filtrado por cepa y certificados de laboratorio (COA) por producto."
+seoDescription: "Tienda para Strike, marca D2C de hemp y cannabis: diseño de tema, arquitectura de catálogo, certificados de laboratorio y migración a WooCommerce con acceso mayorista."
 ---
 
 ## El problema real
 
-Strike llegó con logo e identidad pero sin tienda activa. El catálogo son ocho líneas de producto, entre cartuchos, pre-rolls, flores, gomitas, vapes desechables y dabs, y cada una tiene sus propias cepas y tamaños de empaque. Si cada línea lleva su propio filtrado, son ocho implementaciones que se desincronizan en el primer cambio, así que construí uno solo, reutilizable, y conecté todas las líneas a él.
+Strike llegó con logo, identidad y packaging resueltos, pero sin tienda. Partiendo de eso como referencia diseñé el tema, lo implementé y lo personalicé, y desde entonces le doy mantenimiento.
 
-Lo que saca a esta tienda de lo estándar es la parte regulatoria. Cada producto necesita su Certificado de Análisis visible, verificable y al día: el documento de laboratorio que dice qué contiene realmente. Eso no es un campo que se agrega al final, es un sistema que hay que mantener. Cada producto lleva su COA enlazado y descargable, presentado en una cuadrícula dedicada para que alguien pueda verificar los resultados antes de comprar, con el trabajo continuo de actualizarlos a medida que entra producto nuevo.
+El catálogo son ocho líneas de producto, entre cartuchos, pre-rolls, flores, gomitas, vapes desechables y dabs, y cada una tiene sus propias cepas y tamaños de empaque. Si cada línea lleva su propio filtrado, son ocho implementaciones que se desincronizan en el primer cambio, así que construí uno solo, reutilizable, y conecté todas las líneas a él. Sobre esa base va la cuadrícula de productos con búsqueda y paginación.
 
-Sobre esa base construí la cuadrícula de productos con búsqueda y paginación, con scroll infinito como alternativa.
+Lo que saca a esta tienda de lo estándar es la parte regulatoria. Cada producto necesita su Certificado de Análisis visible, verificable y al día: el documento de laboratorio que dice qué contiene realmente. Eso no es un campo que se agrega al final, es un sistema que hay que mantener. Cada producto lleva su COA enlazado y descargable, en una cuadrícula dedicada para que alguien verifique los resultados antes de comprar.
+
+La misma regulación terminó decidiendo la plataforma. Las pasarelas de pago tratan esta categoría de producto de forma distinta, y las que funcionan no encajan en el flujo de checkout de Shopify. Así que la tienda está migrando a WordPress con WooCommerce, donde el pago sí se puede resolver. Ese trabajo está en curso, con el diseño preliminar ya definido.
+
+La migración trajo además un requerimiento nuevo: un canal mayorista. Quien se registra queda pendiente de aprobación, y una vez aprobado ve precios de mayorista y productos que no existen para el resto de los visitantes.
 
 ## Tecnologías
 
-- **Plataforma**: Shopify
-- **Lenguajes**: Liquid, HTML, CSS, JavaScript
+- **Plataformas**: Shopify, WordPress con WooCommerce (migración en curso)
+- **Lenguajes**: Liquid, PHP, HTML, CSS, JavaScript
 - **Framework / CMS**: Shopify OS 2.0, secciones, metafields
-- **Áreas de enfoque**: Arquitectura de catálogo, filtrado reutilizable, documentación de cumplimiento
+- **Áreas de enfoque**: Diseño e implementación de tema, arquitectura de catálogo, documentación de cumplimiento, acceso mayorista, migración de plataforma

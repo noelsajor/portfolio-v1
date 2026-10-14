@@ -1,5 +1,5 @@
 ---
-title: Strike Storefront Build
+title: "Strike Storefront: Design, Theme and Migration"
 client: Strike — direct-to-consumer hemp & cannabis brand
 liveUrl: https://strikebrands.co/
 type: E-commerce
@@ -8,19 +8,22 @@ capabilities:
 segment: D2C
 industry: Consumer Goods / CBD, Delta-8 & Delta-9, Medical Cannabis
 roles:
+  - UI/UX Designer
   - Shopify Developer
-  - Catalog & Merchandising Systems
+  - Catalog and Merchandising Systems
 services:
-  - Shopify Store Setup
-  - Front-End Implementation
-  - Product Catalog & Merchandising
-  - Compliance Documentation Systems
-summary: Built a Shopify storefront from scratch for a direct-to-consumer hemp and cannabis brand — a structured multi-line product catalog, shared strain-based filtering, and an ongoing lab-certificate (COA) compliance system.
-challenge: The brand had a logo and identity but no active Shopify store, a multi-line hemp and cannabis catalog with no consistent structure, and a regulatory need to keep a verifiable lab certificate visibly attached to every product — none of which a standard storefront template is built to handle.
-outcome: Delivered a live, published Shopify storefront covering the full multi-line catalog, with a single reusable strain-filtering component shared across every product line and a working lab-certificate system — replacing what had been no active store at all.
+  - Shopify theme design and implementation
+  - Product catalog and merchandising
+  - Compliance documentation systems
+  - Ongoing store maintenance
+  - Approval-gated wholesale access flow
+  - Shopify to WooCommerce migration
+summary: "Theme design and implementation for a D2C hemp and cannabis brand, with strain filtering shared across eight product lines and a lab certificate on every product. Now migrating to WooCommerce over payment processor restrictions."
+challenge: "The brand had an identity but no store, an eight-line catalog with no consistent structure, and a duty to keep a verifiable lab certificate on every product. Later, the payment processors that will take this category turned out to be incompatible with Shopify checkout."
+outcome: "A published store under ongoing maintenance, with reusable strain filtering across every line and a working COA system. The migration to WooCommerce, with an approval-gated wholesale channel, is underway."
 year: "2026"
-duration: Short-term engagement (2026)
-team: Engaged directly by the brand; sole developer responsible for store setup, catalog, and compliance systems.
+duration: Since 2026, with ongoing maintenance; migration underway
+team: Engaged directly by the brand; sole designer and developer responsible for the theme, the catalog, the compliance systems and the migration.
 featured: false
 order: 4
 status: published
@@ -40,21 +43,25 @@ gallery:
     status: ready
     src: /images/case-studies/coa-certificate.webp
     alt: Strike Certificate of Authenticity page listing lab-verified product lines with linked certificates
-seoTitle: Strike — Hemp & Cannabis Storefront Build | Noelsajor
-seoDescription: Shopify store build for Strike, a direct-to-consumer hemp and cannabis brand — product catalog architecture, strain-based filtering, and a lab-certificate compliance system.
+seoTitle: Strike — Hemp and Cannabis Shopify Storefront | Noelsajor
+seoDescription: "Storefront for Strike, a D2C hemp and cannabis brand: theme design, catalog architecture, lab certificates, and a WooCommerce migration with wholesale access."
 ---
 
 ## The real problem
 
-Strike arrived with a logo and an identity but no live store. The catalog spans eight product lines, across cartridges, pre-rolls, flower, gummies, disposable vapes, and dabs, each with its own strains and pack sizes. Give every line its own filtering and you have eight implementations that fall out of sync on the first change, so I built one reusable filter and wired every line into it.
+Strike arrived with the logo, identity and packaging already settled, but no store. Working from those as the reference I designed the theme, built it, customized it, and have maintained it since.
 
-What takes this store out of the standard is the regulatory side. Every product needs a visible, verifiable, current Certificate of Analysis: the lab document stating what is actually in it. That is not a field you bolt on at the end, it is a system that has to be maintained. Each product carries a linked, downloadable COA, surfaced through a dedicated grid so a customer can check the lab results before buying, with the ongoing work of keeping them current as new product lands.
+The catalog spans eight product lines, across cartridges, pre-rolls, flower, gummies, disposable vapes and dabs, each with its own strains and pack sizes. Give every line its own filtering and you have eight implementations that fall out of sync on the first change, so I built one reusable filter and wired every line into it. The product grid with search and pagination sits on top of that.
 
-On that base I built the product grid with search and pagination, with infinite scroll as the fallback.
+What takes this store out of the standard is the regulatory side. Every product needs a visible, verifiable, current Certificate of Analysis: the lab document stating what is actually in it. That is not a field you bolt on at the end, it is a system that has to be maintained. Each product carries a linked, downloadable COA in a dedicated grid, so a customer can check the lab results before buying.
+
+The same regulation ended up deciding the platform. Payment processors treat this product category differently, and the ones that will take it do not fit Shopify's checkout flow. So the store is migrating to WordPress with WooCommerce, where payment can actually be solved. That work is underway, with the preliminary design settled.
+
+The migration also brought a new requirement: a wholesale channel. Anyone who registers is held pending approval, and once approved sees wholesale pricing and products that do not exist for other visitors.
 
 ## Technologies
 
-- **Platform**: Shopify
-- **Languages**: Liquid, HTML, CSS, JavaScript
+- **Platforms**: Shopify, WordPress with WooCommerce (migration underway)
+- **Languages**: Liquid, PHP, HTML, CSS, JavaScript
 - **Framework / CMS**: Shopify OS 2.0, sections, metafields
-- **Focus areas**: Catalog architecture, reusable filtering, compliance documentation
+- **Focus areas**: Theme design and implementation, catalog architecture, compliance documentation, wholesale access, platform migration
