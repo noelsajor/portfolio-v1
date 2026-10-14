@@ -95,16 +95,15 @@ export function ProjectGallery({ items, labels }: { items: GalleryItem[]; labels
             >
                 {active ? (
                     <div className="relative flex w-[min(94vw,80rem)] flex-col gap-3 p-4">
-                        <Image
-                            src={active.src}
-                            alt={active.alt ?? active.id}
-                            width={1920}
-                            height={1080}
-                            // max-h with object-contain keeps a tall screenshot inside the
-                            // viewport; the letterboxing around it is backdrop-dark anyway,
-                            // and clicking it closes, which is what a lightbox should do.
-                            className="h-auto max-h-[80vh] w-full object-contain"
-                        />
+                        {/* The image runs at the full width of the dialog and the box
+                            scrolls when it is taller than the viewport. Most of this
+                            gallery is screenshots of pages, and shrinking a full-page
+                            capture to fit the height makes it unreadable, which defeats
+                            the point of opening it. A landscape image fits without
+                            scrolling and behaves as before. */}
+                        <div className="max-h-[80vh] overflow-y-auto overscroll-contain rounded-lg">
+                            <Image src={active.src} alt={active.alt ?? active.id} width={1920} height={1080} className="h-auto w-full" />
+                        </div>
 
                         <div className="flex items-center justify-between gap-4">
                             <p className="text-sm text-white/60">
