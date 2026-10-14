@@ -10,16 +10,17 @@ roles:
   - Desarrollador full-stack
   - Infraestructura y traspaso al cliente
 services:
+  - Definición del enfoque de captación de leads
   - Desarrollo web (Astro + CMS headless)
   - Implementación front-end
-  - Herramientas de generación de leads
+  - Herramienta interactiva de mockups
   - Traspaso de infraestructura de producción
-summary: Construí un sitio de marketing B2B con un embudo de generación de leads a medida y una herramienta interactiva de mockups de producto para un fabricante de suplementos de marca privada, y después ejecuté el traspaso completo de la infraestructura de producción a las cuentas del propio cliente sin tiempo de inactividad.
-challenge: La marca necesitaba un sitio B2B capaz de convertir a posibles clientes de marca privada en leads calificados, incluyendo que pudieran previsualizar su propio empaque sobre los formatos reales de producto del fabricante. Y, una vez construido, necesitaba la propiedad total de la infraestructura de producción transferida a sus propias cuentas, sin inactividad ni reescribir código.
+summary: "Sitio de marketing B2B para un fabricante de suplementos de marca privada, con un embudo de captación que separa los leads por tipo de servicio y un generador de mockups a medida, más el traspaso completo de la infraestructura a las cuentas del cliente."
+challenge: "El encargo era un objetivo de negocio, no una especificación: convertir visitantes en leads calificados cuando no todos los prospectos piden lo mismo. Y, una vez construido el sitio, el negocio necesitaba la propiedad total de su infraestructura, sin inactividad ni reescribir código."
 outcome: Entregué un sitio de marketing B2B en funcionamiento, con un embudo de generación de leads operativo y una herramienta de mockups a medida, y completé el traspaso total de la infraestructura (código, hosting, CMS y email transferidos a las cuentas del cliente) sin que quedara ningún acceso de la agencia.
 year: "2026"
-duration: Unas pocas semanas (2026)
-team: Contratado a través de una agencia intermediaria de marketing y staffing; único desarrollador responsable de la construcción y del traspaso completo de la infraestructura.
+duration: ~3 meses (2026)
+team: Contratado a través de una agencia intermediaria de marketing y staffing. El logo y el brand kit los hizo el diseñador de la agencia; el enfoque del sitio, la construcción y el traspaso fueron míos.
 featured: false
 order: 5
 status: published
@@ -46,9 +47,11 @@ seoDescription: "Sitio B2B para Vita Organica, fabricante de suplementos de marc
 
 ## El problema real
 
-En fabricación de marca privada el prospecto tiene que convencerse de que tú puedes hacer su producto antes de hablar con nadie. Una página de "contáctanos" no convence a nadie de eso.
+El encargo venía con un objetivo de negocio, no con una especificación: convertir visitantes en leads calificados. En fabricación de marca privada eso no es trivial, porque no todos los prospectos piden lo mismo y un formulario único los mezcla a todos.
 
-Por eso el sitio tiene tres caminos de lead, y el que importa es el generador de mockups: el prospecto carga el arte de su etiqueta y la ve colocada sobre los formatos reales de producto del fabricante. Convierte "¿pueden fabricar lo mío?" en algo que comprueba por su cuenta. Los tres caminos pasan por una misma canalización de email transaccional y llegan a la bandeja de ventas como leads accionables, no a una base de datos que nadie revisa.
+La decisión que tomé fue filtrar por tipo de servicio desde el sitio mismo, sin agregarle pasos al visitante, y hacerlo interactivo en lugar de alargar el formulario. De ahí salieron tres caminos de lead, y el que resuelve el problema es un generador de mockups: el prospecto elige uno de los formatos que la planta realmente fabrica, carga el arte de su etiqueta sobre esa plantilla y ve su producto antes de hablar con nadie. Convierte "¿pueden fabricar lo mío?" en algo que comprueba por su cuenta.
+
+Los tres caminos pasan por una misma canalización de email transaccional y llegan a la bandeja de ventas como leads accionables, no a una base de datos que nadie revisa.
 
 Lo construí en Astro con renderizado híbrido y Sanity como CMS headless, para que marketing gestione el contenido sin tocar código, y las piezas interactivas como islas de React aisladas en lugar de cargar JavaScript en todo el sitio.
 

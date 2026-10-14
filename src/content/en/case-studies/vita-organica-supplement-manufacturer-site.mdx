@@ -10,16 +10,17 @@ roles:
   - Full-Stack Developer
   - Infrastructure & Client Handoff
 services:
-  - Website Development (Astro + Headless CMS)
-  - Front-End Implementation
-  - Lead-Generation Tooling
-  - Production Infrastructure Handoff
-summary: Built a B2B marketing site with a custom lead-generation funnel and an interactive product-mockup tool for a private-label supplement manufacturer, then executed a full production infrastructure handoff to the client's own accounts with zero downtime.
-challenge: The brand needed a B2B site that could turn prospective private-label clients into qualified leads — including letting them preview their own packaging on the manufacturer's real product formats — and, once built, needed full ownership of the production infrastructure transferred into its own accounts without downtime or re-coding.
+  - Lead capture approach
+  - Web development (Astro + headless CMS)
+  - Front-end implementation
+  - Interactive mockup tool
+  - Production infrastructure handover
+summary: "B2B marketing site for a private-label supplement manufacturer, with a lead funnel that separates prospects by type of service and a custom mockup generator, plus the full handover of the infrastructure to the client's own accounts."
+challenge: "The brief was a business objective, not a specification: turn visitors into qualified leads when prospects are not all asking for the same thing. And once the site was built, the business needed full ownership of its infrastructure, with no downtime and no rewrite."
 outcome: Delivered a live B2B marketing site with a working lead-generation funnel and a custom mockup tool, then completed a full infrastructure handoff — code, hosting, CMS, and email all transferred to the client's own accounts — with zero agency access remaining.
 year: "2026"
-duration: A few weeks (2026)
-team: Engaged via a marketing/staffing agency intermediary; sole developer responsible for the build and the full infrastructure handoff.
+duration: ~3 months (2026)
+team: Engaged through an intermediary marketing and staffing agency. The logo and brand kit were the agency designer's; the site's approach, the build and the handover were mine.
 featured: false
 order: 5
 status: published
@@ -46,13 +47,15 @@ seoDescription: B2B marketing site with a custom lead-generation funnel and prod
 
 ## The real problem
 
-In private-label manufacturing the prospect has to convince themselves you can make their product before they talk to anyone. A "contact us" page convinces nobody of that.
+The brief came with a business objective, not a specification: turn visitors into qualified leads. In private-label manufacturing that is not trivial, because prospects are not all asking for the same thing and a single form mixes them together.
 
-So the site has three lead paths, and the one that matters is the mockup generator: the prospect uploads their label art and sees it placed on the manufacturer's real product formats. It turns "can you make mine?" into something they check for themselves. All three paths run through one transactional email pipeline and land in the sales inbox as actionable leads, not in a database nobody reads.
+The call I made was to sort by type of service from inside the site, without adding steps for the visitor, and to do it interactively rather than by lengthening a form. That produced three lead paths, and the one that solves the problem is a mockup generator: the prospect picks one of the formats the plant actually manufactures, drops their label art onto that template, and sees their product before speaking to anyone. It turns "can you make mine?" into something they check for themselves.
+
+All three paths run through one transactional email pipeline and land in the sales inbox as actionable leads, not in a database nobody reads.
 
 I built it in Astro with hybrid rendering and Sanity as a headless CMS, so marketing can manage content without touching code, and the interactive pieces as isolated React islands instead of shipping JavaScript across the whole site.
 
-The second half of the engagement was the handover. The repository, the hosting, the CMS project, and the transactional email domain all moved to accounts the client owns, with no agency infrastructure left in the loop. That meant migrating the package manager, rewriting internal build notes as operational guides, and running a DNS cutover with no downtime.
+The second half of the engagement was the handover. The repository, the hosting, the CMS project and the transactional email domain all moved to accounts the client owns, with no agency infrastructure left in the loop. That meant migrating the package manager, rewriting internal build notes as operational guides, and running a DNS cutover with no downtime.
 
 ## Technologies
 
