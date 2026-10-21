@@ -39,9 +39,6 @@ export const uiContent = {
         visitLiveSite: 'Ver sitio en vivo',
         opensInNewTab: ' (se abre en una pestaña nueva)'
     },
-    trustStrip: {
-        ariaLabel: 'Resumen de experiencia'
-    },
     carousel: {
         ariaLabel: 'Proyectos destacados',
         previous: 'Proyecto anterior',
@@ -81,12 +78,6 @@ export const uiContent = {
         galleryNext: 'Imagen siguiente',
         galleryCounter: 'Imagen {current} de {total}',
         moreProjects: 'Otros proyectos'
-    },
-    contactPage: {
-        recruiterPrefix: '¿Eres reclutador o responsable de contratación? Mira mi ',
-        recruiterLink: 'CV',
-        recruiterSuffix: '.',
-        linkedinLabel: 'LinkedIn'
     },
     resumePage: {
         reachOutCta: 'Escríbeme sobre una vacante',

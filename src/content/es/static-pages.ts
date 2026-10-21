@@ -46,7 +46,6 @@ export const contactContent = {
     },
     heading: 'Cuéntame qué está construyendo tu equipo.',
     intro: 'Comparte el proyecto, el cuello de botella o el backlog con el que necesitas ayuda. Te respondo con el siguiente paso más útil.',
-    otherChannelsHeading: 'Otros canales'
 } as const satisfies ContentShape<typeof contactContentEn>
 
 export const resumeContent = {

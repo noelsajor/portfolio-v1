@@ -13,20 +13,12 @@ export const homeContent = {
         // Empty on purpose: the hero drops the eyebrow line (HeroSection skips it when empty).
         eyebrow: '',
         headline: ['From idea', 'to production.'],
-        supportingText: 'I design and build websites and digital products. One person, from idea to production.',
-        primaryCta: { label: 'Work With Me', href: '/contact' },
+        supportingText: 'I design and build websites and digital products. One person, start to finish.',
+        primaryCta: { label: 'Work with me', href: '/contact' },
         secondaryCta: { label: 'My work', href: '/work' },
         // Empty on purpose: the hero drops the availability line (HeroSection skips it when empty).
         availability: '',
         recruiterNote: { label: 'Recruiter? See my resume', href: '/resume' }
-    },
-    trustStrip: {
-        points: [
-            '10+ years across design and digital production',
-            'Shopify, UI/UX and front-end execution',
-            'Remote experience with international teams',
-            'AI-assisted workflow, human-reviewed output'
-        ]
     },
     services: {
         // Empty on purpose: the section drops the label and intro (ServicesSection skips them when empty).
@@ -60,7 +52,6 @@ export const homeContent = {
         heading: 'Featured projects',
         viewAllLabel: 'View all',
         viewAllHref: '/work',
-        projectCtaLabel: 'View project',
         emptyStateMessage: 'No featured projects yet. Check back soon.'
     },
     process: {
@@ -83,7 +74,7 @@ export const homeContent = {
                 number: '03',
                 title: 'Implement',
                 description:
-                    'Translate the approved direction into responsive, accessible and maintainable front-end production.'
+                    'Build the approved direction as responsive, accessible, maintainable front-end code.'
             },
             {
                 number: '04',
@@ -157,7 +148,6 @@ export const homeContent = {
     // translation in ../es/home.ts.
     testimonials: {
         heading: 'What clients say',
-        linkedinLabel: 'See the recommendations on LinkedIn',
         items: [
             {
                 quote: 'I highly recommend Jose for his exceptional skills in packaging, branding, and other graphic design tasks. Throughout our collaboration, he consistently showcased an impressive level of creativity and innovation, bringing fresh ideas to every project. His communication skills were great, making the entire process smooth and efficient.',
@@ -200,7 +190,7 @@ export const homeContent = {
     finalCTA: {
         heading: 'Have a project somewhere between design and development?',
         body: 'Tell me what you are building and I reply with a concrete proposal, not a discovery form.',
-        primaryCta: { label: 'Discuss Your Project', href: '/contact' },
+        primaryCta: { label: 'Discuss your project', href: '/contact' },
         // Empty label on purpose: the final CTA drops the email link (FinalCTASection skips it when empty).
         secondaryLink: { label: '', href: `mailto:${siteConfig.email}` }
     }

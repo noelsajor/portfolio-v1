@@ -49,9 +49,6 @@ export const uiContent = {
         // after the visible link text.
         opensInNewTab: ' (opens in a new tab)'
     },
-    trustStrip: {
-        ariaLabel: 'Experience summary'
-    },
     carousel: {
         ariaLabel: 'Featured projects',
         previous: 'Previous project',
@@ -96,13 +93,6 @@ export const uiContent = {
         galleryNext: 'Next image',
         galleryCounter: 'Image {current} of {total}',
         moreProjects: 'More projects'
-    },
-    contactPage: {
-        // Rendered as: {recruiterPrefix}<Link>{recruiterLink}</Link>{recruiterSuffix}
-        recruiterPrefix: 'Recruiter or hiring manager? See my ',
-        recruiterLink: 'resume',
-        recruiterSuffix: ' instead.',
-        linkedinLabel: 'LinkedIn'
     },
     resumePage: {
         reachOutCta: 'Reach out about a role',

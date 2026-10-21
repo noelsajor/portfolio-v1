@@ -27,14 +27,6 @@ export const homeContent = {
         availability: '',
         recruiterNote: { label: '¿Eres reclutador? Mira mi CV', href: '/resume' }
     },
-    trustStrip: {
-        points: [
-            'Más de 10 años en diseño y producción digital',
-            'Shopify, UI/UX y ejecución front-end',
-            'Experiencia remota con equipos internacionales',
-            'Flujo de trabajo asistido por IA, con revisión humana'
-        ]
-    },
     services: {
         // Empty on purpose: the section drops the label and intro (ServicesSection skips them when empty).
         label: '',
@@ -67,7 +59,6 @@ export const homeContent = {
         heading: 'Proyectos destacados',
         viewAllLabel: 'Ver todo',
         viewAllHref: '/work',
-        projectCtaLabel: 'Ver proyecto',
         emptyStateMessage: 'Todavía no hay proyectos destacados. Vuelve pronto.'
     },
     process: {
@@ -159,7 +150,6 @@ export const homeContent = {
     // inglés en el perfil, aquí traducidas (el enlace lleva al original).
     testimonials: {
         heading: 'Lo que dicen mis clientes',
-        linkedinLabel: 'Ver las recomendaciones en LinkedIn',
         items: [
             {
                 quote: 'Recomiendo mucho a Jose por sus habilidades excepcionales en packaging, branding y otras tareas de diseño gráfico. Durante nuestra colaboración mostró de forma constante un nivel impresionante de creatividad e innovación, aportando ideas frescas a cada proyecto. Su comunicación fue excelente e hizo que todo el proceso fuera fluido y eficiente.',

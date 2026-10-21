@@ -10,15 +10,15 @@ export const aboutContent = {
     metadata: {
         title: 'About',
         description:
-            'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.'
+            'Multidisciplinary designer and front-end production specialist: product design, UI/UX, Shopify, and front-end implementation.'
     },
     heading: 'About',
     portraitAlt: 'Portrait of Noelsajor, smiling with his arms crossed, in an orange running shirt against a dark background',
     paragraphs: [
         "I’m Noelsajor (Jose Leon Rojas), a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
-        'What started as visual and brand design work grew into UI/UX and front-end implementation — I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
-        "I use AI to speed up research, documentation, and repetitive implementation work. Every output is reviewed and adapted to the project’s actual goals, brand, and technical constraints — the creative and technical judgment stays mine.",
-        'I collaborate remotely with international teams — founders, marketers, designers, and other developers — without unnecessary process overhead.'
+        'What started as visual and brand design work grew into UI/UX and front-end implementation. I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
+        "I use AI to speed up research, documentation, and repetitive implementation work. Every output is reviewed and adapted to the project’s actual goals, brand, and technical constraints. The creative and technical judgment stays mine.",
+        'I collaborate remotely with international teams (founders, marketers, designers, and other developers) without unnecessary process overhead.'
     ],
     // GEO block: the same facts as the paragraphs above, as label/value
     // pairs a retrieval model can lift verbatim ("Languages: English and
@@ -45,14 +45,13 @@ export const contactContent = {
     },
     heading: 'Tell me what your team is building.',
     intro: "Share the project, production gap, or backlog you need help with. I'll respond with the most useful next step.",
-    otherChannelsHeading: 'Other channels'
 } as const
 
 export const resumeContent = {
     metadata: {
         title: 'Resume',
         description:
-            'Jose Leon Rojas (Noelsajor) — Multidisciplinary Designer & Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
+            'Jose Leon Rojas (Noelsajor), Multidisciplinary Designer and Front-End Production Specialist. Skills, experience, and selected work for recruiters and hiring managers.'
     },
     // Empty on purpose: the resume page drops the eyebrow (the page skips it when empty).
     eyebrow: '',
@@ -122,6 +121,6 @@ export const workContent = {
         description: 'Selected product design, front-end implementation and Shopify projects.'
     },
     heading: 'Work',
-    intro: 'A curated set of product design, Shopify, and front-end implementation projects — from brand systems and marketing websites to e-commerce storefronts.',
+    intro: 'A curated set of product design, Shopify, and front-end implementation projects, from brand systems and marketing websites to e-commerce storefronts.',
     emptyStateMessage: 'No projects published yet.'
 } as const
