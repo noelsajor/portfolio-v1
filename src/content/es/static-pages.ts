@@ -23,7 +23,8 @@ export const aboutContent = {
         'Soy Noelsajor (Jose Leon Rojas), diseñador multidisciplinario y desarrollador front-end con más de una década de experiencia en branding, UI/UX, e-commerce, productos digitales e implementación web.',
         'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas a medida, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',
         'Uso IA para acelerar la investigación, la documentación y el trabajo de implementación repetitivo. Reviso y adapto cada resultado a los objetivos reales del proyecto, a la marca y a sus restricciones técnicas: el criterio creativo y técnico sigue siendo mío.',
-        'Colaboro de forma remota con equipos internacionales (fundadores, equipos de marketing, diseñadores y otros desarrolladores) sin procesos innecesarios de por medio.'
+        'Colaboro de forma remota con equipos internacionales (fundadores, equipos de marketing, diseñadores y otros desarrolladores) sin procesos innecesarios de por medio.',
+        'Fuera del trabajo corro. Ahora mismo estoy entrenando con el objetivo de llegar a un Ironman.'
     ],
     facts: {
         heading: 'En resumen',

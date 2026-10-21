@@ -18,7 +18,8 @@ export const aboutContent = {
         "I’m Noelsajor (Jose Leon Rojas), a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
         'What started as visual and brand design work grew into UI/UX and front-end implementation. I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
         "I use AI to speed up research, documentation, and repetitive implementation work. Every output is reviewed and adapted to the project’s actual goals, brand, and technical constraints. The creative and technical judgment stays mine.",
-        'I collaborate remotely with international teams (founders, marketers, designers, and other developers) without unnecessary process overhead.'
+        'I collaborate remotely with international teams (founders, marketers, designers, and other developers) without unnecessary process overhead.',
+        'Outside work, I run. Right now I’m training with the goal of getting to an Ironman.'
     ],
     // GEO block: the same facts as the paragraphs above, as label/value
     // pairs a retrieval model can lift verbatim ("Languages: English and
