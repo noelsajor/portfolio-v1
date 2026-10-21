@@ -52,13 +52,21 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 <h1 className="text-3xl font-semibold tracking-tight md:col-start-1 md:row-start-1 md:text-4xl">
                     {aboutContent.heading}
                 </h1>
+                {/* Cut out, so there is no frame and he stands on the page itself.
+                    The studio backdrop was already near the site's black, so the
+                    cutout only removes the seam the border was drawing attention to.
+                    The JSON-LD still points at the uncut photo: an entity image
+                    wants an ordinary photograph, not a transparent one. */}
                 <Image
-                    src="/images/noelsajor-portrait-2.webp"
+                    src="/images/noelsajor-cutout.webp"
                     alt={aboutContent.portraitAlt}
                     width={1200}
                     height={1500}
                     priority
-                    className="h-auto w-full max-w-[20rem] rounded-2xl border border-white/10 grayscale md:col-start-2 md:row-span-2 md:row-start-1 md:max-w-none"
+                    // Without the fade the torso ends on a hard horizontal line, which
+                    // is what gives a floating cutout away. The gradient dissolves the
+                    // bottom into the page instead.
+                    className="h-auto w-full max-w-[20rem] grayscale [mask-image:linear-gradient(to_bottom,black_72%,transparent_98%)] md:col-start-2 md:row-span-2 md:row-start-1 md:max-w-none"
                 />
                 <div className="space-y-6 md:col-start-1 md:row-start-2">
                     {aboutContent.paragraphs.map((paragraph) => (
