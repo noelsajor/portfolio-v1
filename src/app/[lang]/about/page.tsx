@@ -41,24 +41,32 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     return (
         <div className="page-sections">
             <JsonLd nodes={jsonLd} />
-            {/* Portrait above the heading, one column at every width. It is capped
-                at 20rem because a 4:5 portrait across the full content width would
-                be taller than the viewport and push the heading off screen. */}
-            <div className="space-y-6">
+            {/* Heading / portrait / paragraphs, in that DOM order. On mobile they
+                stack that way, so the face arrives right after the heading rather
+                than below four paragraphs. On md+ the explicit row and column
+                placement puts heading and paragraphs in the left column and runs
+                the portrait down the right. Grayscale is applied in CSS, not baked
+                into the file, so the Person node in the JSON-LD still serves a
+                colour photo, which is what a knowledge panel wants. */}
+            <div className="grid gap-6 md:grid-cols-[1fr_20rem] md:items-start md:gap-10">
+                <h1 className="text-3xl font-semibold tracking-tight md:col-start-1 md:row-start-1 md:text-4xl">
+                    {aboutContent.heading}
+                </h1>
                 <Image
                     src="/images/noelsajor-portrait.webp"
                     alt={aboutContent.portraitAlt}
                     width={1200}
                     height={1500}
                     priority
-                    className="h-auto w-full max-w-[20rem] rounded-2xl border border-white/10"
+                    className="h-auto w-full max-w-[20rem] rounded-2xl border border-white/10 grayscale md:col-start-2 md:row-span-2 md:row-start-1 md:max-w-none"
                 />
-                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{aboutContent.heading}</h1>
-                {aboutContent.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="max-w-2xl text-white/70">
-                        {paragraph}
-                    </p>
-                ))}
+                <div className="space-y-6 md:col-start-1 md:row-start-2">
+                    {aboutContent.paragraphs.map((paragraph) => (
+                        <p key={paragraph} className="max-w-2xl text-white/70">
+                            {paragraph}
+                        </p>
+                    ))}
+                </div>
             </div>
 
             {/* The conversion path the home uses, reused: proof, social proof, next step.
