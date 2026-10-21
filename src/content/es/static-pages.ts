@@ -18,7 +18,7 @@ export const aboutContent = {
             'Diseñador multidisciplinario y especialista en producción front-end: diseño de producto, UI/UX, Shopify e implementación front-end.'
     },
     heading: 'Sobre mí',
-    portraitAlt: 'Retrato de Noelsajor, sonriendo, con camiseta naranja sobre fondo oscuro',
+    portraitAlt: 'Retrato de Noelsajor, sonriendo con los brazos cruzados, con camiseta naranja de running sobre fondo oscuro',
     paragraphs: [
         'Soy Noelsajor (Jose Leon Rojas), diseñador multidisciplinario y desarrollador front-end con más de una década de experiencia en branding, UI/UX, e-commerce, productos digitales e implementación web.',
         'Lo que empezó como diseño visual y de marca creció hacia UI/UX e implementación front-end. Trabajo en estrategia, diseño y producción en lugar de pasar el proyecto de un especialista a otro. Eso incluye Shopify: construyo tiendas a medida, temas y secciones Liquid reutilizables para marcas de e-commerce, además de trabajo de UI/UX y front-end fuera del e-commerce.',

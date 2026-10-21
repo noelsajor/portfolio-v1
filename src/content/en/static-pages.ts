@@ -13,7 +13,7 @@ export const aboutContent = {
             'Multidisciplinary designer and front-end production specialist — product design, UI/UX, Shopify, and front-end implementation.'
     },
     heading: 'About',
-    portraitAlt: 'Portrait of Noelsajor, smiling, in an orange shirt against a dark background',
+    portraitAlt: 'Portrait of Noelsajor, smiling with his arms crossed, in an orange running shirt against a dark background',
     paragraphs: [
         "I’m Noelsajor (Jose Leon Rojas), a multidisciplinary designer and front-end developer with more than a decade of experience across branding, UI/UX, e-commerce, digital products, and web implementation.",
         'What started as visual and brand design work grew into UI/UX and front-end implementation — I work across strategy, design, and production instead of handing a project between separate specialists. That includes Shopify: I build custom storefronts, themes, and reusable Liquid sections for e-commerce brands, alongside UI/UX and front-end work outside of e-commerce entirely.',
