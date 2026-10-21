@@ -49,6 +49,15 @@ export function buildPersonSchema({
         alternateName: [siteConfig.legalName, 'Jose Leon'],
         url: siteConfig.siteUrl,
         email: `mailto:${siteConfig.email}`,
+        // A face attached to the entity is one of the stronger signals that
+        // the two names above belong to one real person, which is the whole
+        // job of this node now that the site publishes under a pseudonym.
+        image: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/images/noelsajor-portrait.webp'),
+            width: 1200,
+            height: 1500
+        },
         jobTitle,
         description,
         knowsAbout: siteConfig.knowsAbout,

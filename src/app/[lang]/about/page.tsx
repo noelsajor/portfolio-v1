@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { buildPageMetadata } from '@/lib/site-config'
 import { aboutContent as aboutContentEn } from '@/content/en/static-pages'
 import { aboutContent as aboutContentEs } from '@/content/es/static-pages'
@@ -40,13 +41,31 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     return (
         <div className="page-sections">
             <JsonLd nodes={jsonLd} />
-            <div className="space-y-6">
-                <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{aboutContent.heading}</h1>
-                {aboutContent.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="max-w-2xl text-white/70">
-                        {paragraph}
-                    </p>
-                ))}
+            {/* Three grid items, heading / portrait / paragraphs, in that DOM order.
+                On mobile they stack that way, so the face arrives right after the
+                heading instead of below four paragraphs. On md+ the explicit row and
+                column placement puts heading and paragraphs in the left column with
+                the portrait spanning both rows on the right. The h1 stays first in
+                the DOM either way. */}
+            <div className="grid gap-6 md:grid-cols-[1fr_16rem] md:items-start md:gap-8">
+                <h1 className="text-3xl font-semibold tracking-tight md:col-start-1 md:row-start-1 md:text-4xl">
+                    {aboutContent.heading}
+                </h1>
+                <Image
+                    src="/images/noelsajor-portrait.webp"
+                    alt={aboutContent.portraitAlt}
+                    width={1200}
+                    height={1500}
+                    priority
+                    className="h-auto w-40 rounded-2xl border border-white/10 md:col-start-2 md:row-span-2 md:row-start-1 md:w-full"
+                />
+                <div className="space-y-6 md:col-start-1 md:row-start-2">
+                    {aboutContent.paragraphs.map((paragraph) => (
+                        <p key={paragraph} className="max-w-2xl text-white/70">
+                            {paragraph}
+                        </p>
+                    ))}
+                </div>
             </div>
 
             {/* The conversion path the home uses, reused: proof, social proof, next step.
