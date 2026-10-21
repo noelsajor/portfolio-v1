@@ -54,7 +54,7 @@ export function buildPersonSchema({
         // job of this node now that the site publishes under a pseudonym.
         image: {
             '@type': 'ImageObject',
-            url: absoluteUrl('/images/noelsajor-portrait.webp'),
+            url: absoluteUrl('/images/noelsajor-portrait-2.webp'),
             width: 1200,
             height: 1500
         },

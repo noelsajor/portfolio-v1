@@ -53,7 +53,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                     {aboutContent.heading}
                 </h1>
                 <Image
-                    src="/images/noelsajor-portrait.webp"
+                    src="/images/noelsajor-portrait-2.webp"
                     alt={aboutContent.portraitAlt}
                     width={1200}
                     height={1500}
