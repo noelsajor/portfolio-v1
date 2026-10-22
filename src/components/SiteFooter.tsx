@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BrandMark } from '@/components/BrandMark'
 import { FileText, Mail } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { localizedPath, type Locale } from '@/lib/i18n'
@@ -60,7 +61,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
         <footer className="border-t border-white/10">
             <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
                 <p className="flex items-center gap-2">
-                    <span aria-hidden="true" className="brand-mark h-4" />© {new Date().getFullYear()} Noelsajor
+                    <BrandMark className="h-4 w-auto" />© {new Date().getFullYear()} Noelsajor
                 </p>
                 <nav aria-label={footer.ariaFooterLinks} className="flex flex-wrap gap-3">
                     <Link

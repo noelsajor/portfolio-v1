@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { uiContent as uiContentEn } from '@/content/en/ui'
 import { uiContent as uiContentEs } from '@/content/es/ui'
+import { BrandMark } from '@/components/BrandMark'
 import { LanguageSwitch } from '@/components/LanguageSwitch'
 
 function NavLink({
@@ -69,9 +70,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                     data-tracking="nav_home"
                     className="flex items-center gap-2 text-sm font-semibold tracking-tight text-white"
                 >
-                    {/* Decorative: the wordmark beside it already names the site,
-                        so announcing the mark too would read the brand twice. */}
-                    <span aria-hidden="true" className="brand-mark h-5" />
+                    <BrandMark className="h-5 w-auto" />
                     Noelsajor
                 </Link>
 
