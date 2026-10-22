@@ -165,6 +165,11 @@ export const homeContent = {
                 quote: 'El trabajo de Jose es excelente. Tiene estilo y elegancia, con gráficos que enganchan. Es muy fácil trabajar con él. En general, fue una experiencia súper positiva.',
                 name: 'Lena Zaritsky',
                 role: 'Estratega de Empoderamiento Creativo y emprendedora'
+            },
+            {
+                quote: 'Jose fue un activo increíble para el equipo. Era puntual y siempre estaba al tanto de sus proyectos. Dedicado, comunicativo y cercano. También nos ayudó a incorporar IA en nuestros proyectos y a simplificar procesos. Un candidato de primer nivel.',
+                name: 'Ethan Barak',
+                role: 'CEO, NUUD Pleasures'
             }
         ]
     },
