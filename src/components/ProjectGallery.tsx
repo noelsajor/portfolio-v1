@@ -68,7 +68,7 @@ export function ProjectGallery({ items, labels }: { items: GalleryItem[]; labels
                 (e.g. mobile screenshots) sources, and a grid forces row-pairing
                 that leaves awkward gaps next to a tall image. Columns let each
                 item flow to its own natural height instead. */}
-            <div className="columns-1 gap-4 md:columns-2">
+            <div data-reveal-stagger className="columns-1 gap-4 md:columns-2">
                 {items.map((item, i) => (
                     <button
                         key={item.id}

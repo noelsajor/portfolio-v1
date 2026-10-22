@@ -86,6 +86,13 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
     return (
         <div className="space-y-4" role="region" aria-roledescription="carousel" aria-label={labels.ariaLabel}>
             {/* Three portrait cards fill the row on md+. Below md the track bleeds into the page gutter and scroll-padding keeps the snapped card aligned with it, with ~20% of the next card peeking. */}
+            {/* Deliberately not a data-reveal-stagger container. The track
+                holds COPIES copies of the list so the loop is seamless, and it
+                scrolls itself to the middle one on mount: nth-child delays
+                would land on the aria-hidden clones rather than on the cards
+                anyone can see. A carousel also already carries its own motion,
+                so revealing its items one by one fights the horizontal scroll
+                instead of adding to it. */}
             <ul
                 ref={trackRef}
                 role="list"

@@ -12,7 +12,7 @@ export function LandingProof({ lang, heading }: { lang: Locale; heading: string 
     return (
         <section className="section-stack">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{heading}</h2>
-            <ul role="list" className="grid gap-4 md:grid-cols-2">
+            <ul role="list" data-reveal-stagger className="grid gap-4 md:grid-cols-2">
                 {projects.map((project) => (
                     <li key={project.slug} className="h-full">
                         <Link
