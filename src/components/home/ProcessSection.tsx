@@ -29,7 +29,7 @@ export function ProcessSection({ lang }: { lang: Locale }) {
                 <span aria-hidden="true" className="absolute bottom-0 left-0.5 top-0 w-px bg-white/15 md:hidden" />
                 <span aria-hidden="true" className="absolute left-0 top-1/2 hidden h-px w-full bg-white/15 md:block" />
 
-                <ol role="list" className="relative space-y-6 md:grid md:grid-cols-4 md:grid-rows-[1fr_8rem_1fr] md:space-y-0">
+                <ol role="list" data-reveal-stagger className="relative space-y-6 md:grid md:grid-cols-4 md:grid-rows-[1fr_8rem_1fr] md:space-y-0">
                     {process.steps.map((step, index) => {
                         const Icon = STEP_ICONS[step.title]
                         const isTopStep = index % 2 === 0

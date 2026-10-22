@@ -19,7 +19,7 @@ export function ServicesSection({ lang }: { lang: Locale }) {
             </div>
 
             {/* Same card style as the other home sections (process steps, projects, comparison). */}
-            <ul role="list" className="grid gap-4 md:grid-cols-2">
+            <ul role="list" data-reveal-stagger className="grid gap-4 md:grid-cols-2">
                 {services.items.map((service, index) => {
                     const Icon = SERVICE_ICONS[index]
 

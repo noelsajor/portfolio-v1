@@ -92,3 +92,68 @@ body {
   .marquee { overflow-x: auto; }
   .marquee-clone { display: none; }
 }
+
+/* ---- Scroll reveal ---------------------------------------------------
+   One IntersectionObserver (src/components/Reveal.tsx) adds data-revealed
+   as an element scrolls into view; every visual decision below is CSS.
+   Nothing here writes an inline style, because style-src is 'self' plus a
+   single hash: a library that assigned element.style would be blocked
+   outright by the CSP.
+
+   `html.js-motion` is set by a pre-paint inline script in SiteShell. With
+   JavaScript off the class never lands, so nothing is ever hidden and the
+   page reads exactly as it did before this feature existed. That ordering
+   matters more than it looks: hiding first and revealing later would mean
+   a reader without JS gets a blank page.
+
+   Motion rides on `translate`, not `transform`, so a Tailwind
+   hover:-translate or hover:scale on the same element keeps working once
+   the animation's fill mode has settled. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes reveal-rise {
+    from { opacity: 0; translate: 0 1.25rem; }
+    to   { opacity: 1; translate: none; }
+  }
+  @keyframes reveal-rise-sm {
+    from { opacity: 0; translate: 0 0.75rem; }
+    to   { opacity: 1; translate: none; }
+  }
+
+  /* The first block on any page is already on screen when it loads, so it
+     arrives on load rather than on scroll. Waiting for the observer would
+     leave the hero blank for however long hydration takes. No js-motion
+     guard here on purpose: it is an animation from hidden to visible, so
+     it ends visible even if the script never runs. */
+  .page-sections > :first-child {
+    animation: reveal-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html.js-motion :is(.page-sections > :not(:first-child), [data-reveal]) {
+    opacity: 0;
+  }
+  html.js-motion :is(.page-sections > :not(:first-child), [data-reveal])[data-revealed] {
+    animation: reveal-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Grids and lists whose items should arrive one after another instead of
+     as a slab. They key off the revealed ancestor rather than being
+     observed themselves, so one observer entry drives the whole cascade.
+     Delays are literal rules rather than a per-element custom property,
+     again because setting one would mean an inline style. */
+  html.js-motion [data-reveal-stagger] > * {
+    opacity: 0;
+  }
+  html.js-motion [data-revealed] [data-reveal-stagger] > *,
+  html.js-motion [data-reveal-stagger][data-revealed] > * {
+    animation: reveal-rise-sm 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  html.js-motion [data-reveal-stagger] > :nth-child(2) { animation-delay: 70ms; }
+  html.js-motion [data-reveal-stagger] > :nth-child(3) { animation-delay: 140ms; }
+  html.js-motion [data-reveal-stagger] > :nth-child(4) { animation-delay: 210ms; }
+  html.js-motion [data-reveal-stagger] > :nth-child(5) { animation-delay: 280ms; }
+  html.js-motion [data-reveal-stagger] > :nth-child(6) { animation-delay: 350ms; }
+  /* Past the sixth, everything shares the last step. A literal cascade on a
+     long list leaves the tail arriving well after the reader got there. */
+  html.js-motion [data-reveal-stagger] > :nth-child(n + 7) { animation-delay: 420ms; }
+}
