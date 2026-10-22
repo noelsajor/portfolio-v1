@@ -16,7 +16,11 @@ import { useEffect } from 'react'
 //
 // The first child of `.page-sections` is skipped: it is above the fold, and
 // CSS animates it on load so the hero is never blank while hydration runs.
-const SELECTOR = '.page-sections > :not(:first-child), [data-reveal]'
+// Stagger containers are observed in their own right, not left to fire off an
+// ancestor. A section is often taller than the viewport, so its top edge can
+// appear while its grid is still well below the fold; keyed to the section,
+// those cards would finish animating before the reader ever reached them.
+const SELECTOR = '.page-sections > :not(:first-child), [data-reveal], [data-reveal-stagger]'
 
 export function Reveal() {
     const pathname = usePathname()
@@ -43,9 +47,11 @@ export function Reveal() {
                 }
             },
             {
-                // Bottom: fire a little before the element is fully in view, so
-                // the motion reads as the section arriving rather than as a
-                // late correction.
+                // Bottom: the element has to be a quarter of the way up the
+                // screen before it counts. Firing on the first pixel that
+                // peeks over the bottom edge means the animation is already
+                // finished by the time the reader has actually scrolled to it,
+                // which reads as the page moving on its own.
                 //
                 // Top: effectively unbounded, and that part is load-bearing. An
                 // observer only reports threshold crossings, so an element the
@@ -54,7 +60,7 @@ export function Reveal() {
                 // without ever intersecting, and would stay hidden for the rest
                 // of the session. Extending the root upwards makes "already
                 // scrolled past" count as revealed too.
-                rootMargin: '100000px 0px -12% 0px',
+                rootMargin: '100000px 0px -25% 0px',
                 threshold: 0.01
             }
         )

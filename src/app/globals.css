@@ -137,14 +137,15 @@ body {
   }
 
   /* Grids and lists whose items should arrive one after another instead of
-     as a slab. They key off the revealed ancestor rather than being
-     observed themselves, so one observer entry drives the whole cascade.
+     as a slab. The container is observed in its own right rather than
+     keyed to an ancestor: a section can be taller than the viewport, and
+     a grid keyed to its section would finish animating while still below
+     the fold.
      Delays are literal rules rather than a per-element custom property,
      again because setting one would mean an inline style. */
   html.js-motion [data-reveal-stagger] > * {
     opacity: 0;
   }
-  html.js-motion [data-revealed] [data-reveal-stagger] > *,
   html.js-motion [data-reveal-stagger][data-revealed] > * {
     animation: reveal-rise-sm 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
