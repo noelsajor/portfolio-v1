@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { uiContent as uiContentEn } from '@/content/en/ui'
 import { uiContent as uiContentEs } from '@/content/es/ui'
+import { BrandMark } from '@/components/BrandMark'
 import { LanguageSwitch } from '@/components/LanguageSwitch'
 
 function NavLink({
@@ -67,8 +68,9 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 <Link
                     href={localizedPath(lang, '/')}
                     data-tracking="nav_home"
-                    className="text-sm font-semibold tracking-tight text-white"
+                    className="flex items-center gap-2 text-sm font-semibold tracking-tight text-white"
                 >
+                    <BrandMark className="h-5 w-auto" />
                     Noelsajor
                 </Link>
 

@@ -18,7 +18,7 @@ export const homeContent = {
     hero: {
         // Empty on purpose: the hero drops the eyebrow line (HeroSection skips it when empty).
         eyebrow: '',
-        headline: ['De la idea', 'a producción.'],
+        headline: { lead: 'De la idea', tail: 'a ', rotate: ['producción.', 'diseño.'] },
         supportingText:
             'Diseño y desarrollo sitios web y productos digitales. Una sola persona, de la idea a producción.',
         primaryCta: { label: 'Trabaja conmigo', href: '/contact' },
