@@ -183,3 +183,20 @@ body {
   html.js-motion [data-reveal-stagger] > .reveal-step-5 { animation-delay: 350ms; }
   html.js-motion [data-reveal-stagger] > .reveal-step-6 { animation-delay: 420ms; }
 }
+
+/* ---- Brand mark -----------------------------------------------------
+   The monogram, drawn as a mask rather than an <img> or an inline <svg>.
+   Painting currentColor through the mask means the mark takes the colour
+   of whatever text it sits beside — white in the header, dimmed in the
+   footer — from one cached file, instead of being serialised into the
+   HTML of every page twice over. Lightning CSS adds the -webkit- prefix.
+   Set a height; the aspect ratio holds the width. */
+@utility brand-mark {
+  display: inline-block;
+  aspect-ratio: 626 / 697;
+  background-color: currentColor;
+  mask-image: url('/images/logo.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}

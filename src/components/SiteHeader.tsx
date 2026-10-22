@@ -67,8 +67,11 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 <Link
                     href={localizedPath(lang, '/')}
                     data-tracking="nav_home"
-                    className="text-sm font-semibold tracking-tight text-white"
+                    className="flex items-center gap-2 text-sm font-semibold tracking-tight text-white"
                 >
+                    {/* Decorative: the wordmark beside it already names the site,
+                        so announcing the mark too would read the brand twice. */}
+                    <span aria-hidden="true" className="brand-mark h-5" />
                     Noelsajor
                 </Link>
 
