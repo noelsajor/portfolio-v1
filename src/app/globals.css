@@ -157,4 +157,29 @@ body {
   /* Past the sixth, everything shares the last step. A literal cascade on a
      long list leaves the tail arriving well after the reader got there. */
   html.js-motion [data-reveal-stagger] > :nth-child(n + 7) { animation-delay: 420ms; }
+
+  /* Only one level fades at a time. A block that holds a cascading group
+     must not fade as a unit, because its own 600ms sweep runs straight over
+     the top of the cascade and flattens it back into everything-at-once —
+     the cards really are offset, you just cannot see it through the parent.
+     Same reasoning one level down for a nested group. The heading beside
+     the grid still animates: these sections carry data-reveal-stagger
+     themselves, so their own children cascade. */
+  html.js-motion :is(.page-sections > *, [data-reveal]):has([data-reveal-stagger]),
+  html.js-motion [data-reveal-stagger] > [data-reveal-stagger] {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* An explicit step, for lists whose DOM order is not their reading order.
+     The looping carousel renders the same projects COPIES times, so
+     nth-child counts clones; each card states which step it is instead.
+     After the nth-child rules on purpose: same specificity, later wins. */
+  html.js-motion [data-reveal-stagger] > .reveal-step-0 { animation-delay: 0ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-1 { animation-delay: 70ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-2 { animation-delay: 140ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-3 { animation-delay: 210ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-4 { animation-delay: 280ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-5 { animation-delay: 350ms; }
+  html.js-motion [data-reveal-stagger] > .reveal-step-6 { animation-delay: 420ms; }
 }

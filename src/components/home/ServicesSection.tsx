@@ -11,7 +11,7 @@ export function ServicesSection({ lang }: { lang: Locale }) {
     const { services } = homeContent
 
     return (
-        <section id="services" className="scroll-mt-24 section-stack">
+        <section id="services" data-reveal-stagger className="scroll-mt-24 section-stack">
             <div className="space-y-4">
                 {services.label ? <p className="text-sm font-semibold tracking-wide text-white/70">{services.label}</p> : null}
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{services.heading}</h2>

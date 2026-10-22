@@ -36,14 +36,33 @@ export function Reveal() {
         )
         if (targets.length === 0) return
 
+        const observers: IntersectionObserver[] = []
+        const reveal = (target: Element) => {
+            target.setAttribute('data-revealed', '')
+            // Reveal once. Scrolling back up should not replay it, and an
+            // element that is done no longer needs watching by either pass.
+            for (const o of observers) o.unobserve(target)
+        }
+
+        // Safety net, and it earns its place. The main pass below only counts
+        // an element once its top clears 75% of the screen, which an element
+        // near the end of the page may never manage: if there is not enough
+        // content beneath it, the page runs out of scroll first and the thing
+        // stays invisible for good. This pass reveals anything that is mostly
+        // on screen regardless of where its top sits.
+        const safetyNet = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) if (entry.isIntersecting) reveal(entry.target)
+            },
+            { threshold: 0.6 }
+        )
+        observers.push(safetyNet)
+
         const observer = new IntersectionObserver(
             (entries) => {
                 for (const entry of entries) {
                     if (!entry.isIntersecting) continue
-                    entry.target.setAttribute('data-revealed', '')
-                    // Reveal once. Scrolling back up should not replay it, and
-                    // an element that is done no longer needs watching.
-                    observer.unobserve(entry.target)
+                    reveal(entry.target)
                 }
             },
             {
@@ -65,8 +84,14 @@ export function Reveal() {
             }
         )
 
-        for (const target of targets) observer.observe(target)
-        return () => observer.disconnect()
+        observers.push(observer)
+        for (const target of targets) {
+            observer.observe(target)
+            safetyNet.observe(target)
+        }
+        return () => {
+            for (const o of observers) o.disconnect()
+        }
         // Client-side navigation swaps the page under a layout that does not
         // remount, so the new route's sections need a fresh pass.
     }, [pathname])
