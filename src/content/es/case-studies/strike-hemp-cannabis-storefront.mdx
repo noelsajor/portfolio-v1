@@ -1,0 +1,94 @@
+---
+title: "Tienda Strike: diseño, tema y migración"
+client: Strike, marca D2C de hemp y cannabis
+liveUrl: https://strikebrands.co/
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: D2C
+industry: Bienes de consumo / CBD, Delta-8 y Delta-9, cannabis medicinal
+roles:
+  - Diseñador UI/UX
+  - Desarrollador Shopify
+  - Sistemas de catálogo y merchandising
+services:
+  - Diseño e implementación de tema Shopify
+  - Catálogo de productos y merchandising
+  - Sistemas de documentación de cumplimiento
+  - Mantenimiento continuo de la tienda
+  - Flujo de acceso mayorista por aprobación
+  - Sistema de diseño y especificación de build
+  - Migración de Shopify a WooCommerce
+summary: "Diseño e implementación del tema Shopify de una marca D2C de hemp y cannabis, con filtrado por cepa compartido entre ocho líneas y certificados de laboratorio por producto. Hoy en migración a WooCommerce por restricciones de pasarelas de pago."
+challenge: "La marca tenía identidad pero ninguna tienda, un catálogo de ocho líneas sin estructura consistente y la obligación de mantener un certificado de laboratorio verificable en cada producto. Después, las pasarelas de pago que aceptan esta categoría resultaron incompatibles con el checkout de Shopify."
+outcome: "Una tienda publicada y en mantenimiento, con un filtrado por cepa reutilizable entre todas las líneas y un sistema de COA operativo. La migración a WooCommerce, con canal mayorista por aprobación, está en curso."
+year: "2026"
+duration: Desde 2026, con mantenimiento continuo; migración en curso
+team: Contratado directamente por la marca; único diseñador y desarrollador responsable del tema, el catálogo, los sistemas de cumplimiento y la migración.
+featured: false
+order: 4
+status: published
+updatedAt: "2026-08-31"
+coverImage: /images/case-studies/strike-storefront-cover.webp
+coverAlt: Imagen de portada de la marca Strike con el logo sobre una foto de estilo de vida de alguien encendiendo un pre-roll
+gallery:
+  - id: product-catalog-grid
+    status: ready
+    src: /images/case-studies/product-catalog-grid.webp
+    alt: Página de inicio de la tienda Strike con la cuadrícula completa del catálogo en categorías como vapes desechables, cartuchos, dabs, flores y gomitas
+  - id: strain-filtering
+    status: ready
+    src: /images/case-studies/strain-filtering.webp
+    alt: Página de producto de Strike con controles de filtrado por cepa y píldoras de variantes de cepa
+  - id: coa-certificate
+    status: ready
+    src: /images/case-studies/coa-certificate.webp
+    alt: Página de certificados de autenticidad de Strike con las líneas de producto verificadas en laboratorio y sus certificados enlazados
+  - id: strike-woo-homepage
+    status: ready
+    src: /images/case-studies/strike-woo-homepage.webp
+    alt: Portada del nuevo sitio de Strike en WooCommerce, con el hero, los más vendidos y la navegación por categoría
+  - id: strike-woo-product-page
+    status: ready
+    src: /images/case-studies/strike-woo-product-page.webp
+    alt: Página de producto en WooCommerce con selector de variantes, efectos, bloque de Certificado de Análisis descargable y productos relacionados
+  - id: strike-woo-coa-page
+    status: ready
+    src: /images/case-studies/strike-woo-coa-page.webp
+    alt: Página de Certificados de Análisis en WooCommerce, con los productos agrupados por categoría y un enlace al COA de cada uno
+  - id: strike-design-file-canvas
+    status: ready
+    src: /images/case-studies/strike-design-file-canvas.webp
+    alt: Archivo de diseño de la migración de Strike con las cerca de cuarenta pantallas mapeadas, desde la portada hasta cuenta de cliente, checkout, canal mayorista y páginas de políticas
+  - id: strike-architecture
+    status: ready
+    src: /images/case-studies/strike-architecture.webp
+    alt: Diagrama de arquitectura del tema, de los tokens de theme.json a las plantillas, las partes de plantilla, los patrones y los bloques
+  - id: strike-design-tokens
+    status: ready
+    src: /images/case-studies/strike-design-tokens.webp
+    alt: Especificación de build con el principio de implementación, la paleta de tokens de theme.json y la escala tipográfica por breakpoint
+seoTitle: Strike — Tienda Shopify de hemp y cannabis | Noelsajor
+seoDescription: "Tienda para Strike, marca D2C de hemp y cannabis: diseño de tema, arquitectura de catálogo, certificados de laboratorio y migración a WooCommerce con acceso mayorista."
+---
+
+## El problema real
+
+Strike llegó con logo, identidad y packaging resueltos, pero sin tienda. Partiendo de eso como referencia diseñé el tema, lo implementé y lo personalicé, y desde entonces le doy mantenimiento.
+
+El catálogo son ocho líneas de producto, entre cartuchos, pre-rolls, flores, gomitas, vapes desechables y dabs, y cada una tiene sus propias cepas y tamaños de empaque. Si cada línea lleva su propio filtrado, son ocho implementaciones que se desincronizan en el primer cambio, así que construí uno solo, reutilizable, y conecté todas las líneas a él. Sobre esa base va la cuadrícula de productos con búsqueda y paginación.
+
+Lo que saca a esta tienda de lo estándar es la parte regulatoria. Cada producto necesita su Certificado de Análisis visible, verificable y al día: el documento de laboratorio que dice qué contiene realmente. Eso no es un campo que se agrega al final, es un sistema que hay que mantener. Cada producto lleva su COA enlazado y descargable, en una cuadrícula dedicada para que alguien verifique los resultados antes de comprar.
+
+La misma regulación terminó decidiendo la plataforma. Las pasarelas de pago tratan esta categoría de producto de forma distinta, y las que funcionan no encajan en el flujo de checkout de Shopify. Así que la tienda está migrando a WordPress con WooCommerce, y ese rediseño lo hice completo antes de tocar código: unas cuarenta pantallas, con cuenta de cliente, carrito, checkout, el canal mayorista y las páginas de políticas, no solo la portada.
+
+De ahí salió un sistema de diseño en theme.json, con la paleta, tres familias tipográficas y una escala de tamaños por breakpoint, más un documento que mapea cada sección a su bloque o patrón exacto de Gutenberg. La regla que me puse fue usar los bloques nativos en su presentación por defecto y ajustar solo color y tipografía vía tokens, reservando bloques propios para lo que no tiene equivalente nativo. Cuesta más al principio y evita entregar un tema que después nadie pueda mantener.
+
+La migración trajo además un requerimiento nuevo: un canal mayorista. Quien se registra queda pendiente de aprobación, y una vez aprobado ve precios de mayorista y productos que no existen para el resto de los visitantes.
+
+## Tecnologías
+
+- **Plataformas**: Shopify, WordPress con WooCommerce (migración en curso)
+- **Lenguajes**: Liquid, PHP, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0, secciones, metafields; WordPress FSE, Gutenberg, theme.json, ACF
+- **Áreas de enfoque**: Diseño e implementación de tema, arquitectura de catálogo, documentación de cumplimiento, acceso mayorista, migración de plataforma

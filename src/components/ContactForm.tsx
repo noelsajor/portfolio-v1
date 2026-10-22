@@ -1,10 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { sendGAEvent } from '@next/third-parties/google'
-import { SUPPORT_TYPES, TIMELINES } from '@/lib/contact-form-options'
+import { SUPPORT_TYPES, TIMELINES, SUPPORT_TYPE_LABELS, TIMELINE_LABELS } from '@/lib/contact-form-options'
+import type { Locale } from '@/lib/i18n'
+import { getUiContent } from '@/lib/ui-content'
+import type { ContactErrorCode } from '@/content/en/ui'
 
-export function ContactForm() {
+export function ContactForm({ lang }: { lang: Locale }) {
+    const { contactForm: t } = getUiContent(lang)
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const successRef = useRef<HTMLDivElement>(null)
@@ -41,6 +46,9 @@ export function ContactForm() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    // Which language version of the site the visitor used, so
+                    // the notification says which language to reply in.
+                    lang,
                     name: formData.get('name'),
                     email: formData.get('email'),
                     message: formData.get('message'),
@@ -51,10 +59,17 @@ export function ContactForm() {
                 })
             })
 
-            const data = await response.json().catch(() => null)
+            const data: { code?: string; error?: string } | null = await response.json().catch(() => null)
 
             if (!response.ok) {
-                setErrorMessage(data?.error ?? 'Something went wrong. Please try again.')
+                // PR 11: the API returns a stable `code` (see
+                // src/app/api/contact/route.ts) that maps to a localized
+                // message here; `data.error` is the English fallback for
+                // callers that predate the code field.
+                const code = data?.code
+                const localized =
+                    code && code in t.errors ? t.errors[code as ContactErrorCode] : undefined
+                setErrorMessage(localized ?? data?.error ?? t.errors.generic)
                 setStatus('error')
                 return
             }
@@ -65,7 +80,7 @@ export function ContactForm() {
             sendGAEvent('event', 'contact_form_submit_success')
             setStatus('success')
         } catch {
-            setErrorMessage('Something went wrong. Please check your connection and try again.')
+            setErrorMessage(t.errors.network)
             setStatus('error')
         }
     }
@@ -79,13 +94,13 @@ export function ContactForm() {
                 aria-live="polite"
                 className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center focus:outline-none"
             >
-                <h3 className="text-xl font-semibold">Message sent!</h3>
-                <p className="mt-2 text-white/70">Thank you for reaching out. I&apos;ll get back to you soon.</p>
+                <h3 className="text-xl font-semibold">{t.successHeading}</h3>
+                <p className="mt-2 text-white/70">{t.successBody}</p>
                 <button
                     onClick={() => setStatus('idle')}
                     className="mt-6 text-sm font-semibold text-white/70 hover:text-white"
                 >
-                    Send another message
+                    {t.sendAnother}
                 </button>
             </div>
         )
@@ -100,7 +115,7 @@ export function ContactForm() {
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-white/70">Name</label>
+                    <label htmlFor="name" className="text-sm font-medium text-white/70">{t.nameLabel}</label>
                     <input
                         required
                         type="text"
@@ -109,11 +124,11 @@ export function ContactForm() {
                         autoComplete="name"
                         maxLength={200}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
-                        placeholder="Your name"
+                        placeholder={t.namePlaceholder}
                     />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-white/70">Email</label>
+                    <label htmlFor="email" className="text-sm font-medium text-white/70">{t.emailLabel}</label>
                     <input
                         required
                         type="email"
@@ -122,55 +137,64 @@ export function ContactForm() {
                         autoComplete="email"
                         maxLength={320}
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
-                        placeholder="email@example.com"
+                        placeholder={t.emailPlaceholder}
                     />
                 </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                    <label htmlFor="supportType" className="text-sm font-medium text-white/70">Type of support</label>
+                    <label htmlFor="supportType" className="text-sm font-medium text-white/70">{t.supportTypeLabel}</label>
+                    {/* appearance-none hides the native arrow (whose position ignores padding) so the chevron can sit with real right padding. */}
+                    <div className="relative">
                     <select
                         required
                         id="supportType"
                         name="supportType"
                         defaultValue=""
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                     >
                         <option value="" disabled>
-                            Select one
+                            {t.selectOne}
                         </option>
                         {SUPPORT_TYPES.map((type) => (
                             <option key={type} value={type}>
-                                {type}
+                                {SUPPORT_TYPE_LABELS[lang][type]}
                             </option>
                         ))}
                     </select>
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                    </div>
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="timeline" className="text-sm font-medium text-white/70">Timeline</label>
+                    <label htmlFor="timeline" className="text-sm font-medium text-white/70">{t.timelineLabel}</label>
+                    {/* appearance-none hides the native arrow (whose position ignores padding) so the chevron can sit with real right padding. */}
+                    <div className="relative">
                     <select
                         required
                         id="timeline"
                         name="timeline"
                         defaultValue=""
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
                     >
                         <option value="" disabled>
-                            Select one
+                            {t.selectOne}
                         </option>
                         {TIMELINES.map((timeline) => (
                             <option key={timeline} value={timeline}>
-                                {timeline}
+                                {TIMELINE_LABELS[lang][timeline]}
                             </option>
                         ))}
                     </select>
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                    </div>
                 </div>
             </div>
 
             <div className="space-y-2">
                 <label htmlFor="budget" className="text-sm font-medium text-white/70">
-                    Budget or engagement model <span className="text-white/50">(optional)</span>
+                    {`${t.budgetLabel} `}
+                    <span className="text-white/50">{t.optional}</span>
                 </label>
                 <input
                     type="text"
@@ -178,12 +202,12 @@ export function ContactForm() {
                     name="budget"
                     maxLength={200}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
-                    placeholder="e.g. project-based, ongoing retainer, $X–Y range"
+                    placeholder={t.budgetPlaceholder}
                 />
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium text-white/70">Message</label>
+                <label htmlFor="message" className="text-sm font-medium text-white/70">{t.messageLabel}</label>
                 <textarea
                     required
                     id="message"
@@ -191,7 +215,7 @@ export function ContactForm() {
                     rows={5}
                     maxLength={5000}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
-                    placeholder="How can I help?"
+                    placeholder={t.messagePlaceholder}
                 />
             </div>
 
@@ -207,7 +231,7 @@ export function ContactForm() {
                 data-tracking="contact_form_submit"
                 className="inline-flex w-full items-center justify-center rounded-full border border-white/15 bg-white/5 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50"
             >
-                {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                {status === 'submitting' ? t.submitting : t.submit}
             </button>
         </form>
     )

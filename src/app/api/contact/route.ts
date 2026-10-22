@@ -3,11 +3,29 @@ import { Resend } from 'resend'
 import { checkRateLimit } from '@/lib/rate-limiter'
 import { isValidEmailAddress, resolveEmailConfig } from '@/lib/email-config'
 import { SUPPORT_TYPES, TIMELINES } from '@/lib/contact-form-options'
+import { DEFAULT_LOCALE, isLocale, type Locale } from '@/lib/i18n'
+import { buildContactEmail } from '@/lib/contact-email'
 
 const MAX_NAME_LENGTH = 200
 const MAX_EMAIL_LENGTH = 320
 const MAX_MESSAGE_LENGTH = 5000
 const MAX_BUDGET_LENGTH = 200
+
+// PR 11: every error response carries a stable `code` the client maps to a
+// localized message (uiContent.contactForm.errors in src/content/{en,es}/
+// ui.ts). `error` stays as the English text for anything that still reads
+// it. Add a code here and a string in both dictionaries together.
+const ERRORS = {
+    rate_limited: 'Too many requests. Please try again later.',
+    not_configured: 'Contact form is not configured.',
+    invalid_body: 'Invalid request body.',
+    validation: 'Please fill in all required fields with valid values.',
+    send_failed: 'Message could not be sent. Please try again later.'
+} as const
+
+function errorBody(code: keyof typeof ERRORS) {
+    return { code, error: ERRORS[code] }
+}
 
 // The name is interpolated into the email subject line — reject control
 // characters (newlines in particular) so a submission can't inject extra
@@ -24,7 +42,7 @@ export async function POST(request: Request) {
     if (!rateLimit.success) {
         const retryAfterSeconds = Math.max(0, Math.ceil((rateLimit.reset - Date.now()) / 1000))
         return NextResponse.json(
-            { error: 'Too many requests. Please try again later.' },
+            errorBody('rate_limited'),
             { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
         )
     }
@@ -35,17 +53,17 @@ export async function POST(request: Request) {
     const emailConfig = resolveEmailConfig()
     if (!emailConfig.ok) {
         console.error(`Contact form: ${emailConfig.reason}`)
-        return NextResponse.json({ error: 'Contact form is not configured.' }, { status: 500 })
+        return NextResponse.json(errorBody('not_configured'), { status: 500 })
     }
 
     let body: unknown
     try {
         body = await request.json()
     } catch {
-        return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
+        return NextResponse.json(errorBody('invalid_body'), { status: 400 })
     }
 
-    const { name, email, message, website, supportType, timeline, budget } = (body ?? {}) as Record<string, unknown>
+    const { name, email, message, website, supportType, timeline, budget, lang } = (body ?? {}) as Record<string, unknown>
 
     // Honeypot: bots that fill this hidden field are silently accepted without sending anything.
     // Enforced server-side because a bot can POST here directly, bypassing any client-side check.
@@ -70,13 +88,14 @@ export async function POST(request: Request) {
         !TIMELINES.includes(timeline as (typeof TIMELINES)[number]) ||
         (budget !== undefined && budget !== null && budget !== '' && (typeof budget !== 'string' || budget.length > MAX_BUDGET_LENGTH || hasControlCharacters(budget)))
     ) {
-        return NextResponse.json(
-            { error: 'Please fill in all required fields with valid values.' },
-            { status: 400 }
-        )
+        return NextResponse.json(errorBody('validation'), { status: 400 })
     }
 
     const budgetLine = typeof budget === 'string' && budget.trim() ? budget.trim() : 'Not specified'
+    // Deliberately not part of the validation above: an unknown or missing
+    // locale falls back instead of rejecting a real submission over a label.
+    const locale: Locale = typeof lang === 'string' && isLocale(lang) ? lang : DEFAULT_LOCALE
+    const { subject, text, html } = buildContactEmail({ name, email, message, supportType, timeline, budget: budgetLine, lang: locale })
 
     const resend = new Resend(emailConfig.config.apiKey)
 
@@ -85,24 +104,19 @@ export async function POST(request: Request) {
             from: emailConfig.config.from,
             to: emailConfig.config.to,
             replyTo: email,
-            subject: `New portfolio message from ${name}`,
-            text: `From: ${name} <${email}>\nSupport type: ${supportType}\nTimeline: ${timeline}\nBudget/engagement: ${budgetLine}\n\n${message}`
+            subject,
+            text,
+            html
         })
 
         if (error) {
             console.error('Contact form: Resend returned an error', error)
-            return NextResponse.json(
-                { error: 'Message could not be sent. Please try again later.' },
-                { status: 502 }
-            )
+            return NextResponse.json(errorBody('send_failed'), { status: 502 })
         }
 
         return NextResponse.json({ success: true })
     } catch (err) {
         console.error('Contact form: send failed', err)
-        return NextResponse.json(
-            { error: 'Message could not be sent. Please try again later.' },
-            { status: 500 }
-        )
+        return NextResponse.json(errorBody('send_failed'), { status: 500 })
     }
 }

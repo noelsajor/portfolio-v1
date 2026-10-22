@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // The single source of truth for what a case-study MDX file's frontmatter
 // is allowed to contain. Every field here reflects the current real
-// content in src/content/case-studies/ (see brand-website-build.mdx, d2c-wellness-storefront.mdx,
+// content in src/content/en/case-studies/ (see brand-website-build.mdx, d2c-wellness-storefront.mdx,
 // _template.mdx) — nothing here is speculative.
 //
 // `.strict()`: unknown frontmatter keys are rejected. Both real case
@@ -60,6 +60,11 @@ export const projectFrontmatterSchema = z
         order: z.number().optional(),
         status: z.enum(['draft', 'published']).optional(),
         liveUrl: z.string().url('liveUrl must be a valid URL').optional(),
+        // Overrides the default "View live site" label. For a case study whose
+        // work never shipped, the live site is the client's current one and the
+        // default label would promise the reader something the link does not
+        // show. Locale-dependent, so each locale's file sets its own.
+        liveUrlLabel: z.string().min(1).optional(),
         repositoryUrl: z.string().url('repositoryUrl must be a valid URL').optional(),
         industry: z.string().min(1).optional(),
         seoTitle: z.string().min(1).optional(),

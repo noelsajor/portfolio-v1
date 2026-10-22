@@ -8,9 +8,19 @@ import type { NextConfig } from "next";
 // regression for a mostly-static portfolio. 'unsafe-eval' was removed after
 // confirming (same browser check) nothing in production actually needs it —
 // it's a dev-mode-only requirement (eval-based source maps).
-// style-src has no 'unsafe-inline': this app has no inline `style=`
-// attributes anywhere, confirmed by a repo-wide search, and removing it
-// produced zero CSP violations across every route.
+// style-src has no 'unsafe-inline': nothing in this repo writes an inline
+// `style=` attribute. One still reaches the browser, because next/image
+// stamps every <img> it renders with `style="color:transparent"` (it hides
+// the alt text while the file loads). That was throwing a CSP error on every
+// page carrying an image, around 20 per page, and the img silently rendered
+// without it.
+// 'unsafe-hashes' plus the hash of that exact declaration allows that one
+// string and nothing else: any other inline style, including any other value
+// for color, is still refused. Keeping the hash beats 'unsafe-inline', which
+// would open every inline style on the site, and beats leaving it broken,
+// since a console full of CSP errors hides the next real one. The hash is of
+// the literal `color:transparent`, so it only changes if Next changes that
+// declaration.
 // script-src/connect-src also allow Google's specific GA4 hosts (added in
 // Step 8): gtag.js is loaded from googletagmanager.com, and it reports
 // events via fetch/beacon to google-analytics.com and googletagmanager.com.
@@ -20,7 +30,7 @@ import type { NextConfig } from "next";
 const csp =
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; " +
-    "style-src 'self'; " +
+    "style-src 'self' 'unsafe-hashes' 'sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk='; " +
     "img-src 'self' blob: data:; " +
     "font-src 'self'; " +
     "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; " +
@@ -33,8 +43,46 @@ const csp =
 const nextConfig: NextConfig = {
     // Don't advertise the framework via the X-Powered-By response header.
     poweredByHeader: false,
+    // Legacy, pre-i18n URLs permanently redirect to their /en equivalent.
+    // `/` is NOT listed here: it's a language-selection redirect, not a
+    // stable SEO destination, so it must stay a redirect that can change
+    // target locale per visitor rather than one browsers/crawlers cache as
+    // permanent. src/proxy.ts owns it — detecting the visitor's locale from
+    // the `preferred_locale` cookie and `Accept-Language`, then issuing a
+    // 307 — because that decision depends on per-request data this static
+    // redirects() config cannot see.
+    //
+    // No rewrites(): there is no catch-all under [lang] to funnel unmatched
+    // paths into anymore (removed — see src/app/not-found.tsx). Any path
+    // that isn't one of these literal legacy routes, or a real /en/* or
+    // /es/* page, is simply unmatched and served by the static global 404.
+    async redirects() {
+        return [
+            { source: '/about', destination: '/en/about', permanent: true },
+            { source: '/work', destination: '/en/work', permanent: true },
+            { source: '/contact', destination: '/en/contact', permanent: true },
+            { source: '/resume', destination: '/en/resume', permanent: true },
+            { source: '/for-agencies', destination: '/en/for-agencies', permanent: true },
+            { source: '/work/:slug', destination: '/en/work/:slug', permanent: true }
+        ]
+    },
     async headers() {
         return [
+            // The resume PDFs carry their download name from the server instead
+            // of relying on the <a download> attribute, which browsers ignore
+            // whenever they open the PDF in their built-in viewer (Safari does
+            // this often) and then save it under the URL's filename. `inline`
+            // keeps the in-browser preview working; only the suggested name is
+            // forced. Keep these filenames in sync with resumePage.
+            // downloadFilename in src/content/{en,es}/ui.ts.
+            {
+                source: '/resume.pdf',
+                headers: [{ key: 'Content-Disposition', value: 'inline; filename="Jose-Leon-Rojas-Resume.pdf"' }]
+            },
+            {
+                source: '/resume-es.pdf',
+                headers: [{ key: 'Content-Disposition', value: 'inline; filename="Jose-Leon-Rojas-CV.pdf"' }]
+            },
             {
                 source: '/(.*)',
                 headers: [

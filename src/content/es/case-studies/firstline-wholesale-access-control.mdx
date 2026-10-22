@@ -1,0 +1,65 @@
+---
+title: Reconstrucción del control de acceso mayorista de Firstline
+client: Firstline, distribuidor mayorista B2B (tabaco y vape)
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: B2B
+industry: Distribución mayorista de tabaco y vape (B2B, WooCommerce)
+roles:
+  - Diseñador UI/UX
+  - Desarrollador WordPress/WooCommerce
+  - Arquitectura de sistemas de control de acceso
+services:
+  - Diseño UI/UX del flujo de compradores
+  - Sistema de control de acceso solo para mayoristas
+  - Refuerzo del registro y la aprobación de compradores
+  - Auditoría de catálogo y taxonomías
+  - Estrategia de caché y rendimiento
+summary: Reconstruí el control de acceso de una tienda mayorista existente en WooCommerce con 17.5k SKUs. Bloqueo del lado del servidor según el estado del comprador, un flujo de registro y aprobación reforzado y una política de caché segura para contenido dinámico específico de cada comprador, entregados a través de una hoja de ruta por fases con aprobación en cada una.
+challenge: La tienda WooCommerce de Firstline exponía todo su catálogo y sus precios a cualquier persona, y su flujo de registro de compradores no estaba lo bastante reforzado para restringir con seguridad un catálogo mayorista de 17.5k productos en producción solo a compradores aprobados y con licencia verificada.
+outcome: "Entregué el bloqueo del catálogo del lado del servidor solo para mayoristas, un flujo de registro y aprobación reforzado y basado en estados, y una política de caché segura para contenido específico de cada comprador. El cliente pausó el proyecto antes del QA final y el lanzamiento público."
+year: "2026"
+duration: En pausa (2026)
+team: Contratado directamente por el cliente; único diseñador y desarrollador responsable de la auditoría, la hoja de ruta, el diseño UI/UX y la implementación.
+featured: false
+order: 6
+status: published
+liveUrl: https://firstlinewholesale.com/
+liveUrlLabel: Ver la tienda del cliente
+coverImage: /images/case-studies/firstline-cover.webp
+coverAlt: Logo de FirstLine Distribution sobre una foto de marca con iluminación azul de ambiente
+gallery:
+  - id: firstline-buyer-onboarding-wireframes
+    status: ready
+    src: /images/case-studies/firstline-buyer-onboarding-wireframes.webp
+    alt: Wireframes de alta fidelidad para escritorio y móvil del flujo de incorporación de compradores mayoristas de Firstline, incluidos el formulario de solicitud y el estado de aprobación pendiente
+  - id: firstline-access-state-pages
+    status: ready
+    src: /images/case-studies/firstline-access-state-pages.webp
+    alt: Diagrama de los estados críticos de acceso del comprador en el bloqueo mayorista de Firstline, como inicio de sesión requerido, solicitud pendiente, sin stock, checkout no disponible y otros
+seoTitle: Firstline — Control de acceso mayorista en WooCommerce | Noelsajor
+seoDescription: "Control de acceso solo para mayoristas en WooCommerce para Firstline: bloqueo por estado del comprador, registro reforzado y caché segura para catálogo B2B."
+---
+
+## El problema real
+
+El catálogo completo de Firstline, 17.500 SKUs con sus precios y su stock, era visible para cualquiera. Debía verlo solo un comprador mayorista aprobado, y el registro que ya existía no estaba lo bastante reforzado para sostener eso: faltaban verificaciones de nonce y de capacidades, la verificación de email no era obligatoria y no había una máquina formal de estados del comprador.
+
+Es una tienda en producción, con compradores activos y sincronización en vivo con Cin7, así que propuse una hoja de ruta por fases y la hice aprobar antes de tocar nada: estabilizar caché y respaldos, auditar la autenticación, definir los estados de acceso, optimizar el filtrado, bloquear el catálogo y solo entonces elegir el plugin de precios mayoristas. El orden es deliberado. No se deciden los precios antes de resolver quién puede verlos.
+
+Por la misma razón nada se probó contra la tienda real. Levanté una instalación local de WordPress en Docker y ahí verifiqué cada estado de acceso antes de proponer el cambio.
+
+El flujo lo diseñé completo antes de implementarlo: el registro y una pantalla propia para cada estado, pendiente, rechazado y bloqueado, además de la ruta de verificación. Un comprador no aprobado tiene que llegar a la pantalla que le corresponde y no a una rota, que es el mismo problema de acceso visto desde el otro lado.
+
+El acceso se rige por el estado del usuario y no por roles nuevos de WordPress, que habrían creado riesgo de migración sobre una base de usuarios con roles mixtos. Vive en un plugin propio y no en el tema, para poder revertirlo con seguridad. Y como el estado, los precios, el stock y el carrito son todos dinámicos, saqué las rutas del catálogo privado de la caché de página por completo: ahí el rendimiento se apoya en consultas por taxonomía y caché de objetos.
+
+El cliente pausó el proyecto antes del QA final, así que el bloqueo de catálogo y el flujo de estados quedaron construidos y sin publicar. La tienda que sigue en línea es la anterior, todavía con el catálogo abierto.
+
+## Tecnologías
+
+- **Plataforma**: WordPress, WooCommerce
+- **Lenguajes**: PHP, JavaScript, HTML, CSS
+- **Integraciones**: Cin7, plugin de precios mayoristas, caché de página y de objetos
+- **Entorno local**: Docker (instalación de WordPress para pruebas)
+- **Áreas de enfoque**: Diseño de flujo de compradores, control de acceso, endurecimiento de autenticación, política de caché, rendimiento de consultas

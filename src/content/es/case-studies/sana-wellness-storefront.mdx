@@ -1,0 +1,67 @@
+---
+title: Desarrollo y operación de la tienda SANA
+client: SANA, marca D2C de bienestar
+liveUrl: https://sanavitahoney.com/
+coverImage: /images/case-studies/sana-storefront-cover.webp
+coverAlt: Ilustración de la marca SANA VitaHoney con cinco abejas mascota de caricatura en poses de médico, lectura y ejercicio sobre un fondo de atardecer naranja
+gallery:
+  - id: sana-storefront-hero
+    status: ready
+    src: /images/case-studies/sana-storefront-hero.webp
+    alt: Hero de la página de inicio de SANA mostrando las seis fórmulas de cucharadas de miel, en escritorio y móvil
+  - id: sana-product-template
+    status: ready
+    src: /images/case-studies/sana-product-template.webp
+    alt: Página de producto de SANA construida sobre metafields, con beneficios, ingredientes e información nutricional del suplemento en escritorio y móvil
+  - id: sana-lighthouse-audit
+    status: ready
+    src: /images/case-studies/sana-lighthouse-audit.webp
+    alt: Comparación lado a lado de auditorías Lighthouse en móvil para la tienda SANA
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: D2C
+industry: Bienes de consumo / Bienestar y suplementos
+roles:
+  - Desarrollador Shopify
+  - Optimización de rendimiento
+  - Gestión de tienda
+services:
+  - Desarrollo de tema Shopify
+  - Optimización de rendimiento mobile-first
+  - Metafields y arquitectura de datos de producto
+  - UX de suscripciones y descuentos por volumen
+  - Implementación de analítica y tracking
+  - Gestión de tienda y catálogo
+  - Gestión de medios pagados (Meta y Google Ads)
+summary: "Desarrollo del tema Shopify de SANA, arquitectura de producto en metafields, suscripciones, trabajo continuo de rendimiento móvil y la operación diaria de la tienda."
+challenge: Una línea de producto donde cada variante necesita sus propios datos, imposible de sostener con una plantilla estándar, y un rendimiento móvil que había que revisar cada vez que entraba una sección nueva.
+outcome: Una tienda mobile-first con los datos de producto en metafields, suscripciones y descuentos por volumen funcionando, mejoras de Lighthouse verificadas, y el stack de tracking que permitió lanzar las primeras campañas.
+year: "2026"
+duration: ~2 meses (2026)
+team: Contratado a través de una agencia intermediaria de marketing y staffing. Único desarrollador del proyecto; la identidad de marca la llevó el diseñador del equipo, con quien trabajé la parte visual.
+featured: false
+order: 3
+status: published
+updatedAt: "2026-09-01"
+seoTitle: SANA — Desarrollo y operación de una tienda Shopify | Noelsajor
+seoDescription: "Tema Shopify para SANA, marca D2C de bienestar: arquitectura de producto con metafields, suscripciones, rendimiento móvil y operación de la tienda."
+---
+
+## El problema real
+
+Cada variante monodosis necesita sus propios beneficios, ingredientes, recomendaciones y color de acento en la interfaz. En una plantilla de producto normal eso termina siendo una pila de excepciones que nadie puede mantener, así que monté una arquitectura de metafields: esos datos viven en cada producto y no dentro de la plantilla, y agregar una variante dejó de ser trabajo de código. Sobre eso construí la interfaz de compra por suscripción y con descuentos por volumen.
+
+El otro frente fue el rendimiento, que en una tienda viva no se audita una sola vez. La revisión encontró cosas concretas: Google Tag Manager disparaba una etiqueta GA4 duplicada encima del canal de analítica propio de Shopify, quedaban 85 archivos huérfanos de una app de page builder que habíamos descartado cargando CSS y JavaScript sin uso en cada página, la imagen hero que determinaba el LCP no tenía preload, y a varias secciones les faltaban width, height y alt. Corregir cada punto mejoró la auditoría Lighthouse en móvil, medido con ejecuciones antes y después.
+
+También limpié errores de schema de producto que Search Console marcaba en Merchant Center y monté el stack de tracking desde cero, con el que corrí las primeras campañas pagadas de la marca.
+
+Y después quedó el trabajo que no se ve en un caso de estudio: altas y cambios de producto, promociones, y volver a medir el rendimiento cada vez que entraba una sección nueva.
+
+## Tecnologías
+
+- **Plataforma**: Shopify
+- **Lenguajes**: Liquid, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0, metafields
+- **Tracking y anuncios**: Google Tag Manager, Meta Pixel, X (Twitter) Pixel, Meta Ads Manager, Google Ads
+- **Herramientas**: Git, Shopify CLI, Google Search Console, Lighthouse

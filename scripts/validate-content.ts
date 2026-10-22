@@ -5,7 +5,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { projectFrontmatterSchema } from '../src/lib/project-schema'
-import { getProjectSlugs } from '../src/lib/projects'
+import matter from 'gray-matter'
+import { getProjectSlugs, getProjects } from '../src/lib/projects'
+import { headingIds } from '../src/lib/mdx-headings'
+import { uiContent as uiContentEn } from '../src/content/en/ui'
+import { uiContent as uiContentEs } from '../src/content/es/ui'
 
 let failures = 0
 
@@ -136,7 +140,7 @@ check(
 
 console.log('\nLoader (real content directory):')
 
-const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'case-studies')
+const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'en', 'case-studies')
 
 check(
     'template is never exposed as a project',
@@ -254,6 +258,107 @@ Temporary validation fixture.
     )
     fs.unlinkSync(badPath)
     tempFiles.pop()
+}
+
+// --- Locale parity ---------------------------------------------------------
+//
+// PR 11 (replaces the PR 5 "es falls back to en" assertion, which would have
+// failed on the first real Spanish MDX). Spanish case studies land one file
+// at a time (per-file fallback in src/lib/projects.ts), so the invariants
+// are: every `es` file matches an `en` slug, the slug catalog is identical
+// in both locales, `es` frontmatter keeps the locale-independent fields
+// byte-identical to `en`, and every file in a locale carries the canonical
+// H2 headings the case-study page's question chips link to
+// (uiContent.work.askChips in src/content/<locale>/ui.ts, see
+// docs/es-style-guide.md section 7).
+
+console.log('\nLocale parity:')
+
+{
+    const enSlugs = getProjects('en', { includeDrafts: true })
+        .map((project) => project.slug)
+        .sort()
+    const esSlugs = getProjects('es', { includeDrafts: true })
+        .map((project) => project.slug)
+        .sort()
+    check(
+        "getProjects('es') exposes the same slug catalog as getProjects('en')",
+        esSlugs.length === enSlugs.length && esSlugs.every((slug, i) => slug === enSlugs[i])
+    )
+
+    const esDir = path.join(process.cwd(), 'src/content/es/case-studies')
+    const esFiles = fs.existsSync(esDir)
+        ? fs.readdirSync(esDir).filter((f) => f.endsWith('.mdx') && !f.startsWith('_'))
+        : []
+    const enDir = path.join(process.cwd(), 'src/content/en/case-studies')
+
+    check(
+        'every es case-study file has a matching en file',
+        esFiles.every((f) => fs.existsSync(path.join(enDir, f)))
+    )
+
+    // Fields that must stay identical across locales: anything that drives
+    // routing, grouping, ordering, publication, images or outbound links.
+    const LOCALE_INDEPENDENT_FIELDS = [
+        'type',
+        'capabilities',
+        'segment',
+        'year',
+        'featured',
+        'order',
+        'status',
+        'updatedAt',
+        'coverImage',
+        'liveUrl',
+        'repositoryUrl'
+    ] as const
+
+    for (const file of esFiles) {
+        const en = matter(fs.readFileSync(path.join(enDir, file), 'utf8'))
+        const es = matter(fs.readFileSync(path.join(esDir, file), 'utf8'))
+        const drift = LOCALE_INDEPENDENT_FIELDS.filter(
+            (field) => JSON.stringify(en.data[field] ?? null) !== JSON.stringify(es.data[field] ?? null)
+        )
+        check(`${file}: locale-independent frontmatter matches en${drift.length ? ` (drift: ${drift.join(', ')})` : ''}`, drift.length === 0)
+
+        const enGallery = (en.data.gallery ?? []) as { id: string; status: string; src?: string }[]
+        const esGallery = (es.data.gallery ?? []) as { id: string; status: string; src?: string }[]
+        check(
+            `${file}: gallery ids/status/src match en`,
+            JSON.stringify(enGallery.map(({ id, status, src }) => [id, status, src ?? null])) ===
+                JSON.stringify(esGallery.map(({ id, status, src }) => [id, status, src ?? null]))
+        )
+    }
+
+    // The case-study page renders only the question chips whose heading the
+    // document actually has, so a shorter case study is allowed to carry
+    // fewer sections. What must not drift is which chips the two locales
+    // offer for the same project: a reader switching language should get the
+    // same navigation, not a box that appears on /es and vanishes on /en.
+    const CHIP_ANCHORS: Record<'en' | 'es', string[]> = {
+        en: uiContentEn.work.askChips.map((chip) => decodeURIComponent(chip.href.slice(1))),
+        es: uiContentEs.work.askChips.map((chip) => decodeURIComponent(chip.href.slice(1)))
+    }
+
+    /** The chips a locale's file will show, as their English labels, so the
+     *  two locales' lists are comparable even though their anchors differ. */
+    function chipsShown(locale: 'en' | 'es', dir: string, file: string): string[] {
+        const { content } = matter(fs.readFileSync(path.join(dir, file), 'utf8'))
+        const ids = headingIds(content)
+        return CHIP_ANCHORS[locale]
+            .map((anchor, i): string | null => (ids.has(anchor) ? uiContentEn.work.askChips[i].label : null))
+            .filter((label): label is string => label !== null)
+    }
+
+    for (const file of esFiles) {
+        const en = chipsShown('en', enDir, file)
+        const es = chipsShown('es', esDir, file)
+        const same = en.length === es.length && en.every((label, i) => label === es[i])
+        check(
+            `${file}: shows the same question chips in both locales${same ? '' : ` (en: ${en.join(', ') || 'none'} / es: ${es.join(', ') || 'none'})`}`,
+            same
+        )
+    }
 }
 
 console.log()

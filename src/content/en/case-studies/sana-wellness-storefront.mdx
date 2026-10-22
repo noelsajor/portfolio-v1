@@ -1,0 +1,67 @@
+---
+title: SANA Storefront Development and Operations
+client: SANA, direct-to-consumer wellness brand
+liveUrl: https://sanavitahoney.com/
+coverImage: /images/case-studies/sana-storefront-cover.webp
+coverAlt: SANA VitaHoney brand illustration with five cartoon bee mascots in doctor, reading, and workout poses against an orange sunset background
+gallery:
+  - id: sana-storefront-hero
+    status: ready
+    src: /images/case-studies/sana-storefront-hero.webp
+    alt: SANA storefront homepage hero showing the six honey-spoon formulas, on desktop and mobile
+  - id: sana-product-template
+    status: ready
+    src: /images/case-studies/sana-product-template.webp
+    alt: SANA product page built on metafields, showing benefits, ingredients, and supplement-facts content on desktop and mobile
+  - id: sana-lighthouse-audit
+    status: ready
+    src: /images/case-studies/sana-lighthouse-audit.webp
+    alt: Side-by-side Lighthouse mobile audit comparison for the SANA storefront
+type: E-commerce
+capabilities:
+  - Ecommerce Systems
+segment: D2C
+industry: Consumer Goods / Wellness & Supplements
+roles:
+  - Shopify Developer
+  - Performance Optimization
+  - Store Management
+services:
+  - Shopify theme development
+  - Mobile-first performance optimization
+  - Metafields and product data architecture
+  - Subscription and volume-discount UX
+  - Analytics and tracking implementation
+  - Store and catalog management
+  - Paid media management (Meta and Google Ads)
+summary: "Shopify theme development for SANA, a metafield-based product architecture, subscriptions, continuous mobile performance work, and the day-to-day running of the store."
+challenge: A product line where every variant needs its own data, impossible to hold in a standard template, and mobile performance that had to be rechecked every time a new section landed.
+outcome: A mobile-first store with product data in metafields, subscriptions and volume discounts working, verified Lighthouse gains, and the tracking stack that made the brand's first campaigns possible.
+year: "2026"
+duration: ~2 months (2026)
+team: Engaged through an intermediary marketing and staffing agency. Sole developer on the project; the brand identity was led by the team's designer, who I worked with on the visual side.
+featured: false
+order: 3
+status: published
+updatedAt: "2026-09-01"
+seoTitle: SANA — Shopify Storefront Development and Operations | Noelsajor
+seoDescription: "Shopify theme for SANA, a D2C wellness brand: metafield product architecture, subscriptions, mobile performance, and store operations."
+---
+
+## The real problem
+
+Every single-serve variant needs its own benefits, ingredients, recommendations, and accent color in the UI. On a normal product template that becomes a pile of exceptions nobody can maintain, so I set up a metafield architecture: that data lives on each product rather than inside the template, and adding a variant stopped being a code change. On top of it I built the subscription and volume-discount purchase UI.
+
+The other front was performance, which on a live store is not something you audit once. The review turned up concrete things: Google Tag Manager was firing a duplicate GA4 tag on top of Shopify's own analytics channel, 85 orphaned files were left from a page builder app we had dropped and were still loading unused CSS and JavaScript on every page, the hero image driving LCP had no preload, and several sections were missing width, height, and alt. Fixing each one improved the store's mobile Lighthouse audit, measured with before and after runs.
+
+I also cleared product schema errors Search Console was flagging in Merchant Center, and built the tracking stack from scratch, which I then used to run the brand's first paid campaigns.
+
+And then there is the work a case study never shows: adding and changing products, running promotions, and re-measuring performance every time a new section landed.
+
+## Technologies
+
+- **Platform**: Shopify
+- **Languages**: Liquid, HTML, CSS, JavaScript
+- **Framework / CMS**: Shopify OS 2.0, metafields
+- **Tracking and ads**: Google Tag Manager, Meta Pixel, X (Twitter) Pixel, Meta Ads Manager, Google Ads
+- **Tools**: Git, Shopify CLI, Google Search Console, Lighthouse

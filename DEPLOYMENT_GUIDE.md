@@ -44,9 +44,11 @@ The contact endpoint (`/api/contact`) is rate-limited per client IP using [Upsta
 
 ## 🔄 Deployment Workflow
 1.  **Develop** on a feature branch (e.g., `feat/rebrand`).
-2.  **Verify** using the Vercel Preview URL.
+2.  **Verify** using the Vercel Preview URL, including locale-prefixed public routes such as `/en`, `/en/work`, `/es`, and `/es/work`.
 3.  **Merge** to `main` to trigger the production build.
 4.  **Audit** using Lighthouse in the Vercel Dashboard.
+
+Public content is served from locale-prefixed routes. Legacy unprefixed public URLs such as `/about`, `/work`, `/contact`, `/resume`, and `/for-agencies` should redirect permanently to their `/en/...` equivalents; do not treat those legacy paths as canonical preview targets.
 
 ---
 

@@ -1,0 +1,67 @@
+---
+title: Vita Organica Site Build & Infrastructure Handoff
+client: Vita Organica, B2B private-label supplement manufacturer
+type: Marketing Website
+capabilities:
+  - Custom Websites
+segment: B2B
+industry: Consumer Goods / Supplement Contract Manufacturing (B2B)
+roles:
+  - Full-Stack Developer
+  - Infrastructure & Client Handoff
+services:
+  - Lead capture approach
+  - Web development (Astro + headless CMS)
+  - Front-end implementation
+  - Interactive mockup tool
+  - Production infrastructure handover
+summary: "B2B marketing site for a private-label supplement manufacturer, with a lead funnel that separates prospects by type of service and a custom mockup generator, plus the full handover of the infrastructure to the client's own accounts."
+challenge: "The brief was a business objective, not a specification: turn visitors into qualified leads when prospects are not all asking for the same thing. And once the site was built, the business needed full ownership of its infrastructure, with no downtime and no rewrite."
+outcome: I delivered a live B2B marketing site with a working lead-generation funnel and a custom mockup tool, then completed a full infrastructure handoff (code, hosting, CMS, and email all transferred to the client's own accounts) with zero agency access remaining.
+year: "2026"
+duration: ~3 months (2026)
+team: Engaged through an intermediary marketing and staffing agency. The logo and brand kit were the agency designer's; the site's approach, the build and the handover were mine.
+featured: false
+order: 5
+status: published
+updatedAt: "2026-08-31"
+liveUrl: https://vitaorganicasupps.com
+coverImage: /images/case-studies/vita-organica-cover.webp
+coverAlt: Vita Organica Supplements wordmark in white over a lime-green background with an abstract outlined leaf graphic
+gallery:
+  - id: vita-organica-lead-funnel
+    status: ready
+    src: /images/case-studies/vita-organica-lead-funnel.webp
+    alt: Vita Organica homepage hero alongside the guide-download form, custom-quote form, and mockup tool preview
+  - id: vita-organica-mockup-generator
+    status: ready
+    src: /images/case-studies/vita-organica-mockup-generator.webp
+    alt: Vita Organica's interactive mockup generator, stepping through format selection, artwork upload, and a live branded product preview
+  - id: vita-organica-cta-footer
+    status: ready
+    src: /images/case-studies/vita-organica-cta-footer.webp
+    alt: Vita Organica's final call-to-action section and site footer, with the Request a Quote flow
+seoTitle: Vita Organica — Site Build & Infrastructure Handoff | Noelsajor
+seoDescription: B2B marketing site with a custom lead-generation funnel and product-mockup tool for Vita Organica, a private-label supplement manufacturer, plus a full production infrastructure handoff.
+---
+
+## The real problem
+
+The brief came with a business objective, not a specification: turn visitors into qualified leads. In private-label manufacturing that is not trivial, because prospects are not all asking for the same thing and a single form mixes them together.
+
+The call I made was to sort by type of service from inside the site, without adding steps for the visitor, and to do it interactively rather than by lengthening a form. That produced three lead paths, and the one that solves the problem is a mockup generator: the prospect picks one of the formats the plant actually manufactures, drops their label art onto that template, and sees their product before speaking to anyone. It turns "can you make mine?" into something they check for themselves, and the lead reaches sales already saying which format they are after.
+
+All three paths run through one transactional email pipeline and land in the sales inbox as actionable leads, not in a database nobody reads.
+
+I built it in Astro with hybrid rendering and Sanity as a headless CMS, so marketing can manage content without touching code, and the interactive pieces as isolated React islands instead of shipping JavaScript across the whole site.
+
+The second half of the engagement was the handover. The repository, the hosting, the CMS project and the transactional email domain all moved to accounts the client owns, with no agency infrastructure left in the loop. That meant migrating the package manager, rewriting internal build notes as operational guides, and running a DNS cutover with no downtime.
+
+What nearly held it up was not technical: the client could not find the credentials for their email accounts, their hosting provider or their domain. It was sorted in an afternoon, in a live working session over a call.
+
+## Technologies
+
+- **Framework**: Astro (hybrid rendering), React islands
+- **CMS**: Sanity
+- **Languages**: TypeScript, HTML, CSS
+- **Focus areas**: B2B lead generation, custom interactive tooling, infrastructure handover

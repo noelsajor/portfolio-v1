@@ -12,7 +12,7 @@ export function LandingFeatureList({
     const ListTag = numbered ? 'ol' : 'ul'
 
     return (
-        <section className="space-y-8">
+        <section className="section-stack">
             <div className="space-y-4">
                 <p className="text-sm font-semibold tracking-wide text-white/70">{label}</p>
                 <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{heading}</h2>

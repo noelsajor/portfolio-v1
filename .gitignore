@@ -41,4 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 # local AI agent tooling cache (machine-specific, not project source)
+.claude/
 .atl/
