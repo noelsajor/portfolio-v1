@@ -150,6 +150,11 @@ export const homeContent = {
         heading: 'What clients say',
         items: [
             {
+                quote: 'Jose was an incredible asset to the team. He was punctual and always on top of his projects. Dedicated, communicative and friendly. He was able to help utilize AI into our projects as well and streamline things. Top tier candidate.',
+                name: 'Ethan Barak',
+                role: 'CEO, NUUD Pleasures'
+            },
+            {
                 quote: 'I highly recommend Jose for his exceptional skills in packaging, branding, and other graphic design tasks. Throughout our collaboration, he consistently showcased an impressive level of creativity and innovation, bringing fresh ideas to every project. His communication skills were great, making the entire process smooth and efficient.',
                 name: 'Bibi Nucci',
                 role: 'Co-Founder, Creative Home and Kitchen'
@@ -163,11 +168,6 @@ export const homeContent = {
                 quote: "Jose's work is excellent!!! It has style and elegance, with engaging graphics. Jose is easy to work with. Overall, it was a super positive experience.",
                 name: 'Lena Zaritsky',
                 role: 'Creative Empowerment Strategist & Entrepreneur'
-            },
-            {
-                quote: 'Jose was an incredible asset to the team. He was punctual and always on top of his projects. Dedicated, communicative and friendly. He was able to help utilize AI into our projects as well and streamline things. Top tier candidate.',
-                name: 'Ethan Barak',
-                role: 'CEO, NUUD Pleasures'
             }
         ]
     },
