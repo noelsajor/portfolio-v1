@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { homeContent as homeContentEn } from '@/content/en/home'
 import { homeContent as homeContentEs } from '@/content/es/home'
+import { TypewriterWords } from '@/components/home/TypewriterWords'
 import { localizedPath, type Locale } from '@/lib/i18n'
 
 export function HeroSection({ lang }: { lang: Locale }) {
@@ -10,12 +11,21 @@ export function HeroSection({ lang }: { lang: Locale }) {
     return (
         <section className="space-y-8">
             {hero.eyebrow ? <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{hero.eyebrow}</p> : null}
-            <h1 className="text-5xl font-semibold leading-tight tracking-tight md:text-6xl lg:text-7xl">
-                {hero.headline.map((line) => (
-                    <span key={line} className="block">
-                        {line}
-                    </span>
-                ))}
+            {/* aria-label rather than a hidden duplicate of the word: it names
+                the heading once, with the sentence finished, and keeps the
+                cycling line out of the accessibility tree without putting the
+                word in the DOM twice where a crawler would read it back. */}
+            <h1
+                aria-label={`${hero.headline.lead} ${hero.headline.tail}${hero.headline.rotate[0]}`}
+                className="text-5xl font-semibold leading-tight tracking-tight md:text-6xl lg:text-7xl"
+            >
+                {/* The spans are block, so the space is invisible on screen, but
+                    without it anything reading textContent gets "From ideato". */}
+                <span className="block">{hero.headline.lead}</span>{' '}
+                <span aria-hidden="true" className="block">
+                    {hero.headline.tail}
+                    <TypewriterWords words={hero.headline.rotate} />
+                </span>
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl">{hero.supportingText}</p>
 

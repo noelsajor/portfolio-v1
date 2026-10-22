@@ -12,7 +12,10 @@ export const homeContent = {
     hero: {
         // Empty on purpose: the hero drops the eyebrow line (HeroSection skips it when empty).
         eyebrow: '',
-        headline: ['From idea', 'to production.'],
+        // The last word cycles (see TypewriterWords). `rotate[0]` is what the
+        // server renders and what a reader without JavaScript keeps, so it has
+        // to be the word the heading most wants to say on its own.
+        headline: { lead: 'From idea', tail: 'to ', rotate: ['production.', 'design.'] },
         supportingText: 'I design and build websites and digital products. One person, start to finish.',
         primaryCta: { label: 'Work with me', href: '/contact' },
         secondaryCta: { label: 'My work', href: '/work' },
