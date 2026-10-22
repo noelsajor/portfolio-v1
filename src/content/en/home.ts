@@ -144,28 +144,36 @@ export const homeContent = {
         }
     },
     // Real LinkedIn recommendations (profile > Recommendations > Received).
-    // Quotes are verbatim; to add one, append an item here and its Spanish
-    // translation in ../es/home.ts.
+    // `receivedAt` is the date LinkedIn shows on each one. It is not rendered;
+    // it exists so the order below is a recorded fact rather than the order
+    // someone happened to paste them in. Keep the list sorted by it,
+    // newest first.
+    // To add one, insert it in date order here and its Spanish translation in
+    // ../es/home.ts.
     testimonials: {
         heading: 'What clients say',
         items: [
             {
                 quote: 'Jose was an incredible asset to the team. He was punctual and always on top of his projects. Dedicated, communicative and friendly. He was able to help utilize AI into our projects as well and streamline things. Top tier candidate.',
+                receivedAt: '2026-10-19',
                 name: 'Ethan Barak',
                 role: 'CEO, NUUD Pleasures'
             },
             {
                 quote: 'I highly recommend Jose for his exceptional skills in packaging, branding, and other graphic design tasks. Throughout our collaboration, he consistently showcased an impressive level of creativity and innovation, bringing fresh ideas to every project. His communication skills were great, making the entire process smooth and efficient.',
+                receivedAt: '2023-08-04',
                 name: 'Bibi Nucci',
                 role: 'Co-Founder, Creative Home and Kitchen'
             },
             {
                 quote: 'They greatly improved my presentation with their creativity, attention to detail, and ability to translate ideas. Jose is a professional, timely, and dedicated designer who consistently delivers high-quality work. I look forward to working with them again in the future.',
+                receivedAt: '2023-06-02',
                 name: 'Alex Wanderley',
-                role: 'GTM, IoT & Asset Visibility | Enterprise Sales'
+                role: 'GTM | IoT & Asset Visibility | OT | Cybersecurity | Enterprise Sales'
             },
             {
                 quote: "Jose's work is excellent!!! It has style and elegance, with engaging graphics. Jose is easy to work with. Overall, it was a super positive experience.",
+                receivedAt: '2021-03-26',
                 name: 'Lena Zaritsky',
                 role: 'Creative Empowerment Strategist & Entrepreneur'
             }
