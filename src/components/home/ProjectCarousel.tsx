@@ -86,19 +86,25 @@ export function ProjectCarousel({ lang, projects, labels }: { lang: Locale; proj
     return (
         <div className="space-y-4" role="region" aria-roledescription="carousel" aria-label={labels.ariaLabel}>
             {/* Three portrait cards fill the row on md+. Below md the track bleeds into the page gutter and scroll-padding keeps the snapped card aligned with it, with ~20% of the next card peeking. */}
+            {/* The track holds COPIES copies of the list so the loop is
+                seamless, and scrolls itself to the middle one on mount, so
+                nth-child would count clones rather than the cards anyone can
+                see. Each card states its own step instead (see reveal-step-* in
+                globals.css), which is the same for a card and its clones. */}
             <ul
+                data-reveal-stagger
                 ref={trackRef}
                 role="list"
                 className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 scroll-pl-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:scroll-pl-0"
             >
                 {Array.from({ length: COPIES }, (_, copy) => copy).flatMap((copy) =>
-                    projects.map((project) => {
+                    projects.map((project, index) => {
                         const clone = copy !== REAL_COPY
                         return (
                             <li
                                 key={`${copy}-${project.slug}`}
                                 aria-hidden={clone || undefined}
-                                className={`${PROJECT_CARD_CLASS} w-[80%] flex-none snap-start sm:w-[46%] md:w-[calc((100%-2rem)/3)]`}
+                                className={`${PROJECT_CARD_CLASS} reveal-step-${Math.min(index, 6)} w-[80%] flex-none snap-start sm:w-[46%] md:w-[calc((100%-2rem)/3)]`}
                             >
                                 <ProjectPortraitCardBody lang={lang} project={project} tracking={`project_card_${project.slug}`} tabbable={!clone} />
                             </li>

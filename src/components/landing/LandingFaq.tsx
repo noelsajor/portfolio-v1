@@ -13,9 +13,9 @@ export function LandingFaq({
 }) {
     return (
         // mx-auto: the capped-width FAQ sits centered in the page, heading included.
-        <section className="section-stack mx-auto max-w-3xl">
+        <section data-reveal-stagger className="section-stack mx-auto max-w-3xl">
             <h2 className="text-center text-2xl font-semibold tracking-tight md:text-3xl">{heading}</h2>
-            <div className="divide-y divide-white/10 border-t border-white/10">
+            <div data-reveal-stagger className="divide-y divide-white/10 border-t border-white/10">
                 {items.map((item, index) => (
                     <details key={item.question} open={index === 0} className="group">
                         <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left font-semibold text-white [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-sm">

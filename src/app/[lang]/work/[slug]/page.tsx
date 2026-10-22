@@ -267,7 +267,7 @@ export default async function CaseStudyPage({
             </article>
 
             {readyGalleryItems.length > 0 ? (
-                <section className="space-y-4">
+                <section data-reveal className="space-y-4">
                     <h2 className="text-xl font-semibold tracking-tight md:text-2xl">{work.gallery}</h2>
                     <ProjectGallery
                         items={readyGalleryItems}

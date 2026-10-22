@@ -67,12 +67,12 @@ export default async function WorkPage({ params }: { params: Promise<{ lang: str
             {projectSections.length > 0 ? (
                 <div className="space-y-10">
                     {projectSections.map((section) => (
-                        <section key={section.capability} className="space-y-4" aria-labelledby={capabilityId(section.capability)}>
+                        <section key={section.capability} data-reveal className="space-y-4" aria-labelledby={capabilityId(section.capability)}>
                             <h2 id={capabilityId(section.capability)} className="text-2xl font-semibold tracking-tight">
                                 {capabilityLabel(lang, section.capability)}
                             </h2>
                             {/* Same portrait card as the home carousel, in a static grid. */}
-                            <ul role="list" className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                            <ul role="list" data-reveal-stagger className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                                 {section.projects.map((project) => (
                                     <li key={project.slug} className={PROJECT_CARD_CLASS}>
                                         <ProjectPortraitCardBody lang={lang} project={project} tracking={`portfolio_item_${project.slug}`} />

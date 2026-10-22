@@ -71,7 +71,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
 
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">{resumeContent.experienceHeading}</h2>
-                <ul className="space-y-5">
+                <ul data-reveal-stagger className="space-y-5">
                     {experience.map((role) => (
                         <li key={role.title} className="space-y-1">
                             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -89,7 +89,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                 <section className="space-y-4">
                     <h2 className="text-lg font-semibold">{resumeContent.selectedWorkHeading}</h2>
                     {/* Same shape as the Experience entries: bold title line, muted detail below. */}
-                    <ul className="space-y-5">
+                    <ul data-reveal-stagger className="space-y-5">
                         {projects.map((project) => (
                             <li key={project.slug} className="space-y-1">
                                 <p className="font-semibold text-white">
@@ -115,7 +115,7 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
             {/* Skills come after the evidence: recruiters scan experience and projects first, the keyword index last. */}
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">{resumeContent.skillsHeading}</h2>
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div data-reveal-stagger className="grid gap-6 sm:grid-cols-2">
                     {skillGroups.map((group) => (
                         <div key={group.title} className="space-y-2">
                             <h3 className="text-sm font-semibold text-white/90">{group.title}</h3>

@@ -68,7 +68,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                     // bottom into the page instead.
                     className="h-auto w-full max-w-[20rem] grayscale [mask-image:linear-gradient(to_bottom,black_72%,transparent_98%)] md:col-start-2 md:row-span-2 md:row-start-1 md:max-w-none"
                 />
-                <div className="space-y-6 md:col-start-1 md:row-start-2">
+                <div data-reveal-stagger className="space-y-6 md:col-start-1 md:row-start-2">
                     {aboutContent.paragraphs.map((paragraph) => (
                         <p key={paragraph} className="max-w-2xl text-white/70">
                             {paragraph}
