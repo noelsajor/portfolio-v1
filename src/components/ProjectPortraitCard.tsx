@@ -26,7 +26,7 @@ export function ProjectPortraitCardBody({
 }) {
     return (
         <>
-            <ProjectCardPreview lang={lang} project={project} aspect="portrait" />
+            <ProjectCardPreview lang={lang} project={project} aspect="landscape" />
             <div className="flex flex-col gap-3">
                 <div className="flex h-7 shrink-0 items-center gap-2 overflow-hidden whitespace-nowrap [&>*]:shrink-0">
                     <CapabilityChips lang={lang} capabilities={project.capabilities} />
