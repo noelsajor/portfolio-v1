@@ -6,8 +6,11 @@ import { capabilityLabel, projectTypeLabel } from '@/lib/project-labels'
 type ProjectCardPreviewProps = {
     lang: Locale
     project: CaseStudyFrontmatter
-    // 'landscape' (16:9, the default) for card grids; 'portrait' (9:16) for
-    // the home carousel, where three tall cards fit side by side.
+    // 'landscape' (16:9, the default) everywhere, because that is the shape
+    // every cover was composed at. 'portrait' (9:16) is kept for the day
+    // there are covers drawn for it: a 9:16 window onto a 16:9 image shows
+    // 31% of its width, and each of these covers carries a wordmark across
+    // the full width, so the crop reliably cuts it mid-letter.
     aspect?: 'landscape' | 'portrait'
 }
 
