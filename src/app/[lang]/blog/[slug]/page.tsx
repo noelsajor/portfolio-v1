@@ -157,7 +157,10 @@ export default async function BlogPostPage({
                 <p className="max-w-2xl text-lg text-white/80">{frontmatter.description}</p>
             </header>
 
-            <article className="prose prose-invert max-w-none">
+            {/* No `prose` class here: @tailwindcss/typography is not installed
+                in this project, so `prose`/`prose-invert` would be inert. Every
+                element is styled through mdxComponents instead. */}
+            <article className="max-w-3xl">
                 <MDXRemote
                     source={content}
                     components={mdxComponents}
