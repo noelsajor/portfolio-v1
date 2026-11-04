@@ -48,9 +48,11 @@ every page load.
 
 Removing them took 152,572 lines out of the theme.
 
-![Diff of locales/en.default.json showing 46 removed lines, all nested under a top-level gempages key with entries for Carousel, CarouselV3, Newsletter and IconListV2 components.](/blog/shopify-speed-audit/fig-locales.png)
-
-_Forty-six translation keys for a page builder nobody had opened in months, still shipping in every locale file._
+<Figure
+  src="/blog/shopify-speed-audit/fig-locales.png"
+  alt="Diff of locales/en.default.json showing 46 removed lines, all nested under a top-level gempages key with entries for Carousel, CarouselV3, Newsletter and IconListV2 components."
+  caption="Forty-six translation keys for a page builder nobody had opened in months, still shipping in every locale file."
+/>
 
 > **Check your store.** Open your theme in the code editor and look for filenames carrying a vendor
 > prefix. Page builders, review apps, quiz apps and upsell apps all tag their files. Then search
@@ -86,9 +88,11 @@ The cost is not only speed. Duplicated tracking inflates session counts, halves 
 rate and makes every conversion number wrong in a direction that looks flattering. People tune ad
 spend on those numbers.
 
-![Diagram of one page view branching into three tracking paths: Shopify's Google channel sending GA4 hit one, an empty Google Tag Manager container sending GA4 hit two, and an unused Metricool pixel sending a third request.](/blog/shopify-speed-audit/fig-tracking.png)
-
-_One page view, three outbound requests, two of them counting the same session._
+<Figure
+  src="/blog/shopify-speed-audit/fig-tracking.png"
+  alt="Diagram of one page view branching into three tracking paths: Shopify's Google channel sending GA4 hit one, an empty Google Tag Manager container sending GA4 hit two, and an unused Metricool pixel sending a third request."
+  caption="One page view, three outbound requests, two of them counting the same session."
+/>
 
 > **Check your store.** Load any page, open the network tab and filter for `collect` or `gtag`. If
 > the same measurement ID appears in more than one request, you are counting twice. Then open
@@ -143,9 +147,11 @@ The multicolumn section on this store offered sizes up to **3200px**. The widest
 picked was **1500px**, because that is as large as the section gets on a 4K display. Every byte above
 that was generated, cached and sometimes downloaded for nothing.
 
-![Bar comparison showing the multicolumn section generating image candidates up to 3200 pixels wide while the widest size any browser ever rendered was 1500 pixels, leaving the remainder never requested.](/blog/shopify-speed-audit/fig-srcset.png)
-
-_Everything past 1500px was generated and cached, and no browser ever asked for it._
+<Figure
+  src="/blog/shopify-speed-audit/fig-srcset.png"
+  alt="Bar comparison showing the multicolumn section generating image candidates up to 3200 pixels wide while the widest size any browser ever rendered was 1500 pixels, leaving the remainder never requested."
+  caption="Everything past 1500px was generated and cached, and no browser ever asked for it."
+/>
 
 > **Check your store.** In the network tab, filter to images and compare the Size column with the
 > rendered dimensions. Chrome DevTools shows both on hover. Any image whose intrinsic width is more
@@ -236,15 +242,19 @@ What worked here:
 3. **Change one thing at a time where you can.** When a commit bundles six fixes, you know the total moved. You do not know which fix moved it, and next time you will guess wrong.
 4. **Re-measure every time a new section ships.** This is the one most teams skip, and the only one that matters long term.
 
-![Two Lighthouse reports for the same store side by side. The left scores 63 with LCP 3.6s, TBT 20ms and CLS 0.02. The right scores 71 with LCP 4.7s, TBT 300ms and CLS 0.044. The left thumbnail is desktop width, the right is phone width.](/blog/shopify-speed-audit/fig-lighthouse.webp)
-
-_Two audits of the same store, 63 and 71. The higher score has the worse LCP, the worse blocking time and the worse layout shift, because one is desktop and the other is mobile. This is the comparison to avoid, not a before and after._
+<Figure
+  src="/blog/shopify-speed-audit/fig-lighthouse.webp"
+  alt="Two Lighthouse reports for the same store side by side. The left scores 63 with LCP 3.6s, TBT 20ms and CLS 0.02. The right scores 71 with LCP 4.7s, TBT 300ms and CLS 0.044. The left thumbnail is desktop width, the right is phone width."
+  caption="Two audits of the same store, 63 and 71. The higher score has the worse LCP, the worse blocking time and the worse layout shift, because one is desktop and the other is mobile. This is the comparison to avoid, not a before and after."
+/>
 
 That last point is the real lesson from this audit. Performance on a live store is not a project with
 an end date. Every new section, app and promotion is a chance to lose what you gained. The store that
 stays fast is the one where the check is part of shipping, not an annual clean up.
 
-## I'll run these six checks on your store
+<div className="mt-12 rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+
+<h2 id="offer" className="text-xl font-semibold tracking-tight md:text-2xl">I'll run these six checks on your store</h2>
 
 Send me your store URL and one sentence about what you have noticed, and I will run the six checks in
 this article against it and reply in writing with what I find. No call, no deck.
@@ -255,10 +265,15 @@ You get back:
 - Which ones you can fix yourself, and how
 - Which ones need someone in the theme code
 
-<a href="/en/contact?subject=store-audit" data-tracking="blog_free_audit">Audit my store</a>
+<a
+  href="/en/contact?subject=store-audit"
+  data-tracking="blog_free_audit"
+  className="mt-6 inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black no-underline hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+>Audit my store</a>
 
-Free, and I do a few of these a month. If your store is on Shopify and already selling, it is worth
-doing.
+<p className="mt-4 text-sm text-white/60">Free, and I do a few of these a month. If your store is on Shopify and already selling, it is worth doing.</p>
+
+</div>
 
 ## Frequently asked questions
 
