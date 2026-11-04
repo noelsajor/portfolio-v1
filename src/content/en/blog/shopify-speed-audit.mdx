@@ -1,0 +1,310 @@
+---
+title: The app you uninstalled is still slowing down your Shopify store
+description: >-
+  A performance audit of a live Shopify store turned up 85 files left behind by a page builder
+  removed months earlier, two analytics pixels firing on top of Shopify's own tracking, and theme
+  bundles carrying roughly 40 percent dead code. None of it was visible in the theme editor.
+publishedAt: '2026-11-04'
+coverImage: /blog/shopify-speed-audit/cover-diffstat.png
+coverAlt: >-
+  Terminal window showing the output of git show --stat on a theme commit, listing deleted page
+  builder layout and template files and ending with the summary line: 776 files changed, 143,415
+  insertions, 152,572 deletions.
+relatedCaseStudy: sana-wellness-storefront
+---
+
+Below is each finding, how to check for it in your own store, and what it took to fix.
+
+## What the audit found
+
+| Finding | What it was | What changed |
+| --- | --- | --- |
+| [Orphaned app files](#finding-1-the-app-you-uninstalled-is-still-in-your-theme) | 85 files, 46 translation keys and 3 backup templates from a page builder removed months earlier | Deleted, 152,572 lines removed |
+| [Duplicate tracking](#finding-2-you-are-probably-tracking-twice) | An empty Google Tag Manager container and a leftover Metricool pixel, both on top of Shopify's native GA4 channel | Both removed |
+| [Unprioritized LCP](#finding-3-your-lcp-image-is-not-prioritized) | Hero image with no preload, product image with no fetch priority | `preload` on the hero, `fetchpriority="high"` on the product image |
+| [Oversized images](#finding-4-you-are-shipping-images-far-larger-than-you-render) | `srcset` offering up to 3200px where 1500px was the widest size ever rendered | Capped at 1500px |
+| [Dead code in bundles](#finding-5-your-theme-bundles-carry-dead-code) | `global.js` at 43KB, `base.css` at 78KB | 25KB and 65KB |
+| [Missing image attributes](#finding-6-the-same-cleanup-fixes-accessibility-and-structured-data) | `width`, `height` and `alt` absent across 8 section and snippet files | Added, which fixed layout shift and accessibility in the same pass |
+
+Five of the six were invisible from the Shopify admin. You only find them in the theme files.
+
+## Finding 1: the app you uninstalled is still in your theme
+
+**An uninstall is an account action, not a cleanup.**
+
+When you remove a Shopify app, Shopify revokes its access and takes it out of your admin. It does
+not touch your theme, and it should not: the files the app wrote are part of your theme now, and
+Shopify has no way to know which ones you edited or which ones your templates still call. Leaving
+them is the safe choice on their side. The problem is that nothing tells you this. You read "app
+uninstalled", you reasonably believe it is done, and the admin never mentions your theme files
+again. Page builders in particular tend to get trialled during a redesign, under deadline, by
+whoever had the store open at the time, and nobody writes down what they touched.
+
+This store had used GemPages, a page builder, and had stopped using it. The app was gone from the
+admin. Still in the theme were **85 orphaned files** spread across `sections/`, `snippets/`,
+`assets/` and `templates/`, plus **46 translation keys** sitting in `locales/en.default.json` and
+**3 backup templates** named `*.gp-template-bk-default.json`. Several were still being requested on
+every page load.
+
+Removing them took 152,572 lines out of the theme.
+
+![Diff of locales/en.default.json showing 46 removed lines, all nested under a top-level gempages key with entries for Carousel, CarouselV3, Newsletter and IconListV2 components.](/blog/shopify-speed-audit/fig-locales.png)
+
+_Forty-six translation keys for a page builder nobody had opened in months, still shipping in every locale file._
+
+> **Check your store.** Open your theme in the code editor and look for filenames carrying a vendor
+> prefix. Page builders, review apps, quiz apps and upsell apps all tag their files. Then search
+> `locales/*.json` for the same prefix, because translation keys survive longer than anyone expects.
+> Finally, load a product page with the network tab open and sort by file name: anything from an app
+> you no longer use is dead weight the browser is still fetching.
+>
+> **Do not bulk delete.** Some app files are referenced from templates that still render. Work in a
+> branch, diff the rendered output, and keep the theme you replaced until you have confirmed nothing
+> broke.
+
+## Finding 2: you are probably tracking twice
+
+**If your store is already connected through Shopify's Google channel, you do not also need a GA4 tag in Google Tag Manager.**
+
+Both can carry the same measurement ID, neither one can see the other, and every page view gets
+counted twice. That is worth stating plainly, because double tracking is almost never a decision. It
+is two people solving the same problem a year apart.
+
+Shopify's native Google channel gets connected when someone sets up Google Shopping. Later a
+different person needs a pixel for an ad test, or a marketing tool asks for a container, and Google
+Tag Manager is the standard answer to both. Neither person did anything wrong, and neither knew what
+the other had done. Then the ad test ends and the tool gets cancelled, and the container stays,
+because adding a tag takes five minutes and has a visible payoff, while removing one takes half an
+hour, shows up in no report and carries a real risk of breaking attribution. Every individual
+decision here is rational. The result still counts your sessions twice.
+
+This store had an **empty GTM container** loading on every page, firing a duplicate GA4 tag over
+Shopify's native one. It also had a **Metricool pixel** hard coded in `layout/theme.liquid`, left
+over from a marketing tool nobody was using any more.
+
+The cost is not only speed. Duplicated tracking inflates session counts, halves your apparent bounce
+rate and makes every conversion number wrong in a direction that looks flattering. People tune ad
+spend on those numbers.
+
+![Diagram of one page view branching into three tracking paths: Shopify's Google channel sending GA4 hit one, an empty Google Tag Manager container sending GA4 hit two, and an unused Metricool pixel sending a third request.](/blog/shopify-speed-audit/fig-tracking.png)
+
+_One page view, three outbound requests, two of them counting the same session._
+
+> **Check your store.** Load any page, open the network tab and filter for `collect` or `gtag`. If
+> the same measurement ID appears in more than one request, you are counting twice. Then open
+> `layout/theme.liquid` and read every `<script>` tag in the head: pixels from tools you have stopped
+> paying for tend to stay there for years.
+
+## Finding 3: your LCP image is not prioritized
+
+**Nothing in a Shopify build ever asks you about load priority.**
+
+The hero looks instant to everyone who works on it, because by the time you are reviewing the theme
+the image is in your browser cache and you are on an office connection. The browser's own default is
+to treat every image equally and to discover them late, after it has parsed the CSS. Priority is
+something you have to opt into, and there is no setting for it in the admin, no field in the theme
+editor and no step in a design handoff that raises it. So this is not a mistake anyone made. It is a
+default that nobody overrode, on the one asset whose load order decides the score.
+
+Largest Contentful Paint is almost always an image, and on a Shopify store it is almost always the
+hero on the home page or the main image on the product page. The browser discovers both late, after
+parsing CSS, and queues them behind whatever it found first.
+
+Two fixes, one line each. On the home page, a `preload` scoped to where the hero actually is:
+
+```liquid
+{% if section.index == 1 %}
+  <link rel="preload" as="image" href="{{ image | image_url: width: 1500 }}" fetchpriority="high">
+{% endif %}
+```
+
+The `section.index == 1` guard matters. Preloading every image in a section that repeats down the
+page is worse than preloading nothing, because it competes with the one image that counts. On the
+product page, `fetchpriority="high"` on the main image is enough: it is already in the initial markup
+and just needs to be told it matters.
+
+> **Check your store.** Run Lighthouse and open the LCP entry under diagnostics. It names the
+> element. Then view source and look for that image: if it has neither a preload nor a fetch
+> priority, you are leaving the easiest win on the table.
+
+## Finding 4: you are shipping images far larger than you render
+
+**Nobody decided to send a 3200px image to a phone.**
+
+The hero gets designed at desktop width and exported at retina scale, so that it looks right on the
+monitor of the person approving it. It goes into the theme. The theme's `srcset` lists everything
+available up to the source file, because a theme cannot know in advance what you will upload, so
+offering every size is the safe default. From there the browser picks using the viewport and the
+device pixel ratio, and on a phone that math lands far higher than anyone would have chosen on
+purpose. The width was decided once, in a design file, by someone optimising for their own screen,
+and nothing downstream ever re-asks the question.
+
+The multicolumn section on this store offered sizes up to **3200px**. The widest the browser ever
+picked was **1500px**, because that is as large as the section gets on a 4K display. Every byte above
+that was generated, cached and sometimes downloaded for nothing.
+
+![Bar comparison showing the multicolumn section generating image candidates up to 3200 pixels wide while the widest size any browser ever rendered was 1500 pixels, leaving the remainder never requested.](/blog/shopify-speed-audit/fig-srcset.png)
+
+_Everything past 1500px was generated and cached, and no browser ever asked for it._
+
+> **Check your store.** In the network tab, filter to images and compare the Size column with the
+> rendered dimensions. Chrome DevTools shows both on hover. Any image whose intrinsic width is more
+> than twice its displayed width is over-served. Then find where it is rendered in Liquid and look at
+> the `widths:` array in its `image_url` filter.
+>
+> **Rule of thumb.** The largest value in your `srcset` should be about twice the widest CSS pixel
+> width the element ever reaches, not the largest file the merchant happened to upload.
+
+## Finding 5: your theme bundles carry dead code
+
+**Dead code survives because deleting it is unrewarded and genuinely risky.**
+
+A theme passes through several pairs of hands. Each one adds; none can safely subtract. Confirming
+that a function is unused means grepping Liquid templates, section schema, app blocks and inline
+scripts, and if you get it wrong you find out from a customer on a product page. Adding takes minutes
+and is visible in a screenshot. Removing takes an afternoon, is visible to nobody, and can break a
+live store. So theme bloat is not a skill problem or a care problem. It is what you get when adding
+is cheap, removing is expensive, and nobody owns the file after launch.
+
+Two files on this store:
+
+| File | Before | After | How |
+| --- | --- | --- | --- |
+| `assets/global.js` | 43KB | 25KB | Dead code removed, then minified with terser |
+| `assets/base.css` | 78KB | 65KB | clean-css at level 1 only, AST verified |
+
+That is roughly 40 percent out of the JavaScript and 17 percent out of the CSS, on files requested on
+every single page.
+
+**The part worth copying is the verification, not the minification.** CSS minifiers at aggressive
+settings will merge selectors and reorder declarations, and on a theme with specificity battles
+already in it, that silently changes rendering. Level 1 is whitespace and simple shortening only.
+Then parse both the input and the output into an abstract syntax tree and compare the rule sets: if a
+selector or a declaration disappeared, you know before your customers do.
+
+A 13KB saving is not worth a broken product page, and the only way to tell the difference is to
+check.
+
+> **Check your store.** Before deleting anything, grep the whole theme for each function or class
+> name. Liquid templates, section schema, app blocks and inline `<script>` tags all reference assets,
+> so a search limited to `assets/` will miss callers and you will delete something that is live.
+
+## Finding 6: the same cleanup fixes accessibility and structured data
+
+**These are three separate problems only on the org chart.**
+
+Layout shift belongs to whoever owns performance. Accessibility arrives as a compliance review or an
+audit PDF. Structured data belongs to whoever owns SEO or the Merchant Center feed. Three owners,
+three tickets, three budgets, often three different quarters. But `width`, `alt` and shipping schema
+are attributes on the same element, in the same eight files, and the separation that makes them three
+projects is organizational rather than technical. It is also why the same markup gets opened three
+times by three people who never talk.
+
+Once you are already editing eight section and snippet files to add `width` and `height`, two other
+classes of problem are sitting in the same lines.
+
+**Accessibility.** Adding `alt` costs nothing extra. The same pass needed `role="img"` on star
+ratings and comparison icons, which were carrying ARIA attributes prohibited on their implicit role,
+and a tabindex toggle in a sticky product showcase where focusable elements sat inside an
+`aria-hidden` container. That last one is a real defect, not a lint warning: keyboard focus was
+landing on controls a screen reader had been told did not exist.
+
+**Structured data.** Merchant Center was rejecting this store's product schema. What it wanted was
+`shippingDetails` and `hasMerchantReturnPolicy`, neither of which Shopify's default product schema
+emits.
+
+The consequences are not symmetric. A missing `width` costs you layout shift, which is a score. The
+accessibility defects cost a real person the ability to use the store, which is not. And the
+structured data is the one that compounds, because it is not about quality, it is about eligibility:
+Merchant Center was not marking these products down, it was refusing them, and the same fields are
+what any automated shopping surface reads to decide whether a product is allowed to appear at all. A
+product that cannot be parsed cannot be recommended.
+
+## How to measure so the number means something
+
+Most performance advice ends with "run Lighthouse". That is where the mistakes start.
+
+A Lighthouse score moves several points between consecutive runs on an unchanged page. Network
+conditions, CPU contention and whether a third party script happened to respond quickly all shift it.
+If you run it once before a change and once after, you are measuring noise as often as you are
+measuring your work.
+
+What worked here:
+
+1. **Same device, same connection, same URL, before and after.** Mobile and desktop are different audits. A home page and a product page are different pages.
+2. **Three runs, take the median.** A single run is an anecdote.
+3. **Change one thing at a time where you can.** When a commit bundles six fixes, you know the total moved. You do not know which fix moved it, and next time you will guess wrong.
+4. **Re-measure every time a new section ships.** This is the one most teams skip, and the only one that matters long term.
+
+![Two Lighthouse reports for the same store side by side. The left scores 63 with LCP 3.6s, TBT 20ms and CLS 0.02. The right scores 71 with LCP 4.7s, TBT 300ms and CLS 0.044. The left thumbnail is desktop width, the right is phone width.](/blog/shopify-speed-audit/fig-lighthouse.webp)
+
+_Two audits of the same store, 63 and 71. The higher score has the worse LCP, the worse blocking time and the worse layout shift, because one is desktop and the other is mobile. This is the comparison to avoid, not a before and after._
+
+That last point is the real lesson from this audit. Performance on a live store is not a project with
+an end date. Every new section, app and promotion is a chance to lose what you gained. The store that
+stays fast is the one where the check is part of shipping, not an annual clean up.
+
+## I'll run these six checks on your store
+
+Send me your store URL and one sentence about what you have noticed, and I will run the six checks in
+this article against it and reply in writing with what I find. No call, no deck.
+
+You get back:
+
+- What each check turned up, with the file or request it came from
+- Which ones you can fix yourself, and how
+- Which ones need someone in the theme code
+
+<a href="/en/contact?subject=store-audit" data-tracking="blog_free_audit">Audit my store</a>
+
+Free, and I do a few of these a month. If your store is on Shopify and already selling, it is worth
+doing.
+
+## Frequently asked questions
+
+**Why does uninstalling a Shopify app leave files behind?**
+
+Apps that write into your theme, such as page builders and section libraries, add Liquid files,
+assets and translation keys directly to the theme code. Uninstalling removes the app's access and its
+admin presence, not the files it wrote. Shopify has no mechanism to reverse those writes, because the
+theme is yours and the platform cannot know which edits you want to keep.
+
+**How do I know if I have duplicate GA4 tracking on Shopify?**
+
+Load any page with the network tab open and filter for `collect` or `gtag`. If the same measurement
+ID appears in more than one request, you are sending the same event twice. The usual cause is Google
+Tag Manager configured with a GA4 tag while Shopify's native Google channel is also connected.
+
+**Does removing unused CSS actually improve a Lighthouse score?**
+
+It improves the unused CSS audit and reduces transfer size, but it rarely moves the score on its own.
+The larger wins on a Shopify theme are usually LCP related: prioritizing the hero image and cutting
+oversized `srcset` candidates. Treat bundle size as housekeeping that compounds, not as the headline
+fix.
+
+**How often should I check my Shopify store's performance?**
+
+Every time a new section, app or template ships. Performance regressions on a live store arrive
+through normal work, not through neglect, so a quarterly audit tells you something broke without
+telling you what.
+
+**Can I do this without a developer?**
+
+The checks, yes. Every diagnostic in this article runs in Chrome DevTools or Lighthouse. The fixes
+touch theme code, so unless you are comfortable editing Liquid and working in a duplicated theme you
+can roll back, get someone who is.
+
+## Where this came from
+
+Every number here comes from one engagement: the storefront build and ongoing operations for
+[SANA](/en/work/sana-wellness-storefront), a direct to consumer wellness brand. I was the sole
+developer on the theme, and the performance work ran across three commits in May 2026.
+
+The full case study covers the rest of that engagement, including the metafield product architecture
+behind per variant content and the subscription and volume discount purchase flow.
+
+---
+
+I'm **Jose Leon Rojas**, writing as Noelsajor. I design and build Shopify and WooCommerce storefronts,
+usually as the only person on both sides of the work. The SANA store in this article is one of
+[seven case studies](/en/work) here.
