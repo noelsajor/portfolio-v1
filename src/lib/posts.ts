@@ -55,6 +55,8 @@ export const postFrontmatterSchema = z.object({
     updatedAt: z.string().regex(ISO_DATE, 'must be an ISO date (YYYY-MM-DD)').optional(),
     coverImage: z.string().min(1).optional(),
     coverAlt: z.string().min(1).optional(),
+    /** Optional caption rendered under the cover as a <figcaption>. */
+    coverCaption: z.string().min(1).optional(),
     /** Opt-in pairing with a post in another locale. Both sides must carry
      *  the same value before either page emits an hreflang alternate. */
     translationKey: z.string().min(1).optional(),
