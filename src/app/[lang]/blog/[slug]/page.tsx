@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -155,6 +156,29 @@ export default async function BlogPostPage({
                     {frontmatter.title}
                 </h1>
                 <p className="max-w-2xl text-lg text-white/80">{frontmatter.description}</p>
+
+                {/* The cover is the LCP element on this route, so it is
+                    rendered eagerly with priority rather than lazily like the
+                    in-body figures. */}
+                {frontmatter.coverImage ? (
+                    <figure className="mt-2">
+                        <div className="overflow-hidden rounded-2xl border border-white/10">
+                            <Image
+                                src={frontmatter.coverImage}
+                                alt={frontmatter.coverAlt ?? frontmatter.title}
+                                width={1200}
+                                height={630}
+                                className="h-auto w-full"
+                                priority
+                            />
+                        </div>
+                        {frontmatter.coverCaption ? (
+                            <figcaption className="mt-3 text-sm leading-relaxed text-white/60">
+                                {frontmatter.coverCaption}
+                            </figcaption>
+                        ) : null}
+                    </figure>
+                ) : null}
             </header>
 
             {/* No `prose` class here: @tailwindcss/typography is not installed
