@@ -7,10 +7,12 @@ description: >-
 publishedAt: '2026-11-04'
 coverImage: /blog/shopify-speed-audit/cover-diffstat.png
 coverAlt: >-
-  Terminal window showing the output of git show --stat on a theme commit, listing deleted page
-  builder layout and template files and ending with the summary line: 776 files changed, 143,415
-  insertions, 152,572 deletions.
-coverCaption: One commit. Most of those deletions belong to an app that had already been uninstalled.
+  Terminal window showing git show --stat on a theme commit, filtered to page builder files. It
+  lists deleted layout, section, snippet and template files and ends with the summary line: 85
+  files changed, 1,235 insertions, 22,230 deletions.
+coverCaption: >-
+  Eighty-five files belonging to an app that had been uninstalled months earlier, still in the
+  theme and still being served.
 relatedCaseStudy: sana-wellness-storefront
 ---
 
@@ -20,7 +22,7 @@ Below is each finding, how to check for it in your own store, and what it took t
 
 | Finding | What it was | What changed |
 | --- | --- | --- |
-| [Orphaned app files](#finding-1-the-app-you-uninstalled-is-still-in-your-theme) | 85 files, 46 translation keys and 3 backup templates from a page builder removed months earlier | Deleted, 152,572 lines removed |
+| [Orphaned app files](#finding-1-the-app-you-uninstalled-is-still-in-your-theme) | 85 files, 46 translation keys and 3 backup templates from a page builder removed months earlier | Deleted, 22,230 lines removed |
 | [Duplicate tracking](#finding-2-you-are-probably-tracking-twice) | An empty Google Tag Manager container and a leftover Metricool pixel, both on top of Shopify's native GA4 channel | Both removed |
 | [Unprioritized LCP](#finding-3-your-lcp-image-is-not-prioritized) | Hero image with no preload, product image with no fetch priority | `preload` on the hero, `fetchpriority="high"` on the product image |
 | [Oversized images](#finding-4-you-are-shipping-images-far-larger-than-you-render) | `srcset` offering up to 3200px where 1500px was the widest size ever rendered | Capped at 1500px |
@@ -47,7 +49,7 @@ admin. Still in the theme were **85 orphaned files** spread across `sections/`, 
 **3 backup templates** named `*.gp-template-bk-default.json`. Several were still being requested on
 every page load.
 
-Removing them took 152,572 lines out of the theme.
+Removing them took **22,230 lines** out of the theme across those 85 files.
 
 <Figure
   src="/blog/shopify-speed-audit/fig-locales.png"
