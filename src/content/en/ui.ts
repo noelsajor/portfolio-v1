@@ -26,7 +26,30 @@ export const uiContent = {
         ariaGithub: 'GitHub',
         ariaFigma: 'Figma Community',
         ariaResume: 'Resume',
-        ariaFooterLinks: 'Footer links'
+        ariaFooterLinks: 'Footer links',
+        // One sentence restating what the site is about, on every page.
+        // Kept in sync with the About page's opening claim rather than
+        // written as marketing copy.
+        pitch: 'Product design, front-end implementation and Shopify builds. Usually the only person on both sides of the work.',
+        headingSite: 'Site',
+        headingElsewhere: 'Elsewhere',
+        ariaSiteLinks: 'Site',
+        ariaElsewhereLinks: 'Profiles and resume',
+        navBlog: 'Blog',
+        navForAgencies: 'For agencies',
+        navResume: 'Resume'
+    },
+    blog: {
+        metaTitle: 'Blog',
+        metaDescription:
+            'Field notes from Shopify, front-end and design work: what the audits actually turned up, with the numbers.',
+        heading: 'Blog',
+        intro: 'Notes from real engagements. Every number comes from a repository, not an estimate.',
+        // Shown in a locale that has no posts yet. The page still has to
+        // exist in both locales so the language switch always has somewhere
+        // to land.
+        empty: 'Nothing here yet in English.',
+        readingSuffix: 'Read the post'
     },
     shell: {
         // Name of the site root in BreadcrumbList JSON-LD (not rendered as
