@@ -20,7 +20,24 @@ export const uiContent = {
         ariaGithub: 'GitHub',
         ariaFigma: 'Figma Community',
         ariaResume: 'CV',
-        ariaFooterLinks: 'Enlaces del pie de página'
+        ariaFooterLinks: 'Enlaces del pie de página',
+        pitch: 'Diseño de producto, implementación front-end y desarrollo en Shopify. Normalmente la única persona a ambos lados del trabajo.',
+        headingSite: 'Sitio',
+        headingElsewhere: 'En otros sitios',
+        ariaSiteLinks: 'Sitio',
+        ariaElsewhereLinks: 'Perfiles y CV',
+        navBlog: 'Blog',
+        navForAgencies: 'Para agencias',
+        navResume: 'CV'
+    },
+    blog: {
+        metaTitle: 'Blog',
+        metaDescription:
+            'Notas de trabajo en Shopify, front-end y diseño: lo que encontraron las auditorías, con los números.',
+        heading: 'Blog',
+        intro: 'Notas de proyectos reales. Cada número sale de un repositorio, no de una estimación.',
+        empty: 'Todavía no hay entradas en español.',
+        readingSuffix: 'Leer la entrada'
     },
     shell: {
         // Name of the site root in BreadcrumbList JSON-LD (not rendered as

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { BrandMark } from '@/components/BrandMark'
-import { FileText, Mail } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { localizedPath, type Locale } from '@/lib/i18n'
 import { uiContent as uiContentEn } from '@/content/en/ui'
@@ -53,25 +52,77 @@ function LinkedInIcon() {
     )
 }
 
+const siteLinkClass =
+    'rounded-sm text-white/70 transition-colors duration-200 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30'
+
+// Three columns, rebuilt from the single icon row this used to be. The old
+// footer offered six destinations and five of them left the site, so every
+// page in the site quietly pointed outward and nothing pointed back in. The
+// `Site` column is the fix: the footer renders on every page, so these are
+// the internal links that do the most work.
+//
+// The email address is deliberately visible text rather than only an icon.
+// An address in the markup can be read, copied and quoted; a mail glyph
+// cannot.
 export function SiteFooter({ lang }: { lang: Locale }) {
     const uiContent = lang === 'es' ? uiContentEs : uiContentEn
-    const { footer } = uiContent
+    const { footer, header } = uiContent
+
+    const siteLinks = [
+        { href: '/work', label: header.navWork, tracking: 'footer_work' },
+        { href: '/blog', label: footer.navBlog, tracking: 'footer_blog' },
+        { href: '/for-agencies', label: footer.navForAgencies, tracking: 'footer_for_agencies' },
+        { href: '/about', label: header.navAbout, tracking: 'footer_about' },
+        { href: '/contact', label: header.navContact, tracking: 'footer_contact' },
+        { href: '/resume', label: footer.navResume, tracking: 'footer_resume' }
+    ]
 
     return (
         <footer className="border-t border-white/10">
-            <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
-                <p className="flex items-center gap-2">
-                    <BrandMark className="h-4 w-auto" />© {new Date().getFullYear()} Noelsajor
-                </p>
-                <nav aria-label={footer.ariaFooterLinks} className="flex flex-wrap gap-3">
-                    <Link
-                        className={footerLinkClass}
-                        href={`mailto:${siteConfig.email}`}
-                        data-tracking="footer_email"
-                        aria-label={footer.ariaEmail(siteConfig.email)}
-                    >
-                        <Mail aria-hidden="true" className="h-6 w-6" />
-                    </Link>
+            <div className="mx-auto max-w-5xl px-4 pb-6 pt-12 text-sm text-white/70">
+                <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+                    <div>
+                        <p className="flex items-center gap-2 font-semibold text-white">
+                            <BrandMark className="h-4 w-auto" />
+                            {siteConfig.name}
+                        </p>
+                        <p className="mt-3 max-w-[34ch] text-[13.5px] leading-relaxed text-white/50">
+                            {footer.pitch}
+                        </p>
+                        <Link
+                            className="mt-4 inline-block rounded-sm text-[13.5px] text-white/70 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                            href={`mailto:${siteConfig.email}`}
+                            data-tracking="footer_email"
+                            aria-label={footer.ariaEmail(siteConfig.email)}
+                        >
+                            {siteConfig.email}
+                        </Link>
+                    </div>
+
+                    <nav aria-label={footer.ariaSiteLinks}>
+                        <h2 className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50">
+                            {footer.headingSite}
+                        </h2>
+                        <ul className="mt-4 flex flex-col gap-2.5">
+                            {siteLinks.map((link) => (
+                                <li key={link.href}>
+                                    <Link
+                                        className={siteLinkClass}
+                                        href={localizedPath(lang, link.href)}
+                                        data-tracking={link.tracking}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    <div>
+                        <h2 className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50">
+                            {footer.headingElsewhere}
+                        </h2>
+                        <nav aria-label={footer.ariaElsewhereLinks} className="mt-4 flex flex-wrap gap-3">
                     <Link
                         className={footerLinkClass}
                         href={siteConfig.sameAs.linkedin}
@@ -112,15 +163,15 @@ export function SiteFooter({ lang }: { lang: Locale }) {
                     >
                         <FigmaIcon />
                     </Link>
-                    <Link
-                        className={footerLinkClass}
-                        href={localizedPath(lang, '/resume')}
-                        data-tracking="footer_resume"
-                        aria-label={footer.ariaResume}
-                    >
-                        <FileText aria-hidden="true" className="h-6 w-6" />
-                    </Link>
-                </nav>
+                        </nav>
+                    </div>
+                </div>
+
+                <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5 text-[13px] text-white/50">
+                    <p>
+                        © {new Date().getFullYear()} {siteConfig.name}. {siteConfig.legalName}.
+                    </p>
+                </div>
             </div>
         </footer>
     )
